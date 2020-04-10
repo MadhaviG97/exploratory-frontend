@@ -40,10 +40,7 @@ const NavbarStyle=makeStyles((theme) => ({
     
    },
    
-    menuButton: {//these are not used
-      marginLeft: theme.spacing(10),
-      marginRight: theme.spacing(2),
-    },
+    
     title: {
       flexGrow: 1,
       display: 'none',//these are not used
@@ -53,23 +50,51 @@ const NavbarStyle=makeStyles((theme) => ({
     },
     logo: {//logo is just logo.png from public folder 
       flexGrow: 1,
-      marginLeft: theme.spacing(20),
+      marginLeft: theme.spacing(19),
       maxWidth: 180,
       
     },
-    
+    logoShrink: {//this is when the window size is changed 
+      flexGrow: 1,
+      marginLeft: theme.spacing(4),
+      maxWidth: 180,
+      justifySelf:"center"
+    },
     Menu:{//this is for menu.js
       
-      marginRight: theme.spacing(20),
+      marginRight: theme.spacing(19),
       display: 'none',
       [theme.breakpoints.up('sm')]: {
         display: 'block',
       },
     },
     sbutton:{
-      marginRight: theme.spacing(20),
+      marginRight: theme.spacing(19),
 
     },
+    
+    menuButton: {
+      
+      marginLeft: theme.spacing(7),
+      //marginRight: theme.spacing(1),
+
+    },
+
+    appbarShrink:{ //no difference with appbar at the moment
+      
+      background: '#FFFFFF',//navbar(header) color
+      color:'#000000' ,//header font color
+      position:'fixed',
+      //alignItems: 'center',
+      boxShadow: [
+        // 23 default values of 'shadows' array from https://material-ui-1dab0.firebaseapp.com/customization/themes/
+            '0 1px 2px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12)', // 24th value
+          ],
+      
+    },
+
+
+
     searchIcon: {//these are not used
       padding: theme.spacing(0, 2),
       height: '100%',

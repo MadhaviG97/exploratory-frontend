@@ -38,7 +38,7 @@ function LeftMenu(props) {//these ara the links in the left side of the nav bar
           <Box p={3} bgcolor="background.paper" >
             <Link
               className={classes.link}
-              onClick={handleClick}
+              //onClick={handleClick}
               onMouseOver={handleClick}//if mouseover is too much can remove it from here
               aria-controls="simple-menu"
               aria-haspopup="true"
@@ -64,7 +64,7 @@ function LeftMenu(props) {//these ara the links in the left side of the nav bar
           <Box p={3} bgcolor="background.paper" >
             <Link
               className={classes.link}
-              onClick={handleClick}
+              //onClick={handleClick}
               onMouseOver={handleClick}//if mouseover is too much can remove it from here
               aria-controls="simple-menu"
               aria-haspopup="true"

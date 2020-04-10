@@ -11,7 +11,7 @@ function Copyright() {
     <Typography variant="body2" color="#FFFFFF">
       {'Copyright © '}
       <Link color="inherit" href="">
-        Expeditor
+        Exploratory
       </Link>{' '}
       {new Date().getFullYear()}
       {'.'}

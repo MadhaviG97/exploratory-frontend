@@ -11,10 +11,10 @@ const FooterStyle = makeStyles((theme) => ({
       marginBottom: theme.spacing(2),
     },
     footer2: {//Footer 2 is the footer in the bottom-the darker one
-      padding: theme.spacing(1.5, 0.5),//to change size
+      padding: theme.spacing(1.7),//to change size
       //marginTop: 'auto',
       color:"#FFFFFF",
-      
+      textAlign:'center',
       backgroundColor:
       '#003f68'
         //theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],

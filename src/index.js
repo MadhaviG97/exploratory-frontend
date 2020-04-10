@@ -8,7 +8,7 @@ import FooterMenu from "./components/Footer/FooterMenu"
 import Theme from "./components/Theme"
 import {  ThemeProvider } from '@material-ui/core/styles';
 
-render(<div >
+render(
     <React.StrictMode>
     <ThemeProvider theme={Theme}>
     
@@ -20,6 +20,6 @@ render(<div >
     <Footer/>
     
     </ThemeProvider>
-  </React.StrictMode>,
-    </div>
+  </React.StrictMode>
+    
     ,document.getElementById("root"));
