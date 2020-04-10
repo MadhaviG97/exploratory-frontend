@@ -102,9 +102,7 @@ export default function SignUp() {
           </Button>
         </form>
       </div>
-      <Box mt={5}>
-        <CopyRight />
-      </Box>
+      
     </Container>
   );
 }
