@@ -9,15 +9,14 @@ const FooterStyle = makeStyles((theme) => ({
   },
   main: {
     //these are not used
+    flexGrow: 1,
     marginTop: theme.spacing(8),
-    marginBottom: theme.spacing(2),
+    marginBottom: theme.spacing(0),
   },
   footer2: {
-    //Footer 2 is the footer in the bottom-the darker one
+    // //Footer 2 is the footer in the bottom-the darker one
     padding: theme.spacing(1.5, 0.5), //to change size
-    //marginTop: 'auto',
-    color: "#FFFFFF",
-
+    color: "#000000",
     backgroundColor: "#003f68",
     //theme.palette.type === 'light' ? theme.palette.grey[200] : theme.palette.grey[800],
     //to change color
