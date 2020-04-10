@@ -1,4 +1,4 @@
-import {  makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from "@material-ui/core/styles";
 
 const FooterStyle = makeStyles((theme) => ({
     root: {//This helps the footer appear in the bottom
@@ -29,5 +29,7 @@ const FooterStyle = makeStyles((theme) => ({
       },
     
   }));
+
+ 
 
 export default FooterStyle;
