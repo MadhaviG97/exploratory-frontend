@@ -17,14 +17,12 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import CopyRight from "../../components/copyRight";
 import { useStyles } from "../../assets/css/sign-in";
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
@@ -58,7 +56,7 @@ export default function SignUp() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Hey!! {props.response}
         </Typography>
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
@@ -166,6 +164,7 @@ export default function SignUp() {
             variant="contained"
             color="primary"
             className={classes.submit}
+            onClick={() => props.onSubmit(this)}
           >
             Sign Up
           </Button>
@@ -178,7 +177,6 @@ export default function SignUp() {
           </Grid>
         </form>
       </div>
-      
     </Container>
   );
 }
