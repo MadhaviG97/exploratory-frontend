@@ -16,7 +16,7 @@ const StyledButton = withStyles({
         backgroundColor: '#003f68',
         color: '#FFF'
     },
-      borderRadius: 5,//button shape
+      borderRadius: 4,//button shape
       
       color: '#FFFFFF',//button font color
       height: 45,

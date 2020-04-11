@@ -1,25 +1,35 @@
-import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import React, { Suspense } from 'react';
+import { Route, Switch } from "react-router-dom";
+
+import signUp from "./views/guest-user/sign-up";
+import home from "./views/research/home";
+import fillProfile from "./views/researcher/fill-profile"
+import signIn from "./views/researcher/sign-in";
+
+
+
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
+import Theme from "./assets/themes/Theme";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Suspense fallback={(<div>Loading...</div>)}>
+      <ThemeProvider theme={Theme}>
+        <Navbar />
+        <div  >
+          <Switch>
+            <Route exact path="/" component={signUp} />
+            <Route exact path="/signin" component={signIn} />
+            <Route exact path="/signup" component={signUp} />
+            <Route exact path="/fillProfile" component={fillProfile} />
+            
+          </Switch>
+        </div>
+        <Footer />
+      </ThemeProvider>
+    </Suspense>
   );
 }
 

@@ -32,7 +32,7 @@ export default function Navbar(props) {
             >
               <MenuIcon />
             </IconButton>
-            <img src="logo.png" alt="logo" className={classes.logoShrink} />
+            <img src="/logo.png" alt="logo" className={classes.logoShrink} />
           
           </Toolbar>
         </AppBar>
@@ -40,7 +40,7 @@ export default function Navbar(props) {
       {WindowResize()[0].matches && (
         <AppBar className={classes.appbar}>
           <Toolbar>
-          <img src="logo.png" alt="logo" className={classes.logo} />
+          <img src="/logo.png" alt="logo" className={classes.logo} />
         
           <LeftMenu/>
           
