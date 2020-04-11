@@ -26,7 +26,10 @@ export default function SignUp(props) {
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
+    email: "",
     password: "",
+    first_name: "",
+    last_name: "",
     confirm_password: "",
     showPassword: false,
     showConfirmPassword: false,
@@ -48,6 +51,31 @@ export default function SignUp(props) {
     event.preventDefault();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      email: values.email,
+      password: values.password,
+      first_name: values.first_name,
+      last_name: values.last_name,
+      contact_no: "0716377656",
+      confirm_password: values.confirm_password,
+    };
+
+    const response = await fetch("/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...formData }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+      });
+  };
+
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
@@ -63,13 +91,15 @@ export default function SignUp(props) {
             <Grid item xs={12} sm={6}>
               <TextField
                 autoComplete="fname"
-                name="firstName"
+                name="first_name"
                 variant="outlined"
                 required
                 fullWidth
                 id="firstName"
                 label="First Name"
                 autoFocus
+                autoComplete="name"
+                onChange={handleChange("first_name")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -79,8 +109,9 @@ export default function SignUp(props) {
                 fullWidth
                 id="lastName"
                 label="Last Name"
-                name="lastName"
-                autoComplete="lname"
+                name="last_ame"
+                autoComplete="name"
+                onChange={handleChange("last_name")}
               />
             </Grid>
 
@@ -93,6 +124,7 @@ export default function SignUp(props) {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleChange("email")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -164,7 +196,7 @@ export default function SignUp(props) {
             variant="contained"
             color="primary"
             className={classes.submit}
-            onClick={() => props.onSubmit(this)}
+            onClick={handleSubmit}
           >
             Sign Up
           </Button>
