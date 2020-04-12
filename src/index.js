@@ -1,5 +1,5 @@
 import React from "react";
 import { render } from "react-dom";
-import App from "./App";
+import Home from "./views/research/home";
 
-render(<App />, document.getElementById("root"));
+render(<Home />, document.getElementById("root"));
