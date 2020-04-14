@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react'
 
 
-import { useStyles } from "../../assets/css/editor";
+import { useStyles } from "../../../assets/css/editor";
 import Typography from "@material-ui/core/Typography";
 import { Button } from "@material-ui/core";
-import QuillEditor from '../../components/editor/QuillEditor';
+import QuillEditor from '../../../components/editor/QuillEditor';
 //import axios from 'axios';
 //import { useSelector } from "react-redux";
 
