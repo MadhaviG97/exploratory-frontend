@@ -26,10 +26,11 @@ export default class App extends React.Component {
       <div>
         <Avatar
           width="100%"
-          height={295}
+          height={300}
           onCrop={this.onCrop}
           onClose={this.onClose}
           src={this.state.preview}
+          round={false}
         />
         {/* <img src={this.state.preview} alt="Preview" /> */}
       </div>

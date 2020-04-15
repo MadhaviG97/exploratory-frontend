@@ -7,8 +7,6 @@ const NavbarStyle = makeStyles((theme) => ({
   appbar: {
     background: "#FFFFFF", //navbar(header) color
     color: "#000000", //header font color
-    position: "fixed",
-
     boxShadow: [
       // 23 default values of 'shadows' array from https://material-ui-1dab0.firebaseapp.com/customization/themes/
       "0 1px 2px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12)", // 24th value

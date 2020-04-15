@@ -1,43 +1,32 @@
 import React from "react";
-import { Container, Typography, Grid } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import Navbar from "../../components/Navbar/NavbarProject";
+import ProjectNavbar from "./projectNavbar";
 import Tab from "../../components/Tab";
-
-export default function home() {
-  const classes = makeStyles((theme) => ({
-    header: {
-      backgroundColor: "red",
-    },
-    main: {
-      backgroundColor: "green",
-    },
-    footer: {
-      backgroundColor: "blue",
-    },
-  }));
-
-  const tab = {
-    backgroundColor: "#cfe8fc",
-    height: "100vh",
-  };
-
-  const container = {
-    display: "flex",
-    flexDirection: "coloumn",
-    justifyContent: "center",
-  };
-
+import Paper from "@material-ui/core/Paper";
+import Footer from "../../components/Footer/Footer";
+import Box from "@material-ui/core/Box";
+export default function Home(props) {
   return (
     <React.Fragment>
-      <Container maxWidth="100%">
-        <Typography component="div" style={tab}>
-          <Grid container style={container}>
-            <Grid item xs={12}>
-              <Tab />
-            </Grid>
-          </Grid>
-        </Typography>
-      </Container>
+      <Box display="flex" flexDirection="column" style={{ height: "100vh" }}>
+        <Box>
+          <Navbar />
+        </Box>
+        <Box flexGrow="1">
+          <ProjectNavbar
+            comments="5"
+            followers="2"
+            updates="8"
+            projectName="Automated Inter-artefact Traceability Establishment for DevOps Practice"
+            authour="Charunie Prabodha"
+            description="Showcase your professional experience and education to help potential employers and collaborators find and contact you about career opportunities."
+          />
+          <Tab />
+        </Box>
+        <Box>
+          <Footer />
+        </Box>
+      </Box>
     </React.Fragment>
   );
 }
