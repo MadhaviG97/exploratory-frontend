@@ -11,6 +11,9 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "../../assets/css/sign-in";
+import Navbar from "../../components/Navbar/Navbar";
+import Footer from "../../components/Footer/Footer";
+import GridContainer from "../../components/Grid/GridContainer";
 
 import { InputLabel, InputAdornment, OutlinedInput } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
@@ -59,8 +62,10 @@ export default function SignInSide() {
   };
 
   return (
-    <Grid container component="main" className={classes.root}>
-      <CssBaseline />
+    <div>
+      <Navbar />
+      <Grid container component="main" className={classes.root}>
+        <CssBaseline />
 
       <Grid item xs={false} sm={4} md={7} className={classes.image} />
       <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -139,6 +144,7 @@ export default function SignInSide() {
           </form>
         </div>
       </Grid>
-    </Grid>
+      <Footer />
+    </div>
   );
 }
