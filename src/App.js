@@ -1,3 +1,4 @@
+
 import React, { Suspense } from 'react';
 import { Route, Switch } from "react-router-dom";
 import signUp from "./views/guest-user/sign-up.jsx";
@@ -26,6 +27,7 @@ function App() {
       </ThemeProvider>
     </Suspense>
   );
+
 }
 
 export default App;
