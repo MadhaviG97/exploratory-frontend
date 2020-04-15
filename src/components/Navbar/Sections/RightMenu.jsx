@@ -2,7 +2,7 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import NavbarStyle from '../NavbarStyle';
+import NavbarStyle from '../../../assets/css/NavbarStyle';
 import Link from '@material-ui/core/Link';
 
 

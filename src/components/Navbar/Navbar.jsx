@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import { fade, makeStyles } from '@material-ui/core/styles';
 
-import NavbarStyle from './NavbarStyle';
+import NavbarStyle from '../../assets/css/NavbarStyle';
 
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';

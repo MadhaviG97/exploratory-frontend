@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
 import Link from '@material-ui/core/Link';
-import NavbarStyle from '../NavbarStyle';
+import NavbarStyle from '../../../assets/css/NavbarStyle';
 
 function LeftMenu(props) {//these ara the links in the left side of the nav bar
   const [anchorEl, setAnchorEl] = React.useState(null);
