@@ -3,9 +3,12 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
 
 // @material-ui/icons
-
+import FacebookIcon from "@material-ui/icons/Facebook";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
 // core components
 import GridContainer from "../../components/Grid/GridContainer.js";
 import GridItem from "../../components/Grid/GridItem.js";
@@ -46,20 +49,15 @@ export default function TeamSection() {
                 <small className={classes.smallTitle}>Web Developer</small>
               </h4>
               <CardFooter className={classes.justifyCenter}>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-linkedin"} />
-                </Button>
+                <IconButton aria-label="LinkedIn" href="">
+                  <LinkedInIcon />
+                </IconButton>
+                <IconButton aria-label="Twitter" href="">
+                  <TwitterIcon />
+                </IconButton>
+                <IconButton aria-label="Facebook" href="">
+                  <FacebookIcon />
+                </IconButton>
               </CardFooter>
             </Card>
           </GridItem>
@@ -74,20 +72,15 @@ export default function TeamSection() {
                 <small className={classes.smallTitle}>Web Developer</small>
               </h4>
               <CardFooter className={classes.justifyCenter}>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-linkedin"} />
-                </Button>
+                <IconButton aria-label="LinkedIn" href="">
+                  <LinkedInIcon />
+                </IconButton>
+                <IconButton aria-label="Twitter" href="">
+                  <TwitterIcon />
+                </IconButton>
+                <IconButton aria-label="Facebook" href="">
+                  <FacebookIcon />
+                </IconButton>
               </CardFooter>
             </Card>
           </GridItem>
@@ -102,20 +95,15 @@ export default function TeamSection() {
                 <small className={classes.smallTitle}>Web Developer</small>
               </h4>
               <CardFooter className={classes.justifyCenter}>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-linkedin"} />
-                </Button>
+                <IconButton aria-label="LinkedIn" href="">
+                  <LinkedInIcon />
+                </IconButton>
+                <IconButton aria-label="Twitter" href="">
+                  <TwitterIcon />
+                </IconButton>
+                <IconButton aria-label="Facebook" href="">
+                  <FacebookIcon />
+                </IconButton>
               </CardFooter>
             </Card>
           </GridItem>
@@ -130,20 +118,15 @@ export default function TeamSection() {
                 <small className={classes.smallTitle}>Web Developer</small>
               </h4>
               <CardFooter className={classes.justifyCenter}>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-twitter"} />
-                </Button>
-                <Button
-                  justIcon
-                  color="transparent"
-                  className={classes.margin5}
-                >
-                  <i className={classes.socials + " fab fa-linkedin"} />
-                </Button>
+                <IconButton aria-label="LinkedIn" href="">
+                  <LinkedInIcon />
+                </IconButton>
+                <IconButton aria-label="Twitter" href="">
+                  <TwitterIcon />
+                </IconButton>
+                <IconButton aria-label="Facebook" href="">
+                  <FacebookIcon />
+                </IconButton>
               </CardFooter>
             </Card>
           </GridItem>

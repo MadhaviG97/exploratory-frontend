@@ -4,8 +4,12 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
 
 // @material-ui/icons
+import FacebookIcon from "@material-ui/icons/Facebook";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
 
 // core components
 import NavBar from "../../components/Navbar/Navbar";
@@ -44,6 +48,15 @@ export default function LandingPage(props) {
                 World{"'"}s most popular web portal connecting Researchers and
                 Research Groups....
               </h3>
+              <IconButton color="primary" aria-label="LinkedIn" href="">
+                  <LinkedInIcon />
+                </IconButton>
+                <IconButton color="primary" aria-label="Twitter" href="">
+                  <TwitterIcon />
+                </IconButton>
+                <IconButton color="primary" aria-label="Facebook" href="">
+                  <FacebookIcon />
+                </IconButton>
               <br />
             </GridItem>
             <GridItem xs={6} align="center">
@@ -51,6 +64,7 @@ export default function LandingPage(props) {
                 variant="contained"
                 color="primary"
                 href="/signup"
+                size="large"
               >
                 Join For Free
               </Button>
