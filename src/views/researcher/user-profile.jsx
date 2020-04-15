@@ -22,6 +22,7 @@ import NavPills from "../../components/NavPills/NavPills.js";
 import Parallax from "../../components/Parallax/Parallax.js";
 import UserTable from "../../components/UserProfileSections/TableSection";
 import Posts from "../../components/UserProfileSections/PostSection";
+import Publications from "../../components/UserProfileSections/PhotoSection";
 
 import profile from "../../assets/images/user-profile/faces/marc.jpg";
 
@@ -114,44 +115,7 @@ export default function ProfilePage(props) {
                 {
                   tabButton: "Publications",
                   tabIcon: NoteIcon,
-                  tabContent: (
-                    <GridContainer justify="center">
-                      <GridItem xs={12} sm={6} md={4}>
-                        <img
-                          alt="..."
-                          src={publication1}
-                          className={navImageClasses}
-                        />
-                        <img
-                          alt="..."
-                          src={publication2}
-                          className={navImageClasses}
-                        />
-                        <img
-                          alt="..."
-                          src={publication3}
-                          className={navImageClasses}
-                        />
-                      </GridItem>
-                      <GridItem xs={12} sm={6} md={4}>
-                        <img
-                          alt="..."
-                          src={publication2}
-                          className={navImageClasses}
-                        />
-                        <img
-                          alt="..."
-                          src={publication3}
-                          className={navImageClasses}
-                        />
-                        <img
-                          alt="..."
-                          src={publication1}
-                          className={navImageClasses}
-                        />
-                      </GridItem>
-                    </GridContainer>
-                  ),
+                  tabContent: <Publications />,
                 },
                 {
                   tabButton: "Projects",

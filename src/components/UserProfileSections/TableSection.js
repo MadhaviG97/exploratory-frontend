@@ -7,7 +7,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Link from '@material-ui/core/Link';
+import Link from "@material-ui/core/Link";
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
@@ -66,7 +66,7 @@ const rows = [
     "Kamal Perera",
     "Saman ,Nimal",
     "Completed"
-  )
+  ),
 ];
 
 const useStyles = makeStyles({
@@ -94,16 +94,15 @@ export default function CustomizedTables() {
           {rows.map((row) => (
             <StyledTableRow key={row.name}>
               <StyledTableCell component="th" scope="row" width={0}>
-              <Link
-  component="button"
-  variant="body2"
-  onClick={() => {
-    console.info("I'm a button.");
-  }}
->
-{row.title}
-</Link>
-                
+                <Link
+                  component="button"
+                  variant="body2"
+                  onClick={() => {
+                    console.info("I'm a button.");
+                  }}
+                >
+                  {row.title}
+                </Link>
               </StyledTableCell>
               <StyledTableCell align="left">{row.description}</StyledTableCell>
               <StyledTableCell align="left">{row.creator}</StyledTableCell>
