@@ -117,9 +117,9 @@ export default function TitlebarGridList() {
          
           
           <Box p={8} style={{ display: "flex" }} flexDirection="row" marginLeft={75} marginRight={16} marginTop={7}>
-            <Typography variant="h5" >
-              My Drive
-            </Typography>
+            <div className={classes.name}>
+              <h1 className={classes.title}>My Drive</h1>
+            </div>
             <Button
               style={{ marginLeft: "auto", background: '#014f82',//can change the sign-in button color from here
               color: '#FFFFFF',

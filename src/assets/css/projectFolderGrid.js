@@ -1,16 +1,7 @@
 import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(50),
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-  },
-  form: {
-    //width: "100%", // Fix IE 11 issue.
-    marginTop: theme.spacing(3),
-  },
+  
   title: {
     color: "#3C4858",
     margin: "1.75rem 0 0.875rem",
@@ -23,8 +14,27 @@ export const useStyles = makeStyles((theme) => ({
     minHeight: "32px",
     textDecoration: "none"
   },
-
-
+  card: {
+    display: 'flex',
+  },
+  cardDetails: {
+    flex: 1,
+  },
+  cardMedia: {
+    width: 160,
+  },
+  titletwo: {
+    color: "#3C4858",
+    margin: "1.75rem 0 0.875rem",
+    textDecoration: "none",
+    fontWeight: "100",
+    fontFamily: `"Roboto Slab"`,
+    //display: "inline-block",
+    //position: "relative",
+    //marginTop: "30px",
+    minHeight: "28px",
+    textDecoration: "none"
+  },
   name: {
     marginTop: "-20px"
   },

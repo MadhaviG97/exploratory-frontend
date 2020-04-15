@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import { container, title } from "../jss/material-kit-react";
+
 export const useStyles = makeStyles((theme) => ({
   container: {
     zIndex: "12",
@@ -10,6 +11,23 @@ export const useStyles = makeStyles((theme) => ({
     background: "#FFFFFF",
     position: "relative",
     zIndex: "3"
+  },
+  title: {
+    color: "#3C4858",
+    margin: "1.75rem 0 0.875rem",
+    textDecoration: "none",
+    fontWeight: "550",
+    fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    display: "inline-block",
+    position: "relative",
+    //marginTop: "30px",
+    minHeight: "32px",
+    textDecoration: "none"
+  },
+
+
+name: {
+    marginTop: "-20px"
   },
   mainRaised: {
     margin: "0px 30px 30px 30px",

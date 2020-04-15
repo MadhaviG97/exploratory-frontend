@@ -67,12 +67,14 @@ function CreatePage(props) {
    
     return (
         <div>
-            <PNavbar/>
+            <NavBar/>
             <Box p={2.5}></Box>
             <div className={classNames(classes.main, classes.mainRaised)} >
                 <div style={{ maxWidth: '1100px', margin: '1.5rem auto'}}>
-                <Box p={5}  />{/*marginTop={7}*/}
-                    <Typography variant="h5" align='center' > Group Name</Typography>
+                <Box p={5} marginTop={7} />{/*marginTop={7}*/}
+                <div className={classes.name} >
+                    <h1 align='center' className={classes.title}>Group Name</h1>
+                </div>
                     
                     <Box p={2} style={{ display: "flex" }} flexDirection="row" >
                         
