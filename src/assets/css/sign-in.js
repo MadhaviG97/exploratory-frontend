@@ -4,7 +4,7 @@ const img = "images/sign-in/sign-in-" + Math.ceil(Math.random() * 10) + ".jpg";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
+    height: "93vh",
   },
   image: {
     backgroundImage: `url(${img})`,
