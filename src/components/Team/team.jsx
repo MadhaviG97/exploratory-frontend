@@ -56,6 +56,22 @@ export default function Team(props) {
               image={details.image}
             />
           </Grid>
+          <Grid item xs={4}>
+            <Member
+              username={details.username}
+              university={details.university}
+              image={details.image}
+            />
+          </Grid>
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+          <Grid item xs={4}>
+            <Member
+              username={details.username}
+              university={details.university}
+              image={details.image}
+            />
+          </Grid>
         </Grid>
       </Grid>
     </div>

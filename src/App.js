@@ -15,9 +15,9 @@ function App() {
       <ThemeProvider theme={Theme}>
         <div>
           <Switch>
-            <Route exact path="/" exact component={signUp} />
-            <Route exact path="/signin" exact component={signIn} />
-            <Route exact path="/signup" exact component={signUp} />
+            <Route exact path="/" component={AboutUs} />
+            <Route exact path="/signin" component={signIn} />
+            <Route exact path="/signup" component={signUp} />
             <Route exact path="/fillProfile" component={fillProfile} />
             <Route exact path="/aboutus" component={AboutUs} />
             <Route exact path="/project" component={Project} />

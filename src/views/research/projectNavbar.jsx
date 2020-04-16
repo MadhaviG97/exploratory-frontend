@@ -54,7 +54,7 @@ export default function ProjectNavbar(props) {
           </Box>
 
           <Box flexGrow="0" display="flex" flexDirection="row">
-            <Box flexGrow="0">
+            <Box flexGrow="0" alignSelf="flex-end">
               <List component="nav" aria-label="main mailbox folders">
                 <ListItem className={classes.listItem}>
                   <ListItemIcon>
@@ -86,7 +86,7 @@ export default function ProjectNavbar(props) {
                 </ListItem>
               </List>
             </Box>
-            <Box flexGrow="1">
+            <Box flexGrow="1" alignSelf="flex-end">
               <List component="nav" aria-label="main mailbox folders">
                 <ListItem button className={classes.listItem}>
                   <ListItemText

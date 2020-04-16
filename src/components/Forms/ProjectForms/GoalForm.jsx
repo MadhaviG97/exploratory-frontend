@@ -44,6 +44,7 @@ export default function GoalForm(props) {
       open={props.open}
       onClose={props.onClick}
       aria-labelledby="form-dialog-title"
+      maxWidth="md"
     >
       <DialogTitle id="form-dialog-title">
         <Typography variant="subtitle1" color="primary">
