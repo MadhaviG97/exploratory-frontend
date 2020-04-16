@@ -6,7 +6,7 @@ import {
   ListItemIcon,
   ListItemText,
   Chip,
-  Container,
+  Typography,
   Paper,
 } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -27,8 +27,12 @@ export default function ProjectNavbar(props) {
             <List component="nav" aria-label="main mailbox folders">
               <ListItem className={classes.heading}>
                 <ListItemText
-                  primary={props.projectName}
-                  primaryTypographyProps={{ variant: "h5" }}
+                  primary={
+                    <Typography variant="h6">
+                      {" "}
+                      <Box fontWeight="fontWeightBold">{props.projectName}</Box>
+                    </Typography>
+                  }
                 />
               </ListItem>
               <ListItem className={classes.heading}>
@@ -48,9 +52,7 @@ export default function ProjectNavbar(props) {
               </ListItem>
             </List>
           </Box>
-          <Box flexGrow="1">
-            <Container />
-          </Box>
+
           <Box flexGrow="0" display="flex" flexDirection="row">
             <Box flexGrow="0">
               <List component="nav" aria-label="main mailbox folders">
@@ -85,7 +87,7 @@ export default function ProjectNavbar(props) {
               </List>
             </Box>
             <Box flexGrow="1">
-              <List component="nav" aria-label="main mailbox folders" classa>
+              <List component="nav" aria-label="main mailbox folders">
                 <ListItem button className={classes.listItem}>
                   <ListItemText
                     primary={

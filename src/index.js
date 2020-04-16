@@ -3,7 +3,6 @@ import { render } from "react-dom";
 import App from "./App";
 import Theme from "./assets/themes/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
-
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter } from "react-router-dom";
 

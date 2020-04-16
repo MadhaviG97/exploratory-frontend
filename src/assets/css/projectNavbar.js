@@ -2,11 +2,11 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
   paperroot: {
-    padding: theme.spacing(2, 23),
+    padding: theme.spacing(1, 23),
     backgroundColor: "#ffffff",
   },
   root: {
-    padding: theme.spacing(2, 5),
+    padding: theme.spacing(0, 5),
   },
   left: {
     padding: theme.spacing(0, 5, 0),
@@ -28,9 +28,9 @@ export const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
   },
   listItem: {
-    padding: theme.spacing(1, 1),
+    padding: theme.spacing(1, 3),
   },
   heading: {
-    padding: theme.spacing(0),
+    padding: theme.spacing(0, 2, 0),
   },
 }));
