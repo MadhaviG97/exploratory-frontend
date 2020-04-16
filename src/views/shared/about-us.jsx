@@ -38,7 +38,7 @@ export default function LandingPage(props) {
       <NavBar />
       <Parallax
         filter
-        image={require("../../assets/images/About-us/about-us-bg2.jpg")}
+        image={require("../../assets/images/About-us/about-us-bg3.jpg")}
       >
         <div className={classes.container}>
           <GridContainer>
