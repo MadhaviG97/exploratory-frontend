@@ -57,9 +57,9 @@ function LeftMenu(props) {//these ara the links in the left side of the nav bar
             onClose={handleClose}
             MenuListProps={{ onMouseLeave: handleClose }}
           >
-            <MenuItem style={{ color: '#000000',fontSize: 15 }} onClick={handleClose}>Link 1</MenuItem>
-            <MenuItem style={{ color: '#000000',fontSize: 15 }} onClick={handleClose}>Link 2</MenuItem>
-            <MenuItem style={{ color: '#000000',fontSize: 15 }} onClick={handleClose}>Link 3</MenuItem>
+            <MenuItem className={classes.link} onClick={handleClose}>Link 1</MenuItem>
+            <MenuItem className={classes.link} onClick={handleClose}>Link 2</MenuItem>
+            <MenuItem className={classes.link} onClick={handleClose}>Link 3</MenuItem>
           </Menu>
           <Box p={3} bgcolor="background.paper" >
             <Link

@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     //position: "relative",
     //marginTop: "30px",
     minHeight: "32px",
-    textDecoration: "none"
+    
   },
   card: {
     display: 'flex',

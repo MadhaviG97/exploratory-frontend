@@ -23,7 +23,7 @@ import ShareIcon from '@material-ui/icons/Share';
 
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-
+import Tooltip from '@material-ui/core/Tooltip';
 
 //import tileData from './tileData';
 //const fileImage = '../../../public/images/fileFolder/fileImage.png'
@@ -120,6 +120,7 @@ export default function TitlebarGridList() {
             <div className={classes.name}>
               <h1 className={classes.title}>My Drive</h1>
             </div>
+            <Tooltip title="Add a File">
             <Button
               style={{ marginLeft: "auto", background: '#014f82',//can change the sign-in button color from here
               color: '#FFFFFF',
@@ -134,8 +135,11 @@ export default function TitlebarGridList() {
                   style={{ display: "none" }}
               />
             </Button>
+            </Tooltip>
             <Box p={1}></Box>
+            
             <FolderDialog/>
+            
           </Box>
           <div className={classes.root}>
       

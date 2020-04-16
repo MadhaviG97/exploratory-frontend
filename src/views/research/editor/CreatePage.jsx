@@ -14,6 +14,9 @@ import DocumentrDialog from '../../../components/editor/DocumentDialog';
 
 import Avatar from '@material-ui/core/Avatar';
 import AvatarGroup from '@material-ui/lab/AvatarGroup';
+import Tooltip from '@material-ui/core/Tooltip';
+import MenuIcon from "@material-ui/icons/Menu";
+import IconButton from '@material-ui/core/IconButton';
 
 import team1 from "../../../assets/images/About-us/about-us-damika.jpg";
 import team2 from "../../../assets/images/About-us/about-us-madhavi.jpg";
@@ -76,16 +79,23 @@ function CreatePage(props) {
                     <h1 align='center' className={classes.title}>Group Name</h1>
                 </div>
                     
-                    <Box p={2} style={{ display: "flex" }} flexDirection="row" >
-                        
-                       
-                        
-                        <AvatarGroup max={4} style={{ marginLeft: "auto"}}>
-                            <Avatar alt="Remy Sharp" src={team1} />
-                            <Avatar alt="Travis Howard" src={team2} />
-                            <Avatar alt="Cindy Baker" src={team3} />
-                            <Avatar alt="Cindy Baker" src={team4}/>
-                        </AvatarGroup>
+                    <Box p={2} style={{ display: "flex" }} flexDirection="row" > 
+                        <IconButton
+                            edge="start"
+                            className={classes.menuButton}
+                            color="inherit"
+                            aria-label="open drawer"
+                            >
+                            <MenuIcon />
+                        </IconButton>  
+                        <Tooltip title="Now Online">
+                            <AvatarGroup max={4} style={{ marginLeft: "auto"}}>
+                                <Avatar alt="Remy Sharp" src={team1} />
+                                <Avatar alt="Travis Howard" src={team2} />
+                                <Avatar alt="Cindy Baker" src={team3} />
+                                <Avatar alt="Cindy Baker" src={team4}/>
+                            </AvatarGroup>
+                        </Tooltip>
                     </Box>
                     <QuillEditor
                         placeholder={""}

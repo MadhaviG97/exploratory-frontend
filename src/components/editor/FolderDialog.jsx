@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import FolderIcon from '@material-ui/icons/Folder';
+import Tooltip from '@material-ui/core/Tooltip';
 
 export default function FoldermDialog() {
   const [open, setOpen] = React.useState(false);
@@ -21,13 +22,15 @@ export default function FoldermDialog() {
 
   return (
     <div>
-      <Button style={{  background: '#014f82',//can change the sign-in button color from here
-        color: '#FFFFFF',
-        height: 40,
-        boxShadow: ['none']}} variant="contained"
-        component="label" onClick={handleClickOpen}>
-        <FolderIcon/>
-      </Button>
+      <Tooltip title="Add a Folder">
+        <Button style={{  background: '#014f82',//can change the sign-in button color from here
+          color: '#FFFFFF',
+          height: 40,
+          boxShadow: ['none']}} variant="contained"
+          component="label" onClick={handleClickOpen}>
+          <FolderIcon/>
+        </Button>
+      </Tooltip>
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         
         <DialogContent>
@@ -44,9 +47,11 @@ export default function FoldermDialog() {
           />
         </DialogContent>
         <DialogActions>
+        
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
+         
           <Button onClick={handleClose} color="primary">
             Create
           </Button>

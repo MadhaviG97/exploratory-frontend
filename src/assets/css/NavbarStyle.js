@@ -30,6 +30,8 @@ const NavbarStyle=makeStyles((theme) => ({
     },
     link: {
        // a number of your choice
+      fontWeight: "550",
+      fontFamily: `"Roboto Slab", "Times New Roman", serif`,
       color: '#000000',
       fontSize: 15,
     },
