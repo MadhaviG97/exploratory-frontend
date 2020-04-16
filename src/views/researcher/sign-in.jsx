@@ -17,6 +17,7 @@ import { InputLabel, InputAdornment, OutlinedInput } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
 
 export default function SignInSide() {
   const classes = useStyles();
@@ -25,6 +26,8 @@ export default function SignInSide() {
     email: "",
     showPassword: false,
   });
+
+  const [submit, setSubmit] = React.useState(false);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -38,7 +41,7 @@ export default function SignInSide() {
     event.preventDefault();
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, cb) => {
     e.preventDefault();
 
     const formData = {
@@ -55,9 +58,19 @@ export default function SignInSide() {
     })
       .then((response) => response.json())
       .then((result) => {
-        console.log(result);
+        cb();
       });
   };
+
+  function Redirect(submit) {
+    if (submit) {
+      return <Redirect to="/project" />;
+    }
+  }
+
+  let history = useHistory();
+  let location = useLocation();
+  let { from } = location.state || { from: { pathname: "/" } };
 
   return (
     <div>
@@ -117,13 +130,18 @@ export default function SignInSide() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
+              {Redirect(submit)}
               <Button
                 type="submit"
                 fullWidth
                 variant="contained"
                 color="primary"
                 className={classes.submit}
-                onClick={handleSubmit}
+                onClick={(e) =>
+                  handleSubmit(e, () => {
+                    history.replace(from);
+                  })
+                }
               >
                 Sign In
               </Button>
@@ -134,7 +152,7 @@ export default function SignInSide() {
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
+                  <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
                 </Grid>

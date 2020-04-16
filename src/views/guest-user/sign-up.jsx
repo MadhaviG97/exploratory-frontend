@@ -76,6 +76,8 @@ export default function SignUp(props) {
       .then((result) => {
         console.log(result);
       });
+
+    // return <Redirect to="/signin" />;
   };
 
   return (

@@ -9,11 +9,12 @@ import Grid from "@material-ui/core/Grid";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
 import Box from "@material-ui/core/Box";
-import TextField from "@material-ui/core/TextField";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
+    alignItems: "center",
+    padding: theme.spacing(1),
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -37,7 +38,7 @@ export default function ControlledExpansionPanels() {
 
   return (
     <div className={classes.root}>
-      <Grid md="6">
+      <Grid md="12">
         <ExpansionPanel
           expanded={expanded === "panel4"}
           onChange={handleChange("panel4")}

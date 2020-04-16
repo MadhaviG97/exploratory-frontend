@@ -16,7 +16,9 @@ export default function Navbar(props) {
     <div className={classes.root}>
       <AppBar className={classes.appbar} position="sticky">
         <Toolbar>
-          <img src="logo.png" alt="logo" className={classes.logo} />
+          <a href="/">
+            <img src="logo.png" alt="logo" className={classes.logo} />
+          </a>
           <LeftMenu />
           <Typography
             className={classes.title}

@@ -8,7 +8,7 @@ import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import OverView from "./Overview/overview";
 import Team from "./Team/team";
-import ChatHead from "./Team/chathead";
+import ChatHead from "./ProjectComments/chathead";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -22,7 +22,11 @@ function TabPanel(props) {
       aria-labelledby={`full-width-tab-${index}`}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && (
+        <Box height="100%" alignItems="flex-start" p={3}>
+          {children}
+        </Box>
+      )}
     </Typography>
   );
 }
@@ -89,6 +93,9 @@ export default function FullWidthTabs() {
           <Team />
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
+          <ChatHead />
+          <ChatHead />
+          <ChatHead />
           <ChatHead />
           <ChatHead />
           <ChatHead />

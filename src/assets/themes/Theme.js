@@ -11,6 +11,14 @@ const Theme = createMuiTheme({
       disableRipple: true,
     },
   },
+  palette: {
+    primary: {
+      main: "#014f82",
+    },
+    // secondary: {
+    //   main: "#f48fb1",
+    // },
+  },
 });
 
 export default Theme;
