@@ -13,8 +13,6 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "../../assets/css/sign-in";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import GridContainer from "../../components/Grid/GridContainer";
-
 import { InputLabel, InputAdornment, OutlinedInput } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -48,7 +46,7 @@ export default function SignInSide() {
       password: values.password,
     };
 
-    const response = await fetch("/login", {
+    await fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -1,5 +1,5 @@
 import React from "react";
-import { useStyles } from "../assets/css/team";
+import { useStyles } from "../../assets/css/team";
 import { Paper, Grid } from "@material-ui/core";
 import Member from "./member";
 

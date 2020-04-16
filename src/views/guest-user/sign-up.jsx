@@ -81,14 +81,14 @@ export default function SignUp(props) {
   return (
     <React.Fragment>
       <Navbar />
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Hey!! {props.response}
+            Sign-Up
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>

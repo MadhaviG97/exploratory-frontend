@@ -12,9 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     color: "#f3e5f5",
     padding: theme.spacing(2),
   },
-  innerCard: {
-    padding: theme.spacing(2),
-    minHeight: 100,
-    backgroundColor: "#f2e5f5",
+  overview: {
+    padding: theme.spacing(2, 0),
   },
 }));

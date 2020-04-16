@@ -3,7 +3,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
 import FooterStyle from "./FooterStyle";
 //this is the footer 2 the darker one at the bottom
-import Copyright from "../copyRight";
+import Copyright from "../Navbar/copyRight";
 
 export default function Footer(props) {
   const classes = FooterStyle();

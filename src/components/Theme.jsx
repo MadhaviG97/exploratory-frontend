@@ -1,16 +1,16 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import theme from './Theme';
+import { createMuiTheme } from "@material-ui/core/styles";
+import theme from "./Theme";
 //This is to stop auto capitalizing tab and button text
-const Theme = createMuiTheme({      
+const Theme = createMuiTheme({
   typography: {
     button: {
-      textTransform: 'none'
+      textTransform: "none",
     },
-    tab:{
-        textTransform: 'none',
-        disableRipple: true
-      }
-  }
+    tab: {
+      textTransform: "none",
+      disableRipple: true,
+    },
+  },
 });
 
 export default Theme;
