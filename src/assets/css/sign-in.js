@@ -4,7 +4,7 @@ const img = "images/sign-in/sign-in-" + Math.ceil(Math.random() * 10) + ".jpg";
 
 export const useStyles = makeStyles((theme) => ({
   root: {
-    height: "100vh",
+    height: "93vh",
   },
   image: {
     backgroundImage: `url(${img})`,
@@ -17,7 +17,7 @@ export const useStyles = makeStyles((theme) => ({
     backgroundPosition: "center",
   },
   paper: {
-    margin: theme.spacing(8, 4),
+    margin: theme.spacing(3, 4),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

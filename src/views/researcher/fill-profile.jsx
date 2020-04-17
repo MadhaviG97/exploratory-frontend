@@ -8,10 +8,10 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "../../assets/css/fill-profile";
 import Container from "@material-ui/core/Container";
-import DatePicker from "../../components/date-picker";
-import FileUploader from "../../components/file-uploader";
-import InstitutionList from "../../components/institutions-list";
-import CopyRight from "../../components/copyRight";
+import DatePicker from "../../components/Forms/FormComponents/date-picker";
+import FileUploader from "../../components/Forms/FormComponents/file-uploader";
+import InstitutionList from "../../components/Forms/FormComponents/institutions-list";
+import CopyRight from "../../components/Navbar/copyRight";
 
 export default function SignUp() {
   const classes = useStyles();

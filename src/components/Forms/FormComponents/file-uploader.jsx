@@ -27,11 +27,12 @@ export default class FileUploader extends React.Component {
       <div>
         
         <Avatar
-          width={140}
-          height={140}
+          width="100%"
+          height={300}
           onCrop={this.onCrop}
           onClose={this.onClose}
           src={this.state.preview}
+          round={false}
         />
         
         {/* <img src={this.state.preview} alt="Preview" /> */}

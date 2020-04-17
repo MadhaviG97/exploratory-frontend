@@ -1,6 +1,7 @@
 
+import { makeStyles } from "@material-ui/core/styles";
 
-import { fade, makeStyles } from '@material-ui/core/styles';
+
 
 
 const NavbarStyle=makeStyles((theme) => ({
@@ -91,47 +92,42 @@ const NavbarStyle=makeStyles((theme) => ({
       marginLeft: theme.spacing(7),
       //marginRight: theme.spacing(1),
 
+    marginRight: theme.spacing(20),
+    display: "none",
+    [theme.breakpoints.up("sm")]: {
+      display: "block",
     },
-
-    appbarShrink:{ //no difference with appbar at the moment
-      
-      background: '#FFFFFF',//navbar(header) color
-      color:'#000000' ,//header font color
-      position:'fixed',
-      //alignItems: 'center',
-      boxShadow: [
-        // 23 default values of 'shadows' array from https://material-ui-1dab0.firebaseapp.com/customization/themes/
-            '0 1px 2px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.12)', // 24th value
-          ],
-      
-    },
-
-
-
-    searchIcon: {//these are not used
-      padding: theme.spacing(0, 2),
-      height: '100%',
-      position: 'absolute',
-      pointerEvents: 'none',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-    inputRoot: {//these are not used
-      color: 'inherit'
-    },
-    inputInput: {//these are not used
-      padding: theme.spacing(1, 1, 1, 0),
-      // vertical padding + font size from searchIcon
-      paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
-      transition: theme.transitions.create('width'),
-      width: '100%',
-      [theme.breakpoints.up('sm')]: {
-        width: '12ch',
-        '&:focus': {
-          width: '20ch',
-        },
+  },
+  sbutton: {
+    marginRight: theme.spacing(20),
+  },
+  searchIcon: {
+    //these are not used
+    padding: theme.spacing(0, 2),
+    height: "100%",
+    position: "absolute",
+    pointerEvents: "none",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputRoot: {
+    //these are not used
+    color: "inherit",
+  },
+  inputInput: {
+    //these are not used
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    transition: theme.transitions.create("width"),
+    width: "100%",
+    [theme.breakpoints.up("sm")]: {
+      width: "12ch",
+      "&:focus": {
+        width: "20ch",
       },
     },
-  }));
-  export default NavbarStyle;
+  },
+}));
+export default NavbarStyle;

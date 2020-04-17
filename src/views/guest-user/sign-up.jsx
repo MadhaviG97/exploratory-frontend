@@ -17,20 +17,21 @@ import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
-import CopyRight from "../../components/copyRight";
 import { useStyles } from "../../assets/css/sign-in";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
-export default function SignUp() {
+export default function SignUp(props) {
   const classes = useStyles();
 
   const [values, setValues] = React.useState({
+    email: "",
     password: "",
+    first_name: "",
+    last_name: "",
     confirm_password: "",
     showPassword: false,
     showConfirmPassword: false,
@@ -52,30 +53,59 @@ export default function SignUp() {
     event.preventDefault();
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      email: values.email,
+      password: values.password,
+      first_name: values.first_name,
+      last_name: values.last_name,
+      contact_no: "0716377656",
+      confirm_password: values.confirm_password,
+    };
+
+    const response = await fetch("/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ...formData }),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        console.log(result);
+      });
+
+    // return <Redirect to="/signin" />;
+  };
+
   return (
-    <div>
+    <React.Fragment>
       <Navbar />
-      <Container component="main" maxWidth="xs">
+      <Container component="main" maxWidth="xs" className={classes.container}>
         <CssBaseline />
         <div className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Sign-Up
           </Typography>
           <form className={classes.form} noValidate>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="fname"
-                  name="firstName"
+                  name="first_name"
                   variant="outlined"
                   required
                   fullWidth
                   id="firstName"
                   label="First Name"
                   autoFocus
+                  autoComplete="name"
+                  onChange={handleChange("first_name")}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -85,8 +115,9 @@ export default function SignUp() {
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
-                  autoComplete="lname"
+                  name="last_ame"
+                  autoComplete="name"
+                  onChange={handleChange("last_name")}
                 />
               </Grid>
 
@@ -99,6 +130,7 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={handleChange("email")}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -176,12 +208,13 @@ export default function SignUp() {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={handleSubmit}
             >
               Sign Up
             </Button>
             <Grid container justify="flex-end">
               <Grid item>
-                <Link href="/signin" variant="body2">
+                <Link href="#" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
@@ -189,7 +222,8 @@ export default function SignUp() {
           </form>
         </div>
       </Container>
+
       <Footer />
-    </div>
+    </React.Fragment>
   );
 }
