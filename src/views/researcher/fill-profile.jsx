@@ -10,7 +10,7 @@ import { useStyles } from "../../assets/css/fill-profile";
 import Container from "@material-ui/core/Container";
 import DatePicker from "../../components/Forms/FormComponents/date-picker";
 import FileUploader from "../../components/Forms/FormComponents/file-uploader";
-import InstitutionList from "../../components/Forms/FormComponents/institutions-list";
+import InstitutionList from "../../components/Forms/FormComponents/institutionsList";
 import CopyRight from "../../components/Navbar/copyRight";
 
 export default function SignUp() {

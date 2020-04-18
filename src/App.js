@@ -7,7 +7,7 @@ import signIn from "./views/researcher/sign-in";
 import Project from "./views/research/home";
 import Theme from "./assets/themes/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
-// import Modal from "./components/appBar";
+import Form from "./views/research/createResearch";
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
             <Route exact path="/fillProfile" component={fillProfile} />
             <Route exact path="/aboutus" component={AboutUs} />
             <Route exact path="/project" component={Project} />
-            {/* <Route exact path="/modal" component={Modal} /> */}
+            <Route exact path="/create" component={Form} />
           </Switch>
         </div>
       </ThemeProvider>

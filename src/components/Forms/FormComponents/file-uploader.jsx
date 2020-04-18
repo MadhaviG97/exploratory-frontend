@@ -18,7 +18,6 @@ export default class App extends React.Component {
 
   onCrop(preview) {
     this.setState({ preview });
-    console.log(this.state.src);
   }
 
   render() {
