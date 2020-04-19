@@ -5,9 +5,11 @@ import Footer from "../../../components/Footer/Footer";
 import NavBar from "../../../components/Navbar/Navbar";
 import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/editor";
-import Typography from "@material-ui/core/Typography";
+
 import { Button } from "@material-ui/core";
 import QuillEditor from '../../../components/editor/QuillEditor';
+
+import { useSelector, useDispatch } from 'react-redux';
 //import axios from 'axios';
 //import { useSelector } from "react-redux";
 import DocumentrDialog from '../../../components/editor/DocumentDialog';

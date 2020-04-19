@@ -1,6 +1,6 @@
-import { defaultFont } from "assets/jss/material-kit-react.js";
+import { defaultFont } from "../../material-kit-react";
 
-import tooltip from "assets/jss/material-kit-react/tooltipsStyle.js";
+import tooltip from "../tooltipsStyle";
 
 const headerLinksStyle = theme => ({
   list: {
@@ -37,11 +37,11 @@ const headerLinksStyle = theme => ({
     padding: "0 !important"
   },
   navLink: {
-    color: "inherit",
+    color: "#000000",
     position: "relative",
     padding: "0.9375rem",
-    fontWeight: "400",
-    fontSize: "12px",
+    fontWeight: "500",
+    fontSize: "13px",
     textTransform: "uppercase",
     borderRadius: "3px",
     lineHeight: "20px",
@@ -63,8 +63,31 @@ const headerLinksStyle = theme => ({
       }
     }
   },
+  imageLink: {
+    color: "#000000",
+    position: "relative",
+    
+    fontWeight: "500",
+    fontSize: "13px",
+    textTransform: "uppercase",
+    
+    textDecoration: "none",
+    margin: "0px",
+    display: "inline-flex",
+    
+    [theme.breakpoints.down("sm")]: {
+      width: "calc(100% - 30px)",
+      marginLeft: "15px",
+      marginBottom: "8px",
+      marginTop: "8px",
+      textAlign: "left",
+      "& > span:first-child": {
+        justifyContent: "flex-start"
+      }
+    }
+  },
   notificationNavLink: {
-    color: "inherit",
+    color: "#FFF",
     padding: "0.9375rem",
     fontWeight: "400",
     fontSize: "12px",
@@ -85,6 +108,16 @@ const headerLinksStyle = theme => ({
     textDecoration: "none",
     margin: "0px",
     display: "inline-flex"
+  },
+  signinLink:{
+    borderRadius: 4,//button shape
+    fontSize: "13px",
+    fontWeight: "400",
+    lineHeight: "20px",
+      color: '#FFFFFF',//button font color
+      height: 45,
+      boxShadow: ['none'],//button shadow
+      display: "inline-flex"
   },
   navLinkActive: {
     color: "inherit",
