@@ -12,6 +12,7 @@ import Footer from "./components/Footer/Footer";
 import Theme from "./assets/themes/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 
+
 import CreatePage from "./views/research/editor/CreatePage";
 import EditPage from "./views/research/editor//EditPage";
 import FileManager from "./views/research/fileFolder/FileManager";

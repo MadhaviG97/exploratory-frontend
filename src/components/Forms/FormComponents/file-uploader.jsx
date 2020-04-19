@@ -19,7 +19,6 @@ export default class FileUploader extends React.Component {
 
   onCrop(preview) {
     this.setState({ preview });
-    console.log(this.state.src);
   }
 
   render() {
