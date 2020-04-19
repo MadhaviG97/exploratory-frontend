@@ -19,8 +19,12 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 
+import { loginUser } from "../../_actions/user_actions";
+import { useDispatch } from "react-redux";
+
 export default function SignInSide() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [values, setValues] = React.useState({
     password: "",
     email: "",
@@ -49,14 +53,7 @@ export default function SignInSide() {
       password: values.password,
     };
 
-    await fetch("/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...formData }),
-    })
-      .then((response) => response.json())
+    dispatch(loginUser(formData))
       .then((result) => {
         cb();
       });
