@@ -113,7 +113,7 @@ return (
                 color='inherit'
                 onClick={logoutHandler}
                 >
-                Log out
+                Sign out
               </LinkTo>
             ]}
           />

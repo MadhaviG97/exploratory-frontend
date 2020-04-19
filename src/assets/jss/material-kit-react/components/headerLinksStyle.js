@@ -63,6 +63,32 @@ const headerLinksStyle = theme => ({
       }
     }
   },
+  navLinkHeader: {
+    color: "#000000",
+    position: "relative",
+    padding: "0.9375rem",
+    fontWeight: "500",
+    fontSize: "13px",
+    textTransform: "uppercase",
+    borderRadius: "3px",
+    lineHeight: "20px",
+    textDecoration: "none",
+    margin: "0px",
+    display: "inline-flex",
+    "&:hover,&:focus": {
+      textDecoration: "underline"
+    },
+    [theme.breakpoints.down("sm")]: {
+      width: "calc(100% - 30px)",
+      marginLeft: "15px",
+      marginBottom: "8px",
+      marginTop: "8px",
+      textAlign: "left",
+      "& > span:first-child": {
+        justifyContent: "flex-start"
+      }
+    }
+  },
   imageLink: {
     color: "#000000",
     position: "relative",

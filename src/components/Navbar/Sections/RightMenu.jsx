@@ -21,8 +21,8 @@ return (
         <ListItem className={classes.listItem}>
           <Button
             href="/signin"
-            className={classes.navLink}
-            onClick={e => e.preventDefault()}
+            className={classes.navLinkHeader}
+            
             color="transparent"
           >
             Sign in
@@ -32,7 +32,7 @@ return (
           <Button
             href="/signup"
             className={classes.signinLink}
-            onClick={e => e.preventDefault()}
+            
             color="themeBlue"
             round
           >
