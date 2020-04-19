@@ -12,6 +12,10 @@ import Tab from "../Tab";
 //the styles are from NavbarStyle
 export default function Navbar(props) {
   const classes = NavbarStyle();
+
+  const handleShowNotification = (e) => {
+    console.log("test2");
+  };
   return (
     <div className={classes.root}>
       <AppBar className={classes.appbar} position="sticky">
@@ -25,7 +29,7 @@ export default function Navbar(props) {
             variant="h6"
             noWrap
           ></Typography>
-          <RightMenu />
+          <RightMenu showNotification={handleShowNotification} />
           <Paper />
         </Toolbar>
       </AppBar>

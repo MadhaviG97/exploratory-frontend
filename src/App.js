@@ -8,6 +8,7 @@ import Project from "./views/research/home";
 import Theme from "./assets/themes/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Form from "./views/research/createResearch";
+import Notification from "./views/shared/notification";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
             <Route exact path="/aboutus" component={AboutUs} />
             <Route exact path="/project" component={Project} />
             <Route exact path="/create" component={Form} />
+            <Route exact path="/not" component={Notification} />
           </Switch>
         </div>
       </ThemeProvider>

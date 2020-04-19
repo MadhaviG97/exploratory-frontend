@@ -5,6 +5,8 @@ import Button from "@material-ui/core/Button";
 import NavbarStyle from "../NavbarStyle";
 import LinkTo from "@material-ui/core/Link";
 import { Link } from "react-router-dom";
+import { Badge, IconButton } from "@material-ui/core";
+import NotificationsIcon from "@material-ui/icons/Notifications";
 
 function RightMenu(props) {
   //these ara the links in the left side of the nav bar

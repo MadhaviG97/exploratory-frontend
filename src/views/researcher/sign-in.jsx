@@ -130,7 +130,7 @@ export default function SignInSide() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              {Redirect(submit)}
+              {/* {Redirect(submit)} */}
               <Button
                 type="submit"
                 fullWidth
