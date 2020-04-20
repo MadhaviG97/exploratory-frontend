@@ -16,9 +16,9 @@ import Icon from "@material-ui/core/Icon";
 import Popper from "@material-ui/core/Popper";
 
 // core components
-import Button from "components/CustomButtons/Button.js";
+import Button from "../CustomButtons/Button.js";
 
-import styles from "assets/jss/material-kit-react/components/customDropdownStyle.js";
+import styles from "../../assets/jss/material-kit-react/components/customDropdownStyle.js";
 
 const useStyles = makeStyles(styles);
 
@@ -55,7 +55,8 @@ export default function CustomDropdown(props) {
     hoverColor,
     left,
     rtlActive,
-    noLiPadding
+    noLiPadding,
+    imgText
   } = props;
   const caretClasses = classNames({
     [classes.caret]: true,
@@ -92,8 +93,10 @@ export default function CustomDropdown(props) {
         >
           {icon}
           {buttonText !== undefined ? buttonText : null}
+          {imgText !== undefined ? imgText : null}
           {caret ? <b className={caretClasses} /> : null}
         </Button>
+        
       </div>
       <Popper
         open={Boolean(anchorEl)}
@@ -178,7 +181,8 @@ CustomDropdown.propTypes = {
     "success",
     "warning",
     "danger",
-    "rose"
+    "rose",
+    "themeBlue"
   ]),
   buttonText: PropTypes.node,
   buttonIcon: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),

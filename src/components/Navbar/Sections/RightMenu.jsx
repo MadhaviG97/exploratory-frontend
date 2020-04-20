@@ -1,57 +1,45 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import { withStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import NavbarStyle from '../NavbarStyle';
+
+
+import NavbarStyle from '../../../assets/css/NavbarStyle';
 import Link from '@material-ui/core/Link';
+import styles from "../../../assets/jss/material-kit-react/views/componentsSections/navbarsStyle";
+import { makeStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
 
-
+import Button from "../../CustomButtons/Button.js";
+const useStyles = makeStyles(styles);
 function RightMenu(props) {
 //these ara the links in the left side of the nav bar
-const classes = NavbarStyle();
-const StyledButton = withStyles({
-    root: {
-      background: '#014f82',//can change the sign-in button color from here
-      '&:hover': {
-        backgroundColor: '#003f68',
-        color: '#FFF'
-    },
-      borderRadius: 4,//button shape
-      
-      color: '#FFFFFF',//button font color
-      height: 45,
-      padding: '0 30px',
-      boxShadow: ['none'],//button shadow
-    },
-    label: {
-      textTransform: 'none',
-    },
-  })(Button);
+const classes = useStyles();
+
 return (
-  <div>
-    <Box display="flex" flexDirection="row" >
-    <Box p={3} bgcolor="background.paper" >
-            <Link
-              className={classes.signin}
-              component="button"
-              variant="body2"
-              onClick={() => {
-                console.info("I'm a button.");
-              }}
-              >
-                SIGN IN
-            </Link>
-          </Box>
-    <Box display="flex" flexDirection="column" >{/* These boxes are only here because otherwise the button will not allign with the other components in the navbar */}
-      <Box p={0.75}/>     {/*If better option found please apply*/ }
-        <StyledButton
-            className={classes.sbutton}
-        >
-          
-            SIGN UP
-        </StyledButton>
-      </Box>
-    </Box>
-  </div>
+  
+      <List className={classes.list}>
+        <ListItem className={classes.listItem}>
+          <Button
+            href="/signin"
+            className={classes.navLinkHeader}
+            
+            color="transparent"
+          >
+            Sign in
+          </Button>
+        </ListItem>
+        <ListItem className={classes.listItem}>
+          <Button
+            href="/signup"
+            className={classes.signinLink}
+            
+            color="themeBlue"
+            round
+          >
+            Join for Free
+          </Button>
+        </ListItem>
+      </List>
+  
 )}
 export default RightMenu

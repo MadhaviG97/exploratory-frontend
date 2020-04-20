@@ -1,7 +1,7 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Container from "@material-ui/core/Container";
-import FooterStyle from "./FooterStyle";
+import FooterStyle from "../../assets/css/FooterStyle";
 //this is the footer 2 the darker one at the bottom
 import Copyright from "../Navbar/copyRight";
 

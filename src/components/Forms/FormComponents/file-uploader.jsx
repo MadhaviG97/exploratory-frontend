@@ -1,7 +1,8 @@
 import React from "react";
 import Avatar from "react-avatar-edit";
+import Box from '@material-ui/core/Box';
 
-export default class App extends React.Component {
+export default class FileUploader extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -23,6 +24,7 @@ export default class App extends React.Component {
   render() {
     return (
       <div>
+        
         <Avatar
           width="100%"
           height={300}
@@ -31,6 +33,7 @@ export default class App extends React.Component {
           src={this.state.preview}
           round={false}
         />
+        
         {/* <img src={this.state.preview} alt="Preview" /> */}
       </div>
     );

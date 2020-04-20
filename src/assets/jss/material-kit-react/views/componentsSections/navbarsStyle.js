@@ -1,5 +1,5 @@
-import { container, title } from "assets/jss/material-kit-react.js";
-import headerLinksStyle from "assets/jss/material-kit-react/components/headerLinksStyle.js";
+import { container, title } from "../../../material-kit-react";
+import headerLinksStyle from "../../components/headerLinksStyle";
 
 const navbarsStyle = theme => ({
   section: {
@@ -21,6 +21,12 @@ const navbarsStyle = theme => ({
     "& header": {
       borderRadius: "0"
     }
+  },
+  logo: {//logo is just logo.png from public folder 
+    flexGrow: 1,
+    marginLeft: theme.spacing(19),
+    maxWidth: 180,
+    
   },
   navigation: {
     backgroundPosition: "center center",
