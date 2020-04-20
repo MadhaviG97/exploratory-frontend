@@ -3,6 +3,7 @@ import { Grid, Typography, TextField, Paper, Button } from "@material-ui/core";
 import Navbar from "../../components/Navbar/Navbar";
 import CollaboratorList from "../../components/Forms/FormComponents/collaboratorList";
 import { useStyles } from "../../assets/css/createResearch";
+import Footer from "../../components/Footer/Footer";
 
 export default function Form() {
   const classes = useStyles();
@@ -15,6 +16,7 @@ export default function Form() {
           <AddressForm />
         </Paper>
       </main>
+      <Footer />
     </React.Fragment>
   );
 }

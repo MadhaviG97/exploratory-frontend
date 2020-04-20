@@ -6,13 +6,13 @@ import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import FlatButton from "material-ui/FlatButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
-import CommunicationCall from "material-ui/svg-icons/communication/call";
+
 import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
 import ReactMaterialUiNotifications from "./ReactMaterialUiNotifications";
 import moment from "moment";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 
-export default function Main() {
+export default function Notification(props) {
   const [state, setState] = React.useState({
     count: 0,
     data: {

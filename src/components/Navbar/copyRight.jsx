@@ -3,7 +3,7 @@ import { Typography, Link } from "@material-ui/core";
 
 export default function Copyright() {
   return (
-    <Typography variant="body2" color="#FFFFFF" align="center">
+    <Typography variant="body2" align="center">
       {"Copyright © "}
       <Link color="inherit" href="#">
         Exploratory
