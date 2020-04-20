@@ -1,14 +1,27 @@
-import React, { Suspense } from "react";
+import React, { Suspense } from 'react';
 import { Route, Switch } from "react-router-dom";
+
 import signUp from "./views/guest-user/sign-up.jsx";
 import fillProfile from "./views/researcher/fill-profile";
 import UserProfile from "./views/researcher/user-profile.jsx";
 import AboutUs from "./views/shared/about-us.jsx";
 import Forum from "./views/shared/public-forum"
 import signIn from "./views/researcher/sign-in";
-import Project from "./views/research/home";
+import Auth from "./hoc/auth";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
+
 import Theme from "./assets/themes/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
+
+
+import CreatePage from "./views/research/editor/CreatePage";
+import EditPage from "./views/research/editor//EditPage";
+import FileManager from "./views/research/fileFolder/FileManager";
+import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
+
+import Project from "./views/research/home";
+
 // import Modal from "./components/appBar";
 
 function App() {
@@ -17,14 +30,17 @@ function App() {
       <ThemeProvider theme={Theme}>
         <div>
           <Switch>
-            <Route exact path="/" component={AboutUs} />
-            <Route exact path="/signin" component={signIn} />
-            <Route exact path="/signup" component={signUp} />
-            <Route exact path="/fillProfile" component={fillProfile} />
-            <Route exact path="/userProfile" component={UserProfile} />
-            <Route exact path="/aboutus" component={AboutUs} />
-            <Route exact path="/forum" component={Forum} />
-            <Route exact path="/project" component={Project} />
+            <Route exact path="/" component={Auth(AboutUs,null)} />
+            <Route exact path="/signin" component={Auth(signIn,false)} />
+            <Route exact path="/signup" component={Auth(signUp,false)} />
+            <Route exact path="/fillProfile" component={Auth(fillProfile,true)} />
+            <Route exact path="/aboutus" component={Auth(AboutUs,null)} />
+            <Route exact path="/document/create" component={Auth(CreatePage,true)} />
+            {/*<Route exact path="/document/edit" component={EditPage} />
+            <Route exact path="/blog/edit/:postId" component={Auth(EditPage, null)} />*/}
+            <Route exact path="/document/projectfolder" component={Auth(ProjectFolder,null)} />
+            <Route exact path="/document/filemanager" component={Auth(FileManager,null)} />
+            <Route exact path="/project" component={Auth(Project,null)} />
             {/* <Route exact path="/modal" component={Modal} /> */}
           </Switch>
         </div>
