@@ -38,7 +38,7 @@ function LeftMenu(props) {//these ara the links in the left side of the nav bar
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button
-            href="/"
+            href="/forum"
             className={classes.navLink}
             
             color="transparent"
