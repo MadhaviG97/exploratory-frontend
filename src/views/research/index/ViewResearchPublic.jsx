@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../../components/Navbar/Navbar";
-import ProjectNavbar from "./projectNavbar";
-import Tab from "../../components/Tab";
-import Footer from "../../components/Footer/Footer";
+import Navbar from "../../../components/Navbar/Navbar";
+import ProjectNavbar from "../../../components/Project/ProjectNavbar";
+import Tab from "../../../components/Project/TabPublicMode";
+import Footer from "../../../components/Footer/Footer";
 import Box from "@material-ui/core/Box";
 export default function Home(props) {
   return (

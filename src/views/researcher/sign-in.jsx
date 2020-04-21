@@ -17,8 +17,7 @@ import { InputLabel, InputAdornment, OutlinedInput } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
-import { Redirect, useHistory, useLocation } from "react-router-dom";
-
+import { useHistory, useLocation } from "react-router-dom";
 import { loginUser } from "../../_actions/user_actions";
 import { useDispatch } from "react-redux";
 
@@ -53,17 +52,11 @@ export default function SignInSide() {
       password: values.password,
     };
 
-    dispatch(loginUser(formData))
-      .then((result) => {
-        cb();
-      });
+    dispatch(loginUser(formData)).then((result) => {
+      console.log(result);
+      cb();
+    });
   };
-
-  function Redirect(submit) {
-    if (submit) {
-      return <Redirect to="/project" />;
-    }
-  }
 
   let history = useHistory();
   let location = useLocation();
@@ -127,7 +120,7 @@ export default function SignInSide() {
                 control={<Checkbox value="remember" color="primary" />}
                 label="Remember me"
               />
-              {/* {Redirect(submit)} */}
+
               <Button
                 type="submit"
                 fullWidth

@@ -14,66 +14,57 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Header from "../Header/Header.js";
 import Button from "../CustomButtons/Button.js";
-import Tab from "../Tab";
+import Tab from "../Project/TabPrivateMode";
 
 const useStyles = makeStyles(styles);
 //the styles are from NavbarStyle
 export default function Navbar(props) {
-
   const classes = useStyles();
-  const user = useSelector(state => state.user)
-  
+  const user = useSelector((state) => state.user);
+  const [show, setShow] = React.useState(false);
+
+  const handleShowNotification = (show) => {
+    setShow(!show);
+    console.log(show);
+  };
+
   if (user.userData && !user.userData.isAuth) {
     return (
       <div className={classes.root}>
         <Header
-        logo="/logo1.png"
-            brand="Exploratory"
-            leftLinks={
-              <LeftMenu/>
-            }
-            rightLinks={
-              <RightMenu/>
-            }
-          />
+          logo="/logo1.png"
+          brand="Exploratory"
+          leftLinks={<LeftMenu />}
+          rightLinks={<RightMenu />}
+        />
       </div>
     );
-  }
-  
-  /* this nested elif is used to handle the sitaution when user.userData is null */
-  else if(user.userData && user.userData.isAuth){
+  } else if (user.userData && user.userData.isAuth) {
+    /* this nested elif is used to handle the sitaution when user.userData is null */
     return (
       <div className={classes.root}>
         <Header
-        logo="/logo1.png"
-            brand="Exploratory"
-            leftLinks={
-              <LeftMenu/>
-            }
-            rightLinks={
-              <LoggedRightMenu/>
-            }
-          />
+          logo="/logo1.png"
+          brand="Exploratory"
+          leftLinks={<LeftMenu />}
+          rightLinks={
+            <LoggedRightMenu
+              onShowNotification={() => handleShowNotification(show)}
+            />
+          }
+        />
       </div>
     );
-  }
-  else{
+  } else {
     return (
       <div className={classes.root}>
         <Header
-        logo="/logo1.png"
-            brand="Exploratory"
-            leftLinks={
-              <LeftMenu/>
-            }
-            rightLinks={
-              <RightMenu/>
-            }
-          />
+          logo="/logo1.png"
+          brand="Exploratory"
+          leftLinks={<LeftMenu />}
+          rightLinks={<RightMenu />}
+        />
       </div>
     );
   }
-
-  
-
 }

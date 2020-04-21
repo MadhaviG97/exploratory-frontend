@@ -23,6 +23,7 @@
     "moment": "^2.24.0",
     "node-sass": "^4.13.1",
     "nouislider": "^14.2.0",
+    "pdf-viewer-reactjs": "^2.0.6",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-avatar-edit": "^0.8.3",
