@@ -143,7 +143,7 @@ export default function TitlebarGridList() {
           </Box>
           <div className={classes.root}>
       
-            <GridList cellHeight={150} cols={5} spacing={70} className={classes.gridList}>
+            <GridList cellHeight={150} lg={8} md={12} xs={24} className={classes.gridList}>
           
               {tileData.map((tile) => (
                 <GridListTile key={tile.img}>

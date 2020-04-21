@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-
 export const useStyles = makeStyles((theme) => ({
   
   title: {
@@ -13,6 +12,9 @@ export const useStyles = makeStyles((theme) => ({
     //marginTop: "30px",
     minHeight: "32px",
     
+  },
+  avatar: {
+    backgroundColor: "#014f82",
   },
   card: {
     display: 'flex',
