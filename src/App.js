@@ -90,6 +90,7 @@ function App() {
 
             <Route exact path="/project" component={Auth(Project, null)} />
             <Route exact path="/forum" component={Auth(Forum, true)} />
+            <Route exact path="/userProfile" component={Auth(UserProfile, null)} />
             {/* <Route exact path="/modal" component={Modal} /> */}
           </Switch>
         </div>
