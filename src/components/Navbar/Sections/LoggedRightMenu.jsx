@@ -19,106 +19,107 @@ import LinkTo from '@material-ui/core/Link';
 import { useSelector } from "react-redux";
 import { Typography } from '@material-ui/core';
 const useStyles = makeStyles(styles);
-function LoggedRightMenu(props) {
-//these ara the links in the left side of the nav bar
-const classes = useStyles();
-const history = useHistory();
-const user = useSelector(state => state.user)
-let profileImage=process.env.PUBLIC_URL + '/images/profile-pictures/profilePic.png'
-if (user.userData.profile_picture){
-  profileImage=user.userData.profile_picture
-}
-//console.log(user)
-const name=user.userData.first_name;
-const logoutHandler = () => {
-  const token = localStorage.token;
-  
-  let config = {
-      headers: {
-      'Authorization': `Bearer ${token}`
-      }
-    }
-  localStorage.removeItem("token")
-  axios.post(`/logout`,{},config).then(response => {
-    if (response.status === 200) {
-      history.push("/signin");
-    } else {
-      alert('Log Out Failed')
-    }
-  });
-};
 
-return (
-  
-    <List className={classes.list}>
-        <ListItem className={classes.listItem}>
-          <Button
-            justIcon
-            round
-            href="#pablo"
-            className={classes.notificationNavLink}
-            onClick={e => e.preventDefault()}
-            color="rose"
-          >
-            <NotificationsIcon className={classes.icons} />
-          </Button>
-        </ListItem>
-        <ListItem className={classes.listItem}>
-          <CustomDropdown
-            left
-            caret={false}
-            hoverColor="themeBlue"
-            imgText={
-              <div
-                className={classes.imageLink}
-                color="transparent"
-              >
-            {name}
-          </div>
-            }
-            caret="true"
-            buttonText={
-              <img
-                src={profileImage}
-                className={classes.img}
-                alt="profile"
-              />
+function LoggedRightMenu(props) {
+
+  const classes = useStyles();
+  const history = useHistory();
+  const user = useSelector(state => state.user)
+  let profileImage=process.env.PUBLIC_URL + '/images/profile-pictures/profilePic.png'
+  if (user.userData.profile_picture){
+    profileImage=user.userData.profile_picture
+  }
+  //console.log(user)
+  const name=user.userData.first_name;
+  const logoutHandler = () => {
+    const token = localStorage.token;
+    
+    let config = {
+        headers: {
+        'Authorization': `Bearer ${token}`
+        }
+      }
+    localStorage.removeItem("token")
+    axios.post(`/logout`,{},config).then(response => {
+      if (response.status === 200) {
+        history.push("/signin");
+      } else {
+        alert('Log Out Failed')
+      }
+    });
+  };
+
+  return (
+    
+      <List className={classes.list}>
+          <ListItem className={classes.listItem}>
+            <Button
+              justIcon
+              round
+              href="#pablo"
+              className={classes.notificationNavLink}
+              onClick={e => e.preventDefault()}
+              color="rose"
+            >
+              <NotificationsIcon className={classes.icons} />
+            </Button>
+          </ListItem>
+          <ListItem className={classes.listItem}>
+            <CustomDropdown
+              left
+              caret={false}
+              hoverColor="themeBlue"
+              imgText={
+                <div
+                  className={classes.imageLink}
+                  color="transparent"
+                >
+              {name}
+            </div>
+              }
+              caret={true}
+              buttonText={
+                <img
+                  src={profileImage}
+                  className={classes.img}
+                  alt="profile"
+                />
+                
+              }
+              buttonProps={{
+                className:
+                  classes.navLink + " " + classes.imageDropdownButton,
+                color: "transparent"
+              }}
               
-            }
-            buttonProps={{
-              className:
-                classes.navLink + " " + classes.imageDropdownButton,
-              color: "transparent"
-            }}
-            
-            dropdownList={[
-              <Link to="/#" style={{ color: 'inherit' }}>
-                <LinkTo  
-                  component="button"
-                >
-                  My Profile
-                </LinkTo>
-                
+              dropdownList={[
+                <Link to="/#" style={{ color: 'inherit' }}>
+                  <LinkTo  
+                    component="button"
+                  >
+                    My Profile
+                  </LinkTo>
+                  
+                </Link>,
+                <Link to="/#" style={{ color: 'inherit' }}>
+                  <LinkTo  
+                    component="button"
+                  >
+                    My Projects
+                  </LinkTo>
               </Link>,
-              <Link to="/#" style={{ color: 'inherit' }}>
-                <LinkTo  
+                <LinkTo
+                  
                   component="button"
-                >
-                  My Projects
+                  color='inherit'
+                  onClick={logoutHandler}
+                  >
+                  Sign out
                 </LinkTo>
-            </Link>,
-              <LinkTo
-                
-                component="button"
-                color='inherit'
-                onClick={logoutHandler}
-                >
-                Sign out
-              </LinkTo>
-            ]}
-          />
-        </ListItem>
-      </List>
-  
+              ]}
+            />
+          </ListItem>
+        </List>
+    
 )}
 export default LoggedRightMenu

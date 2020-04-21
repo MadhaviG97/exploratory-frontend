@@ -19,16 +19,15 @@ export function registerUser(dataToSubmit){
 
 export function loginUser(dataToSubmit){
     const request = axios.post(`/login`,dataToSubmit)
-                .then(response => {
-                    if (response.message){
+        .then(response => {
+            if (response.message){
 
-                    }else{
-                        localStorage.setItem("token", response.data.token)
-                        localStorage.setItem("body", response.data)
-                        console.log(response.data.token)
-                    }
+            }else{
+                localStorage.setItem("token", response.data.token)
+                console.log(response.data.token)
+            }
 
-                })
+        })
     
 
     return {

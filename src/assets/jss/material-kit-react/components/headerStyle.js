@@ -28,7 +28,7 @@ const headerStyle = {
     alignItems: "center",
     flexFlow: "row nowrap",
     justifyContent: "flex-start",
-    position: "relative",
+    position: "sticky",
     zIndex: "unset"
   },
   absolute: {

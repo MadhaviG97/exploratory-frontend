@@ -14,7 +14,8 @@ import { ThemeProvider } from "@material-ui/core/styles";
 
 
 import CreatePage from "./views/research/editor/CreatePage";
-import EditPage from "./views/research/editor//EditPage";
+import EditPage from "./views/research/editor/EditPage";
+import EditorBlog from "./views/research/editor/EditorBlog";
 import FileManager from "./views/research/fileFolder/FileManager";
 import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 
@@ -37,6 +38,8 @@ function App() {
             {/*<Route exact path="/document/edit" component={EditPage} />
             <Route exact path="/blog/edit/:postId" component={Auth(EditPage, null)} />*/}
             <Route exact path="/document/projectfolder" component={Auth(ProjectFolder,null)} />
+            <Route exact path="/document/edit/:postId" component={Auth(EditPage,null)} />
+            <Route exact path="/document/editorblog" component={Auth(EditorBlog,null)} />
             <Route exact path="/document/filemanager" component={Auth(FileManager,null)} />
             <Route exact path="/project" component={Auth(Project,null)} />
             {/* <Route exact path="/modal" component={Modal} /> */}

@@ -63,7 +63,7 @@ export default function Header(props) {
   const logoImg = <img src={logo} alt="logo" className={classes.logo} />
   const brandComponent = <Button className={classes.title}>{brand}</Button>;
   return (
-    <AppBar className={appBarClasses}>
+    <AppBar className={appBarClasses} >
       <Toolbar className={classes.container}>
         {logoImg}
         { brandComponent }
