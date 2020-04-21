@@ -1,22 +1,38 @@
 import React from "react";
-import { Grid, Typography, TextField, Paper, Button } from "@material-ui/core";
-import Navbar from "../../components/Navbar/Navbar";
-import CollaboratorList from "../../components/Forms/FormComponents/collaboratorList";
-import { useStyles } from "../../assets/css/createResearch";
-import Footer from "../../components/Footer/Footer";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Paper,
+  Button,
+  Box,
+} from "@material-ui/core";
+import Navbar from "../../../components/Navbar/Navbar";
+import CollaboratorList from "../../../components/Forms/FormComponents/collaboratorList";
+import { useStyles } from "../../../assets/css/createResearch";
+import Footer from "../../../components/Footer/Footer";
 
 export default function Form() {
   const classes = useStyles();
 
   return (
     <React.Fragment>
-      <Navbar />
-      <main className={classes.layout}>
-        <Paper className={classes.paper} elevation={5}>
-          <AddressForm />
-        </Paper>
-      </main>
-      <Footer />
+      <Box display="flex" flexDirection="column">
+        <Box>
+          <Navbar />
+        </Box>
+        <Box flexGrow="1" bgcolor="#eceff1">
+          <main className={classes.layout}>
+            <Paper className={classes.paper} elevation={5}>
+              <AddressForm />
+            </Paper>
+          </main>
+        </Box>
+
+        <Box>
+          <Footer />
+        </Box>
+      </Box>
     </React.Fragment>
   );
 }

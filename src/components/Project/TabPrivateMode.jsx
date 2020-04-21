@@ -6,9 +6,9 @@ import { Tabs, Paper } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OverView from "./Overview/overview";
-import Team from "./Team/team";
-import ChatHead from "./ProjectComments/chathead";
+import OverView from "../Overview/OverViewPrivate";
+import Team from "../Team/team";
+import ChatHead from "../ProjectComments/chathead";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;

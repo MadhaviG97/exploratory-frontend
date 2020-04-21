@@ -14,7 +14,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import Header from "../Header/Header.js";
 import Button from "../CustomButtons/Button.js";
-import Tab from "../Tab";
+import Tab from "../Project/TabPrivateMode";
 
 const useStyles = makeStyles(styles);
 //the styles are from NavbarStyle

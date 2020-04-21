@@ -48,6 +48,7 @@ function LoggedRightMenu(props) {
         Authorization: `Bearer ${token}`,
       },
     };
+
     localStorage.removeItem("token");
     axios.post(`/logout`, {}, config).then((response) => {
       if (response.status === 200) {
@@ -85,6 +86,21 @@ function LoggedRightMenu(props) {
       },
       {
         id: "3",
+        description: "You have new task assigned to you",
+        time: "11:20:10",
+      },
+      {
+        id: "4",
+        description: "You have new task assigned to you",
+        time: "11:20:10",
+      },
+      {
+        id: "5",
+        description: "You have new task assigned to you",
+        time: "11:20:10",
+      },
+      {
+        id: "6",
         description: "You have new task assigned to you",
         time: "11:20:10",
       },
@@ -135,31 +151,42 @@ function LoggedRightMenu(props) {
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
         <MuiThemeProvider muiTheme={muiTheme}>
-          <div style={{ position: "relative" }}>
-            <IconButton onClick={() => handleShowNotification()}>
-              <Badge badgeContent={4} color="primary">
-                <NotificationsIcon fontSize="large" />
-              </Badge>
-            </IconButton>
-          </div>
-          {state.show && (
-            <div style={{ position: "absolute", zIndex: 2 }}>
-              <Paper>
-                <Notifications items={state.data} />
-              </Paper>
+          <React.Fragment>
+            <div style={{ position: "relative" }}>
+              <IconButton onClick={() => handleShowNotification()}>
+                <Badge badgeContent={4} color="primary">
+                  <NotificationsIcon fontSize="large" />
+                </Badge>
+              </IconButton>
             </div>
-          )}
-          <ReactMaterialUiNotifications
-            desktop={true}
-            transitionName={{
-              leave: "dummy",
-              leaveActive: "fadeOut",
-              appear: "dummy",
-              appearActive: "zoomInUp",
-            }}
-            transitionAppear={true}
-            transitionLeave={true}
-          />
+            {state.show && (
+              <div
+                style={{
+                  position: "absolute",
+                  zIndex: 2,
+                  maxHeight: "300px",
+                  width: "280px",
+                  left: "5px",
+                  overflowY: "scroll",
+                }}
+              >
+                <Paper className={classes.notificationContainer}>
+                  <Notifications items={state.data} />
+                </Paper>
+              </div>
+            )}
+            <ReactMaterialUiNotifications
+              desktop={true}
+              transitionName={{
+                leave: "dummy",
+                leaveActive: "fadeOut",
+                appear: "dummy",
+                appearActive: "zoomInUp",
+              }}
+              transitionAppear={true}
+              transitionLeave={true}
+            />
+          </React.Fragment>
         </MuiThemeProvider>
       </ListItem>
       <ListItem className={classes.listItem}>

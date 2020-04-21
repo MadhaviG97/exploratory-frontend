@@ -13,14 +13,12 @@ import Theme from "./assets/themes/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 
 import CreatePage from "./views/research/editor/CreatePage";
-import EditPage from "./views/research/editor//EditPage";
+import EditPage from "./views/research/editor/EditPage";
 import FileManager from "./views/research/fileFolder/FileManager";
 import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
-
-import Project from "./views/research/home";
-import CreateProject from "./views/research/createResearch";
-
-// import Modal from "./components/appBar";
+import ProjectPublic from "./views/research/index/ViewResearchPublic";
+import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
+import CreateProject from "./views/research/index/CreateResearch";
 
 function App() {
   return (
@@ -54,13 +52,21 @@ function App() {
               path="/document/filemanager"
               component={Auth(FileManager, null)}
             />
-            <Route exact path="/project" component={Auth(Project, null)} />
+            <Route
+              exact
+              path="/project/viewproject/:id"
+              component={Auth(ProjectPublic, null)}
+            />
             <Route
               exact
               path="/createProject"
               component={Auth(CreateProject, null)}
             />
-            {/* <Route exact path="/modal" component={Modal} /> */}
+            <Route
+              exact
+              path="/project/MyProject/:id"
+              component={Auth(ProjectPrivate, null)}
+            />
           </Switch>
         </div>
       </ThemeProvider>

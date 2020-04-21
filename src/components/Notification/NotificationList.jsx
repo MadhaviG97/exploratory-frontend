@@ -7,13 +7,21 @@ import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import Checkbox from "@material-ui/core/Checkbox";
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles((theme) => ({
+  listItem: {
+    minWidth: "500",
+  },
+}));
 
 export default function AlignItemsList(props) {
+  const classes = useStyles();
   return (
     <List dense>
       {props.items.map((item) => {
         return (
-          <ListItem key={item.id} button divider>
+          <ListItem key={item.id} button divider className={classes.listItem}>
             <ListItemAvatar>
               <Avatar
                 alt="Remy Sharp"
