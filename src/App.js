@@ -3,7 +3,9 @@ import { Route, Switch } from "react-router-dom";
 
 import signUp from "./views/guest-user/sign-up.jsx";
 import fillProfile from "./views/researcher/fill-profile";
+import UserProfile from "./views/researcher/user-profile.jsx";
 import AboutUs from "./views/shared/about-us.jsx";
+import Forum from "./views/shared/public-forum"
 import signIn from "./views/researcher/sign-in";
 import Auth from "./hoc/auth";
 import Navbar from "./components/Navbar/Navbar";
@@ -73,6 +75,7 @@ function App() {
             <Route exact path="/document/editorblog" component={Auth(EditorBlog,null)} />
             
             <Route exact path="/project" component={Auth(Project,null)} />
+            <Route exact path="/forum" component={Auth(Forum,true)} />
             {/* <Route exact path="/modal" component={Modal} /> */}
           </Switch>
         </div>
