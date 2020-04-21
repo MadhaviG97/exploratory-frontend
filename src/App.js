@@ -59,7 +59,7 @@ function App() {
             />
             <Route
               exact
-              path="/createProject"
+              path="/project/createProject"
               component={Auth(CreateProject, null)}
             />
             <Route
