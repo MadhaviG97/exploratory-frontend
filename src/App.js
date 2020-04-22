@@ -7,6 +7,10 @@ import UserProfile from "./views/researcher/user-profile.jsx";
 import AboutUs from "./views/shared/about-us.jsx";
 import Forum from "./views/shared/public-forum";
 import signIn from "./views/researcher/sign-in";
+
+import feed from "./views/researcher/feed";
+import search from './views/home/search'
+
 import Auth from "./hoc/auth";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
