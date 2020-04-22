@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme) => ({
     margin: "1.75rem 0 0.875rem",
     textDecoration: "none",
     fontWeight: "550",
-    fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
     fontSize:24,
     //display: "inline-block",
     //position: "relative",

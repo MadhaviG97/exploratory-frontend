@@ -149,6 +149,10 @@ export default function TitlebarGridList() {
                 <GridListTile key={tile.img}>
                   <img src={tile.img} alt={tile.title} />
                 <GridListTileBar
+                style={{
+                  backgroundColor:'#003f68'
+                }}
+                  
                   title={tile.title}
                   subtitle={<span>by: {tile.author}</span>}
                   actionIcon={
