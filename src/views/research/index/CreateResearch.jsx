@@ -8,7 +8,11 @@ import {
   Box,
 } from "@material-ui/core";
 import Navbar from "../../../components/Navbar/Navbar";
-import CollaboratorList from "../../../components/Forms/FormComponents/collaboratorList";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemText from "@material-ui/core/ListItemText";
+import ListItemAvatar from "@material-ui/core/ListItemAvatar";
+import Avatar from "@material-ui/core/Avatar";
 import { useStyles } from "../../../assets/css/createResearch";
 import Footer from "../../../components/Footer/Footer";
 import Autocomplete from "@material-ui/lab/Autocomplete";
@@ -17,15 +21,13 @@ import Checkbox from "@material-ui/core/Checkbox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 //redux
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createResearch } from "../../../_actions/project_actions";
 //routing
 import { useHistory, useLocation } from "react-router-dom";
 
 export default function Form() {
   const classes = useStyles();
-  const user = useSelector((state) => state.user);
-  const research = useSelector((state) => state.projectDetails);
   const dispatch = useDispatch();
 
   let history = useHistory();
@@ -37,53 +39,64 @@ export default function Form() {
   const AddressForm = () => {
     const [state, setState] = React.useState({
       title: "",
-      goal: "",
+      description: "",
       currentuser: {
-        id: "4",
-        name: "madhavi gayathri",
-        university: "university of moratuwa",
+        id: 10001,
+        first_name: "Madhavi",
+        last_name: "gayathti",
+        university: "University of Colombo",
+        email: "mad@123.com",
+        profile_picture: "avatar-1.jpg",
       },
-      collaborators: [],
+      collaborators: [10001],
       tags: [],
     });
 
     const handleChange = (e) => {
       setState({
         ...state,
-        [e.target.name]: e.target.state,
+        [e.target.name]: e.target.value,
       });
-      console.log(e.target.value);
+      // console.log(state.title, state.description);
     };
 
     const onTagsChange = (values) => {
+      const newList = [];
+      values.forEach((value) => {
+        newList.push(value.id);
+      });
       setState({
         ...state,
-        tags: values,
+        tags: newList,
       });
-      console.log(values);
     };
 
     const onCollaboratorChange = (values) => {
+      const newList = [];
+      values.forEach((value) => {
+        newList.push(value.id);
+      });
       setState({
         ...state,
-        collaborators: values,
+        collaborators: newList,
       });
-      console.log(values);
     };
 
     const handleSubmit = (e, cb) => {
       const formData = {
         title: state.title,
-        goal: state.goal,
-        creator: state.currentuser,
+        description: state.description,
+        creator: state.currentuser.id,
         collaborators: state.collaborators,
         tags: state.tags,
       };
-      console.log(formData);
-      dispatch(createResearch(formData)).then((result) => {
-        console.log(result);
-        cb();
-      });
+      // console.log(formData);
+      dispatch(createResearch(formData))
+        .then((result) => {
+          // console.log(result);
+          cb();
+        })
+        .catch((e) => console.log(e));
     };
 
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
@@ -112,11 +125,11 @@ export default function Form() {
         <Grid item xs={12}>
           <TextField
             required
-            id="goal"
-            name="goal"
-            label="Goal"
+            id="description"
+            name="description"
+            label="description"
             fullWidth
-            autoComplete="project goal"
+            autoComplete="project description"
             variant="outlined"
             onChange={handleChange}
           />
@@ -125,21 +138,60 @@ export default function Form() {
         <Grid item xs={12}>
           <Autocomplete
             multiple
-            id="fixed-tags-demo"
-            options={top100Films}
+            id="fixed-collaborators-demo"
+            options={collaborators}
+            defaultValue={[collaborators[0]]}
             onChange={(event, value) => {
               onCollaboratorChange(value);
             }}
-            getOptionLabel={(option) => option.title}
-            renderInput={(state, getTagProps) =>
-              state.map((option, index) => (
+            getOptionLabel={(option) =>
+              option.first_name.concat(" ").concat(option.last_name)
+            }
+            renderTags={(value, getTagProps) =>
+              value.map((option, index) => (
                 <Chip
-                  label={option.title}
+                  label={option.first_name.concat(" ").concat(option.last_name)}
                   {...getTagProps({ index })}
                   disabled={index === 0}
+                  avatar={
+                    <Avatar
+                      alt="propic"
+                      src={"../images/profile-pictures/".concat(
+                        option.profile_picture
+                      )}
+                    />
+                  }
                 />
               ))
             }
+            renderOption={(option, { selected }) => (
+              <React.Fragment>
+                <Checkbox
+                  icon={icon}
+                  checkedIcon={checkedIcon}
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                  color="primary"
+                />
+                <List className={classes.root}>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar
+                        src={"../images/profile-pictures/".concat(
+                          option.profile_picture
+                        )}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary={option.first_name
+                        .concat(" ")
+                        .concat(option.last_name)}
+                      secondary={option.university}
+                    />
+                  </ListItem>
+                </List>
+              </React.Fragment>
+            )}
             style={{ width: 500 }}
             renderInput={(params) => (
               <TextField
@@ -156,7 +208,7 @@ export default function Form() {
           <Autocomplete
             multiple
             id="fixed-tags-demo"
-            options={top100Films}
+            options={tags}
             name="tags"
             onChange={(event, value) => {
               onTagsChange(value);
@@ -221,14 +273,82 @@ export default function Form() {
   );
 }
 
-const top100Films = [
-  { title: "The Shawshank Redemption", year: 1994 },
-  { title: "The Godfather", year: 1972 },
-  { title: "The Godfather: Part II", year: 1974 },
-  { title: "The Dark Knight", year: 2008 },
-  { title: "Psycho", year: 1960 },
-  { title: "The Green Mile", year: 1999 },
-  { title: "The Intouchables", year: 2011 },
-  { title: "Modern Times", year: 1936 },
-  { title: "Raiders of the Lost Ark", year: 1981 },
+const tags = [
+  { id: 10001, title: "tags-1" },
+  { id: 10002, title: "tags-2" },
+  { id: 10003, title: "tags-3" },
+  { id: 10004, title: "tags-4" },
+  { id: 10005, title: "tags-5" },
+  // { id: 10006, title: "tags-6" },
+  // { id: 10007, title: "tags-7" },
+  // { id: 10008, title: "tags-8" },
+  // { id: 10009, title: "tags-9" },
+  // { id: 100010, title: "tags-10" },
+];
+
+const collaborators = [
+  {
+    id: 10001,
+    first_name: "peshaka",
+    last_name: "dhananjaya",
+    university: "University of Moratuwa",
+    email: "peshaka_1@123.com",
+    profile_picture: "avatar-1.jpg",
+  },
+  {
+    id: 10002,
+    first_name: "peshaka",
+    last_name: "dhananjaya",
+    university: "University of Moratuwa",
+    email: "peshaka_2@123.com",
+    profile_picture: "avatar-2.jpg",
+  },
+  {
+    id: 10003,
+    first_name: "peshaka",
+    last_name: "dhananjaya",
+    university: "University of Moratuwa",
+    email: "peshaka_3@123.com",
+    profile_picture: "avatar-3.jpg",
+  },
+  {
+    id: 10004,
+    first_name: "peshaka",
+    last_name: "dhananjaya",
+    university: "University of Moratuwa",
+    email: "peshaka_4@123.com",
+    profile_picture: "avatar-4.jpg",
+  },
+  {
+    id: 10005,
+    first_name: "peshaka",
+    last_name: "dhananjaya",
+    university: "University of Moratuwa",
+    email: "peshaka_5@123.com",
+    profile_picture: "avatar-5.jpg",
+  },
+  // {
+  //   id: 10006,
+  //   first_name: "peshaka",
+  //   last_name: "dhananjaya",
+  //   university: "University of Moratuwa",
+  //   email: "peshaka_6@123.com",
+  //   profile_picture: "avatar-6.jpg",
+  // },
+  // {
+  //   id: 10007,
+  //   first_name: "peshaka",
+  //   last_name: "dhananjaya",
+  //   university: "University of Moratuwa",
+  //   email: "peshaka_7@123.com",
+  //   profile_picture: "avatar-7.jpg",
+  // },
+  // {
+  //   id: 10008,
+  //   first_name: "peshaka",
+  //   last_name: "dhananjaya",
+  //   university: "University of Moratuwa",
+  //   email: "peshaka_8@123.com",
+  //   profile_picture: "avatar-8.jpg",
+  // },
 ];

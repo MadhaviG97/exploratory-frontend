@@ -6,14 +6,13 @@ import ListItem from "@material-ui/core/ListItem";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import CustomDropdown from "../../CustomDropdown/CustomDropdown.js";
 import Badge from "@material-ui/core/Badge";
-import IconButton from "@material-ui/core/IconButton";
+import { IconButton, Button } from "@material-ui/core";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import LinkTo from "@material-ui/core/Link";
 import { useSelector } from "react-redux";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
-import FlatButton from "material-ui/FlatButton";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
 import { useHistory, useLocation } from "react-router-dom";
@@ -33,10 +32,14 @@ function LoggedRightMenu(props) {
   let { from } = location.state || { from: { pathname: "/project" } };
 
   const user = useSelector((state) => state.user);
+
   let profileImage =
     process.env.PUBLIC_URL + "/images/profile-pictures/profilePic.png";
   if (user.userData.profile_picture) {
-    profileImage = user.userData.profile_picture;
+    profileImage =
+      process.env.PUBLIC_URL +
+      "/images/profile-pictures/" +
+      user.userData.profile_picture;
   }
 
   const name = user.userData.first_name;
@@ -189,6 +192,7 @@ function LoggedRightMenu(props) {
           </React.Fragment>
         </MuiThemeProvider>
       </ListItem>
+
       <ListItem className={classes.listItem}>
         <CustomDropdown
           left
@@ -211,7 +215,7 @@ function LoggedRightMenu(props) {
             <Link to="/#" style={{ color: "inherit" }}>
               <LinkTo component="button">My Profile</LinkTo>
             </Link>,
-            <Link to="/#" style={{ color: "inherit" }}>
+            <Link to="/project/viewproject/1" style={{ color: "inherit" }}>
               <LinkTo component="button">My Projects</LinkTo>
             </Link>,
             <LinkTo component="button" color="inherit" onClick={logoutHandler}>
