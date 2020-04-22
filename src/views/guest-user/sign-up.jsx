@@ -24,8 +24,22 @@ import { useStyles } from "../../assets/css/sign-in";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
 
+//redux
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../_actions/user_actions";
+
+//routing
+import { useHistory, useLocation } from "react-router-dom";
+
 export default function SignUp(props) {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  let history = useHistory();
+  let location = useLocation();
+  let { from } = location.state || {
+    from: { pathname: "/signin" },
+  };
 
   const [values, setValues] = React.useState({
     email: "",
@@ -65,17 +79,24 @@ export default function SignUp(props) {
       confirm_password: values.confirm_password,
     };
 
-    const response = await fetch("/register", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ ...formData }),
-    })
-      .then((response) => response.json())
+    dispatch(registerUser(formData))
       .then((result) => {
         console.log(result);
-      });
+        history.replace(from);
+      })
+      .catch((e) => console.log(e));
+
+    // const response = await fetch("/register", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({ ...formData }),
+    // })
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     console.log(result);
+    //   });
   };
 
   return (

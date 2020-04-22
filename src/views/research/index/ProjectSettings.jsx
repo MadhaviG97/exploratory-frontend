@@ -14,8 +14,8 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Chip from "@material-ui/core/Chip";
 import IconButton from "@material-ui/core/IconButton";
 import BorderColorOutlinedIcon from "@material-ui/icons/BorderColorOutlined";
-import Alert from "./AlertBox";
-import FileUploader from "./FileUploader";
+import Alert from "../../../components/Project/AlertBox";
+import FileUploader from "../../../components/Project/FileUploader";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
@@ -254,7 +254,11 @@ export default function Form() {
         <Grid item xs={12}>
           <Typography variant="button">Final Paper</Typography>
           <Paper className={classes.fileUploader} elevation={3}>
-            <FileUploader maxFiles={1} multiple={false} accept={"*"} />
+            <FileUploader
+              maxFiles={1}
+              multiple={false}
+              accept={"application/pdf"}
+            />
           </Paper>
         </Grid>
         <Grid item xs={12}>
