@@ -254,7 +254,7 @@ export default function Form() {
         <Grid item xs={12}>
           <Typography variant="button">Final Paper</Typography>
           <Paper className={classes.fileUploader} elevation={3}>
-            <FileUploader maxFiles={1} multiple={false} accept={""} />
+            <FileUploader maxFiles={1} multiple={false} accept={"*"} />
           </Paper>
         </Grid>
         <Grid item xs={12}>
