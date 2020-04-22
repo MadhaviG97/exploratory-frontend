@@ -11,7 +11,8 @@ import Typography from "@material-ui/core/Typography";
 import image1 from "../../assets/images/user-profile/bg2.jpg";
 const useStyles = makeStyles({
   root: {
-    maxWidth: 750,
+    maxWidth: "auto",
+    paddingBottom: 10
   },
   media: {
     height: 300,
@@ -22,6 +23,7 @@ export default function PostCard() {
   const classes = useStyles();
 
   return (
+    <div className={classes.root} >
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
@@ -55,5 +57,7 @@ export default function PostCard() {
         </Button>
       </CardActions>
     </Card>
+    </div>
+    
   );
 }

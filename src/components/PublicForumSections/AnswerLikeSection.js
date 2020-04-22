@@ -32,7 +32,7 @@ export default function AnswerLike() {
   return (
     <div className={classes.root}>
       <div>
-          <Button
+          <Button size="small"
             aria-label="increase"
             onClick={() => {
               setCount(count + 1);
