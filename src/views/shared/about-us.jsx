@@ -4,8 +4,13 @@ import React from "react";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
 
 // @material-ui/icons
+import FacebookIcon from "@material-ui/icons/Facebook";
+import TwitterIcon from "@material-ui/icons/Twitter";
+import LinkedInIcon from "@material-ui/icons/LinkedIn";
 
 // core components
 import NavBar from "../../components/Navbar/Navbar";
@@ -34,27 +39,39 @@ export default function LandingPage(props) {
       <NavBar />
       <Parallax
         filter
-        image={require("../../assets/images/About-us/about-us-bg2.jpg")}
+        image={require("../../assets/images/About-us/about-us-bg3.jpg")}
       >
         <div className={classes.container}>
           <GridContainer>
-            <GridItem xs={6} >
-              <h1 className={classes.title} >EXPLORATORY</h1>
-              <h3>
+            <GridItem xs={12}>
+              <Typography variant="h2" gutterBottom>
+                EXPLORATORY
+              </Typography>
+              <Typography variant="h6" gutterBottom>
                 World{"'"}s most popular web portal connecting Researchers and
                 Research Groups....
-              </h3>
+              </Typography>
+              <IconButton color="primary" aria-label="LinkedIn" href="">
+                <LinkedInIcon />
+              </IconButton>
+              <IconButton color="primary" aria-label="Twitter" href="">
+                <TwitterIcon />
+              </IconButton>
+              <IconButton color="primary" aria-label="Facebook" href="">
+                <FacebookIcon />
+              </IconButton>
               <br />
             </GridItem>
-            <GridItem xs={6} align="center">
+            {/* <GridItem xs={6} align="center">
               <Button
-                variant="contained"
-                color="primary"
+                variant="outlined"
+                color="secondary"
                 href="/signup"
+                size="large"
               >
                 Join For Free
               </Button>
-            </GridItem>
+            </GridItem> */}
           </GridContainer>
         </div>
       </Parallax>

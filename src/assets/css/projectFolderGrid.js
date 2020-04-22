@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-
 export const useStyles = makeStyles((theme) => ({
   
   title: {
@@ -8,11 +7,15 @@ export const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     fontWeight: "550",
     fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    fontSize:24,
     //display: "inline-block",
     //position: "relative",
     //marginTop: "30px",
-    minHeight: "32px",
+    minHeight: "50px",
     
+  },
+  avatar: {
+    backgroundColor: "#014f82",
   },
   card: {
     display: 'flex',

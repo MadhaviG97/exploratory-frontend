@@ -116,7 +116,7 @@ export default function TitlebarGridList() {
        <div className={classNames(classes.main, classes.mainRaised)}>
          
           
-          <Box p={8} style={{ display: "flex" }} flexDirection="row" marginLeft={75} marginRight={16} marginTop={7}>
+          <Box p={8} style={{ display: "flex" }} flexDirection="row" marginLeft={75} marginRight={16} >{/* marginTop={7}*/}
             <div className={classes.name}>
               <h1 className={classes.title}>My Drive</h1>
             </div>

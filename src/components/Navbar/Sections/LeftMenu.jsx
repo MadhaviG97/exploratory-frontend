@@ -30,7 +30,7 @@ function LeftMenu(props) {
           </Button>
         </ListItem>
         <ListItem className={classes.listItem}>
-          <Button href="/" className={classes.navLink} color="transparent">
+          <Button href="/forum" className={classes.navLink} color="transparent">
             Forum
           </Button>
         </ListItem>

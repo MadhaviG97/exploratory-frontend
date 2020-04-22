@@ -3,8 +3,14 @@ import { Route, Switch } from "react-router-dom";
 
 import signUp from "./views/guest-user/sign-up.jsx";
 import fillProfile from "./views/researcher/fill-profile";
+import UserProfile from "./views/researcher/user-profile.jsx";
 import AboutUs from "./views/shared/about-us.jsx";
+import Forum from "./views/shared/public-forum";
 import signIn from "./views/researcher/sign-in";
+
+import feed from "./views/researcher/feed";
+import search from './views/home/search'
+
 import Auth from "./hoc/auth";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -14,12 +20,15 @@ import { ThemeProvider } from "@material-ui/core/styles";
 
 import CreatePage from "./views/research/editor/CreatePage";
 import EditPage from "./views/research/editor/EditPage";
+import EditorBlog from "./views/research/editor/EditorBlog";
 import FileManager from "./views/research/fileFolder/FileManager";
 import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
 import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
 import ProjectSettings from "./views/research/index/ProjectSettings";
+
+import Project from "./views/research/index/ViewResearchPublic";
 
 function App() {
   return (
@@ -68,6 +77,26 @@ function App() {
               path="/project/MyProject/:id"
               component={Auth(ProjectPrivate, null)}
             />
+            <Route
+              exact
+              path="/document/projectfolder"
+              component={Auth(ProjectFolder, null)}
+            />
+            <Route
+              exact
+              path="/document/edit/:postId"
+              component={Auth(EditPage, null)}
+            />
+            <Route
+              exact
+              path="/document/editorblog"
+              component={Auth(EditorBlog, null)}
+            />
+
+            <Route exact path="/project" component={Auth(Project, null)} />
+            <Route exact path="/forum" component={Auth(Forum, true)} />
+            <Route exact path="/userProfile" component={Auth(UserProfile, null)} />
+            {/* <Route exact path="/modal" component={Modal} /> */}
             <Route
               exact
               path="/project/settings/:id"
