@@ -13,14 +13,14 @@ export default function (ComposedClass, reload) {
             dispatch(auth()).then(async response => {
                 if (await !response.payload) {
                     if (reload) {
-                        props.history.push('/register_login')
+                        props.history.push('/signup_signin')
                     }
                 } else {
                     
-                        if (reload === false) {
-                            props.history.push('/')
-                        }
-                    
+                    if (reload === false) {
+                        props.history.push('/')
+                    }
+                
                 }
             })
             

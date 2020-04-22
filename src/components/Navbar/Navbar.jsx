@@ -1,7 +1,5 @@
 import React from "react";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import { Typography, Paper } from "@material-ui/core";
+
 
 import styles from "../../assets/jss/material-kit-react/views/componentsSections/navbarsStyle";
 
@@ -10,8 +8,7 @@ import RightMenu from "./Sections/RightMenu";
 import LoggedRightMenu from "./Sections/LoggedRightMenu";
 import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
+
 import Header from "../Header/Header.js";
 import Button from "../CustomButtons/Button.js";
 import Tab from "../Project/TabPrivateMode";

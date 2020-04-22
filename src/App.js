@@ -16,6 +16,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 
 import CreatePage from "./views/research/editor/CreatePage";
 import EditPage from "./views/research/editor/EditPage";
+import EditorBlog from "./views/research/editor/EditorBlog";
 import FileManager from "./views/research/fileFolder/FileManager";
 import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
@@ -69,8 +70,13 @@ function App() {
               path="/project/MyProject/:id"
               component={Auth(ProjectPrivate, null)}
             />
-            <Route exact path="/forum" component={Auth(Forum, null)} />
-            <Route exact path="/userProfile" component={Auth(UserProfile, null)} />
+            <Route exact path="/document/projectfolder" component={Auth(ProjectFolder,null)} />
+            <Route exact path="/document/edit/:postId" component={Auth(EditPage,null)} />
+            <Route exact path="/document/editorblog" component={Auth(EditorBlog,null)} />
+            
+            <Route exact path="/project" component={Auth(Project,null)} />
+            <Route exact path="/forum" component={Auth(Forum,true)} />
+            {/* <Route exact path="/modal" component={Modal} /> */}
           </Switch>
         </div>
       </ThemeProvider>
