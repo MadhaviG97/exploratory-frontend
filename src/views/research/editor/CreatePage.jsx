@@ -47,10 +47,10 @@ function CreatePage(props) {
     return (
         <div>
             <NavBar/>
-            <Box p={2.5}></Box>
+            <Box p={0.5}></Box>
             <div className={classNames(classes.main, classes.mainRaised)} >
                 <div style={{ maxWidth: '1000px', margin: '1.5rem auto'}}>
-                    <Box p={5} marginTop={7} />{/*marginTop={7}*/}
+                    <Box p={5}  />{/*marginTop={7}*/}
                     <div className={classes.name} >
                         <h1 align='center' className={classes.title}>Group Name</h1>
                     </div>

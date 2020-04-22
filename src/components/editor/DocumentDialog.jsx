@@ -5,12 +5,14 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import { useHistory, useLocation } from "react-router-dom";
 import axios from 'axios';
 import Alert from '@material-ui/lab/Alert';
 import { useSelector } from "react-redux";
 export default function DocumentDialog(props) {
   const [open, setOpen] = React.useState(false);
   const [name,setName]=React.useState('');
+  const history = useHistory();
   const user = useSelector(state => state.user);
   const handleClickOpen = () => {
     setOpen(true);
@@ -29,7 +31,7 @@ export default function DocumentDialog(props) {
     
     const variables = {
         content: props.content,
-        writer: "GeeFour",
+        //writer: "GeeFour",
         name: name
     }
     let config = {
@@ -45,7 +47,7 @@ export default function DocumentDialog(props) {
               alert('Document Created!')
 
                 setTimeout(() => {
-                    props.history.push('/')
+                    history.push('/document/editorblog')
                 }, 2000);
             }
         })

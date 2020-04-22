@@ -36,7 +36,7 @@ export default function CreatePage(props) {
     return(
         <div>
             <NavBar/>
-            <Box p={2.5}></Box>
+            <Box p={0.5}></Box>
             <div className={classNames(classes.main, classes.mainRaised)}>
                 <Box p={5} marginTop={7} />
                 <div className={classes.name}  >
