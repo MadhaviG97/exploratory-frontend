@@ -19,6 +19,7 @@ import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
 import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
+import ProjectSettings from "./views/research/index/ProjectSettings";
 
 function App() {
   return (
@@ -66,6 +67,11 @@ function App() {
               exact
               path="/project/MyProject/:id"
               component={Auth(ProjectPrivate, null)}
+            />
+            <Route
+              exact
+              path="/project/settings/:id"
+              component={Auth(ProjectSettings, null)}
             />
           </Switch>
         </div>
