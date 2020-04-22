@@ -22,6 +22,7 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 //redux
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { createResearch } from "../../../_actions/project_actions";
 //routing
 import { useHistory, useLocation } from "react-router-dom";
@@ -29,7 +30,8 @@ import { useHistory, useLocation } from "react-router-dom";
 export default function Form() {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+  const user = useSelector((state) => state.user);
+  console.log(user.userData);
   let history = useHistory();
   let location = useLocation();
   let { from } = location.state || {
@@ -41,12 +43,12 @@ export default function Form() {
       title: "",
       description: "",
       currentuser: {
-        id: 10001,
-        first_name: "Madhavi",
-        last_name: "gayathti",
-        university: "University of Colombo",
-        email: "mad@123.com",
-        profile_picture: "avatar-1.jpg",
+        id: "10001",
+        first_name: "yogya",
+        last_name: "gamage",
+        email: "yogyagamage@123.com",
+        university: "University of Jayawardhanapura",
+        profile_picture: "avatar-7.jpg",
       },
       collaborators: [10001],
       tags: [],
@@ -139,8 +141,8 @@ export default function Form() {
           <Autocomplete
             multiple
             id="fixed-collaborators-demo"
-            options={collaborators}
-            defaultValue={[collaborators[0]]}
+            options={[...collaborators, state.currentuser]}
+            defaultValue={[state.currentuser]}
             onChange={(event, value) => {
               onCollaboratorChange(value);
             }}
