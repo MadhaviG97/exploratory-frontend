@@ -116,7 +116,7 @@ export default function TitlebarGridList() {
        <div className={classNames(classes.main, classes.mainRaised)}>
          
           
-          <Box p={8} style={{ display: "flex" }} flexDirection="row" marginLeft={75} marginRight={16} marginTop={7}>
+          <Box p={8} style={{ display: "flex" }} flexDirection="row" marginLeft={75} marginRight={16} >{/* marginTop={7}*/}
             <div className={classes.name}>
               <h1 className={classes.title}>My Drive</h1>
             </div>
@@ -143,7 +143,7 @@ export default function TitlebarGridList() {
           </Box>
           <div className={classes.root}>
       
-            <GridList cellHeight={150} lg={8} md={12} xs={24} className={classes.gridList}>
+            <GridList cellHeight={150} cols={5} spacing={70} className={classes.gridList}>
           
               {tileData.map((tile) => (
                 <GridListTile key={tile.img}>

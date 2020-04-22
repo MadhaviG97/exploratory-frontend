@@ -7,10 +7,11 @@ export const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     fontWeight: "550",
     fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    fontSize:24,
     //display: "inline-block",
     //position: "relative",
     //marginTop: "30px",
-    minHeight: "32px",
+    minHeight: "50px",
     
   },
   avatar: {

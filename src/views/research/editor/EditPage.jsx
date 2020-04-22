@@ -38,6 +38,7 @@ function Edit2Page(props) {
     let reactQuillRef = null;
     const [text, setText] = useState("")
     const [savedStatus, setSavedStatus] = useState([])
+    const [name, setName] = useState("")
 
     useEffect(() => {
         let isCurrent = true
@@ -58,8 +59,8 @@ function Edit2Page(props) {
             axios.post('/editor/getPost', variable,config)
                 .then(response => {
                     if (response.data.success) {
-                        //console.log(response.data.post)
-                        
+                        console.log(response.data)
+                        setName(response.data.post.name)
                         setText(response.data.post.content)
                         console.log(text,'one')
                     } else {
@@ -96,7 +97,13 @@ function Edit2Page(props) {
     }
     
     const handleSave=()=> {
-        const variable = { postId: props.match.params.postId,text:text }
+        const variable = { 
+            postId: props.match.params.postId,
+          
+            content: text,
+            writer: "GeeFour",
+            name: name
+        }
         const token = localStorage.token;
         let config = {
             headers: {
@@ -128,14 +135,15 @@ function Edit2Page(props) {
         return (
         <div>
             <NavBar/>
-            <Box p={2.5}></Box>
+            <Box p={0.5}></Box>
             <div className={classNames(classes.main, classes.mainRaised)} >
                 <div style={{ maxWidth: '1000px', margin: '1.5rem auto' }}>
-                    <Box p={5} marginTop={7} />
+                    <Box p={5}  />
                     <div className={classes.name} >
-                        <h1 align='center' className={classes.title}>Post Name</h1>
+                    <h1 align='center' className={classes.title}>{name}</h1>
                        
                     </div>
+                    <h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>
                     <Box p={2} style={{ display: "flex" }} flexDirection="row" > 
                     <IconButton
                             edge="start"
@@ -145,7 +153,6 @@ function Edit2Page(props) {
                             >
                             <MenuIcon />
                         </IconButton>  
-                        <h3 align='center' className={classes.title}>{ saveStatusRender() }</h3>
                         <Tooltip title="Now Online">
                             <AvatarGroup max={4} style={{ marginLeft: "auto"}}>
                                 <Avatar alt="Remy Sharp" src={team1} />

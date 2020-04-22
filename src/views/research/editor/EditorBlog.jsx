@@ -11,7 +11,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import CardActions from '@material-ui/core/CardActions';
 
 import IconButton from '@material-ui/core/IconButton';
-import FavoriteIcon from '@material-ui/icons/Favorite';
+import DeleteIcon from '@material-ui/icons/Delete';
 import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Divider from '@material-ui/core/Divider';
@@ -42,10 +42,10 @@ export default function CreatePage(props) {
     return(
         <div>
             <NavBar/>
-            <Box p={2.5}></Box>
+            <Box p={2}></Box>
             <div className={classNames(classes.main, classes.mainRaised)}>
 
-                {/*<Box p={5} marginTop={7} />*/}
+                <Box p={5}/> {/*marginTop={7} />*/}
                 <div style={{ width: '85%', margin: '3rem auto' }}>
                     <div className={classes.name}  >
                         <h1 align='center' className={classes.title}>Group Name</h1>
@@ -53,7 +53,7 @@ export default function CreatePage(props) {
                     <Box p={1} />
                     <Grid container spacing={4} direction="row" justify="center" alignItems="center">
                         {blogs.map((blog,index) => (
-                        <Grid item lg={8} md={12} xs={24}>
+                        <Grid item lg={4} md={6} xs={12}>
                             <CardActionArea component="a" href={`/document/edit/${blog._id}`}>
                             <Card >
                                 <CardHeader
@@ -82,13 +82,13 @@ export default function CreatePage(props) {
                                 </CardContent>
                                 <Divider variant="middle" />
                                 <CardActions disableSpacing>
-                                    <IconButton aria-label="add to favorites" >
-                                    <FavoriteIcon />
-                                    </IconButton>
+                                    
                                     <IconButton aria-label="share">
                                     <ShareIcon />
                                     </IconButton>
-                                    
+                                    <IconButton aria-label="delete document"  >{/*href ={`/editor/delete/${blog._id}`} */}
+                                    <DeleteIcon />
+                                    </IconButton>
                                 </CardActions>
                                 
                                 

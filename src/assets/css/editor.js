@@ -21,6 +21,20 @@ export const useStyles = makeStyles((theme) => ({
     //position: "relative",
     //marginTop: "30px",
     minHeight: "32px",
+    fontSize:24,
+    textDecoration: "none"
+  },
+  title2: {
+    color: "#3C4858",
+    margin: "1.75rem 0 0.875rem",
+    textDecoration: "none",
+    fontWeight: "500",
+    fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    //display: "inline-block",
+    //position: "relative",
+    //marginTop: "30px",
+    minHeight: "32px",
+    fontSize:15,
     textDecoration: "none"
   },
 
