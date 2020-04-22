@@ -14,6 +14,9 @@ import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Avatar from "@material-ui/core/Avatar";
 import AddIcon from "@material-ui/icons/Add";
+import ButtonGroup from "@material-ui/core/ButtonGroup";
+import DeleteIcon from "@material-ui/icons/Delete";
+import EditIcon from "@material-ui/icons/Edit";
 
 import photo1 from "../../assets/images/user-profile/faces/kendall.jpg";
 import AnswerLikeSection from "./AnswerLikeSection";
@@ -130,15 +133,25 @@ export default function CommentSection() {
                 </ListItemAvatar>
                 <ListItemText primary={primary} secondary={secondary} />
                 <AnswerLikeSection />
+                <ButtonGroup
+                  color="primary"
+                  aria-label="outlined primary button group"
+                >
+                  <IconButton aria-label="delete">
+                    <DeleteIcon />
+                  </IconButton>
+                  <IconButton aria-label="edit">
+                    <EditIcon />
+                  </IconButton>
+                </ButtonGroup>
               </ListItem>
-
             </React.Fragment>
           ))}
         </List>
       </Paper>
       <AppBar position="relative" color="Primary" className={classes.appBar}>
         <Toolbar>
-        <AddComment />
+          <AddComment />
           <div className={classes.grow} />
         </Toolbar>
       </AppBar>

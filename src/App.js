@@ -74,8 +74,9 @@ function App() {
             <Route exact path="/document/edit/:postId" component={Auth(EditPage,null)} />
             <Route exact path="/document/editorblog" component={Auth(EditorBlog,null)} />
             
-            <Route exact path="/project" component={Auth(Project,null)} />
+            {/* <Route exact path="/project" component={Auth(Project,null)} /> */}
             <Route exact path="/forum" component={Auth(Forum,true)} />
+            <Route exact path="/userProfile" component={Auth(UserProfile,true)} />
             {/* <Route exact path="/modal" component={Modal} /> */}
           </Switch>
         </div>
