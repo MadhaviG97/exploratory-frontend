@@ -28,22 +28,6 @@ function App() {
       <ThemeProvider theme={Theme}>
         <div>
           <Switch>
-<<<<<<< HEAD
-            <Route exact path="/" component={Auth(AboutUs,null)} />
-            <Route exact path="/signin" component={Auth(signIn,false)} />
-            <Route exact path="/signup" component={Auth(signUp,false)} />
-            <Route exact path="/fillProfile" component={Auth(fillProfile,true)} />
-            <Route exact path="/userProfile" component={Auth(UserProfile,true)} />
-            <Route exact path="/aboutus" component={Auth(AboutUs,null)} />
-            <Route exact path="/document/create" component={Auth(CreatePage,true)} />
-            {/*<Route exact path="/document/edit" component={EditPage} />
-            <Route exact path="/blog/edit/:postId" component={Auth(EditPage, null)} />*/}
-            <Route exact path="/document/projectfolder" component={Auth(ProjectFolder,null)} />
-            <Route exact path="/document/filemanager" component={Auth(FileManager,null)} />
-            <Route exact path="/project" component={Auth(Project,null)} />
-            <Route exact path="/forum" component={Auth(Forum,true)} />
-            {/* <Route exact path="/modal" component={Modal} /> */}
-=======
             <Route exact path="/" component={Auth(AboutUs, null)} />
             <Route exact path="/signin" component={Auth(signIn, false)} />
             <Route exact path="/signup" component={Auth(signUp, false)} />
@@ -85,7 +69,8 @@ function App() {
               path="/project/MyProject/:id"
               component={Auth(ProjectPrivate, null)}
             />
->>>>>>> origin/development
+            <Route exact path="/forum" component={Auth(Forum, null)} />
+            <Route exact path="/userProfile" component={Auth(UserProfile, null)} />
           </Switch>
         </div>
       </ThemeProvider>
