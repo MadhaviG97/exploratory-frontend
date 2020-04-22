@@ -26,6 +26,7 @@ import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
 import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
+import ProjectSettings from "./views/research/index/ProjectSettings";
 
 import Project from "./views/research/index/ViewResearchPublic";
 
@@ -96,6 +97,11 @@ function App() {
             <Route exact path="/forum" component={Auth(Forum, true)} />
             <Route exact path="/userProfile" component={Auth(UserProfile, null)} />
             {/* <Route exact path="/modal" component={Modal} /> */}
+            <Route
+              exact
+              path="/project/settings/:id"
+              component={Auth(ProjectSettings, null)}
+            />
           </Switch>
         </div>
       </ThemeProvider>

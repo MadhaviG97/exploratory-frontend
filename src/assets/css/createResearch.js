@@ -30,4 +30,7 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
     marginLeft: theme.spacing(1),
   },
+  fileUploader: {
+    padding: theme.spacing(0.5, 2),
+  },
 }));
