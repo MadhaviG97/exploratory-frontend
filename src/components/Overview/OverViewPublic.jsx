@@ -2,6 +2,7 @@ import React from "react";
 import { Box, Paper, Typography, Divider, Button } from "@material-ui/core";
 import { useStyles } from "../../assets/css/overviewpublic";
 import PDFViewer from "pdf-viewer-reactjs";
+import ImageViewer from "./ImageList";
 
 export default function Overview() {
   const classes = useStyles();
@@ -9,7 +10,7 @@ export default function Overview() {
   const text =
     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut ";
   const [state, setState] = React.useState({
-    permission: true,
+    permission: false,
     requested: false,
   });
 
@@ -61,6 +62,8 @@ export default function Overview() {
             </Typography>
             <Divider />
             <Typography variant="caption">{text}</Typography>
+
+            <ImageViewer />
           </Paper>
         </Box>
 
