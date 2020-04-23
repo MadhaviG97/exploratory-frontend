@@ -17,7 +17,7 @@ export default function Home(props) {
             followers="2"
             updates="8"
             projectName="Automated Inter-artefact Traceability Establishment for DevOps Practice"
-            authour="Charunie Prabodha"
+            authour="Gamlath Perera"
             description="Showcase your professional experience and education to help potential employers and collaborators find and contact you about career opportunities."
           />
           <Tab />
