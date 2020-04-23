@@ -52,7 +52,7 @@ function CreatePage(props) {
                 <div style={{ maxWidth: '1000px', margin: '1.5rem auto'}}>
                     <Box p={5}  />{/*marginTop={7}*/}
                     <div className={classes.name} >
-                        <h1 align='center' className={classes.title}>Group Name</h1>
+                        <h1 align='center' className={classes.title}>Editor</h1>
                     </div>
                         
                         <Box p={2} style={{ display: "flex" }} flexDirection="row" > 
