@@ -13,27 +13,13 @@ export default function FeaturedPost(props) {
         <div>
           <CardContent>
             <Box display="flex" flexDirection="column">
-              <Box display="flex" flexDirection="row">
-                <Box width={1 / 2} className={classes.subcard}>
-                  <ProjectCard
-                    heading={props.card1.heading}
-                    value={props.card1.message}
-                    editState={props.card1.editState}
-                    name={props.card1.name}
-                    handleEditState={props.handleEditState}
-                  />
-                </Box>
-
-                <Box width={1 / 2} className={classes.subcard}>
-                  <ProjectCard
-                    heading={props.card2.heading}
-                    value={props.card2.message}
-                    editState={props.card2.editState}
-                    name={props.card2.name}
-                    handleEditState={props.handleEditState}
-                  />
-                </Box>
-              </Box>
+              <ProjectCard
+                heading={props.card1.heading}
+                value={props.card1.message}
+                editState={props.card1.editState}
+                name={props.card1.name}
+                handleEditState={props.handleEditState}
+              />
             </Box>
           </CardContent>
         </div>

@@ -69,10 +69,10 @@ export default function Overview() {
 
         <Box className={classes.box}>
           <Paper className={classes.abstract}>
-            {/* {text} */}
             <ExamplePDFViewer view={state.permission} />
           </Paper>
         </Box>
+
         {!state.permission && (
           <Box className={classes.box}>
             <Button

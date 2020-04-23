@@ -92,10 +92,10 @@ export default function Form() {
         collaborators: state.collaborators,
         tags: state.tags,
       };
-      // console.log(formData);
+
+      console.log(formData);
       dispatch(createResearch(formData))
         .then((result) => {
-          // console.log(result);
           cb();
         })
         .catch((e) => console.log(e));
