@@ -22,7 +22,7 @@ export default function ProjectFolderGrid(props) {
           <div className={classes.cardDetails}>
             <CardContent>
             <div className={classes.name} >
-                  <h2 className={classes.title}>{post.title}</h2>
+                  <h2 className={classes.topic}>{post.title}</h2>
                 </div>
               
               

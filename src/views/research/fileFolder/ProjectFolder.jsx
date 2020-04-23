@@ -36,13 +36,16 @@ export default function CreatePage(props) {
     return(
         <div>
             <NavBar/>
-            <Box p={0.5}></Box>
+            
             <div className={classNames(classes.main, classes.mainRaised)}>
-                <Box p={5} marginTop={7} />
-                <div className={classes.name}  >
-                    <h1 align='center' className={classes.title}>Group Name</h1>
+            <Box p={1}  style={{  background: '#014f82'}}>
+                
+                <div className={classes.name} >
+                    <h1 align='center' className={classes.title}>Group</h1>
                 </div>
-                <Box p={1} />
+                
+            </Box>
+            <Box p={3}/>
                 <Grid container spacing={4} direction="row" justify="center" alignItems="center">
                     {featuredPosts.map((post) => (
                     <ProjectFolderGrid key={post.title} post={post} />
@@ -50,7 +53,7 @@ export default function CreatePage(props) {
                 </Grid>
                 <Box p={5} marginTop={1} />
                 <div className={classes.name} >
-                    <h2 align='center' className={classes.title}>Compare Two Documents</h2>
+                    <h2 align='center' className={classes.topic}>Compare Two Documents</h2>
                 </div>
                 <Box p={3} justifyContent='center' style={{ display: "flex" }} flexDirection="row"  >
                 <Button style={{  color: '#3C4858'}} variant="outlined"component="label">

@@ -2,12 +2,26 @@ import { makeStyles } from "@material-ui/core/styles";
 export const useStyles = makeStyles((theme) => ({
   
   title: {
-    color: "#3C4858",
+    color: "#FFFFFF",
     margin: "1.75rem 0 0.875rem",
     textDecoration: "none",
     fontWeight: "550",
     //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
-    fontSize:24,
+    //display: "inline-block",
+    //position: "relative",
+    //marginTop: "30px",
+    minHeight: "32px",
+    fontSize:25,
+    textDecoration: "none"
+    
+  },
+  topic: {
+    color: "#3C4858",
+    margin: "1.75rem 0 0.875rem",
+    textDecoration: "none",
+    fontWeight: "480",
+    //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    fontSize:22,
     //display: "inline-block",
     //position: "relative",
     //marginTop: "30px",
