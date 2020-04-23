@@ -9,6 +9,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
+import Container from '@material-ui/core/Container';
 
 import WorkIcon from "@material-ui/icons/Work";
 import EmailIcon from "@material-ui/icons/Email";
@@ -56,7 +57,8 @@ export default function CenteredGrid() {
       <NavBar />
       <Grid container spacing={0}>
         <Grid item xs={4}>
-          <Paper className={classes.paper}>
+          <Container style={{backgroundColor: '#222297', padding:'2px'}}>
+          <Paper className={classes.paper}  >
             <div className={classes.paper}>
               <img
                 src={profile}
@@ -148,6 +150,7 @@ export default function CenteredGrid() {
               <EditProfile />
             </div>
           </Paper>
+          </Container>
         </Grid>
         <Grid item xs={8}>
           <Paper className={classes.paper}>
