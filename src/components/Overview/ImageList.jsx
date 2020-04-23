@@ -7,7 +7,10 @@ import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import Button from "@material-ui/core/Button";
-import image from "./default.jpg";
+
+const image_0 = "/images/poster-images/default-0.jpg";
+const image_1 = "/images/poster-images/default-1.jpg";
+const image_2 = "/images/poster-images/default-2.jpg";
 
 const classes = {
   root: {
@@ -36,20 +39,16 @@ export default class ImageViwerClass extends React.Component {
     viewerIsOpen: false,
     dataSet: [
       {
-        src: image,
+        src: image_0,
         caption: "Image 1",
       },
       {
-        src: image,
+        src: image_1,
         caption: "Image 2",
       },
       {
-        src: image,
+        src: image_2,
         caption: "Image 3",
-      },
-      {
-        src: image,
-        caption: "Image 4",
       },
     ],
   };
