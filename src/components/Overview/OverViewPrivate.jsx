@@ -1,11 +1,7 @@
 import React from "react";
 import { Box } from "@material-ui/core";
 import { useStyles } from "../../assets/css/overview";
-import FeaturedPost from "./FeaturedPost";
-import HypothesisForm from "../Forms/ProjectForms/HypothesisForm";
-import GoalForm from "../Forms/ProjectForms/GoalForm";
 import { CardContent } from "@material-ui/core";
-// import { useStyles } from "../../assets/css/featuredPost";
 import ProjectCard from "./projectCard";
 import { useHistory, useLocation } from "react-router-dom";
 
@@ -36,7 +32,6 @@ export default function Overview() {
   });
 
   const setEditState = () => {
-    console.log("edit");
     history.replace(from);
   };
 
@@ -85,16 +80,6 @@ export default function Overview() {
           </CardContent>
         </Box>
       </Box>
-      {/* <HypothesisForm
-        open={form.abstract.editState}
-        defaultValue={form.hypothesis.message}
-        handleClose={setEditState}
-      />
-      <GoalForm
-        open={form.abstract.editState}
-        defaultValue={form.goal.message}
-        handleClose={setEditState}
-      /> */}
     </React.Fragment>
   );
 }
