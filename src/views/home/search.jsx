@@ -3,6 +3,7 @@ import SearchList from "../../components/search/SearchList";
 import Box from "@material-ui/core/Box";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
+import { useSelector } from "react-redux";
 
 const dummyData2 = [
   {
@@ -59,22 +60,46 @@ const dummyInstitutions = [
     link: "http//www.google.com",
   },
 ];
-export default function Search() {
+
+export default function Search(props) {
+  const searchResult = useSelector((state) => state.project).searchData;
+
   return (
     <Box display="flex" flexDirection="column">
       <Box>
         <Navbar />
       </Box>
       <Box flexGrow="1">
-        <SearchList
-          projects={dummyData2}
-          researchers={dummyData2}
-          institutions={dummyInstitutions}
-        />
+        <main>
+          {!searchResult && (
+            <SearchList
+              projects={dummyData2}
+              researchers={dummyData2}
+              institutions={dummyInstitutions}
+            />
+          )}
+          {searchResult && (
+            <SearchList
+              projects={searchResult.projects}
+              researchers={searchResult.researchers}
+              institutions={searchResult.institutions}
+            />
+          )}
+          {/* <SearchList
+            projects={dummyData2}
+            researchers={dummyData2}
+            institutions={dummyInstitutions}
+          /> */}
+          {/* <SearchList
+            projects={searchResult.projects}
+            researchers={searchResult.researchers}
+            institutions={searchResult.institutions}
+          /> */}
+        </main>
       </Box>
-      <Box>
+      {/* <Box>
         <Footer />
-      </Box>
+      </Box> */}
     </Box>
   );
 }

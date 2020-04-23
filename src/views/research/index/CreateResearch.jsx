@@ -43,14 +43,14 @@ export default function Form() {
       title: "",
       description: "",
       currentuser: {
-        id: "10001",
-        first_name: "yogya",
-        last_name: "gamage",
-        email: "yogyagamage@123.com",
-        university: "University of Jayawardhanapura",
-        profile_picture: "avatar-7.jpg",
+        id: 10003,
+        first_name: "gamlath",
+        last_name: "perera",
+        university: "University of Moratuwa",
+        email: "gamlath@123.com",
+        profile_picture: "avatar-3.jpg",
       },
-      collaborators: [10001],
+      collaborators: [10003],
       tags: [],
     });
 

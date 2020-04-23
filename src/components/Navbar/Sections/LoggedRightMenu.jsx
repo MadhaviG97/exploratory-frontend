@@ -7,11 +7,11 @@ import TextField from "@material-ui/core/TextField";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import CustomDropdown from "../../CustomDropdown/CustomDropdown.js";
 import Badge from "@material-ui/core/Badge";
-import { IconButton, Button } from "@material-ui/core";
+import { IconButton } from "@material-ui/core";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import LinkTo from "@material-ui/core/Link";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
@@ -25,11 +25,48 @@ import Notifications from "../../Notification/NotificationList";
 import SearchIcon from "@material-ui/icons/Search";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
-// import { search } from "../../../_actions/user_actions";
+import { search } from "../../../_actions/project_actions";
+import FlatButton from "material-ui/FlatButton";
 
 const useStyles = makeStyles(styles);
 
 function LoggedRightMenu(props) {
+  React.useEffect(() => {
+    const timer = setTimeout(() => {
+      console.log("This will run after 5 second!");
+
+      ReactMaterialUiNotifications.showNotification({
+        title: "Title",
+        additionalText: `You have a new chat from Janith`,
+        iconBadgeColor: "#014f82",
+        icon: <NotificationsActiveIcon />,
+        overflowContent: (
+          <div>
+            <FlatButton
+              label="mark as read"
+              icon={<DoneOutlineIcon color="primary" />}
+            />
+            <FlatButton
+              label="direct me"
+              icon={<ExitToAppIcon color="primary" />}
+              // onClick={(e) =>
+              //   handleSubmit(e, () => {
+              //     history.replace(from);
+              //   })
+              // }
+            />
+          </div>
+        ),
+        timestamp: moment().format("h:mm A"),
+        personalised: true,
+        avatar: "/images/notification/bell.png",
+        priority: true,
+        zDepth: 4,
+      });
+    }, 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
   const [state, setState] = React.useState({
     count: 0,
     data_list: {
@@ -89,6 +126,8 @@ function LoggedRightMenu(props) {
   };
 
   const user = useSelector((state) => state.user);
+  const project = useSelector((state) => state.project);
+  const dispatch = useDispatch();
 
   let profileImage =
     process.env.PUBLIC_URL + "/images/profile-pictures/profilePic.png";
@@ -128,34 +167,6 @@ function LoggedRightMenu(props) {
 
   const handleShowNotification = () => {
     setState({ ...state, show: !state.show });
-    // ReactMaterialUiNotifications.showNotification({
-    //   title: "Title",
-    //   additionalText: `Some message to be displayed ${state.count}`,
-    //   iconBadgeColor: "#014f82",
-    //   icon: <NotificationsActiveIcon />,
-    //   overflowContent: (
-    //     <div>
-    //       <FlatButton
-    //         label="mark as read"
-    //         icon={<DoneOutlineIcon color="primary" />}
-    //       />
-    //       <FlatButton
-    //         label="direct me"
-    //         icon={<ExitToAppIcon color="primary" />}
-    //         onClick={(e) =>
-    //           handleSubmit(e, () => {
-    //             history.replace(from);
-    //           })
-    //         }
-    //       />
-    //     </div>
-    //   ),
-    //   timestamp: moment().format("h:mm A"),
-    //   personalised: true,
-    //   avatar: "images/notification/bell.png",
-    //   priority: true,
-    //   zDepth: 4,
-    // });
   };
 
   const handleChange = (e) => {
@@ -166,10 +177,12 @@ function LoggedRightMenu(props) {
     const formData = {
       searchString: state.searchString,
     };
-    // dispatch(search(formData)).then((result) => {
-    //   console.log(result);
-    //   // cb();
-    // });
+    dispatch(search(formData))
+      .then((result) => {
+        console.log("sent");
+        console.log(result);
+      })
+      .catch((e) => console.log(e));
     history.replace(from);
   };
 
