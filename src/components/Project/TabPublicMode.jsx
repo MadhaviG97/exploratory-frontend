@@ -94,11 +94,6 @@ export default function FullWidthTabs() {
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           <ChatHead />
-          <ChatHead />
-          <ChatHead />
-          <ChatHead />
-          <ChatHead />
-          <ChatHead />
         </TabPanel>
       </SwipeableViews>
     </div>
