@@ -8,8 +8,8 @@ import AboutUs from "./views/shared/about-us.jsx";
 import Forum from "./views/shared/public-forum";
 import signIn from "./views/researcher/sign-in";
 
-import feed from "./views/researcher/feed";
-import search from './views/home/search'
+import Feed from "./views/researcher/feed";
+import Search from "./views/home/search";
 
 import Auth from "./hoc/auth";
 import Navbar from "./components/Navbar/Navbar";
@@ -36,7 +36,12 @@ function App() {
       <ThemeProvider theme={Theme}>
         <div>
           <Switch>
-            <Route exact path="/" component={Auth(AboutUs, null)} />
+            <Route exact path="/" component={Auth(Feed, true)} />
+            <Route
+              exact
+              path="/search/:string"
+              component={Auth(Search, true)}
+            />
             <Route exact path="/signin" component={Auth(signIn, false)} />
             <Route exact path="/signup" component={Auth(signUp, false)} />
             <Route
@@ -95,7 +100,11 @@ function App() {
 
             <Route exact path="/project" component={Auth(Project, null)} />
             <Route exact path="/forum" component={Auth(Forum, true)} />
-            <Route exact path="/userProfile" component={Auth(UserProfile, null)} />
+            <Route
+              exact
+              path="/userProfile"
+              component={Auth(UserProfile, null)}
+            />
             {/* <Route exact path="/modal" component={Modal} /> */}
             <Route
               exact
