@@ -15,7 +15,7 @@ import Footer from "../../../components/Footer/Footer";
 import NavBar from "../../../components/Navbar/Navbar";
 import FolderDialog from '../../../components/editor/FolderDialog';
 import TextField from '@material-ui/core/TextField';
-
+import Divider from "@material-ui/core/Divider";
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -112,15 +112,19 @@ export default function TitlebarGridList() {
             <MenuItem style={{ color: '#4f606c',fontSize: 12.5 }} onClick={handleClose}><ShareIcon style={{ color: '#014f82'}} marginRight={2}/>Share</MenuItem>
             <MenuItem style={{ color: '#4f606c',fontSize: 12.5 }} onClick={handleClose}><DeleteIcon style={{ color: '#d60009'}} marginRight={2}/>Delete</MenuItem>
           </Menu>
-      <Box p={2.5}></Box>
-       <div className={classNames(classes.main, classes.mainRaised)}>
+      
          
           
-          <Box p={8} style={{ display: "flex" }} flexDirection="row" marginLeft={75} marginRight={16} >{/* marginTop={7}*/}
-            <div className={classes.name}>
-              <h1 className={classes.title}>My Drive</h1>
-            </div>
-            <Tooltip title="Add a File">
+          
+          <div className={classNames(classes.main, classes.mainRaised)}>
+          <Box p={1}  style={{  background: '#014f82'}}>
+            
+              <div className={classes.name} >
+                  <h1 align='center' className={classes.title}>Drive</h1>
+              </div>
+            </Box>
+          <Box p={3} style={{ display: "flex" }} flexDirection="row" > 
+          <Tooltip title="Add a File">
             <Button
               style={{ marginLeft: "auto", background: '#014f82',//can change the sign-in button color from here
               color: '#FFFFFF',
@@ -139,8 +143,7 @@ export default function TitlebarGridList() {
             <Box p={1}></Box>
             
             <FolderDialog/>
-            
-          </Box>
+            </Box>
           <div className={classes.root}>
       
             <GridList cellHeight={150} cols={5} spacing={70} className={classes.gridList}>
@@ -149,9 +152,7 @@ export default function TitlebarGridList() {
                 <GridListTile key={tile.img}>
                   <img src={tile.img} alt={tile.title} />
                 <GridListTileBar
-                style={{
-                  backgroundColor:'#003f68'
-                }}
+                
                   
                   title={tile.title}
                   subtitle={<span>by: {tile.author}</span>}

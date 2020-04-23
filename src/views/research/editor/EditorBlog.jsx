@@ -42,14 +42,18 @@ export default function CreatePage(props) {
     return(
         <div>
             <NavBar/>
-            <Box p={2}></Box>
+            
             <div className={classNames(classes.main, classes.mainRaised)}>
-
-                <Box p={5}/> {/*marginTop={7} />*/}
-                <div style={{ width: '85%', margin: '3rem auto' }}>
-                    <div className={classes.name}  >
-                        <h1 align='center' className={classes.title}>Group Name</h1>
+                <Box p={1}  style={{  background: '#014f82'}}>
+                
+                    <div className={classes.name} >
+                        <h1 align='center' className={classes.title}>Documents</h1>
                     </div>
+                    
+                </Box>
+                 {/*marginTop={7} />*/}
+                <div style={{ width: '85%', margin: '3rem auto' }}>
+                    
                     <Box p={1} />
                     <Grid container spacing={4} direction="row" justify="center" alignItems="center">
                         {blogs.map((blog,index) => (
@@ -100,7 +104,7 @@ export default function CreatePage(props) {
                 </div>
                 
                 
-                <Box p={2}></Box>
+                <Box p={5}></Box>
             </div>
             
             <Footer/>
