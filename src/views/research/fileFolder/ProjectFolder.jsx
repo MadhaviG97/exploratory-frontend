@@ -11,22 +11,23 @@ import Grid from '@material-ui/core/Grid';
 import ProjectFolderGrid from '../../../components/editor/ProjectFolderGrid';
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 const featuredPosts = [
-    {
-    title: 'My Drive',
     
-    description:
-        '',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
+    {
+        title: 'Document Editor',
+        refr:"/document/create",
+        description:
+            '',
+        image: process.env.PUBLIC_URL + '/images/fileFolder/images.jpg',
+        imageText: 'Image Text',
     },
     {
-    title: 'Document Editor',
-    
-    description:
-        '',
-    image: 'https://source.unsplash.com/random',
-    imageText: 'Image Text',
-    },
+        title: 'Drive',
+        refr:"/document/fileManager",
+        description:
+            '',
+            image: process.env.PUBLIC_URL + '/images/fileFolder/folders.jpg',
+        imageText: 'Image Text',
+        },
 ];
 
 export default function CreatePage(props) {
@@ -38,15 +39,15 @@ export default function CreatePage(props) {
             <NavBar/>
             
             <div className={classNames(classes.main, classes.mainRaised)}>
-            <Box p={1}  style={{  background: '#014f82'}}>
-                
-                <div className={classes.name} >
-                    <h1 align='center' className={classes.title}>Group</h1>
-                </div>
-                
-            </Box>
-            <Box p={3}/>
-                <Grid container spacing={4} direction="row" justify="center" alignItems="center">
+                <Box p={1}  style={{  background: '#014f82'}}>
+                    
+                    <div className={classes.name} >
+                        <h1 align='center' className={classes.title}>Group</h1>
+                    </div>
+                    
+                </Box>
+                <Box p={3}/>
+                <Grid container spacing={4} direction="row" justify="center"  alignItems="center">
                     {featuredPosts.map((post) => (
                     <ProjectFolderGrid key={post.title} post={post} />
                     ))}

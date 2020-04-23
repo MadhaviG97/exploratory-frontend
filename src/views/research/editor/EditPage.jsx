@@ -101,7 +101,7 @@ function Edit2Page(props) {
             postId: props.match.params.postId,
           
             content: text,
-            writer: "GeeFour",
+            //writer: "GeeFour",
             name: name
         }
         const token = localStorage.token;
