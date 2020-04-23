@@ -44,26 +44,6 @@ export default function CountGrid() {
             </Typography>
             </Paper>
         </Grid>
-        <Grid item xs={6}>
-        <Paper className={classes.paper} >
-            <Typography variant="title" gutterBottom>
-            Best Answers
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              12
-            </Typography>
-            </Paper>
-        </Grid>
-        <Grid item xs={6}>
-        <Paper className={classes.paper} >
-            <Typography variant="title" gutterBottom>
-              Users
-            </Typography>
-            <Typography variant="h5"  gutterBottom>
-              10
-            </Typography>
-            </Paper>
-        </Grid>
       </Grid>
     </div>
   );
