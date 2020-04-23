@@ -3,6 +3,7 @@ import styles from "../../../assets/jss/material-kit-react/views/componentsSecti
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
+import TextField from "@material-ui/core/TextField";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import CustomDropdown from "../../CustomDropdown/CustomDropdown.js";
 import Badge from "@material-ui/core/Badge";
@@ -21,47 +22,14 @@ import moment from "moment";
 import ReactMaterialUiNotifications from "../../../views/shared/ReactMaterialUiNotifications";
 import Paper from "@material-ui/core/Paper";
 import Notifications from "../../Notification/NotificationList";
+import SearchIcon from "@material-ui/icons/Search";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
+// import { search } from "../../../_actions/user_actions";
 
 const useStyles = makeStyles(styles);
 
 function LoggedRightMenu(props) {
-  //these ara the links in the left side of the nav bar
-  const classes = useStyles();
-  const history = useHistory();
-  let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/project" } };
-
-  const user = useSelector((state) => state.user);
-
-  let profileImage =
-    process.env.PUBLIC_URL + "/images/profile-pictures/profilePic.png";
-  if (user.userData.profile_picture) {
-    profileImage =
-      process.env.PUBLIC_URL +
-      "/images/profile-pictures/" +
-      user.userData.profile_picture;
-  }
-
-  const name = user.userData.first_name;
-  const logoutHandler = () => {
-    const token = localStorage.token;
-
-    let config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-
-    localStorage.removeItem("token");
-    axios.post(`/logout`, {}, config).then((response) => {
-      if (response.status === 200) {
-        history.push("/signin");
-      } else {
-        alert("Log Out Failed");
-      }
-    });
-  };
-
   const [state, setState] = React.useState({
     count: 0,
     data_list: {
@@ -76,6 +44,7 @@ function LoggedRightMenu(props) {
       title: "",
       description: "",
     },
+    searchString: "",
     data: [
       {
         id: "1",
@@ -110,6 +79,45 @@ function LoggedRightMenu(props) {
     ],
     show: false,
   });
+
+  const classes = useStyles();
+  const history = useHistory();
+  let location = useLocation();
+  // let { from } = location.state || { from: { pathname: "/project" } };
+  let { from } = location.state || {
+    from: { pathname: `/search/${state.searchString}` },
+  };
+
+  const user = useSelector((state) => state.user);
+
+  let profileImage =
+    process.env.PUBLIC_URL + "/images/profile-pictures/profilePic.png";
+  if (user.userData.profile_picture) {
+    profileImage =
+      process.env.PUBLIC_URL +
+      "/images/profile-pictures/" +
+      user.userData.profile_picture;
+  }
+
+  const name = user.userData.first_name;
+  const logoutHandler = () => {
+    const token = localStorage.token;
+
+    let config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    };
+
+    localStorage.removeItem("token");
+    axios.post(`/logout`, {}, config).then((response) => {
+      if (response.status === 200) {
+        history.push("/signin");
+      } else {
+        alert("Log Out Failed");
+      }
+    });
+  };
 
   const muiTheme = getMuiTheme();
 
@@ -150,8 +158,39 @@ function LoggedRightMenu(props) {
     // });
   };
 
+  const handleChange = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleSearch = (e) => {
+    const formData = {
+      searchString: state.searchString,
+    };
+    // dispatch(search(formData)).then((result) => {
+    //   console.log(result);
+    //   // cb();
+    // });
+    history.replace(from);
+  };
+
   return (
     <List className={classes.list}>
+      <ListItem className={classes.listItem}>
+        <OutlinedInput
+          id="outlined-adornment-password"
+          // value={state.searchString}
+          name="searchString"
+          onChange={handleChange}
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton aria-label="search" onClick={handleSearch} edge="end">
+                <SearchIcon />
+              </IconButton>
+            </InputAdornment>
+          }
+          labelWidth={70}
+        />
+      </ListItem>
       <ListItem className={classes.listItem}>
         <MuiThemeProvider muiTheme={muiTheme}>
           <React.Fragment>

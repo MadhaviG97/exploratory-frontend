@@ -12,27 +12,20 @@ export function registerUser(dataToSubmit) {
   };
 }
 
-export function loginUser(dataToSubmit){
-    const request = axios.post(`/login`,dataToSubmit)
-        .then(response => {
-            if (response.message){
-
-            }else{
-                localStorage.setItem("token", response.data.token)
-                console.log(response.data.token)
-            }
-
-        })
-    
-
-    return {
-        type: LOGIN_USER,
-        payload: request
+export function loginUser(dataToSubmit) {
+  const request = axios.post(`/login`, dataToSubmit).then((response) => {
+    if (response.message) {
+    } else {
+      localStorage.setItem("token", response.data.token);
+      console.log(response.data.token);
     }
+  });
+
+  return {
+    type: LOGIN_USER,
+    payload: request,
   };
-
-  
-
+}
 
 export function auth() {
   const token = localStorage.token;
@@ -60,6 +53,17 @@ export function logoutUser() {
 
   return {
     type: LOGOUT_USER,
+    payload: request,
+  };
+}
+
+export function search(dataToSubmit) {
+  const request = axios
+    .post(`/search`, dataToSubmit)
+    .then((response) => response.data);
+
+  return {
+    type: LOGIN_USER,
     payload: request,
   };
 }
