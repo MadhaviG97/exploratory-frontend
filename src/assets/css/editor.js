@@ -12,7 +12,7 @@ export const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(3),
   },
   title: {
-    color: "#3C4858",
+    color: "#FFFFFF",
     margin: "1.75rem 0 0.875rem",
     textDecoration: "none",
     fontWeight: "550",
@@ -21,8 +21,21 @@ export const useStyles = makeStyles((theme) => ({
     //position: "relative",
     //marginTop: "30px",
     minHeight: "32px",
-    fontSize:24,
+    fontSize:25,
     textDecoration: "none"
+  },
+  topic: {
+    color: "#3C4858",
+    margin: "1.75rem 0 0.875rem",
+    textDecoration: "none",
+    fontWeight: "480",
+    //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    fontSize:22,
+    //display: "inline-block",
+    //position: "relative",
+    //marginTop: "30px",
+    minHeight: "50px",
+    
   },
   title2: {
     color: "#3C4858",
