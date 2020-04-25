@@ -74,7 +74,7 @@ export default function FullWidthTabs() {
           
         >
           <Tab label="Popular Questions" {...a11yProps(0)} />
-          <Tab label="Popular Answers" {...a11yProps(1)} />
+          <Tab label="Rated Answers" {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
