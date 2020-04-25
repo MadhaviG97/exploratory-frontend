@@ -22,6 +22,7 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 //redux
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { createResearch } from "../../../_actions/project_actions";
 //routing
 import { useHistory, useLocation } from "react-router-dom";
@@ -29,7 +30,8 @@ import { useHistory, useLocation } from "react-router-dom";
 export default function Form() {
   const classes = useStyles();
   const dispatch = useDispatch();
-
+  const user = useSelector((state) => state.user);
+  console.log(user.userData);
   let history = useHistory();
   let location = useLocation();
   let { from } = location.state || {
@@ -41,14 +43,14 @@ export default function Form() {
       title: "",
       description: "",
       currentuser: {
-        id: 10001,
-        first_name: "Madhavi",
-        last_name: "gayathti",
-        university: "University of Colombo",
-        email: "mad@123.com",
-        profile_picture: "avatar-1.jpg",
+        id: 10003,
+        first_name: "gamlath",
+        last_name: "perera",
+        university: "University of Moratuwa",
+        email: "gamlath@123.com",
+        profile_picture: "avatar-3.jpg",
       },
-      collaborators: [10001],
+      collaborators: [10003],
       tags: [],
     });
 
@@ -90,10 +92,10 @@ export default function Form() {
         collaborators: state.collaborators,
         tags: state.tags,
       };
-      // console.log(formData);
+
+      console.log(formData);
       dispatch(createResearch(formData))
         .then((result) => {
-          // console.log(result);
           cb();
         })
         .catch((e) => console.log(e));
@@ -139,8 +141,8 @@ export default function Form() {
           <Autocomplete
             multiple
             id="fixed-collaborators-demo"
-            options={collaborators}
-            defaultValue={[collaborators[0]]}
+            options={[...collaborators, state.currentuser]}
+            defaultValue={[state.currentuser]}
             onChange={(event, value) => {
               onCollaboratorChange(value);
             }}
@@ -289,26 +291,26 @@ const tags = [
 const collaborators = [
   {
     id: 10001,
-    first_name: "peshaka",
-    last_name: "dhananjaya",
+    first_name: "madhavi",
+    last_name: "gayathri",
     university: "University of Moratuwa",
-    email: "peshaka_1@123.com",
+    email: "mad@123.com",
     profile_picture: "avatar-1.jpg",
   },
   {
     id: 10002,
-    first_name: "peshaka",
-    last_name: "dhananjaya",
+    first_name: "malani",
+    last_name: "fonseka",
     university: "University of Moratuwa",
-    email: "peshaka_2@123.com",
+    email: "melani@123.com",
     profile_picture: "avatar-2.jpg",
   },
   {
     id: 10003,
-    first_name: "peshaka",
-    last_name: "dhananjaya",
+    first_name: "gamlath",
+    last_name: "perera",
     university: "University of Moratuwa",
-    email: "peshaka_3@123.com",
+    email: "gamlath@123.com",
     profile_picture: "avatar-3.jpg",
   },
   {
@@ -316,39 +318,39 @@ const collaborators = [
     first_name: "peshaka",
     last_name: "dhananjaya",
     university: "University of Moratuwa",
-    email: "peshaka_4@123.com",
+    email: "peshaka@123.com",
     profile_picture: "avatar-4.jpg",
   },
   {
     id: 10005,
-    first_name: "peshaka",
-    last_name: "dhananjaya",
+    first_name: "janith",
+    last_name: "janith",
     university: "University of Moratuwa",
-    email: "peshaka_5@123.com",
+    email: "janith@123.com",
     profile_picture: "avatar-5.jpg",
   },
-  // {
-  //   id: 10006,
-  //   first_name: "peshaka",
-  //   last_name: "dhananjaya",
-  //   university: "University of Moratuwa",
-  //   email: "peshaka_6@123.com",
-  //   profile_picture: "avatar-6.jpg",
-  // },
-  // {
-  //   id: 10007,
-  //   first_name: "peshaka",
-  //   last_name: "dhananjaya",
-  //   university: "University of Moratuwa",
-  //   email: "peshaka_7@123.com",
-  //   profile_picture: "avatar-7.jpg",
-  // },
-  // {
-  //   id: 10008,
-  //   first_name: "peshaka",
-  //   last_name: "dhananjaya",
-  //   university: "University of Moratuwa",
-  //   email: "peshaka_8@123.com",
-  //   profile_picture: "avatar-8.jpg",
-  // },
+  {
+    id: 10006,
+    first_name: "eddie",
+    last_name: "silva",
+    university: "University of Moratuwa",
+    email: "eddie@123.com",
+    profile_picture: "avatar-6.jpg",
+  },
+  {
+    id: 10007,
+    first_name: "madhavi",
+    last_name: "gayathri",
+    university: "University of Moratuwa",
+    email: "madhavi@123.com",
+    profile_picture: "avatar-7.jpg",
+  },
+  {
+    id: 10008,
+    first_name: "jack",
+    last_name: "gamage",
+    university: "University of Moratuwa",
+    email: "jack@123.com",
+    profile_picture: "avatar-8.jpg",
+  },
 ];

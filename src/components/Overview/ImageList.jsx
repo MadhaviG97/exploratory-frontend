@@ -7,7 +7,13 @@ import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import Button from "@material-ui/core/Button";
-import image from "./default.jpg";
+import Typography from "@material-ui/core/Typography";
+
+const images = [
+  { id: 10001, url: "default-0.jpg", caption: "Image-1" },
+  { id: 10002, url: "default-1.jpg", caption: "Image-2" },
+  { id: 10003, url: "default-2.jpg", caption: "Image-3" },
+];
 
 const classes = {
   root: {
@@ -34,25 +40,23 @@ export default class ImageViwerClass extends React.Component {
   state = {
     currImg: 0,
     viewerIsOpen: false,
-    dataSet: [
-      {
-        src: image,
-        caption: "Image 1",
-      },
-      {
-        src: image,
-        caption: "Image 2",
-      },
-      {
-        src: image,
-        caption: "Image 3",
-      },
-      {
-        src: image,
-        caption: "Image 4",
-      },
-    ],
+    dataSet: this.getImages(this.props.images),
   };
+
+  getImages(Images) {
+    if (Images) {
+      var dataSet = [];
+      Images.forEach((image) => {
+        var object = {
+          src: "/images/poster-images/".concat(image.url),
+          caption: image.caption,
+        };
+        dataSet.push(object);
+      });
+      return dataSet;
+    }
+    return false;
+  }
 
   gotoPrevious = () => {
     const prev = this.state.currImg - 1;
@@ -74,7 +78,7 @@ export default class ImageViwerClass extends React.Component {
   };
 
   render() {
-    return (
+    return this.props.images ? (
       <div style={classes.root}>
         <GridList style={classes.gridList} cols={2.5}>
           {this.state.dataSet.map((tile) => (
@@ -111,6 +115,8 @@ export default class ImageViwerClass extends React.Component {
           onClose={this.closeViewer}
         />
       </div>
+    ) : (
+      <Typography variant="caption">No related Images</Typography>
     );
   }
 }

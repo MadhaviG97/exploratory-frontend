@@ -1,98 +1,85 @@
 import React from "react";
 import { Box } from "@material-ui/core";
 import { useStyles } from "../../assets/css/overview";
-import FeaturedPost from "./FeaturedPost";
-import HypothesisForm from "../Forms/ProjectForms/HypothesisForm";
-import GoalForm from "../Forms/ProjectForms/GoalForm";
+import { CardContent } from "@material-ui/core";
+import ProjectCard from "./projectCard";
+import { useHistory, useLocation } from "react-router-dom";
 
 export default function Overview() {
   const classes = useStyles();
+  let history = useHistory();
+  let location = useLocation();
+  let { from } = location.state || {
+    from: { pathname: "/project/settings/1" },
+  };
 
   const [form, setForm] = React.useState({
-    goal: {
-      name: "goal",
-      heading: "Goal",
-      message: "This is my goal",
-      editState: false,
-    },
-    hypothesis: {
-      name: "hypothesis",
-      heading: "Hypothesis",
-      message: "This is my hypothesis",
-      editState: false,
+    abstract: {
+      name: "abstract",
+      heading: "Abstract",
+      message: "Add you project abstract Here",
     },
     finalpaper: {
       name: "finalpaper",
       heading: "Final Paper",
-      message: "This is my final paper",
-      editState: false,
+      message: "Add your Final paper here",
     },
-    experimentalfindings: {
-      name: "experimentalfindings",
-      heading: "Experimental Findings",
-      message: "This is my experimental findings",
-      editState: false,
-    },
-    extradocuments: {
-      name: "extradocuments",
-      heading: "Extra Documents",
-      message: "This is my extradocuments",
-      editState: false,
-    },
-    results: {
-      name: "results",
-      heading: "Results",
-      message: "This is my results",
-      editState: false,
+    relatedMedia: {
+      name: "relatedMedia",
+      heading: "Related Media",
+      message: "Add any related media documents Here",
     },
   });
 
-  const setEditState = (card) => {
-    const editState = form[card].editState;
-    setForm({
-      ...form,
-      [card]: {
-        ...form[card],
-        editState: !editState,
-      },
-    });
+  const setEditState = () => {
+    history.replace(from);
   };
 
   return (
     <React.Fragment>
       <Box>
         <Box className={classes.overview}>
-          <FeaturedPost
-            card1={form.goal}
-            card2={form.hypothesis}
-            handleEditState={setEditState}
-          />
+          <CardContent>
+            <Box display="flex" flexDirection="column">
+              <ProjectCard
+                heading={form.abstract.heading}
+                value={form.abstract.message}
+                editState={form.abstract.editState}
+                name={form.abstract.name}
+                handleEditState={setEditState}
+              />
+            </Box>
+          </CardContent>
         </Box>
+
         <Box className={classes.overview}>
-          <FeaturedPost
-            card1={form.finalpaper}
-            card2={form.extradocuments}
-            handleEditState={setEditState}
-          />
+          <CardContent>
+            <Box display="flex" flexDirection="column">
+              <ProjectCard
+                heading={form.relatedMedia.heading}
+                value={form.relatedMedia.message}
+                editState={form.relatedMedia.editState}
+                name={form.relatedMedia.name}
+                handleEditState={setEditState}
+              />
+            </Box>
+          </CardContent>
         </Box>
+
         <Box className={classes.overview}>
-          <FeaturedPost
-            card1={form.experimentalfindings}
-            card2={form.results}
-            handleEditState={setEditState}
-          />
+          <CardContent>
+            <Box display="flex" flexDirection="column">
+              <ProjectCard
+                heading={form.finalpaper.heading}
+                value={form.finalpaper.message}
+                editState={form.finalpaper.editState}
+                name={form.finalpaper.name}
+                handleEditState={setEditState}
+              />
+            </Box>
+          </CardContent>
         </Box>
       </Box>
-      <HypothesisForm
-        open={form.hypothesis.editState}
-        defaultValue={form.hypothesis.message}
-        handleClose={setEditState}
-      />
-      <GoalForm
-        open={form.goal.editState}
-        defaultValue={form.goal.message}
-        handleClose={setEditState}
-      />
     </React.Fragment>
   );
 }

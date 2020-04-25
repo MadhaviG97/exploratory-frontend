@@ -8,6 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
+import Container from '@material-ui/core/Container';
 // @material-ui/icons
 
 // core components
@@ -36,7 +37,6 @@ export default function AutoGrid() {
 
   return (
     <div>
-      <Navbar />
       <ForumAppBar />
       <div className={classes.root} >
         <Grid container>
@@ -49,15 +49,14 @@ export default function AutoGrid() {
           <Divider orientation="vertical" variant="fullWidth" />
 
           <Grid item xs={6}>
+            <Container  style={{backgroundColor: 'white', padding:'5px'}}>
             <ForumPost />
             <Divider />
             <ForumPost />
             <Divider />
             <ForumPost />
             <Divider />
-            <ForumPost />
-            <Divider />
-            <ForumPost />
+            </Container>
           </Grid>
 
           <Divider orientation="vertical" variant="fullWidth" />

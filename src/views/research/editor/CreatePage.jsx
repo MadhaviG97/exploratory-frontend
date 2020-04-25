@@ -47,15 +47,19 @@ function CreatePage(props) {
     return (
         <div>
             <NavBar/>
-            <Box p={0.5}></Box>
+            
             <div className={classNames(classes.main, classes.mainRaised)} >
-                <div style={{ maxWidth: '1000px', margin: '1.5rem auto'}}>
-                    <Box p={5}  />{/*marginTop={7}*/}
+                <Box p={1}  style={{  background: '#014f82'}}>
+            
                     <div className={classes.name} >
-                        <h1 align='center' className={classes.title}>Group Name</h1>
+                        <h1 align='center' className={classes.title}>Editor</h1>
                     </div>
+                </Box>
+                <div style={{ maxWidth: '1000px', margin: '1.5rem auto'}}>
+                    {/*marginTop={7}*/}
+                    
                         
-                        <Box p={2} style={{ display: "flex" }} flexDirection="row" > 
+                        <Box p={1} style={{ display: "flex" }} flexDirection="row" > 
                             <IconButton
                                 edge="start"
                                 className={classes.menuButton}
@@ -83,8 +87,8 @@ function CreatePage(props) {
                         
                         <div style={{ textAlign: 'center', margin: '2rem', }}>
                             <DocumentrDialog
-                            content= {content}
-                            writer= "GeeFour"
+                                content= {content}
+                                writer= "GeeFour"
                             />
                         </div>
                         

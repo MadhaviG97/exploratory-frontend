@@ -9,6 +9,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
+    backgroundColor: "#eceff1",
   },
   details: {
     display: "flex",

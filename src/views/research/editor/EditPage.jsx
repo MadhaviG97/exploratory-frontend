@@ -101,7 +101,7 @@ function Edit2Page(props) {
             postId: props.match.params.postId,
           
             content: text,
-            writer: "GeeFour",
+            //writer: "GeeFour",
             name: name
         }
         const token = localStorage.token;
@@ -135,17 +135,18 @@ function Edit2Page(props) {
         return (
         <div>
             <NavBar/>
-            <Box p={0.5}></Box>
+            
             <div className={classNames(classes.main, classes.mainRaised)} >
-                <div style={{ maxWidth: '1000px', margin: '1.5rem auto' }}>
-                    <Box p={5}  />
+                <Box p={1}  style={{  background: '#014f82'}}>
                     <div className={classes.name} >
-                    <h1 align='center' className={classes.title}>{name}</h1>
-                       
+                        <h1 align='center' className={classes.title}>Editor</h1>
                     </div>
-                    <h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>
-                    <Box p={2} style={{ display: "flex" }} flexDirection="row" > 
-                    <IconButton
+                </Box>
+                <Box p={0.5}/>
+                <div style={{ maxWidth: '1000px', margin: '1.5rem auto' }}> 
+                    {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
+                    <Box p={1} style={{ display: "flex" }} flexDirection="row" > 
+                        <IconButton
                             edge="start"
                             className={classes.menuButton}
                             color="inherit"
@@ -153,6 +154,7 @@ function Edit2Page(props) {
                             >
                             <MenuIcon />
                         </IconButton>  
+                        
                         <Tooltip title="Now Online">
                             <AvatarGroup max={4} style={{ marginLeft: "auto"}}>
                                 <Avatar alt="Remy Sharp" src={team1} />
@@ -178,6 +180,11 @@ function Edit2Page(props) {
                         <Button
                             size="large"
                             className=""
+                            style={{  background: '#014f82',//can change the sign-in button color from here
+                            color: '#FFFFFF',
+                            height: 40,
+                            boxShadow: ['none']}}
+                            variant="contained"
                             onClick={handleSave}
                         >
                             Save

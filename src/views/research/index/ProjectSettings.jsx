@@ -75,10 +75,11 @@ export default function Form() {
         permission: state.permission,
         tags: state.tags,
       };
-      dispatch(createResearch(formData)).then((result) => {
-        console.log(result);
-        history.replace(from);
-      });
+      // dispatch(createResearch(formData)).then((result) => {
+      //   console.log(result);
+      //   history.replace(from);
+      // });
+      history.replace(from);
     };
 
     const handleSubmit = (e) => {

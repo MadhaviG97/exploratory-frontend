@@ -1,6 +1,5 @@
 import React from "react";
 
-
 import styles from "../../assets/jss/material-kit-react/views/componentsSections/navbarsStyle";
 
 import LeftMenu from "./Sections/LeftMenu";

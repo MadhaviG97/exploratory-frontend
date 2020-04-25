@@ -38,6 +38,7 @@
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.1",
     "react-slick": "^0.25.2",
+    "react-spinners-css": "^1.1.7",
     "react-swipeable-views": "^0.13.9",
     "react-tap-event-plugin": "^3.0.3",
     "react-transition-group": "^1.1.3",

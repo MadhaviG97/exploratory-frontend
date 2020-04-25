@@ -17,12 +17,12 @@ export default function ProjectFolderGrid(props) {
 
   return (
     <Grid item xs={8} md={4}>
-      <CardActionArea component="a" href={post.ref}>
+      <CardActionArea component="a" href={post.refr}>
         <Card className={classes.card}>
           <div className={classes.cardDetails}>
             <CardContent>
             <div className={classes.name} >
-                  <h2 className={classes.title}>{post.title}</h2>
+                  <h2 className={classes.topic}>{post.title}</h2>
                 </div>
               
               

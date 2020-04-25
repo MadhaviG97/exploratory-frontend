@@ -13,16 +13,16 @@ export const useStyles = makeStyles((theme) => ({
     zIndex: "3"
   },
   title: {
-    color: "#3C4858",
+    color: "#FFFFFF",
     margin: "1.75rem 0 0.875rem",
     textDecoration: "none",
     fontWeight: "550",
-    fontFamily: `"Roboto Slab", "Times New Roman", serif`,
-    display: "inline-block",
-    position: "relative",
+    //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    //display: "inline-block",
+    //position: "relative",
     //marginTop: "30px",
     minHeight: "32px",
-    fontSize:24,
+    fontSize:26,
     textDecoration: "none"
   },
 
