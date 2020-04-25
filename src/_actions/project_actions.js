@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGIN_USER, SEARCH } from "./types";
+import { LOGIN_USER, SEARCH, RENDER } from "./types";
 
 export function createResearch(dataToSubmit) {
   console.log(dataToSubmit);
@@ -19,6 +19,13 @@ export function search(dataToSubmit) {
 
   return {
     type: SEARCH,
+    payload: request,
+  };
+}
+
+export function render(request) {
+  return {
+    type: RENDER,
     payload: request,
   };
 }

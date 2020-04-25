@@ -11,7 +11,11 @@ import signIn from "./views/researcher/sign-in";
 import Feed from "./views/researcher/feed";
 import Search from "./views/home/search";
 
+//hoc
 import Auth from "./hoc/auth";
+import WithData from "./hoc/WithData";
+import { compose } from "redux";
+
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 
@@ -23,6 +27,8 @@ import EditPage from "./views/research/editor/EditPage";
 import EditorBlog from "./views/research/editor/EditorBlog";
 import FileManager from "./views/research/fileFolder/FileManager";
 import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
+
+//project
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
 import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
@@ -69,8 +75,8 @@ function App() {
             />
             <Route
               exact
-              path="/project/viewproject/:id"
-              component={Auth(ProjectPublic, null)}
+              path={`/project/viewproject/:id`}
+              component={ProjectPublic}
             />
             <Route
               exact

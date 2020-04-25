@@ -6,9 +6,6 @@ import { Tabs, Paper } from "@material-ui/core";
 import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
-import OverView from "../Overview/OverViewPublic";
-import Team from "../Team/team";
-import ChatHead from "../ProjectComments/chathead";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -52,7 +49,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function FullWidthTabs() {
+export default function FullWidthTabs(props) {
+  const { OverView, Team, Comments } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -87,13 +85,13 @@ export default function FullWidthTabs() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          <OverView />
+          {props.OverView}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          <Team />
+          {props.Team}
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          <ChatHead />
+          <Comments />
         </TabPanel>
       </SwipeableViews>
     </div>

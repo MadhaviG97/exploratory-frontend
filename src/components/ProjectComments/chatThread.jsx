@@ -97,7 +97,10 @@ export default function CommentSection() {
                 )}
                 <ListItem>
                   <ListItemAvatar>
-                    <Avatar alt="Profile Picture" src={profile_picture} />
+                    <Avatar
+                      alt="Profile Picture"
+                      src={"/images/profile-pictures/".concat(profile_picture)}
+                    />
                   </ListItemAvatar>
                   <ListItemText
                     primary={first_name.concat(last_name)}

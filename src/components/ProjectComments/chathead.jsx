@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
     alignItems: "center",
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
   },
   heading: {
     fontSize: theme.typography.pxToRem(15),
@@ -94,7 +94,7 @@ function CommentHeads(props) {
           >
             <Box>
               <Avatar
-                src={"images/profile-pictures/".concat(
+                src={"/images/profile-pictures/".concat(
                   props.chat.profile_picture
                 )}
               />
