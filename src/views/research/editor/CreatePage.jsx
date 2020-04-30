@@ -41,16 +41,12 @@ function CreatePage(props) {
         setFiles(files)
     }
     
-    
-    
-   
     return (
         <div>
             <NavBar/>
             
             <div className={classNames(classes.main, classes.mainRaised)} >
                 <Box p={1}  style={{  background: '#014f82'}}>
-            
                     <div className={classes.name} >
                         <h1 align='center' className={classes.title}>Editor</h1>
                     </div>
@@ -58,7 +54,6 @@ function CreatePage(props) {
                 <div style={{ maxWidth: '1000px', margin: '1.5rem auto'}}>
                     {/*marginTop={7}*/}
                     
-                        
                         <Box p={1} style={{ display: "flex" }} flexDirection="row" > 
                             <IconButton
                                 edge="start"
@@ -84,7 +79,6 @@ function CreatePage(props) {
                             
                         />
 
-                        
                         <div style={{ textAlign: 'center', margin: '2rem', }}>
                             <DocumentrDialog
                                 content= {content}

@@ -1,21 +1,21 @@
+/*
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+
 import { useStyles } from "../../../assets/css/fileFolder";
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import ListSubheader from '@material-ui/core/ListSubheader';
+
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
+
 import InfoIcon from '@material-ui/icons/Info';
 import Box from '@material-ui/core/Box';
 import classNames from "classnames";
 import Footer from "../../../components/Footer/Footer";
 import NavBar from "../../../components/Navbar/Navbar";
-import FolderDialog from '../../../components/editor/FolderDialog';
-import TextField from '@material-ui/core/TextField';
-import Divider from "@material-ui/core/Divider";
+import FolderDialog from '../../../components/drive/FolderDialog';
+
 import FileCopyIcon from '@material-ui/icons/FileCopy';
 import GetAppIcon from '@material-ui/icons/GetApp';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -46,7 +46,7 @@ import Tooltip from '@material-ui/core/Tooltip';
  *     [etc...]
  *   },
  * ];
- */
+ 
 const tileData = [
        {
         img:process.env.PUBLIC_URL + '/images/fileFolder/folderImage.png' ,
@@ -172,3 +172,4 @@ export default function TitlebarGridList() {
       </div>
   );
 }
+*/

@@ -56,11 +56,7 @@ class QuillEditor extends React.Component {
     
     handleChange = (value) => {
         let status = '';
-    if (value.length !== this.state.text.length) {
-        console.log("I am Emitting");
-        //socket.emit('toText', value);
-        
-      };
+    
       
       this.setState({
         text: value

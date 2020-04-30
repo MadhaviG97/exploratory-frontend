@@ -51,7 +51,11 @@ export const useStyles = makeStyles((theme) => ({
     textDecoration: "none"
   },
 
-
+  root:{
+    root: {
+      flexGrow: 1,
+    },
+  },
   name: {
     marginTop: "-20px"
   },
@@ -66,4 +70,11 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow:
       "0 16px 24px 2px rgba(0, 0, 0, 0.08), 0 6px 30px 5px rgba(0, 0, 0, 0.06), 0 8px 10px -5px rgba(0, 0, 0, 0.1)"
   },
+  mainRaised2: {
+    margin: "25px 15px 30px 30px",
+    borderRadius: "2px",
+    boxShadow:
+      "0 8px 12px 1px rgba(0, 0, 0, 0.02), 0 3px 15px 2.5px rgba(0, 0, 0, 0.015), 0 4px 5px -2.5px rgba(0, 0, 0, 0.1)"
+  },
+  
 }))
