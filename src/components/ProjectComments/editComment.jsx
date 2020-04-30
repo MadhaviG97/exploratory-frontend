@@ -7,8 +7,8 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
+import EditIcon from "@material-ui/icons/Edit";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -40,10 +40,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddComment(props) {
+export default function EditComment(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [reply, setReply] = React.useState("");
+  const [reply, setReply] = React.useState(props.message);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,10 +51,11 @@ export default function AddComment(props) {
 
   const handleClose = () => {
     setOpen(false);
+    setReply(props.message);
   };
 
   const handlePost = () => {
-    props.onPost(reply);
+    props.onPost(props.reply_id, reply);
     setOpen(false);
   };
 
@@ -64,15 +65,20 @@ export default function AddComment(props) {
   };
 
   return (
-    <div>
-      <Fab
+    <React.Fragment>
+      {/* <Fab
         color="Primary"
         aria-label="add"
         className={classes.fabButton}
         onClick={handleClickOpen}
       >
         <AddIcon />
-      </Fab>
+      </Fab> */}
+
+      <IconButton color="primary" aria-label="edit" onClick={handleClickOpen}>
+        <EditIcon />
+      </IconButton>
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -104,6 +110,6 @@ export default function AddComment(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 }

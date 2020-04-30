@@ -76,7 +76,7 @@ function App() {
             <Route
               exact
               path={`/project/viewproject/:id`}
-              component={ProjectPublic}
+              component={Auth(ProjectPublic, null)}
             />
             <Route
               exact

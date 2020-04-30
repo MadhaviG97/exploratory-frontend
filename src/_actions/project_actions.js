@@ -1,11 +1,9 @@
 import axios from "axios";
-import { LOGIN_USER, SEARCH, RENDER } from "./types";
+import { LOGIN_USER, SEARCH, RENDER, COMMENTS, REPLIES } from "./types";
 
-export function createResearch(dataToSubmit) {
-  console.log(dataToSubmit);
-  const request = axios
-    .post(`/project/create-project`, dataToSubmit)
-    .then((response) => response.data);
+export function createResearch(request) {
+  console.log(request);
+
   return {
     type: LOGIN_USER,
     payload: request,
@@ -26,6 +24,20 @@ export function search(dataToSubmit) {
 export function render(request) {
   return {
     type: RENDER,
+    payload: request,
+  };
+}
+
+export function getComments(request) {
+  return {
+    type: COMMENTS,
+    payload: request,
+  };
+}
+
+export function getReplies(request) {
+  return {
+    type: REPLIES,
     payload: request,
   };
 }

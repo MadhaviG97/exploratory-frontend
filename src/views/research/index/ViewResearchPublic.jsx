@@ -41,6 +41,7 @@ function Home() {
         .then((response) => {
           return response.data;
         });
+
       dispatch(render(request)).then((response) => {
         setState({ ...state, project: response });
         console.log(response);
@@ -62,7 +63,7 @@ function Home() {
           authour_image={project.admins[0].profile_picture}
           description={project.project.description}
         />
-        <Tab OverView={getOverView} Team={getTeam} Comments={Comments} />
+        <Tab OverView={getOverView} Team={getTeam} Comments={getComments} />
       </React.Fragment>
     );
   };
@@ -76,7 +77,7 @@ function Home() {
   };
 
   const getComments = () => {
-    return <Comments comments={comments} />;
+    return <Comments comments={project.comments} />;
   };
 
   return (

@@ -5,7 +5,7 @@ import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Button from "@material-ui/core/Button";
 import AddIcon from "@material-ui/icons/Add";
 import RemoveIcon from "@material-ui/icons/Remove";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import ThumbDownIcon from "@material-ui/icons/ThumbDown";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -40,7 +40,7 @@ export default function AnswerLike() {
           }}
         >
           <Badge color="primary" badgeContent={count} fontSize="small">
-            <ThumbUpIcon fontSize="small" />
+            <ThumbDownIcon fontSize="small" />
           </Badge>
         </Button>
       </div>

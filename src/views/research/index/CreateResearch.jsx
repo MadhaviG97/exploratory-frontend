@@ -26,6 +26,7 @@ import { useSelector } from "react-redux";
 import { createResearch } from "../../../_actions/project_actions";
 //routing
 import { useHistory, useLocation } from "react-router-dom";
+import axios from "axios";
 
 export default function Form() {
   const classes = useStyles();
@@ -94,7 +95,12 @@ export default function Form() {
       };
 
       console.log(formData);
-      dispatch(createResearch(formData))
+
+      const request = axios
+        .post(`/project/create-project`, formData)
+        .then((response) => response.data);
+
+      dispatch(createResearch(request))
         .then((result) => {
           cb();
         })
