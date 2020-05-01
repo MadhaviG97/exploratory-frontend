@@ -3,28 +3,21 @@ import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
 import Paper from "@material-ui/core/Paper";
-import Fab from "@material-ui/core/Fab";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import ListSubheader from "@material-ui/core/ListSubheader";
 import Avatar from "@material-ui/core/Avatar";
-import AddIcon from "@material-ui/icons/Add";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
 import { useSelector } from "react-redux";
-
-import photo1 from "../../assets/images/user-profile/faces/kendall.jpg";
 import AnswerLikeSection from "../PublicForumSections/AnswerLikeSection";
 import AnswerDislikeSection from "../PublicForumSections/AnswerDislikeSection";
 
-import AddComment from "./addComment";
-import EditComment from "./editComment";
+import AddReply from "./AddReply";
+import EditReply from "./EditReply";
+import DeleteReply from "./DeleteReply";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -78,16 +71,6 @@ export default function CommentSection(props) {
     return authur_id === user.userData._id ? true : false;
   };
 
-  const handleEdit = (e) => {
-    props.onEdit();
-    console.log();
-  };
-
-  const handleDelete = (e) => {
-    props.pnDelete();
-    console.log();
-  };
-
   return (
     <React.Fragment>
       <CssBaseline />
@@ -125,16 +108,18 @@ export default function CommentSection(props) {
                     aria-label="outlined primary button group"
                   >
                     {isEditable(reply.author_id) && (
-                      <EditComment
+                      <EditReply
                         onPost={props.onEdit}
                         message={reply.message}
                         reply_id={reply.reply_id}
                       />
                     )}
                     {isDeletable(reply.author_id) && (
-                      <IconButton aria-label="delete" onClick={handleDelete}>
-                        <DeleteIcon />
-                      </IconButton>
+                      <DeleteReply
+                        onPost={props.onDelete}
+                        reply_id={reply.reply_id}
+                        comment_id={reply.comment_id}
+                      />
                     )}
                   </ButtonGroup>
 
@@ -150,7 +135,7 @@ export default function CommentSection(props) {
       </Paper>
       <AppBar position="relative" color="Primary" className={classes.appBar}>
         <Toolbar>
-          <AddComment onPost={props.onReply} />
+          <AddReply onPost={props.onReply} />
           <div className={classes.grow} />
         </Toolbar>
       </AppBar>

@@ -9,11 +9,11 @@ import Grid from "@material-ui/core/Grid";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
 import Box from "@material-ui/core/Box";
-import { Button, Paper } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import ChatThread from "./chatThread";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import AddNewComment from "./AddNewComment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -33,20 +33,30 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 4),
   },
   newComment: {
-    padding: theme.spacing(0, 3),
+    padding: theme.spacing(2, 2, 1),
   },
 }));
 
 export default function Comments(props) {
   const classes = useStyles();
+  const [comments, setComments] = React.useState(props.comments);
+  const project = useSelector((state) => state.project).renderData.project;
+
+  const handleNewComment = () => {
+    axios
+      .post("/project/comments/view-comments", { id: project.id })
+      .then((response) => {
+        setComments(response.data);
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <React.Fragment>
       <Grid md="12" align="right" className={classes.newComment}>
-        <Button variant="contained" color="primary" onClick={handleNewComment}>
-          New Comment
-        </Button>
+        <AddNewComment onNewComment={handleNewComment} />
       </Grid>
-      {props.comments.map((chat) => {
+      {comments.map((chat) => {
         return <CommentHeads chat={chat} />;
       })}
     </React.Fragment>
@@ -63,15 +73,9 @@ function CommentHeads(props) {
   const [replies, setReplies] = React.useState([]);
 
   const handleChange = (panel) => (event, isExpanded) => {
-    axios
-      .post("/project/view-replies", { id: props.chat.comment_id })
-      .then((response) => {
-        setReplies(response.data);
-        setExpanded(isExpanded ? panel : false);
-
-        console.log(response.data);
-      })
-      .catch((err) => console.log(err));
+    rerenderReplies(() => {
+      setExpanded(isExpanded ? panel : false);
+    });
   };
 
   const handleEdit = (reply_id, message) => {
@@ -81,33 +85,25 @@ function CommentHeads(props) {
     };
 
     axios
-      .post("/project/edit-reply", formData)
+      .post("/project/comments/edit-reply", formData)
       .then((response) => {
-        rerenderReplies();
+        rerenderReplies(() => console.log(response));
       })
       .catch((err) => console.log(err));
   };
 
-  const handleDelete = (reply_id) => {
-    const formData = {
-      reply_id: reply_id,
-    };
-
+  const rerenderReplies = (cb) => {
     axios
-      .post("/project/edit-reply", formData)
-      .then((response) => {
-        rerenderReplies();
-      })
-      .catch((err) => console.log(err));
-  };
-
-  const rerenderReplies = () => {
-    axios
-      .post("/project/view-replies", { id: props.chat.comment_id })
+      .post("/project/comments/view-replies", { id: props.chat.comment_id })
       .then((response) => {
         setReplies(response.data);
+        cb();
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleDelete = () => {
+    rerenderReplies(() => console.log(props.chat));
   };
 
   const handleReply = (reply) => {
@@ -120,10 +116,9 @@ function CommentHeads(props) {
     };
     console.log(formData);
     axios
-      .post("/project/reply-comment", formData)
+      .post("/project/comments/reply-comment", formData)
       .then((response) => {
-        console.log(response);
-        rerenderReplies();
+        rerenderReplies(() => console.log(response));
       })
       .catch((err) => console.log(err));
   };

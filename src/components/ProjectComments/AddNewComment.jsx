@@ -7,8 +7,11 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import EditIcon from "@material-ui/icons/Edit";
-import IconButton from "@material-ui/core/IconButton";
+import AddIcon from "@material-ui/icons/Add";
+import Fab from "@material-ui/core/Fab";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { getComments } from "../../_actions/project_actions";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -40,32 +43,48 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EditComment(props) {
+export default function AddComment(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [reply, setReply] = React.useState(props.message);
+  const [comment, setComment] = React.useState("");
 
-  const handleClickOpen = () => {
+  const user = useSelector((state) => state.user);
+  const project = useSelector((state) => state.project).renderData.project;
+  const dispatch = useDispatch();
+
+  const handleClickOpen = (e) => {
     setOpen(true);
   };
 
   const handleClose = () => {
     setOpen(false);
-    setReply(props.message);
-  };
-
-  const handlePost = () => {
-    props.onPost(props.reply_id, reply);
-    setOpen(false);
   };
 
   const handleChange = (e) => {
-    console.log(reply);
-    setReply(e.target.value);
+    console.log(comment);
+    setComment(e.target.value);
+  };
+
+  const handleNewComment = (e) => {
+    console.log(project);
+    const formData = {
+      project_id: project.id,
+      author_id: user.userData._id,
+      message: comment,
+      no_of_likes: 0,
+      initial_comment: 1,
+    };
+    axios
+      .post("/project/comments/new-comment", formData)
+      .then((response) => {
+        setOpen(false);
+        props.onNewComment();
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
-    <React.Fragment>
+    <div>
       {/* <Fab
         color="Primary"
         aria-label="add"
@@ -74,21 +93,17 @@ export default function EditComment(props) {
       >
         <AddIcon />
       </Fab> */}
-
-      <IconButton color="primary" aria-label="edit" onClick={handleClickOpen}>
-        <EditIcon />
-      </IconButton>
-
+      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+        New Comment
+      </Button>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="form-dialog-title">Reply</DialogTitle>
+        <DialogTitle id="form-dialog-title">New Comment</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            You can reply to this comment section
-          </DialogContentText>
+          <DialogContentText>Please Give us you feedback!</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
@@ -97,7 +112,7 @@ export default function EditComment(props) {
             type="text"
             fullWidth
             multiline
-            value={reply}
+            value={comment}
             onChange={handleChange}
           />
         </DialogContent>
@@ -105,11 +120,15 @@ export default function EditComment(props) {
           <Button onClick={handleClose} color="primary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handlePost} color="primary" variant="contained">
+          <Button
+            onClick={handleNewComment}
+            color="primary"
+            variant="contained"
+          >
             Post
           </Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </div>
   );
 }
