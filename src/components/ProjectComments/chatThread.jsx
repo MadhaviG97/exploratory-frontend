@@ -119,6 +119,8 @@ export default function CommentSection(props) {
                         onPost={props.onDelete}
                         reply_id={reply.reply_id}
                         comment_id={reply.comment_id}
+                        onReplyDelete={props.onReplyDelete}
+                        onCommentDelete={props.onCommentDelete}
                       />
                     )}
                   </ButtonGroup>

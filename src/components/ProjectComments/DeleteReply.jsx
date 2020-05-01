@@ -43,6 +43,7 @@ export default function DeleteComment(props) {
   const [open, setOpen] = React.useState(false);
   const [message, setMessage] = React.useState("Confirm delete Comment!");
   const [type, setType] = React.useState("reply");
+
   const handleClickOpen = () => {
     const formData = {
       id: props.reply_id,
@@ -64,11 +65,12 @@ export default function DeleteComment(props) {
     const formData = {
       id: props.reply_id,
     };
-
     axios
       .post("/project/comments/delete-reply", formData)
       .then((response) => {
         setOpen(false);
+        props.onPost();
+        props.onReplyDelete();
       })
       .catch((err) => console.log(err));
   };
@@ -77,11 +79,11 @@ export default function DeleteComment(props) {
     const formData = {
       id: props.comment_id,
     };
-
     axios
       .post("/project/comments/delete-comment", formData)
       .then((response) => {
         setOpen(false);
+        props.onCommentDelete();
       })
       .catch((err) => console.log(err));
   };
@@ -97,7 +99,6 @@ export default function DeleteComment(props) {
     } else {
       deleteComment();
     }
-    props.onPost();
   };
 
   return (
@@ -123,7 +124,7 @@ export default function DeleteComment(props) {
             Cancel
           </Button>
           <Button onClick={handlePost} color="primary" variant="contained">
-            Post
+            Delete
           </Button>
         </DialogActions>
       </Dialog>

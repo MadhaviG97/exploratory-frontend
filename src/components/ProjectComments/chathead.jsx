@@ -42,7 +42,7 @@ export default function Comments(props) {
   const [comments, setComments] = React.useState(props.comments);
   const project = useSelector((state) => state.project).renderData.project;
 
-  const handleNewComment = () => {
+  const handleRefreshComment = () => {
     axios
       .post("/project/comments/view-comments", { id: project.id })
       .then((response) => {
@@ -54,10 +54,12 @@ export default function Comments(props) {
   return (
     <React.Fragment>
       <Grid md="12" align="right" className={classes.newComment}>
-        <AddNewComment onNewComment={handleNewComment} />
+        <AddNewComment onNewComment={handleRefreshComment} />
       </Grid>
       {comments.map((chat) => {
-        return <CommentHeads chat={chat} />;
+        return (
+          <CommentHeads chat={chat} onCommentDelete={handleRefreshComment} />
+        );
       })}
     </React.Fragment>
   );
@@ -102,8 +104,12 @@ function CommentHeads(props) {
       .catch((err) => console.log(err));
   };
 
-  const handleDelete = () => {
+  const handleReplyDelete = () => {
     rerenderReplies(() => console.log(props.chat));
+  };
+
+  const handleCommentDelete = () => {
+    props.onCommentDelete();
   };
 
   const handleReply = (reply) => {
@@ -171,7 +177,8 @@ function CommentHeads(props) {
                 replies={replies}
                 onReply={handleReply}
                 onEdit={handleEdit}
-                onDelete={handleDelete}
+                onReplyDelete={handleReplyDelete}
+                onCommentDelete={handleCommentDelete}
               />
               {/* should pass replies as props */}
             </CardContent>

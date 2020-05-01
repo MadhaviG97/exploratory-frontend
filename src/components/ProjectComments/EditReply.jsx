@@ -97,7 +97,7 @@ export default function EditComment(props) {
             Cancel
           </Button>
           <Button onClick={handlePost} color="primary" variant="contained">
-            Post
+            Confirm
           </Button>
         </DialogActions>
       </Dialog>
