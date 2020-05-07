@@ -8,9 +8,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
+
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
@@ -18,8 +16,13 @@ import Paper from '@material-ui/core/Paper';
 import { useHistory } from "react-router-dom";
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+
+import { createBrowserHistory } from 'history';
 const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/fileAvatar.png'
-const folderImage=process.env.PUBLIC_URL + '/images/fileFolder/grey-folder-full-icon-png-5.png'
+
+
+const history = createBrowserHistory();
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',

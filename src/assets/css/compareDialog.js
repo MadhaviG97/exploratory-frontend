@@ -1,6 +1,28 @@
 import { makeStyles } from "@material-ui/core/styles";
 export const useStyles = makeStyles((theme) => ({
   
+  root: {
+    maxWidth: 875,
+  },
+
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    formControl: {
+        margin: theme.spacing(1),
+        minWidth: 120,
+        maxWidth: 300,
+    },
+    noLabel: {
+        marginTop: theme.spacing(3),
+    },
+    main: {
+        background: "#FFFFFF",
+        position: "relative",
+        zIndex: "3",
+        margin: "25px 15px 30px 30px"
+    },      
   title: {
     color: "#FFFFFF",
     margin: "1.75rem 0 0.875rem",
@@ -32,13 +54,18 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#014f82",
   },
   card: {
-    display: 'flex',
-  },
+    borderRadius: 2,
+    boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px'
+    //backgroundColor: theme.palette.primary.light,
+    //color: theme.palette.primary.contrastText,
+    //boxShadow: "none"
+   },
   cardDetails: {
     flex: 1,
   },
   cardMedia: {
     width: 160,
+    height: 0
   },
   titletwo: {
     color: "#3C4858",
@@ -52,8 +79,11 @@ export const useStyles = makeStyles((theme) => ({
     minHeight: "28px",
     textDecoration: "none"
   },
+  
   name: {
-    marginTop: "-20px"
+    marginTop: "-20px",
+    marginBottom: "-10px",
+    marginLeft:"120px"
   },
   main: {
     background: "#FFFFFF",
@@ -66,10 +96,10 @@ export const useStyles = makeStyles((theme) => ({
     boxShadow:
       "0 16px 24px 2px rgba(0, 0, 0, 0.08), 0 6px 30px 5px rgba(0, 0, 0, 0.06), 0 8px 10px -5px rgba(0, 0, 0, 0.1)"
   },
-  mainRaised2: {
+  card2:{
+    width: "1000px",
     margin: "25px 15px 30px 30px",
-    borderRadius: "2px",
-    boxShadow:
-      "0 8px 12px 1px rgba(0, 0, 0, 0.02), 0 3px 15px 2.5px rgba(0, 0, 0, 0.015), 0 4px 5px -2.5px rgba(0, 0, 0, 0.1)"
-  },
+    borderRadius: 2,
+    boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px'
+  }
 }))

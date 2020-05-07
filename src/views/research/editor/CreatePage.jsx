@@ -13,16 +13,9 @@ import QuillEditor from '../../../components/editor/QuillEditor';
 //import { useSelector } from "react-redux";
 import DocumentrDialog from '../../../components/editor/DocumentDialog';
 
-import Avatar from '@material-ui/core/Avatar';
-import AvatarGroup from '@material-ui/lab/AvatarGroup';
-import Tooltip from '@material-ui/core/Tooltip';
+
 import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from '@material-ui/core/IconButton';
-
-import team1 from "../../../assets/images/About-us/about-us-damika.jpg";
-import team2 from "../../../assets/images/About-us/about-us-madhavi.jpg";
-import team3 from "../../../assets/images/About-us/about-us-yogya.jpg";
-import team4 from "../../../assets/images/About-us/about-us-janith.png";
 
 import '../../../assets/css/editor.css';
 function CreatePage(props) {
@@ -46,7 +39,7 @@ function CreatePage(props) {
             <NavBar/>
             
             <div className={classNames(classes.main, classes.mainRaised)} >
-                <Box p={1}  style={{  background: '#014f82'}}>
+                <Box p={1.7}  style={{  background: '#014f82'}}>
                     <div className={classes.name} >
                         <h1 align='center' className={classes.title}>Editor</h1>
                     </div>
@@ -63,14 +56,6 @@ function CreatePage(props) {
                                 >
                                 <MenuIcon />
                             </IconButton>  
-                            <Tooltip title="Now Online">
-                                <AvatarGroup max={4} style={{ marginLeft: "auto"}}>
-                                    <Avatar alt="Remy Sharp" src={team1} />
-                                    <Avatar alt="Travis Howard" src={team2} />
-                                    <Avatar alt="Cindy Baker" src={team3} />
-                                    <Avatar alt="Cindy Baker" src={team4}/>
-                                </AvatarGroup>
-                            </Tooltip>
                         </Box>
                         <QuillEditor
                             placeholder={""}
@@ -86,7 +71,7 @@ function CreatePage(props) {
                             />
                         </div>
                         
-                        <Box p={4}  marginBottom={7}/>
+                        <Box p={4} />
                 </div>
             </div>
             <Footer/>

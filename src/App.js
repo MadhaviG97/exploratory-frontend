@@ -15,14 +15,14 @@ import Theme from "./assets/themes/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 
 import CreatePage from "./views/research/editor/CreatePage";
-import EditPage from "./views/research/editor/Edit2Page";
+import EditPage from "./views/research/editor/EditPage";
 import EditorBlog from "./views/research/editor/EditorBlog";
-import FileManager from "./views/research/fileFolder/FileManager2";
+import FileManager from "./views/research/fileFolder/FileManager";
 import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
 import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
-
+import CompareDoc from "./views/research/fileFolder/CompareDoc";
 import Project from "./views/research/index/ViewResearchPublic";
 
 function App() {
@@ -51,6 +51,11 @@ function App() {
               exact
               path="/document/projectfolder"
               component={Auth(ProjectFolder, null)}
+            />
+            <Route
+              exact
+              path="/document/compare"
+              component={Auth(CompareDoc, null)}
             />
             <Route
               exact

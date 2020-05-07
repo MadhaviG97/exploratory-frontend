@@ -16,7 +16,9 @@ import Avatar from '@material-ui/core/Avatar';
 import Divider from "@material-ui/core/Divider";
 import photo1 from "../../assets/images/user-profile/faces/kendall.jpg"
 import { withStyles } from "@material-ui/core/styles";
-import RefreshIcon from '@material-ui/icons/Refresh';
+import { createBrowserHistory } from 'history';
+
+const history = createBrowserHistory();
 const styles = theme => ({
     root: {
         width: "100%",
@@ -48,18 +50,7 @@ class EditorMenu extends React.Component {
         this.setState({ [e]: !this.state[e] });
     };
     render() {
-        const users  = [
-                  {   userData:{
-                      name: "Nougat",
-                      profile_picture:photo1
-                      }
-                  },
-                  {   userData:{
-                      name: "Lollipop",
-                      profile_picture:photo1
-                      }
-                  }
-              ]
+        
         const { classes } = this.props;
         return (
             <div>
@@ -74,6 +65,7 @@ class EditorMenu extends React.Component {
                 <List className={classes.root}>
                  
                   <ListItem
+                      key={1}
                       button
                       onClick={this.props.savedVersion}
                     >
@@ -83,6 +75,7 @@ class EditorMenu extends React.Component {
                   </ListItem>
                   <Divider variant="fullWidth"  />
                   <ListItem
+                      key={2}
                       button
                       //onClick={this.props.history.push('/document/editorBlog')}
                     >
@@ -92,6 +85,7 @@ class EditorMenu extends React.Component {
                   </ListItem>
                   <Divider variant="fullWidth"  />
                   <ListItem
+                      key={3}
                       button
                       //onClick={this.props.history.push('/document/create')}
                     >
@@ -101,6 +95,7 @@ class EditorMenu extends React.Component {
                   </ListItem>
                   <Divider variant="fullWidth"  />
                   <ListItem
+                      key={4}
                       button
                       onClick={this.handleClick.bind(
                           this,

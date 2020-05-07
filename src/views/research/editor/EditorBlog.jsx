@@ -43,7 +43,7 @@ export default function CreatePage(props) {
         <div>
             <NavBar/>
             
-            <div className={classNames(classes.main, classes.mainRaised)}>
+            <div className={classNames(classes.main)}>
                 <Box p={1}  style={{  background: '#014f82'}}>
                 
                     <div className={classes.name} >
@@ -52,6 +52,7 @@ export default function CreatePage(props) {
                     
                 </Box>
                  {/*marginTop={7} />*/}
+                 
                  <div className={classNames(classes.main, classes.mainRaised2)} > 
                     {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
                     
@@ -64,7 +65,7 @@ export default function CreatePage(props) {
                         <Divider orientation="vertical" variant="fullWidth" />
                         
                         <Grid item xs={8}>
-                            <Grid container spacing={4} direction="row" justify="center" alignItems="center">
+                            <Grid container spacing={4} direction="row" >
                                 {blogs.map((blog,index) => (
                                     <Grid item lg={4} md={6} xs={12}>
                                         <CardActionArea component="a" href={`/document/edit/${blog._id}`}>
@@ -113,7 +114,6 @@ export default function CreatePage(props) {
                     </Grid>
                 </div>
                
-                <Box p={5}></Box>
             </div>
             
             <Footer/>
