@@ -24,6 +24,7 @@ import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
 import CompareDoc from "./views/research/fileFolder/CompareDoc";
 import Project from "./views/research/index/ViewResearchPublic";
+import ScreenShare from "./views/research/screenShare/ScreenShare"
 
 function App() {
   return (
@@ -96,6 +97,11 @@ function App() {
               exact
               path="/document/editorblog"
               component={Auth(EditorBlog, null)}
+            />
+            <Route
+              exact
+              path="/screenshare/share"
+              component={Auth(ScreenShare, null)}
             />
 
             <Route exact path="/project" component={Auth(Project, null)} />

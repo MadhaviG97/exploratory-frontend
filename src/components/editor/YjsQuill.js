@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import * as Y from 'yjs'
 import { WebsocketProvider } from 'y-websocket'
 import { QuillBinding } from 'y-quill'
