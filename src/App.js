@@ -25,6 +25,8 @@ import CreateProject from "./views/research/index/CreateResearch";
 import CompareDoc from "./views/research/fileFolder/CompareDoc";
 import Project from "./views/research/index/ViewResearchPublic";
 import ScreenShare from "./views/research/screenShare/ScreenShare"
+import Receive from "./views/research/screenShare/Receive"
+import Send from "./views/research/screenShare/Send"
 
 function App() {
   return (
@@ -102,6 +104,16 @@ function App() {
               exact
               path="/screenshare/share"
               component={Auth(ScreenShare, null)}
+            />
+            <Route
+              exact
+              path="/screenshare/receive"
+              component={Auth(Receive, null)}
+            />
+            <Route
+              exact
+              path="/screenshare/send"
+              component={Auth(Send, null)}
             />
 
             <Route exact path="/project" component={Auth(Project, null)} />
