@@ -10,6 +10,7 @@ import signIn from "./views/researcher/sign-in";
 
 import Feed from "./views/researcher/feed";
 import Search from "./views/home/search";
+import Chat from "./views/researcher/chat";
 
 //hoc
 import Auth from "./hoc/auth";
@@ -117,6 +118,13 @@ function App() {
               path="/project/settings/:id"
               component={Auth(ProjectSettings, null)}
             />
+
+            <Route
+              exact
+              path="/chat"
+              component={Auth(Chat, true)}
+            />
+
           </Switch>
         </div>
       </ThemeProvider>
