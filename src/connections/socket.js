@@ -23,9 +23,19 @@ export default function (user_id,token,controls) {
     socket.emit('message',msg,cb)
   }
 
+  function searchResearchers(searchString="",cb){
+    socket.emit('searchReseacher',searchString,cb)
+  }
+
+  function allResearchers(cb){
+    socket.emit('allResearcher',cb)
+  }
+  
   return{
     getChatrooms,
-    sendMessage
+    sendMessage,
+    searchResearchers,
+    allResearchers,
   }
 }
 

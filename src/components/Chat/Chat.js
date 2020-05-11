@@ -83,6 +83,8 @@ export default class Chat extends React.Component {
       this.setState({ chatRooms: res })
       // console.log(res)
     })
+
+    // this.state.client.searchResearchers("Damika",(res)=>{console.log(res)})
   }
   render() {
     if (!this.state.chatRooms) {
@@ -104,6 +106,7 @@ export default class Chat extends React.Component {
                 setHiddenState: this.setHiddenState,
                 setCurrentChatID: this.setCurrentChatID
               }}
+              state={this.state}
               chatRooms={this.state.chatRooms}
             />
 
