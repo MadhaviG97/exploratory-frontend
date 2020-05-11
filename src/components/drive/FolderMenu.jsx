@@ -14,11 +14,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
 import InputBase from '@material-ui/core/InputBase';
 import Paper from '@material-ui/core/Paper';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import history from '../../history'
 const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/fileAvatar.png'
 const folderImage=process.env.PUBLIC_URL + '/images/fileFolder/grey-folder-full-icon-png-5.png'
 const useStyles = makeStyles((theme) => ({
@@ -45,7 +45,7 @@ export default function FolderMenu(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [file,setFile]=React.useState('');
-  const history = useHistory();
+  
   const [name,setName]=React.useState('');
   let folder=props.folderParams.folderId
   console.log(folder)
@@ -118,7 +118,7 @@ export default function FolderMenu(props) {
       'Authorization': `Bearer ${token}`
       }
     }
-    
+    console.log(data)
     fetch('/drive/upload', {
         method: 'POST',
         body: data,
@@ -128,10 +128,11 @@ export default function FolderMenu(props) {
           if (data.success) {
             console.log('yep3')
               alert('File Added!')
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
 
-                setTimeout(() => {
-                  window.location.reload();
-                }, 2000);
+                
         } else {
           alert('Upload failed');
         }
@@ -258,7 +259,7 @@ export default function FolderMenu(props) {
                 <Button
                     backgroundColor='#b2beb5'
                     component="label"
-                    onClick={handleClickOpen}
+                    onClick={()=>history.push('/document/compare')}
                     >
                     <Typography
                         component="span"

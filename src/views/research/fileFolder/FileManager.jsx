@@ -15,21 +15,21 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 
 import '../../../assets/css/editor.css';
-
+import InfoIcon from '@material-ui/icons/Info';
 import FolderMenu from '../../../components/drive/FolderMenu'
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-import CardHeader from '@material-ui/core/CardHeader';
+
 import CardActions from '@material-ui/core/CardActions';
-
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/Delete';
-import ShareIcon from '@material-ui/icons/Share';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import { Typography } from '@material-ui/core';
 
+import FileSaver from 'file-saver';
 
 
 
@@ -40,13 +40,126 @@ function Edit2Page(props) {
     
     const [files, setFiles] = useState([])
 
-    
+    const [fileDetail, setFileDetail] = useState('')
     const [folders, setFolders] = useState([])
-    
+    const [anchorEl, setAnchorEl] =useState(null);
+    const handleClick = param => event  => {
+        setAnchorEl(event.currentTarget);
+        setFileDetail(param)
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+    const handleShare = () => {
+        const variable = { 
+            name:fileDetail.filename
+        }
+        console.log(variable)
+        const token = localStorage.token;
+        let config = {
+            headers: {
+            'Authorization': `Bearer ${token}`
+            }
+          }
+        if (fileDetail.metadata.sensitivity=='private'){
+            axios.post('/drive/sharefile', variable,config)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('File shared with public')
+                        setTimeout(() => {
+                            window.location.reload();
+                          }, 2000);
+                        
+                    } else {
+                        alert('Could not share ')
+                    }
+                })
+        }
+        if (fileDetail.metadata.sensitivity=='public'){
+            axios.post('/drive/notsharefile', variable,config)
+                .then(response => {
+                    if (response.data.success) {
+                        alert('Stopped Sharing with public')
+                        setTimeout(() => {
+                            window.location.reload();
+                          }, 1000);
+                        
+                    } else {
+                        alert('Could not stop sharing ')
+                    }
+                })
+        }
+        setAnchorEl(null);
+    };
+    const fileDownload = () => {
+        if (folder){
+            console.log(folder)
+            //folder=props.match.params.folderId
+          }
+          else{
+            folder="root"
+          }
+        const variable = { 
+            filename:fileDetail.filename,
+            group: "GeeFour",
+            folder:folder
+        }
+        console.log(variable)
+        const token = localStorage.token;
+        let config = {
+            'Authorization': `Bearer ${token}`
+          }
+          
+        axios( {
+            method: "POST",
+            data: variable,
+            url: '/drive/downloadfile',
+            responseType: "blob",
+            headers:config
+          })
+            .then(response => {
+            if (response.data) {
+                FileSaver.saveAs(response.data);
+                
+            } else {
+                alert('Could not Delete File ')
+            }
+        })
+            
+        
+        setAnchorEl(null);
+    };
+    const handleDelete = () => {
+        const variable = { 
+            id:fileDetail._id
+        }
+        console.log(variable)
+        const token = localStorage.token;
+        let config = {
+            headers: {
+            'Authorization': `Bearer ${token}`
+            }
+          }
+        
+        axios.post('/drive/deletefile', variable,config)
+            .then(response => {
+                if (response.data.success) {
+                    alert('File Successfully Deleted')
+                    setTimeout(() => {
+                        window.location.reload();
+                        }, 1000);
+                    
+                } else {
+                    alert('Could not Delete File ')
+                }
+            })
+        
+        setAnchorEl(null);
+    };
     useEffect(() => {
         if (folder){
             console.log(folder)
-            folder=props.match.params.folderId
+            //folder=props.match.params.folderId
           }
           else{
             folder="root"
@@ -90,18 +203,36 @@ function Edit2Page(props) {
         return (
         <div>
             <NavBar/>
-            
-                <Box p={1}  style={{  background: '#014f82'}}>
-                    <div className={classes.name} >
-                        <h1 align='center' className={classes.title}>Drive</h1>
-                    </div>
-                </Box>
+                <Menu
+                    id="simple-menu"
+                    
+                    anchorEl={anchorEl}
+                    getContentAnchorEl={null}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+                    transformOrigin={{ vertical: "top", horizontal: "center" }}
+                    open={Boolean(anchorEl)}
+                    onClose={handleClose}
+                    MenuListProps={{ onMouseLeave: handleClose }}
+                >   
+                    {fileDetail.metadata && fileDetail.metadata.sensitivity=='private'
+                        ? <MenuItem style={{ fontSize: 14 }} onClick={handleShare}>Share With Public</MenuItem>
+                        : <MenuItem style={{ fontSize: 14 }} onClick={handleShare}>Stop Sharing</MenuItem>
+                    }
+                    <MenuItem style={{fontSize: 14 }} onClick={fileDownload}>Download</MenuItem>
+                    <MenuItem style={{ color: '#d60009',fontSize: 14 }} onClick={handleDelete}>Delete</MenuItem>
+                </Menu>
                 
-                <div className={classNames(classes.main, classes.mainRaised2)} > 
+                
+                <div className={classNames(classes.main)} > 
+                    <Box p={1}  style={{  background: '#014f82'}}>
+                        <div className={classes.name} >
+                            <h1 align='center' className={classes.title}>Drive</h1>
+                        </div>
+                    </Box>
                     {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
                     
                     <Grid container spacing={5} >
-                        <Grid item xs={3}>
+                        <Grid item xs={3} >
                             <Paper >
                             <FolderMenu folderParams={props.match.params}/>
                             </Paper>
@@ -123,11 +254,9 @@ function Edit2Page(props) {
                                                     
                                                 </CardContent>
                                                 <Divider variant="middle" />
-                                                <CardActions  justify="center">
-                                                    
-                                                    
-                                                    <IconButton aria-label="delete document"  >{/*href ={`/editor/delete/${blog._id}`} */}
-                                                    <DeleteIcon />
+                                                <CardActions  justify="center" >
+                                                    <IconButton aria-label="delete document"  href={`/document/filemanager/${folder._id}`}>
+                                                        <ArrowForwardIosIcon/>
                                                     </IconButton>
                                                     <Typography
                                                     component="span"
@@ -144,7 +273,7 @@ function Edit2Page(props) {
                                 {files.map((file,index) => (
                                     
                                 <Grid item lg={3} md={4} xs={8}>
-                                    <CardActionArea component="a" >
+                                    <CardActionArea component="a"  >
                                         <Card >
                                             
                                             <CardContent>
@@ -157,11 +286,12 @@ function Edit2Page(props) {
                                             <Divider variant="middle" />
                                             <CardActions disableSpacing>
                                                 
-                                                <IconButton aria-label="share">
-                                                <ShareIcon />
-                                                </IconButton>
-                                                <IconButton aria-label="delete document"  >{/*href ={`/editor/delete/${blog._id}`} */}
-                                                <DeleteIcon />
+                                                
+                                                <IconButton aria-label={`info `} 
+                                                    onClick={
+                                                        handleClick(file)
+                                                        } >
+                                                <InfoIcon />
                                                 </IconButton>
                                                 <Typography
                                                     component="span"
@@ -185,7 +315,7 @@ function Edit2Page(props) {
                     <Box p={4}  /> 
                 </div>
             
-            <Footer/>
+            
         </div>
         );
 

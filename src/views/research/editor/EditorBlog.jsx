@@ -19,7 +19,7 @@ import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/projectFolderGrid";
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
-
+import EditIcon from '@material-ui/icons/Edit';
 
 
 
@@ -38,7 +38,32 @@ export default function CreatePage(props) {
                 }
             })
     }, [])
-    
+    const handleDelete = (id) => {
+        const variable = { 
+            postId:id
+        }
+        console.log(variable)
+        const token = localStorage.token;
+        let config = {
+            headers: {
+            'Authorization': `Bearer ${token}`
+            }
+          }
+        
+        axios.post('/editor/deletepost', variable,config)
+            .then(response => {
+                if (response.data.success) {
+                    alert('Document Successfully Deleted')
+                    setTimeout(() => {
+                        window.location.reload();
+                        }, 1000);
+                    
+                } else {
+                    alert('Could not Delete Document ')
+                }
+            })
+        
+    };
     return(
         <div>
             <NavBar/>
@@ -53,9 +78,9 @@ export default function CreatePage(props) {
                 </Box>
                  {/*marginTop={7} />*/}
                  
-                 <div className={classNames(classes.main, classes.mainRaised2)} > 
+                 
                     {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
-                    
+                    <Box p={1}/>
                     <Grid container spacing={5} >
                         <Grid item xs={3}>
                             <Paper >
@@ -68,7 +93,7 @@ export default function CreatePage(props) {
                             <Grid container spacing={4} direction="row" >
                                 {blogs.map((blog,index) => (
                                     <Grid item lg={4} md={6} xs={12}>
-                                        <CardActionArea component="a" href={`/document/edit/${blog._id}`}>
+                                        <CardActionArea component="a" >
                                         <Card >
                                             <CardHeader
                                                 avatar={
@@ -96,11 +121,11 @@ export default function CreatePage(props) {
                                             </CardContent>
                                             <Divider variant="middle" />
                                             <CardActions disableSpacing>
+                                            <IconButton aria-label="delete document" href={`/document/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                <EditIcon/>
+                                            </IconButton>
                                                 
-                                                <IconButton aria-label="share">
-                                                <ShareIcon />
-                                                </IconButton>
-                                                <IconButton aria-label="delete document"  >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                <IconButton aria-label="delete document" onClick={()=>handleDelete(blog._id)} >{/*href ={`/editor/delete/${blog._id}`} */}
                                                 <DeleteIcon />
                                                 </IconButton>
                                             </CardActions>
@@ -112,11 +137,11 @@ export default function CreatePage(props) {
                             </Grid>
                         </Grid>
                     </Grid>
-                </div>
+                
                
             </div>
             
-            <Footer/>
+            
         </div>
     );
 

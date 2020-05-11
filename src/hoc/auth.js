@@ -13,7 +13,7 @@ export default function (ComposedClass, reload) {
             dispatch(auth()).then(async response => {
                 if (await !response.payload) {
                     if (reload) {
-                        props.history.push('/signup_signin')
+                        props.history.push('/signup')
                     }
                 } else {
                     

@@ -58,17 +58,17 @@ function App() {
             <Route
               exact
               path="/document/compare"
-              component={Auth(CompareDoc, null)}
+              component={Auth(CompareDoc, true)}
             />
             <Route
               exact
               path="/document/filemanager"
-              component={Auth(FileManager, null)}
+              component={Auth(FileManager, true)}
             />
             <Route
               exact
               path="/document/filemanager/:folderId"
-              component={Auth(FileManager, null)}
+              component={Auth(FileManager, true)}
             />
             <Route
               exact
@@ -88,32 +88,32 @@ function App() {
             <Route
               exact
               path="/document/projectfolder"
-              component={Auth(ProjectFolder, null)}
+              component={Auth(ProjectFolder, true)}
             />
             <Route
               exact
               path="/document/edit/:postId"
-              component={Auth(EditPage, null)}
+              component={Auth(EditPage, true)}
             />
             <Route
               exact
               path="/document/editorblog"
-              component={Auth(EditorBlog, null)}
+              component={Auth(EditorBlog, true)}
             />
             <Route
               exact
               path="/screenshare/share"
-              component={Auth(ScreenShare, null)}
+              component={Auth(ScreenShare, true)}
             />
             <Route
               exact
               path="/screenshare/receive"
-              component={Auth(Receive, null)}
+              component={Auth(Receive, true)}
             />
             <Route
               exact
               path="/screenshare/send"
-              component={Auth(Send, null)}
+              component={Auth(Send, true)}
             />
 
             <Route exact path="/project" component={Auth(Project, null)} />

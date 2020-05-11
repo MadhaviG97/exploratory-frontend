@@ -4,6 +4,9 @@ import openSocket from 'socket.io-client';
 import Button from '@material-ui/core/Button';
 const socket = openSocket('http://localhost:8000');
 var caller;
+var group="GeeFour"
+var caller="caller"
+var room=group.concat(caller)
 const RTC_CONFIGURATION = {
     iceServers: [
       { urls: 'stun:stun.l.google.com:19302' },
@@ -28,7 +31,7 @@ function sendOffer(offer) {
     });
   }
   function makePeerConnection(stream) {
-    if (caller) { caller.close(); }
+    if (caller) { caller=null }
     caller = new RTCPeerConnection(RTC_CONFIGURATION);
     caller.addStream(stream);
     caller.onicecandidate = (event) => {
@@ -89,7 +92,7 @@ class Sender extends React.Component {
     render() {
         
         
-        socket.emit('join', '1234caller');
+        socket.emit('join', room);
         
        
         return (
