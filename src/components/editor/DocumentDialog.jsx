@@ -83,6 +83,7 @@ export default function DocumentDialog(props) {
                 label=""
                 type="text"
                 fullWidth
+                required
                 onChange={handleChange}
             />
         </DialogContent>

@@ -40,15 +40,6 @@ class QuillEditor extends React.Component {
     
     componentDidMount() {
         this._isMounted = true;
-        
-        
-        ////this.provider = new WebsocketProvider("ws://localhost:3000/blog/create");// change to 'ws://localhost:3000' for local development
-        
-        //socket.on('subscribeToText', (text) => {
-        //    this.setState({text: text});
-        //    console.log('socket',text);
-        //  });
-        
      
     }
 
@@ -56,11 +47,7 @@ class QuillEditor extends React.Component {
     
     handleChange = (value) => {
         let status = '';
-    if (value.length !== this.state.text.length) {
-        console.log("I am Emitting");
-        //socket.emit('toText', value);
-        
-      };
+    
       
       this.setState({
         text: value

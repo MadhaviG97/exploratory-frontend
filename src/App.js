@@ -31,9 +31,13 @@ import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
 import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
+import CompareDoc from "./views/research/fileFolder/CompareDoc";
 import ProjectSettings from "./views/research/index/ProjectSettings";
 
 import Project from "./views/research/index/ViewResearchPublic";
+import ScreenShare from "./views/research/screenShare/ScreenShare"
+import Receive from "./views/research/screenShare/Receive"
+import Send from "./views/research/screenShare/Send"
 
 import Demo from "./views/whiteboard/Demo";
 
@@ -71,12 +75,22 @@ function App() {
             />
             <Route
               exact
+              path="/document/compare"
+              component={Auth(CompareDoc, null)}
+            />
+            <Route
+              exact
               path="/document/filemanager"
               component={Auth(FileManager, null)}
             />
             <Route
               exact
-              path={`/project/viewproject/:id`}
+              path="/document/filemanager/:folderId"
+              component={Auth(FileManager, null)}
+            />
+            <Route
+              exact
+              path="/project/viewproject/:id"
               component={Auth(ProjectPublic, null)}
             />
             <Route
@@ -103,6 +117,21 @@ function App() {
               exact
               path="/document/editorblog"
               component={Auth(EditorBlog, null)}
+            />
+            <Route
+              exact
+              path="/screenshare/share"
+              component={Auth(ScreenShare, null)}
+            />
+            <Route
+              exact
+              path="/screenshare/receive"
+              component={Auth(Receive, null)}
+            />
+            <Route
+              exact
+              path="/screenshare/send"
+              component={Auth(Send, null)}
             />
 
             <Route exact path="/project" component={Auth(Project, null)} />
