@@ -122,7 +122,7 @@ function App() {
             <Route
               exact
               path="/chat"
-              component={Auth(Chat, true)}
+              component={Auth(Chat, null)}
             />
 
           </Switch>

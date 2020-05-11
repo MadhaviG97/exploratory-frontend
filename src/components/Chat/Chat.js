@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import ChatWindow from './ChatWindow2'
 import ChatList from './ChatList'
 import { Grid, Paper } from '@material-ui/core'
+
+
 import socket from '../../connections/socket';
 
 const dummyThreads = [
@@ -19,27 +21,17 @@ export default class Chat extends React.Component {
   // const [chatRooms, setChatRooms] = useState([])
   // const [client,setClient]=useState(socket(10001,"dummy token"))
 
-  // console.log(client)
-
-
-
   constructor(props) {
     super()
     this.state = {
-      user_id: 10005,
-      // client:socket(10005,"dummy token"),
+      user_id: props.user._id,
       client: null,
       hiddenState: true,
       currentChatID: null,
-      chatRooms: null
+      chatRooms: null,
+      user:props.user,
+      token:props.token
     }
-
-    // const client=socket(10005,"dummy token")
-    // this.state.client.getChatrooms((err,res)=>{
-    //   // setChatRooms(res)
-    //   this.setState({chatRooms:res})
-    //   // console.log(res)
-    // })
 
     this.setHiddenState = this.setHiddenState.bind(this)
     this.setCurrentChatID = this.setCurrentChatID.bind(this)
@@ -74,7 +66,7 @@ export default class Chat extends React.Component {
       onMessageReceived: this.onMessageReceived
     }
     await this.setState({
-      client: socket(10005, "dummy token", controls)
+      client: socket(this.state.user_id, this.state.token, controls)
     })
     this.state.client.getChatrooms((err, res) => {
       // setChatRooms(res)
