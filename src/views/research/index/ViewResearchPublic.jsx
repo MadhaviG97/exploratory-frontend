@@ -77,7 +77,11 @@ function Home() {
   };
 
   const getComments = () => {
-    return <Comments comments={project.comments} />;
+    if (project.comments) {
+      return <Comments comments={project.comments} />;
+    } else {
+      return <Comments comments={[]} />;
+    }
   };
 
   return (

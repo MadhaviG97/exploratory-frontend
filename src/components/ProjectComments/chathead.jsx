@@ -46,7 +46,12 @@ export default function Comments(props) {
     axios
       .post("/project/comments/view-comments", { id: project.id })
       .then((response) => {
-        setComments(response.data);
+        console.log(response.data);
+        if (response.data) {
+          setComments(response.data);
+        } else {
+          setComments([]);
+        }
       })
       .catch((err) => console.log(err));
   };
@@ -56,6 +61,7 @@ export default function Comments(props) {
       <Grid md="12" align="right" className={classes.newComment}>
         <AddNewComment onNewComment={handleRefreshComment} />
       </Grid>
+      {/* {Array.isArray(comments) && emptyArray.length} */}
       {comments.map((chat) => {
         return (
           <CommentHeads chat={chat} onCommentDelete={handleRefreshComment} />

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   Grid,
   Typography,
@@ -16,24 +16,43 @@ import IconButton from "@material-ui/core/IconButton";
 import BorderColorOutlinedIcon from "@material-ui/icons/BorderColorOutlined";
 import Alert from "../../../components/Project/AlertBox";
 import FileUploader from "../../../components/Project/FileUploader";
-
+import Avatar from "@material-ui/core/Avatar";
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { createResearch } from "../../../_actions/project_actions";
+import { render } from "../../../_actions/project_actions";
 //routing
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
+//API call
+import axios from "axios";
 
 export default function Form() {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
-  const research = useSelector((state) => state.projectDetails);
-  const dispatch = useDispatch();
+  const project = useSelector((state) => state.project).project;
+  const admins = useSelector((state) => state.project).admins;
+  const collaborators = useSelector((state) => state.project).collaborators;
+  const tags = useSelector((state) => state.project).tags;
+  const images = useSelector((state) => state.project).images;
 
+  const dispatch = useDispatch();
+  let { id } = useParams();
   let history = useHistory();
   let location = useLocation();
   let { from } = location.state || {
-    from: { pathname: "/project/viewproject/1" },
+    from: { pathname: `/project/viewproject/${id}` },
   };
+
+  // useEffect(() => {
+  //   var request = axios
+  //     .post("/project/view-project", { id: id })
+  //     .then((response) => {
+  //       return response.data;
+  //     });
+
+  //   dispatch(render(request)).then((response) => {
+  //     console.log(response);
+  //   });
+  // });
 
   const AddressForm = () => {
     const [state, setState] = React.useState({
@@ -90,6 +109,28 @@ export default function Form() {
       setState({ ...state, disabled: action });
     };
 
+    const onTagsChange = (values) => {
+      const newList = [];
+      values.forEach((value) => {
+        newList.push(value.id);
+      });
+      setState({
+        ...state,
+        tags: newList,
+      });
+    };
+
+    const onCollaboratorChange = (values) => {
+      const newList = [];
+      values.forEach((value) => {
+        newList.push(value._id);
+      });
+      setState({
+        ...state,
+        collaborators: newList,
+      });
+    };
+
     return (
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -111,7 +152,7 @@ export default function Form() {
             disabled={state.disabled}
             id="title"
             name="title"
-            defaultValue="Automated Inter-artefact Traceability Establishment for DevOps Practice"
+            defaultValue={project.title}
             label="Project Title"
             fullWidth
             autoComplete="project title"
@@ -123,7 +164,7 @@ export default function Form() {
           <TextField
             required
             disabled={state.disabled}
-            defaultValue="Showcase your professional experience and education to help potential employers and collaborators find and contact you about career opportunities."
+            defaultValue={project.description}
             id="description"
             name="description"
             label="Project Description"
@@ -152,18 +193,25 @@ export default function Form() {
             multiple
             id="fixed-tags-demo"
             disabled
-            options={top100Films}
-            defaultValue={[top100Films[5]]}
-            // onChange={(event, value) => {
-            //   onCollaboratorChange(value);
-            // }}
-            getOptionLabel={(option) => option.title}
+            options={admins}
+            defaultValue={admins}
+            getOptionLabel={(option) =>
+              option.first_name.concat(" ").concat(option.last_name)
+            }
             renderInput={(state, getTagProps) =>
               state.map((option, index) => (
                 <Chip
-                  label={option.title}
+                  label={option.first_name}
                   {...getTagProps({ index })}
                   disabled={index === 0}
+                  avatar={
+                    <Avatar
+                      alt="propic"
+                      src={"../images/profile-pictures/".concat(
+                        option.profile_picture
+                      )}
+                    />
+                  }
                 />
               ))
             }
@@ -171,8 +219,8 @@ export default function Form() {
             renderInput={(params) => (
               <TextField
                 {...params}
-                label="Creator"
-                name="Creator"
+                label="Admins"
+                name="Admins"
                 variant="outlined"
               />
             )}
@@ -184,19 +232,28 @@ export default function Form() {
             multiple
             disabled={state.disabled}
             id="fixed-tags-demo"
-            options={top100Films}
-            defaultValue={[top100Films[1], top100Films[2], top100Films[3]]}
+            options={collaborators}
+            defaultValue={collaborators}
             name="collaborators"
-            // onChange={(event, value) => {
-            //   onTagsChange(value);
-            // }}
-            getOptionLabel={(option) => option.title}
+            onChange={(event, value) => {
+              onCollaboratorChange(value);
+            }}
+            getOptionLabel={(option) =>
+              option.first_name.concat(" ").concat(option.last_name)
+            }
             renderInput={(state, getTagProps) =>
               state.map((option, index) => (
                 <Chip
-                  label={option.title}
+                  label={option.first_name.concat(" ").concat(option.last_name)}
                   {...getTagProps({ index })}
                   disabled={index === 0}
+                  avatar={
+                    <Avatar
+                      src={"images/profile-pictures/".concat(
+                        option.profile_picture
+                      )}
+                    />
+                  }
                 />
               ))
             }
@@ -217,12 +274,12 @@ export default function Form() {
             multiple
             disabled={state.disabled}
             id="fixed-tags-demo"
-            options={top100Films}
-            defaultValue={[top100Films[5], top100Films[3], top100Films[0]]}
+            options={tags}
+            defaultValue={tags}
             name="tags"
-            // onChange={(event, value) => {
-            //   onTagsChange(value);
-            // }}
+            onChange={(event, value) => {
+              onTagsChange(value);
+            }}
             getOptionLabel={(option) => option.title}
             renderInput={(state, getTagProps) =>
               state.map((option, index) => (

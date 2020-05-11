@@ -1,6 +1,7 @@
 import React from "react";
 import { defaultClassNames } from "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
+import { saveAs } from "file-saver";
 
 export default function FileUploader(props) {
   const Layout = ({
@@ -21,8 +22,17 @@ export default function FileUploader(props) {
   };
 
   function CustomLayout() {
-    const getUploadParams = () => ({ url: "https://httpbin.org/post" });
+    // specify upload params and url for your files
+    const getUploadParams = ({ meta }) => {
+      return { url: "https://localhost:3000" };
+    };
 
+    // called every time a file's `status` changes
+    const handleChangeStatus = ({ meta, file }, status) => {
+      console.log(status, meta, file);
+    };
+
+    // receives array of files that are done uploading when submit button is clicked
     const handleSubmit = (files, allFiles) => {
       console.log(files.map((f) => f.meta));
       allFiles.forEach((f) => f.remove());
@@ -33,11 +43,13 @@ export default function FileUploader(props) {
         getUploadParams={getUploadParams}
         LayoutComponent={Layout}
         onSubmit={handleSubmit}
+        onChangeStatus={handleChangeStatus}
         maxFiles={props.maxFiles}
         submitButtonContent={null}
         submitButtonDisabled={true}
         multiple={props.multiple}
         accept={props.accept}
+        autoUpload={true}
         // {...props.extra}
         // classNames={{ inputLabelWithFiles: defaultClassNames.inputLabel }}
         inputContent="..."

@@ -7,6 +7,7 @@ export default function (state = {}, action) {
   switch (action.type) {
     case SEARCH:
       return { ...state, searchData: data };
+
     case RENDER:
       return {
         ...state,

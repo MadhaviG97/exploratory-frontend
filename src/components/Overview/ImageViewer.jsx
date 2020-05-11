@@ -78,7 +78,7 @@ export default class ImageViwerClass extends React.Component {
   };
 
   render() {
-    return this.props.images ? (
+    return (
       <div style={classes.root}>
         <GridList style={classes.gridList} cols={2.5}>
           {this.state.dataSet.map((tile) => (
@@ -115,8 +115,6 @@ export default class ImageViwerClass extends React.Component {
           onClose={this.closeViewer}
         />
       </div>
-    ) : (
-      <Typography variant="caption">No related Images</Typography>
     );
   }
 }

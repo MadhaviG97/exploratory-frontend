@@ -13,7 +13,6 @@ import Search from "./views/home/search";
 
 //hoc
 import Auth from "./hoc/auth";
-import WithData from "./hoc/WithData";
 import { compose } from "redux";
 
 import Navbar from "./components/Navbar/Navbar";
@@ -35,6 +34,8 @@ import CreateProject from "./views/research/index/CreateResearch";
 import ProjectSettings from "./views/research/index/ProjectSettings";
 
 import Project from "./views/research/index/ViewResearchPublic";
+
+import Demo from "./views/whiteboard/Demo";
 
 function App() {
   return (
@@ -117,6 +118,8 @@ function App() {
               path="/project/settings/:id"
               component={Auth(ProjectSettings, null)}
             />
+
+            <Route exact path="/whiteboard" component={Demo} />
           </Switch>
         </div>
       </ThemeProvider>

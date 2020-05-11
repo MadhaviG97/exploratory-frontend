@@ -21,37 +21,31 @@ import Checkbox from "@material-ui/core/Checkbox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 //redux
-import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { createResearch } from "../../../_actions/project_actions";
 //routing
 import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 
+const tags = [
+  { id: 10001, title: "tags-1" },
+  { id: 10002, title: "tags-2" },
+  { id: 10003, title: "tags-3" },
+  { id: 10004, title: "tags-4" },
+  { id: 10005, title: "tags-5" },
+];
+
 export default function Form() {
   const classes = useStyles();
-  const dispatch = useDispatch();
-  const user = useSelector((state) => state.user);
-  console.log(user.userData);
+  let user = useSelector((state) => state.user);
   let history = useHistory();
   let location = useLocation();
-  let { from } = location.state || {
-    from: { pathname: "/project/viewproject/1" },
-  };
 
   const AddressForm = () => {
     const [state, setState] = React.useState({
       title: "",
       description: "",
-      currentuser: {
-        id: 10003,
-        first_name: "gamlath",
-        last_name: "perera",
-        university: "University of Moratuwa",
-        email: "gamlath@123.com",
-        profile_picture: "avatar-3.jpg",
-      },
-      collaborators: [10003],
+      currentuser: collaborators[0],
+      collaborators: [collaborators[0]],
       tags: [],
     });
 
@@ -77,7 +71,7 @@ export default function Form() {
     const onCollaboratorChange = (values) => {
       const newList = [];
       values.forEach((value) => {
-        newList.push(value.id);
+        newList.push(value._id);
       });
       setState({
         ...state,
@@ -85,24 +79,25 @@ export default function Form() {
       });
     };
 
-    const handleSubmit = (e, cb) => {
+    const handleSubmit = (e) => {
       const formData = {
         title: state.title,
         description: state.description,
-        creator: state.currentuser.id,
+        creator: state.currentuser._id,
         collaborators: state.collaborators,
         tags: state.tags,
       };
 
       console.log(formData);
 
-      const request = axios
+      axios
         .post(`/project/create-project`, formData)
-        .then((response) => response.data);
-
-      dispatch(createResearch(request))
-        .then((result) => {
-          cb();
+        .then((response) => {
+          var id = response.data.insertId;
+          let { from } = location.state || {
+            from: { pathname: `/project/viewproject/${id}` },
+          };
+          history.replace(from);
         })
         .catch((e) => console.log(e));
     };
@@ -147,8 +142,8 @@ export default function Form() {
           <Autocomplete
             multiple
             id="fixed-collaborators-demo"
-            options={[...collaborators, state.currentuser]}
-            defaultValue={[state.currentuser]}
+            options={[...collaborators]}
+            defaultValue={[collaborators[0]]}
             onChange={(event, value) => {
               onCollaboratorChange(value);
             }}
@@ -194,7 +189,7 @@ export default function Form() {
                       primary={option.first_name
                         .concat(" ")
                         .concat(option.last_name)}
-                      secondary={option.university}
+                      secondary={option.institution}
                     />
                   </ListItem>
                 </List>
@@ -244,15 +239,7 @@ export default function Form() {
         </Grid>
 
         <Grid item xs={12} align="end">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={(e) =>
-              handleSubmit(e, () => {
-                history.replace(from);
-              })
-            }
-          >
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
             Create Project
           </Button>
         </Grid>
@@ -281,81 +268,68 @@ export default function Form() {
   );
 }
 
-const tags = [
-  { id: 10001, title: "tags-1" },
-  { id: 10002, title: "tags-2" },
-  { id: 10003, title: "tags-3" },
-  { id: 10004, title: "tags-4" },
-  { id: 10005, title: "tags-5" },
-  // { id: 10006, title: "tags-6" },
-  // { id: 10007, title: "tags-7" },
-  // { id: 10008, title: "tags-8" },
-  // { id: 10009, title: "tags-9" },
-  // { id: 100010, title: "tags-10" },
-];
-
-const collaborators = [
+let collaborators = [
   {
-    id: 10001,
+    _id: 10001,
     first_name: "madhavi",
     last_name: "gayathri",
-    university: "University of Moratuwa",
+    institution: "University of Moratuwa",
     email: "mad@123.com",
     profile_picture: "avatar-1.jpg",
   },
   {
-    id: 10002,
+    _id: 10002,
     first_name: "malani",
     last_name: "fonseka",
-    university: "University of Moratuwa",
+    institution: "University of Moratuwa",
     email: "melani@123.com",
     profile_picture: "avatar-2.jpg",
   },
   {
-    id: 10003,
+    _id: 10003,
     first_name: "gamlath",
     last_name: "perera",
-    university: "University of Moratuwa",
+    institution: "University of Moratuwa",
     email: "gamlath@123.com",
     profile_picture: "avatar-3.jpg",
   },
   {
-    id: 10004,
+    _id: 10004,
     first_name: "peshaka",
     last_name: "dhananjaya",
-    university: "University of Moratuwa",
+    institution: "University of Moratuwa",
     email: "peshaka@123.com",
     profile_picture: "avatar-4.jpg",
   },
   {
-    id: 10005,
+    _id: 10005,
     first_name: "janith",
     last_name: "janith",
-    university: "University of Moratuwa",
+    institution: "University of Moratuwa",
     email: "janith@123.com",
     profile_picture: "avatar-5.jpg",
   },
   {
-    id: 10006,
+    _id: 10006,
     first_name: "eddie",
     last_name: "silva",
-    university: "University of Moratuwa",
+    institution: "University of Moratuwa",
     email: "eddie@123.com",
     profile_picture: "avatar-6.jpg",
   },
   {
-    id: 10007,
+    _id: 10007,
     first_name: "madhavi",
     last_name: "gayathri",
-    university: "University of Moratuwa",
+    institution: "University of Moratuwa",
     email: "madhavi@123.com",
     profile_picture: "avatar-7.jpg",
   },
   {
-    id: 10008,
+    _id: 10008,
     first_name: "jack",
     last_name: "gamage",
-    university: "University of Moratuwa",
+    institution: "University of Moratuwa",
     email: "jack@123.com",
     profile_picture: "avatar-8.jpg",
   },

@@ -1,14 +1,5 @@
 import axios from "axios";
-import { LOGIN_USER, SEARCH, RENDER, COMMENTS, REPLIES } from "./types";
-
-export function createResearch(request) {
-  console.log(request);
-
-  return {
-    type: LOGIN_USER,
-    payload: request,
-  };
-}
+import { SEARCH, RENDER, COMMENTS, REPLIES } from "./types";
 
 export function search(dataToSubmit) {
   const request = axios

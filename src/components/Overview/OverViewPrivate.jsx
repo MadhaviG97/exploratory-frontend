@@ -32,6 +32,9 @@ export default function Overview() {
   });
 
   const setEditState = () => {
+    let { from } = location.state || {
+      from: { pathname: "/project/settings/1" },
+    };
     history.replace(from);
   };
 
