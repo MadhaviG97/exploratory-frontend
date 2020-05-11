@@ -1,38 +1,27 @@
 import axios from "axios";
 import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER } from "./types";
 
-export function registerUser(dataToSubmit) {
-  const request = axios
-    .post(`/register`, dataToSubmit)
-    .then((response) => response.data);
-
+export function registerUser(request) {
   return {
     type: REGISTER_USER,
     payload: request,
   };
 }
 
-export function loginUser(dataToSubmit){
-    const request = axios.post(`/login`,dataToSubmit)
-        .then(response => {
-            if (response.message){
-
-            }else{
-                localStorage.setItem("token", response.data.token)
-                console.log(response.data.token)
-            }
-
-        })
-    
-
-    return {
-        type: LOGIN_USER,
-        payload: request
+export function loginUser(dataToSubmit) {
+  const request = axios.post(`/login`, dataToSubmit).then((response) => {
+    if (response.message) {
+    } else {
+      localStorage.setItem("token", response.data.token);
+      console.log(response.data.token);
     }
+  });
+
+  return {
+    type: LOGIN_USER,
+    payload: request,
   };
-
-  
-
+}
 
 export function auth() {
   const token = localStorage.token;

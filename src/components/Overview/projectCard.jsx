@@ -8,28 +8,12 @@ const useStyles = makeStyles((theme) => ({
   innerCard: {
     padding: theme.spacing(2),
     minHeight: 100,
-    backgroundColor: "#eceff1",
+    // backgroundColor: "#eceff1",
   },
 }));
 
 export default function ProjectCard(props) {
-  const [form, setForm] = React.useState({
-    hypothesis: false,
-    goal: false,
-    experiment: false,
-    result: false,
-    finalpaper: false,
-  });
-
-  const handleClose = (type) => {
-    setForm({
-      ...form,
-      [type]: false,
-    });
-  };
-
   const classes = useStyles();
-
   return (
     <Paper elevation={5}>
       <Box display="flex" flexDirection="coloumn" className={classes.innerCard}>
@@ -59,16 +43,4 @@ export default function ProjectCard(props) {
       </Box>
     </Paper>
   );
-}
-
-{
-  /* <HypothesisForm
-            onClick={form.hypothesis}
-            handleClose={() => handleClose(props.heading)}
-          />
-
-          <GoalForm
-            onClick={form.goal}
-            handleClose={() => handleClose(props.heading)}
-          /> */
 }
