@@ -80,6 +80,7 @@ export default function AddComment() {
             label="Your Answer"
             type="text"
             fullWidth
+            multiline
           />
         </DialogContent>
         <DialogActions>

@@ -7,7 +7,14 @@ import UserProfile from "./views/researcher/user-profile.jsx";
 import AboutUs from "./views/shared/about-us.jsx";
 import Forum from "./views/shared/public-forum";
 import signIn from "./views/researcher/sign-in";
+
+import Feed from "./views/researcher/feed";
+import Search from "./views/home/search";
+
+//hoc
 import Auth from "./hoc/auth";
+import { compose } from "redux";
+
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 
@@ -19,14 +26,20 @@ import EditPage from "./views/research/editor/EditPage";
 import EditorBlog from "./views/research/editor/EditorBlog";
 import FileManager from "./views/research/fileFolder/FileManager";
 import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
+
+//project
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
 import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
 import CompareDoc from "./views/research/fileFolder/CompareDoc";
+import ProjectSettings from "./views/research/index/ProjectSettings";
+
 import Project from "./views/research/index/ViewResearchPublic";
 import ScreenShare from "./views/research/screenShare/ScreenShare"
 import Receive from "./views/research/screenShare/Receive"
 import Send from "./views/research/screenShare/Send"
+
+import Demo from "./views/whiteboard/Demo";
 
 function App() {
   return (
@@ -34,7 +47,12 @@ function App() {
       <ThemeProvider theme={Theme}>
         <div>
           <Switch>
-            <Route exact path="/" component={Auth(AboutUs, null)} />
+            <Route exact path="/" component={Auth(Feed, true)} />
+            <Route
+              exact
+              path="/search/:string"
+              component={Auth(Search, true)}
+            />
             <Route exact path="/signin" component={Auth(signIn, false)} />
             <Route exact path="/signup" component={Auth(signUp, false)} />
             <Route
@@ -77,7 +95,7 @@ function App() {
             />
             <Route
               exact
-              path="/project/createProject"
+              path="/project/createproject"
               component={Auth(CreateProject, null)}
             />
             <Route
@@ -118,8 +136,19 @@ function App() {
 
             <Route exact path="/project" component={Auth(Project, null)} />
             <Route exact path="/forum" component={Auth(Forum, true)} />
-            <Route exact path="/userProfile" component={Auth(UserProfile, null)} />
+            <Route
+              exact
+              path="/userProfile"
+              component={Auth(UserProfile, null)}
+            />
             {/* <Route exact path="/modal" component={Modal} /> */}
+            <Route
+              exact
+              path="/project/settings/:id"
+              component={Auth(ProjectSettings, null)}
+            />
+
+            <Route exact path="/whiteboard" component={Demo} />
           </Switch>
         </div>
       </ThemeProvider>

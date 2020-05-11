@@ -13,6 +13,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CommentIcon from "@material-ui/icons/Comment";
+import Avatar from "@material-ui/core/Avatar";
 
 import { useStyles } from "../../assets/css/projectNavbar";
 
@@ -37,7 +38,12 @@ export default function ProjectNavbar(props) {
               </ListItem>
               <ListItem className={classes.heading}>
                 <ListItemIcon>
-                  <AccountCircleIcon color="primary" />
+                  <Avatar
+                    src={"/images/profile-pictures/".concat(
+                      props.authour_image
+                    )}
+                  ></Avatar>
+                  {/* <AccountCircleIcon color="primary" /> */}
                 </ListItemIcon>
                 <ListItemText
                   primary={props.authour}
