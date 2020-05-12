@@ -255,7 +255,6 @@ function LoggedRightMenu(props) {
               {name}
             </div>
           }
-          caret="true"
           buttonText={
             <img src={profileImage} className={classes.img} alt="profile" />
           }

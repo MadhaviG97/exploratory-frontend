@@ -5,7 +5,11 @@ import Tab from "../../../components/Project/TabPublicMode";
 import Footer from "../../../components/Footer/Footer";
 import Box from "@material-ui/core/Box";
 import { useEffect } from "react";
-import { render } from "../../../_actions/project_actions";
+import {
+  render,
+  getRelatedImages,
+  getFinalPaper,
+} from "../../../_actions/project_actions";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
@@ -32,22 +36,78 @@ function Home() {
     project: {},
     collaborators: [],
     tags: [],
-    images: [],
   });
-  useEffect(() => {
-    if (JSON.stringify(state.project) === JSON.stringify({})) {
-      var request = axios
-        .post("/project/view-project", { id: id })
-        .then((response) => {
-          return response.data;
-        });
 
-      dispatch(render(request)).then((response) => {
-        setState({ ...state, project: response });
-        console.log(response);
-      });
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      if (JSON.stringify(state.project) === JSON.stringify({})) {
+        let config = {
+          headers: {
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        };
+
+        var request = axios
+          .post("/project/view-project", { id: id })
+          .then((response) => {
+            return response.data;
+          })
+          .catch((err) => console.log(err.message));
+
+        var request_images = axios
+          .post(
+            "/drive/getfiles",
+            {
+              group: id,
+              folder: "Related Images",
+            },
+            config
+          )
+          .then((response) => {
+            return response.data;
+          })
+          .catch((err) => console.log(err.message));
+
+        var request_final_paper = axios
+          .post(
+            "/drive/getfiles",
+            {
+              group: id,
+              folder: "Final Paper",
+            },
+            config
+          )
+          .then((response) => {
+            console.log(response.data);
+            return response.data;
+          })
+          .catch((err) => console.log(err.message));
+
+        dispatch(getFinalPaper(request_final_paper))
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        dispatch(getRelatedImages(request_images))
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        dispatch(render(request)).then((response) => {
+          setState({ ...state, project: response });
+          console.log(response);
+        });
+      }
     }
-  }, [dispatch, id, state, setState, state.project, axios]);
+    return () => (mounted = false);
+  }, []);
 
   const Page = () => {
     return (
@@ -69,7 +129,7 @@ function Home() {
   };
 
   const getOverView = () => {
-    return <OverView images={project.images} />;
+    return <OverView />;
   };
 
   const getTeam = () => {

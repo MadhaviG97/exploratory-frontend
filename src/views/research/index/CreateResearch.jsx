@@ -94,12 +94,36 @@ export default function Form() {
         .post(`/project/create-project`, formData)
         .then((response) => {
           var id = response.data.insertId;
+          createFolder(id, "Final Paper");
+          createFolder(id, "Related Images");
+          createFolder(id, "Public Files");
+
           let { from } = location.state || {
             from: { pathname: `/project/viewproject/${id}` },
           };
           history.replace(from);
         })
         .catch((e) => console.log(e));
+    };
+
+    const createFolder = (project_id, folder_name) => {
+      const token = localStorage.token;
+      console.log(token);
+      const variables = {
+        group: project_id, //project_id
+        name: folder_name,
+        folder: "root",
+      };
+
+      let config = {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      };
+      axios.post("/drive/createfolder", variables, config).then((response) => {
+        console.log(response);
+        alert("Inserted");
+      });
     };
 
     const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;

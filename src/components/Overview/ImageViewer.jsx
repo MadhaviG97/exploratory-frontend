@@ -85,8 +85,7 @@ export default class ImageViwerClass extends React.Component {
             <GridListTile key={tile.src}>
               <Button onClick={this.handleViewImage}>
                 <img
-                  src={tile.src}
-                  alt={tile.caption}
+                  src={URL.createObjectURL(tile)}
                   id={this.state.dataSet.indexOf(tile)}
                 />
               </Button>
@@ -98,7 +97,7 @@ export default class ImageViwerClass extends React.Component {
                   title: classes.title,
                 }}
                 actionIcon={
-                  <IconButton aria-label={`star ${tile.caption}`}>
+                  <IconButton>
                     <StarBorderIcon style={classes.title} />
                   </IconButton>
                 }

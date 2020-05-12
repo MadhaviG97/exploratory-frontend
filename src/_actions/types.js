@@ -6,3 +6,6 @@ export const SEARCH = "search";
 export const RENDER = "render";
 export const COMMENTS = "comments";
 export const REPLIES = "replies";
+export const RELATEDIMAGES = "images";
+export const FINALPAPER = "finalpaper";
+export const PUBLICFILES = "publicfiles";

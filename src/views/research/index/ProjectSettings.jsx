@@ -17,9 +17,15 @@ import BorderColorOutlinedIcon from "@material-ui/icons/BorderColorOutlined";
 import Alert from "../../../components/Project/AlertBox";
 import FileUploader from "../../../components/Project/FileUploader";
 import Avatar from "@material-ui/core/Avatar";
+import Loader from "../../../components/Loader";
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import { render } from "../../../_actions/project_actions";
+import {
+  render,
+  getRelatedImages,
+  getFinalPaper,
+  getPublicFiles,
+} from "../../../_actions/project_actions";
 //routing
 import { useHistory, useLocation, useParams } from "react-router-dom";
 //API call
@@ -32,7 +38,9 @@ export default function Form() {
   const admins = useSelector((state) => state.project).admins;
   const collaborators = useSelector((state) => state.project).collaborators;
   const tags = useSelector((state) => state.project).tags;
-  const images = useSelector((state) => state.project).images;
+  const related_images = useSelector((state) => state.project).related_images;
+  const final_paper = useSelector((state) => state.project).final_paper;
+  const public_files = useSelector((state) => state.project).public_files;
 
   const dispatch = useDispatch();
   let { id } = useParams();
@@ -42,33 +50,115 @@ export default function Form() {
     from: { pathname: `/project/viewproject/${id}` },
   };
 
-  // useEffect(() => {
-  //   var request = axios
-  //     .post("/project/view-project", { id: id })
-  //     .then((response) => {
-  //       return response.data;
-  //     });
+  useEffect(() => {
+    console.log(project);
 
-  //   dispatch(render(request)).then((response) => {
-  //     console.log(response);
-  //   });
-  // });
+    let mounted = true;
+    if (mounted) {
+      if (project === undefined) {
+        let config = {
+          headers: {
+            Authorization: `Bearer ${localStorage.token}`,
+          },
+        };
+
+        var request = axios
+          .post("/project/view-project", { id: id })
+          .then((response) => {
+            return response.data;
+          })
+          .catch((err) => console.log(err.message));
+
+        var request_images = axios
+          .post(
+            "/drive/getfiles",
+            {
+              group: id,
+              folder: "Related Images",
+            },
+            config
+          )
+          .then((response) => {
+            return response.data;
+          })
+          .catch((err) => console.log(err.message));
+
+        var request_final_paper = axios
+          .post(
+            "/drive/getfiles",
+            {
+              group: id,
+              folder: "Final Paper",
+            },
+            config
+          )
+          .then((response) => {
+            console.log(response.data);
+            return response.data;
+          })
+          .catch((err) => console.log(err.message));
+
+        var request_public_files = axios
+          .post(
+            "/drive/getfiles",
+            {
+              group: id,
+              folder: "Public Files",
+            },
+            config
+          )
+          .then((response) => {
+            console.log(response.data);
+            return response.data;
+          })
+          .catch((err) => console.log(err.message));
+
+        dispatch(getFinalPaper(request_final_paper))
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        dispatch(getPublicFiles(request_public_files))
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        dispatch(getRelatedImages(request_images))
+          .then((response) => {
+            console.log(response);
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
+        dispatch(render(request)).then((response) => {
+          setState({ ...state, project: response });
+          console.log(response);
+        });
+      }
+    }
+    return () => (mounted = false);
+  }, []);
+
+  const [state, setState] = React.useState({
+    title: "",
+    description: "",
+    abstract: "",
+    author: {},
+    collaborators: [],
+    permission: false,
+    tags: [],
+    disabled: true,
+    alertOpen: false,
+  });
 
   const AddressForm = () => {
-    const [state, setState] = React.useState({
-      title: "",
-      description: "",
-      abstract: "",
-      author: {},
-      collaborators: [],
-      relatedImages: [],
-      finalPaper: "",
-      permission: false,
-      tags: [],
-      disabled: true,
-      alertOpen: false,
-    });
-
     const handleChange = (e) => {
       setState({
         ...state,
@@ -89,15 +179,9 @@ export default function Form() {
         abstract: state.abstract,
         creator: state.creator,
         collaborators: state.collaborators,
-        relatedImages: state.relatedImages,
-        finalPaper: state.finalPaper,
         permission: state.permission,
         tags: state.tags,
       };
-      // dispatch(createResearch(formData)).then((result) => {
-      //   console.log(result);
-      //   history.replace(from);
-      // });
       history.replace(from);
     };
 
@@ -305,7 +389,14 @@ export default function Form() {
         <Grid item xs={12}>
           <Typography variant="button">Related Images</Typography>
           <Paper className={classes.fileUploader} elevation={3}>
-            <FileUploader maxFiles={5} multiple={true} accept={"image/*"} />
+            <FileUploader
+              maxFiles={5}
+              multiple={true}
+              accept={"image/*"}
+              folder="Related Images"
+              project_id={id}
+              default={related_images}
+            />
           </Paper>
         </Grid>
 
@@ -316,6 +407,23 @@ export default function Form() {
               maxFiles={1}
               multiple={false}
               accept={"application/pdf"}
+              folder="Final Paper"
+              project_id={id}
+              default={final_paper}
+            />
+          </Paper>
+        </Grid>
+
+        <Grid item xs={12}>
+          <Typography variant="button">Public Documents</Typography>
+          <Paper className={classes.fileUploader} elevation={3}>
+            <FileUploader
+              maxFiles={100}
+              multiple={true}
+              accept={"*"}
+              folder="Public Files"
+              project_id={id}
+              default={public_files}
             />
           </Paper>
         </Grid>
@@ -345,11 +453,16 @@ export default function Form() {
         <Box>
           <Navbar />
         </Box>
+
         <Box flexGrow="1" bgcolor="#eceff1">
           <main className={classes.layout}>
-            <Paper className={classes.paper} elevation={5}>
-              <AddressForm />
-            </Paper>
+            {project === undefined ? (
+              <Loader />
+            ) : (
+              <Paper className={classes.paper} elevation={5}>
+                <AddressForm />
+              </Paper>
+            )}
           </main>
         </Box>
         <Box>

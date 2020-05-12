@@ -21,38 +21,52 @@ export default function FileUploader(props) {
     );
   };
 
+  const storeFiles = (folder, file, project_id) => {
+    let data = new FormData();
+
+    data.append("file", file);
+    data.append("group", project_id);
+    data.append("sensitivity", "private");
+    data.append("folder", folder);
+
+    fetch("/drive/upload", {
+      method: "POST",
+      body: data,
+    })
+      .then((res) => {
+        console.log(data);
+        if (res.json().success) {
+          alert("File Added!");
+        } else {
+          alert("Upload failed");
+        }
+      })
+      .catch((err) => console.log(err.message));
+  };
+
   function CustomLayout() {
-    // specify upload params and url for your files
-    const getUploadParams = ({ meta }) => {
-      return { url: "https://localhost:3000" };
-    };
-
-    // called every time a file's `status` changes
-    const handleChangeStatus = ({ meta, file }, status) => {
-      console.log(status, meta, file);
-    };
-
-    // receives array of files that are done uploading when submit button is clicked
     const handleSubmit = (files, allFiles) => {
       console.log(files.map((f) => f.meta));
       allFiles.forEach((f) => f.remove());
     };
 
+    const handleChangeStatus = ({ meta, file }, status) => {
+      if (status === "done") {
+        storeFiles(props.folder, file, props.project_id);
+      }
+    };
+
     return (
       <Dropzone
-        getUploadParams={getUploadParams}
         LayoutComponent={Layout}
-        onSubmit={handleSubmit}
         onChangeStatus={handleChangeStatus}
         maxFiles={props.maxFiles}
         submitButtonContent={null}
         submitButtonDisabled={true}
         multiple={props.multiple}
         accept={props.accept}
-        autoUpload={true}
-        // {...props.extra}
-        // classNames={{ inputLabelWithFiles: defaultClassNames.inputLabel }}
         inputContent="..."
+        initialFiles={props.default}
       />
     );
   }

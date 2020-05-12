@@ -85,14 +85,14 @@ export default function FullWidthTabs(props) {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          {OverView}
+          {OverView()}
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          {Team}
+          {Team()}
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           {/* <Comments /> */}
-          {Comments}
+          {Comments()}
         </TabPanel>
       </SwipeableViews>
     </div>
