@@ -22,6 +22,7 @@ import Icon from '@material-ui/core/Icon';
 import Message from './Message'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
+import ChatWindowTopAppBar from './ChatWindow/ChatWindowTopAppBar'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -159,22 +160,13 @@ const ChatWindow = (props) => {
 
     <div className={classes.upperRoot} hidden={props.controls.hiddenState}>
       <div className={classes.root}>
-        <AppBar position="relative" color="primary" className={classes.appBar}>
-          <Toolbar>
-            <IconButton edge="start" color="inherit" onClick={() => { props.controls.setHiddenState(true); }} >
-              <ArrowBackIcon />
-            </IconButton>
+       
+        <ChatWindowTopAppBar
+          state={props.state}
+          controls={props.controls}
+          listID={listID}
+        />
 
-            <Avatar alt={props.state.chatRooms[listID].logo} src={props.state.chatRooms[listID].logo} />
-
-            <Typography>{props.state.chatRooms[listID].name}</Typography>
-            <div className={classes.grow} />
-
-            <IconButton edge="end" color="inherit">
-              <MoreIcon />
-            </IconButton>
-          </Toolbar>
-        </AppBar>
         <GridList cellHeight={160} className={classes.gridList} cols={1}>
           <div >
             <CssBaseline />

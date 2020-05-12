@@ -142,48 +142,4 @@ const ChatList = (props) => {
   );
 }
 
-
-
 export default ChatList
-
-
-{
-  //   <CssBaseline />
-
-  //         <Paper square className={classes.paper}>
-  //             <Typography className={classes.text} variant="h5" gutterBottom>
-  //             Inbox
-  //             </Typography>
-  //             <List className={classes.list}>
-  //             {messages.map(({ id, primary, secondary, person }) => (
-  //                 <React.Fragment key={id}>
-  //                 {id === 1 && <ListSubheader className={classes.subheader}>Today</ListSubheader>}
-  //                 {id === 3 && <ListSubheader className={classes.subheader}>Yesterday</ListSubheader>}
-  //                 <ListItem button>
-  //                     <ListItemAvatar>
-  //                     <Avatar alt="Profile Picture" src={person} />
-  //                     </ListItemAvatar>
-  //                     <ListItemText primary={primary} secondary={secondary} />
-  //                 </ListItem>
-  //                 </React.Fragment>
-  //             ))}
-  //             </List>
-  //         </Paper>
-  //        { <AppBar position="fixed" color="primary" className={classes.appBar} style={{width:'300px'}}>
-  //             <Toolbar>
-  //             <IconButton edge="start" color="inherit" aria-label="open drawer">
-  //                 <MenuIcon />
-  //             </IconButton>
-  //             <Fab color="secondary" aria-label="add" className={classes.fabButton}>
-  //                 <AddIcon />
-  //             </Fab>
-  //             <div className={classes.grow} />
-  //             <IconButton color="inherit">
-  //                 <SearchIcon />
-  //             </IconButton>
-  //             <IconButton edge="end" color="inherit">
-  //                 <MoreIcon />
-  //             </IconButton>
-  //             </Toolbar>
-  //         </AppBar>}
-}

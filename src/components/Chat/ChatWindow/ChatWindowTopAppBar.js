@@ -15,16 +15,21 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import ResponseDialog from './ResponseDialog'
+import Divider from '@material-ui/core/Divider';
 
-import AddParticipant from './AddParticipant'
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+
+import ParticipantPanel from './ParticipantPanel'
+
+// import AddParticipant from './AddParticipant'
+// import ResponseDialog from './ResponseDialog'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-
     appBar: {
       top: 0,
       bottom: 'auto',
+      height: '60px',
     },
     grow: {
       flexGrow: 1,
@@ -34,26 +39,12 @@ const useStyles = makeStyles((theme: Theme) =>
 
 
 
-const ChatListTopAppBar = (props) => {
+const ChatWindowTopAppBar = (props) => {
 
   const classes = useStyles();
+
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
-
-  const [state, setState] = React.useState({
-    title: "",
-    description: "",
-    currentuser: null,
-    collaborators: [],
-    tags: [],
-    allCollaborators: [],
-    user_id: props.user_id
-  });
-
-  const [inputName, setInputName] = React.useState("")
-  const [inputDescription, setInputDescription] = React.useState("")
-  const [openResponseDialog, setOpenResponseDialog] = React.useState(false);
-  const [responseDialogMsg, setResponseDialogMsg] = React.useState("")
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -72,55 +63,20 @@ const ChatListTopAppBar = (props) => {
     setOpen(false);
   };
   
-  const handleClickCreate = () => {
-    var participants = [{
-      user_id: state.user_id,
-      isAdmin: 1,
-    }]
-
-    state.collaborators.forEach(c => {
-      participants.push({
-        user_id: c,
-        isAdmin: 0,
-      })
-    })
-
-    var chatDetails = {
-      name: inputName,
-      description: inputDescription,
-      creator_id: state.user_id,
-      participants: participants
-    }
-
-    props.client.createChatroom(chatDetails, (res) => {
-      setResponseDialogMsg(res.message)
-      handleClickOpenResponseDialog()
-    })
-    handleDialogClose()
-  }
-
-  const handleClickOpenResponseDialog = () => {
-    setOpenResponseDialog(true);
-  };
-
-  const handleCloseResponseDialog = () => {
-    setOpenResponseDialog(false);
-    props.state.client.getChatrooms((err, res) => {
-      props.setStateFromChild({ chatRooms: res })
-    })
-  };
-
   return (
-    
     <AppBar position="relative" color="primary" className={classes.appBar}>
       <Toolbar>
-        <Avatar alt="Chat" src="/static/images/avatar/1.jpg" />
+        <IconButton edge="start" color="inherit" onClick={() => { props.controls.setHiddenState(true); }} >
+          <ArrowBackIcon />
+        </IconButton>
 
-        <Typography>Chat</Typography>
+        <Avatar alt={props.state.chatRooms[props.listID].logo} src={props.state.chatRooms[props.listID].logo} />
+
+        <Typography>{props.state.chatRooms[props.listID].name}</Typography>
         <div className={classes.grow} />
 
         <IconButton edge="end" color="inherit">
-          <MoreIcon aria-controls="chatList-menu" aria-haspopup="true" onClick={handleMenuClick} />
+          <MoreIcon aria-controls="chatList-menu" aria-haspopup="true" onClick={handleMenuClick}/>
         </IconButton>
 
         <Menu
@@ -130,69 +86,76 @@ const ChatListTopAppBar = (props) => {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleClickDialogOpen}>Create New Group</MenuItem>
+          <MenuItem onClick={handleClickDialogOpen}>Info</MenuItem>
 
         </Menu>
 
-
       </Toolbar>
 
+
       <Dialog open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Create a New Group</DialogTitle>
+        <DialogTitle id="form-dialog-title">Group Information</DialogTitle>
         <DialogContent>
 
           <TextField
             autoFocus
             margin="dense"
             id="name"
-            label="Name"
+            label="Group Name"
             type="text"
             fullWidth
-            onChange={(event) => {
-              setInputName(event.target.value);
-            }}
+            defaultValue={props.state.chatRooms[props.listID].name}
+            // onChange={(event) => {
+            //   setInputName(event.target.value);
+            // }}
           />
 
           <TextField
             autoFocus
             margin="dense"
             id="description"
-            label="Description"
+            label="Group Description"
             type="text"
             fullWidth
-            onChange={(event) => {
-              setInputDescription(event.target.value);
-            }}
+            multiline
+            rows="3"
+            defaultValue={props.state.chatRooms[props.listID].description}
+            // onChange={(event) => {
+            //   setInputDescription(event.target.value);
+            // }}
           />
+            <Divider />
 
-          <AddParticipant
+            <Typography variant="subtitle2">
+              Participants
+            </Typography>
+
+            <ParticipantPanel
+             state={props.state}
+             listID={props.listID}
+            />
+
+          {/* <AddParticipant
             handleSearchResearchers={props.handleSearchResearchers}
             handleAllResearchers={props.handleAllResearchers}
             state={state}
             setState={setState}
-          />
+          /> */}
 
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClickCreate} color="primary">
+          {/* <Button onClick={handleClickCreate} color="primary">
             Create
-          </Button>
+          </Button> */}
         </DialogActions>
       </Dialog>
 
-      <ResponseDialog
-        open={openResponseDialog}
-        handleCloseResponseDialog={handleCloseResponseDialog}
-        title={responseDialogMsg}
-      // description={"Group Created Successfully"}
-      />
 
     </AppBar>
-
   );
 }
 
-export default ChatListTopAppBar
+export default ChatWindowTopAppBar

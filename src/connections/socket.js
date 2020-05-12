@@ -18,6 +18,9 @@ export default function (user_id, token, controls) {
   function getChatrooms(cb) {
     socket.emit('chatrooms', null, cb)
   }
+  function getChatroomParticipants(chat_id,cb){
+    socket.emit('getChatroomParticipants',chat_id,cb)
+  }
 
   function sendMessage(msg = {}, cb) {
     socket.emit('message', msg, cb)
@@ -37,6 +40,7 @@ export default function (user_id, token, controls) {
 
   return {
     getChatrooms,
+    getChatroomParticipants,
     sendMessage,
     searchResearchers,
     allResearchers,
