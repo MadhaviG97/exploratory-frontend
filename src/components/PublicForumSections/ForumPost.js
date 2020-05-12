@@ -11,10 +11,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import Divider from '@material-ui/core/Divider';
+import Container from "@material-ui/core/Container";
+import Divider from "@material-ui/core/Divider";
 
-import image1 from "../../assets/images/user-profile/faces/marc.jpg";
 import CommentSection from "./CommentSection";
 import QuestionLike from "./QuestionLikeSection";
 
@@ -41,68 +40,73 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Post() {
+export default function Post(props) {
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
-
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+  var theDate = new Date(props.postDetails.Q_created_at);
+  const dateString = theDate.toDateString();
 
   return (
-    <Card className={classes.root} align="justify">
-      <CardHeader
-        avatar={
-          <Avatar alt="Remy Sharp" src={image1} />
-        }
-        action={
-          <IconButton aria-label="settings">
-            <MoreVertIcon />
-          </IconButton>
-        }
-        title="Kamal Perera"
-        subheader="September 14, 2016"
-      />
-      <CardContent>
-        <Typography component="h1" color="textPrimary" align="left">
-          Science And Technology
-        </Typography>
-        <Divider />
-        <Typography component="h1" color="textPrimary" align="left">
-          What is the meaning of word "Research"...?(Question)
-        </Typography>
-        <Divider />
-        <Typography
-          variant="body2"
-          color="textSecondary"
-          component="p"
-          align="justify"
-        >
-          Research has been defined in a number of different ways, and while
-          there are similarities, there does not appear to be a single,
-          all-encompassing definition that is embraced by all who engage in
-          it..(Description)
-        </Typography>
-        <Divider />
-      </CardContent>
-      <CardActions disableSpacing>
-        <QuestionLike />
-        <IconButton
-          className={clsx(classes.expand, {
-            [classes.expandOpen]: expanded,
-          })}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </IconButton>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
+    <Container
+      maxWidth="auto"
+      style={{ backgroundColor: "#8EA2F0", padding: "2px 2px 5px 2px" }}
+    >
+      <Card className={classes.root} align="justify">
+        <CardHeader
+          avatar={
+            <Avatar
+              alt={
+                props.postDetails.first_name + " " + props.postDetails.last_name
+              }
+              src={`data:image/jpeg;base64,${props.postDetails.profile_picture}`}
+            />
+          }
+          title={
+            props.postDetails.first_name + " " + props.postDetails.last_name
+          }
+          subheader={dateString}
+        />
         <CardContent>
-          <CommentSection />
+          <Typography component="h1" color="textPrimary" align="left">
+            {props.postDetails.category_name}
+          </Typography>
+          <Divider />
+          <Typography component="h1" color="textPrimary" align="left">
+            {props.postDetails.title}
+          </Typography>
+          <Divider />
+          <Typography
+            variant="body2"
+            color="textSecondary"
+            component="h6"
+            align="justify"
+          >
+            {props.postDetails.description}
+          </Typography>
+          <Divider />
         </CardContent>
-      </Collapse>
-    </Card>
+        <CardActions disableSpacing>
+          <QuestionLike Q_id={props.postDetails.researcher_id} />
+          <IconButton
+            className={clsx(classes.expand, {
+              [classes.expandOpen]: expanded,
+            })}
+            onClick={handleExpandClick}
+            aria-expanded={expanded}
+            aria-label="show more"
+          >
+            <ExpandMoreIcon />
+          </IconButton>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+          <CardContent>
+            <CommentSection question_id={props.postDetails.question_id} />
+          </CardContent>
+        </Collapse>
+      </Card>
+    </Container>
   );
 }

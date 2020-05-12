@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
@@ -11,6 +11,8 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import { addQuestion } from "../../_actions/forum_actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,9 +21,6 @@ const useStyles = makeStyles((theme) => ({
       width: "25ch",
     },
   },
-}));
-
-const useStyles1 = makeStyles((theme) => ({
   formControl: {
     margin: theme.spacing(1),
     minWidth: 500,
@@ -31,12 +30,29 @@ const useStyles1 = makeStyles((theme) => ({
   },
 }));
 
-export default function FormDialog() {
+export default function QuestionDialog(props) {
   const classes = useStyles();
-  const classes1 = useStyles1();
-  const [value, setValue] = React.useState("");
-  const [category, setCategory] = React.useState("");
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
+  const is_logged = useSelector((state) => state.is_logged);
+  const [categories, setCategories] = React.useState([]);
   const [open, setOpen] = React.useState(false);
+  const [question, setQuestion] = useState({
+    category: {},
+    title: "",
+    description: "",
+  });
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const getCategories = async () => {
+    const response = await fetch(`forum/questioncategory`);
+    const data = await response.json();
+    setCategories(data.data);
+    console.log(data.data);
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,28 +60,56 @@ export default function FormDialog() {
 
   const handleClose = () => {
     setOpen(false);
+    setQuestion({
+      category: {},
+      title: "",
+      description: "",
+    });
   };
 
-  const handleChange1 = (event1) => {
-    setValue(event1.target.value);
+  var date = new Date().getDate();
+  var month = new Date().getMonth() + 1;
+  var year = new Date().getFullYear();
+
+  const handleSubmit = () => {
+    const questionData = {
+      researcher_id: user.userData._id,
+      first_name: user.userData.first_name,
+      last_name: user.userData.last_name,
+      created_at:
+        year + "-" + month + "-" + date,
+      category_name: question.category.category_name,
+      category_id: question.category.id,
+      title: question.title,
+      description: question.description,
+      profile_picture: user.userData.profile_picture,
+      isAuth: user.userData.isAuth,
+    };
+    setOpen(false);
+    dispatch(addQuestion(questionData));
+    setQuestion({
+      category: {},
+      title: "",
+      description: "",
+    });
   };
 
-  const handleChange = (event) => {
-    setCategory(event.target.value);
+  const handleChange = (prop) => (event) => {
+    setQuestion({ ...question, [prop]: event.target.value });
   };
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        Ask a Question
-      </Button>
+      { is_logged ? (
+        <Button variant="contained" color="primary" onClick={handleClickOpen}>
+          Ask a Question
+        </Button>
+      ) : (
+        <div></div>
+      )}
 
-      <Dialog
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="form-dialog-title"
-      >
-        <DialogTitle id="form-dialog-title">Raise your Question</DialogTitle>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Raise your Question</DialogTitle>
         <DialogContent>
           <DialogContentText>
             Please fill out the details below.Try to provide appropriate details
@@ -73,47 +117,42 @@ export default function FormDialog() {
           </DialogContentText>
 
           <form className={classes.root} noValidate autoComplete="off">
-
-          <FormControl className={classes1.formControl} required>
-              <InputLabel id="demo-simple-select-label">Category</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={category}
-                onChange={handleChange}
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Science {"&"} Technology</MenuItem>
-                <MenuItem value={20}>Mathematics</MenuItem>
-                <MenuItem value={30}>Arts</MenuItem>
-                <MenuItem value={40}>Commerse</MenuItem>
+            <FormControl className={classes.formControl} required>
+              <InputLabel>Category</InputLabel>
+              <Select onChange={handleChange("category")}>
+                {categories.map((category) => (
+                  <MenuItem value={category}>{category.category_name}</MenuItem>
+                ))}
               </Select>
             </FormControl>
-            <br />    
-    
+            <br />
+
             <TextField
-              className={classes1.formControl}
-              required
-              id="standard-required"
+              id="Question title"
               label="Question Title"
+              className={classes.formControl}
+              required
+              multiline
+              rowsMax={2}
+              onChange={handleChange("title")}
             />
             <br />
 
             <TextField
-              id="standard-multiline-flexible"
+              id="Description"
               label="Description"
+              className={classes.formControl}
               multiline
               rowsMax={4}
-              value={value}
-              onChange={handleChange1}
-              className={classes1.formControl}
+              onChange={handleChange("description")}
             />
           </form>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose} color="primary" variant="contained">
+          <Button onClick={handleClose} color="primary" variant="outlined">
+            Cancel
+          </Button>
+          <Button onClick={handleSubmit} color="primary" variant="contained">
             Post
           </Button>
         </DialogActions>
