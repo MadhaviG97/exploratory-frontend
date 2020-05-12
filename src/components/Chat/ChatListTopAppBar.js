@@ -15,30 +15,45 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import ResponseDialog from './ResponseDialog'
 
-// import AddParticipant from './autocomplete'
 import AddParticipant from './AddParticipant'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    
+
     appBar: {
       top: 0,
       bottom: 'auto',
     },
     grow: {
       flexGrow: 1,
-    }, 
+    },
   }),
 );
 
 
 
 const ChatListTopAppBar = (props) => {
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
 
+  const [state, setState] = React.useState({
+    title: "",
+    description: "",
+    currentuser: null,
+    collaborators: [],
+    tags: [],
+    allCollaborators: [],
+    user_id: props.user_id
+  });
+
+  const [inputName, setInputName] = React.useState("")
+  const [inputDescription, setInputDescription] = React.useState("")
+  const [openResponseDialog, setOpenResponseDialog] = React.useState(false);
+  const [responseDialogMsg, setResponseDialogMsg] = React.useState("")
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -56,8 +71,44 @@ const ChatListTopAppBar = (props) => {
   const handleDialogClose = () => {
     setOpen(false);
   };
-// props.searchResearchers("Damika",(res)=>{console.log(res)})
   
+  const handleClickCreate = () => {
+    var participants = [{
+      user_id: state.user_id,
+      isAdmin: 1,
+    }]
+
+    state.collaborators.forEach(c => {
+      participants.push({
+        user_id: c,
+        isAdmin: 0,
+      })
+    })
+
+    var chatDetails = {
+      name: inputName,
+      description: inputDescription,
+      creator_id: state.user_id,
+      participants: participants
+    }
+
+    props.client.createChatroom(chatDetails, (res) => {
+      setResponseDialogMsg(res.message)
+      handleClickOpenResponseDialog()
+    })
+    handleDialogClose()
+  }
+
+  const handleClickOpenResponseDialog = () => {
+    setOpenResponseDialog(true);
+  };
+
+  const handleCloseResponseDialog = () => {
+    setOpenResponseDialog(false);
+    props.state.client.getChatrooms((err, res) => {
+      props.setStateFromChild({ chatRooms: res })
+    })
+  };
 
   return (
 
@@ -71,9 +122,6 @@ const ChatListTopAppBar = (props) => {
 
         <IconButton edge="end" color="inherit">
           <MoreIcon aria-controls="chatList-menu" aria-haspopup="true" onClick={handleMenuClick} />
-
-
-
         </IconButton>
 
         <Menu
@@ -91,9 +139,9 @@ const ChatListTopAppBar = (props) => {
       </Toolbar>
 
       <Dialog open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Create New Group</DialogTitle>
+        <DialogTitle id="form-dialog-title">Create a New Group</DialogTitle>
         <DialogContent>
-          
+
           <TextField
             autoFocus
             margin="dense"
@@ -101,23 +149,47 @@ const ChatListTopAppBar = (props) => {
             label="Name"
             type="text"
             fullWidth
+            onChange={(event) => {
+              setInputName(event.target.value);
+            }}
           />
 
-          <AddParticipant 
-          handleSearchResearchers={props.handleSearchResearchers}
-          handleAllResearchers={props.handleAllResearchers}
-           />
+          <TextField
+            autoFocus
+            margin="dense"
+            id="description"
+            label="Description"
+            type="text"
+            fullWidth
+            onChange={(event) => {
+              setInputDescription(event.target.value);
+            }}
+          />
+
+          <AddParticipant
+            handleSearchResearchers={props.handleSearchResearchers}
+            handleAllResearchers={props.handleAllResearchers}
+            state={state}
+            setState={setState}
+          />
 
         </DialogContent>
         <DialogActions>
           <Button onClick={handleDialogClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleDialogClose} color="primary">
-            Subscribe
+          <Button onClick={handleClickCreate} color="primary">
+            Create
           </Button>
         </DialogActions>
       </Dialog>
+
+      <ResponseDialog
+        open={openResponseDialog}
+        handleCloseResponseDialog={handleCloseResponseDialog}
+        title={responseDialogMsg}
+      // description={"Group Created Successfully"}
+      />
 
     </AppBar>
 

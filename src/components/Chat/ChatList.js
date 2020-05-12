@@ -98,12 +98,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-
-
 const ChatList = (props) => {
   const classes = useStyles();
-// props.state.client.searchResearchers("Damika",(res)=>{console.log(res)})
-    
+
   return (
 
     <div className={classes.upperRoot} hidden={!props.controls.hiddenState}>
@@ -112,6 +109,10 @@ const ChatList = (props) => {
         <ChatListTopAppBar 
         handleSearchResearchers={props.state.client.searchResearchers}
         handleAllResearchers={props.state.client.allResearchers}
+        user_id={props.state.user_id}
+        client={props.state.client}
+        state={props.state}
+        setStateFromChild={props.setStateFromChild}
         />
        
         <GridList cellHeight={160} className={classes.gridList} cols={1}>

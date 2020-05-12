@@ -1,7 +1,5 @@
 import React from 'react';
-
 import Grid from '@material-ui/core/Grid';
-
 import {
 
   Typography,
@@ -10,7 +8,6 @@ import {
   Button,
   Box,
 } from "@material-ui/core";
-
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -23,16 +20,9 @@ import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
 
 
-const AddParticipant = (props)=>{
+const AddParticipant = (props) => {
 
-  const [state, setState] = React.useState({
-    title: "",
-    description: "",
-    currentuser: null,
-    collaborators: [],
-    tags: [],
-    allCollaborators:[],
-  });
+  const { state, setState } = props
 
   const [inputValue, setInputValue] = React.useState('');
 
@@ -41,12 +31,11 @@ const AddParticipant = (props)=>{
       ...state,
       [e.target.name]: e.target.value,
     });
-    // console.log(state.title, state.description);
+  
   };
 
   const handleInputChange = (event) => {
     setInputValue(event.target.value);
-    console.log(event.target.value)
   };
 
   const onCollaboratorChange = (values) => {
@@ -60,117 +49,98 @@ const AddParticipant = (props)=>{
     });
   };
 
-  const handleSubmit = (e, cb) => {
-    // const formData = {
-    //   title: state.title,
-    //   description: state.description,
-    //   creator: state.currentuser.id,
-    //   collaborators: state.collaborators,
-    //   tags: state.tags,
-    // };
-
-    // console.log(formData);
-    // dispatch(createResearch(formData))
-    //   .then((result) => {
-    //     cb();
-    //   })
-    //   .catch((e) => console.log(e));
-  };
-
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-  React.useEffect(async () => {
-  
-    props.handleAllResearchers(res=>{
-      setState({
-        ...state,
-        allCollaborators: res,
-      });
-    })
-    // props.handleSearchResearchers(inputValue,(res)=>{
-    //   console.log(res)
-    //   setState({
-    //         ...state,
-    //         allCollaborators: res,
-    //       });
-      
-    // })
+  React.useEffect(() => {
+    const fetchData = async () => {
 
-  }, [inputValue]);
+      props.handleAllResearchers(res => {
+        setState({
+          ...state,
+          allCollaborators: res,
+        });
+      })
 
-  return(
+    }
+    fetchData()
+
+  }, []);
+
+  return (
 
     <Grid item xs={12}>
-          <Autocomplete
-            multiple
-            id="fixed-participant-demo"
-            options={[...state.allCollaborators]}
-            
-            onChange={(event, value) => {
-              onCollaboratorChange(value);
-            }}
-            getOptionLabel={(option) =>
-              option.first_name.concat(" ").concat(option.last_name)
-            }
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip
-                  label={option.first_name.concat(" ").concat(option.last_name)}
-                  {...getTagProps({ index })}
-                  
-                  avatar={
-                    <Avatar
-                      alt="propic"
-                      src={"../images/profile-pictures/".concat(
-                        option.profile_picture
-                      )}
-                    />
+      <Autocomplete
+        multiple
+        id="fixed-participant-demo"
+        options={[...state.allCollaborators]}
+
+        onChange={(event, value) => {
+          onCollaboratorChange(value);
+        }}
+        getOptionLabel={(option) =>
+          option.first_name.concat(" ").concat(option.last_name)
+        }
+        renderTags={(value, getTagProps) =>
+          value.map((option, index) => (
+            <Chip
+              label={option.first_name.concat(" ").concat(option.last_name)}
+              {...getTagProps({ index })}
+
+              avatar={
+                <Avatar
+                  alt="propic"
+                  src={
+                    option.profile_picture
                   }
                 />
-              ))
-            }
-            renderOption={(option, { selected }) => (
-              <React.Fragment>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                  color="primary"
-                />
-                <List >
-                {/* className={classes.root} */}
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar
-                        src={"../images/profile-pictures/".concat(
-                          option.profile_picture
-                        )}
-                      />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={option.first_name
-                        .concat(" ")
-                        .concat(option.last_name)}
-                      secondary={option.institution}
-                    />
-                  </ListItem>
-                </List>
-              </React.Fragment>
-            )}
-            style={{ width: 500 }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Collaborators"
-                name="collaborators"
-                variant="outlined"
-                onChange={handleInputChange}
+              }
+            />
+          ))
+        }
+        renderOption={(option, { selected }) => (
+          option.id != state.user_id ? (
+            <React.Fragment>
+              <Checkbox
+                icon={icon}
+                checkedIcon={checkedIcon}
+                style={{ marginRight: 8 }}
+                checked={selected}
+                color="primary"
               />
-            )}
+              <List >
+                {/* className={classes.root} */}
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar
+                      src={
+                        option.profile_picture
+                      }
+                    />
+                  </ListItemAvatar>
+                  <ListItemText
+                    primary={option.first_name
+                      .concat(" ")
+                      .concat(option.last_name)}
+                    secondary={option.institution}
+                  />
+                </ListItem>
+              </List>
+            </React.Fragment>
+          ) : null
+        )}
+        style={{ width: 500 }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Participants"
+            name="participants"
+            variant="outlined"
+            onChange={handleInputChange}
           />
-        </Grid>
+        )}
+      />
+    </Grid>
   )
 }
 

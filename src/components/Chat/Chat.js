@@ -3,18 +3,8 @@ import ChatWindow from './ChatWindow2'
 import ChatList from './ChatList'
 import { Grid, Paper } from '@material-ui/core'
 
-
 import socket from '../../connections/socket';
 
-const dummyThreads = [
-  {
-    title: "Group 1",
-    logo: "/logo.png",
-    messages: [
-
-    ]
-  }
-]
 // const Chat = (props) =>{
 export default class Chat extends React.Component {
   // const [hiddenState, setHiddenState] = useState(true);
@@ -36,7 +26,7 @@ export default class Chat extends React.Component {
     this.setHiddenState = this.setHiddenState.bind(this)
     this.setCurrentChatID = this.setCurrentChatID.bind(this)
     this.onMessageReceived = this.onMessageReceived.bind(this)
-
+    this.setStateFromChild = this.setStateFromChild.bind(this)
   }
 
   setHiddenState(newHidden) {
@@ -45,6 +35,10 @@ export default class Chat extends React.Component {
 
   setCurrentChatID(newChatID) {
     this.setState({ currentChatID: newChatID })
+  }
+  
+  setStateFromChild(newState){
+    this.setState(newState)
   }
 
   onMessageReceived(msg) {
@@ -69,20 +63,16 @@ export default class Chat extends React.Component {
       client: socket(this.state.user_id, this.state.token, controls)
     })
     this.state.client.getChatrooms((err, res) => {
-      // setChatRooms(res)
-      // console.log("chatroom retuern")
-      // console.log(res)
       this.setState({ chatRooms: res })
-      // console.log(res)
     })
-
-    // this.state.client.searchResearchers("Damika",(res)=>{console.log(res)})
   }
+
+  
   render() {
     if (!this.state.chatRooms) {
       return <div />
     }
-    //  console.log(this.state.chatRooms)
+    
     return (
       <div className="App" style={{ height: '100vh' }}>
         <Grid container style={{ height: '100%' }}>
@@ -99,6 +89,7 @@ export default class Chat extends React.Component {
                 setCurrentChatID: this.setCurrentChatID
               }}
               state={this.state}
+              setStateFromChild={this.setStateFromChild}
               chatRooms={this.state.chatRooms}
             />
 
