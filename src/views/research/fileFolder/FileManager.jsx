@@ -39,7 +39,7 @@ function Edit2Page(props) {
     let folder=props.match.params.folderId
     
     const [files, setFiles] = useState([])
-
+    const [name,setName]=useState('');
     const [fileDetail, setFileDetail] = useState('')
     const [folders, setFolders] = useState([])
     const [anchorEl, setAnchorEl] =useState(null);
@@ -50,6 +50,43 @@ function Edit2Page(props) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    const onSearchChange = (value) => {
+        setName(value)
+    }
+    const handleSearch = (event) => {
+        //console.log('yep')
+        event.preventDefault();
+        const token = localStorage.token;
+        if (folder){
+            console.log(folder)
+            //folder=props.match.params.folderId
+          }
+          else{
+            folder="root"
+          }
+        const variables = {
+            folder:folder,
+            name: name,
+            group:"GeeFour"
+        }
+        let config = {
+          headers: {
+          'Authorization': `Bearer ${token}`
+          }
+        }
+        console.log(variables)
+        axios.post('/drive/searchfile', variables,config)
+           .then(response => {
+            if (response.data.success) {
+                console.log(response.data.files)
+                setFiles(response.data.files)
+            } else {
+                console.log('not')
+                alert('Could not get files ')
+            }
+        })
+        
+    }
     const handleShare = () => {
         const variable = { 
             name:fileDetail.filename
@@ -234,7 +271,7 @@ function Edit2Page(props) {
                     <Grid container spacing={5} >
                         <Grid item xs={3} >
                             <Paper >
-                            <FolderMenu folderParams={props.match.params}/>
+                            <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params}/>
                             </Paper>
                         </Grid>
                         <Divider orientation="vertical" variant="fullWidth" />

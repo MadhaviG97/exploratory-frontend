@@ -31,12 +31,12 @@ socket.on('join', (room) => {
 
 socket.on('offer', (offer) => {
     console.log('Offer', offer != null);
-    io.sockets.emit('offer', offer);
+    io.to(grouproom).emit('offer', offer);
 });
 
 socket.on('answer', (answer) => {
     console.log('Answer', answer != null);
-    io.sockets.emit('answer', answer);
+    io.to(grouproom).emit('answer', answer);
 });
 
 socket.on('candidate', (candidate) => {

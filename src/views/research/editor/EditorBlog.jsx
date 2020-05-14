@@ -27,6 +27,7 @@ export default function CreatePage(props) {
  
     const [blogs, setBlogs] = useState([])
     const classes = useStyles();
+    const [name,setName]=useState('');
     useEffect(() => {
         axios.post('/editor/getBlogs')
             .then(response => {
@@ -38,6 +39,36 @@ export default function CreatePage(props) {
                 }
             })
     }, [])
+    const onSearchChange = (value) => {
+        setName(value)
+        console.log(value)
+    }
+    const handleSearch = (event) => {
+        //console.log('yep')
+        event.preventDefault();
+        const token = localStorage.token;
+        
+        const variables = {
+            //writer: "GeeFour",
+            name: name
+        }
+        let config = {
+          headers: {
+          'Authorization': `Bearer ${token}`
+          }
+        }
+        console.log(variables)
+        axios.post('/editor/searchblog', variables,config)
+           .then(response => {
+            if (response.data.success) {
+                console.log(response.data.blogs)
+                setBlogs(response.data.blogs)
+            } else {
+                alert('Couldnt get blog`s lists')
+            }
+            })
+        
+    }
     const handleDelete = (id) => {
         const variable = { 
             postId:id
@@ -84,7 +115,7 @@ export default function CreatePage(props) {
                     <Grid container spacing={5} >
                         <Grid item xs={3}>
                             <Paper >
-                            <EditorBlogMenu />
+                            <EditorBlogMenu handleSearch={handleSearch} onSearchChange={onSearchChange}/>
                             </Paper>
                         </Grid>
                         <Divider orientation="vertical" variant="fullWidth" />

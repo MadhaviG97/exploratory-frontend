@@ -52,7 +52,11 @@ export default function FolderMenu(props) {
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const onChange = (event) => {
+    
+        props.onSearchChange(event.target.value);
+    
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -153,8 +157,9 @@ export default function FolderMenu(props) {
                         className={classes.input}
                         placeholder="Search Drive"
                         inputProps={{ 'aria-label': 'search drive' }}
+                        onChange={onChange}
                     />
-                    <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                    <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick={props.handleSearch}>
                         <SearchIcon />
                     </IconButton>
                 </Paper>
