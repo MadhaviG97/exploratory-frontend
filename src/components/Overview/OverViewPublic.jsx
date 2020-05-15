@@ -94,7 +94,7 @@ export default function Overview() {
       <Box className={classes.container} display="flex" flexDirection="column">
         <Box className={classes.box}>
           <Paper className={classes.abstract} elevation={3}>
-            <Abstract text={text} />
+            <Abstract text={project.project.abstract} />
           </Paper>
         </Box>
 

@@ -21,6 +21,8 @@ export default function FileUploader(props) {
     );
   };
 
+  console.log(props.default);
+
   const storeFiles = (folder, file, project_id) => {
     let data = new FormData();
 
@@ -66,7 +68,7 @@ export default function FileUploader(props) {
         multiple={props.multiple}
         accept={props.accept}
         inputContent="..."
-        initialFiles={props.default}
+        // initialFiles={props.default}
       />
     );
   }
