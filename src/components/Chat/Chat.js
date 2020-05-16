@@ -81,6 +81,7 @@ export default class Chat extends React.Component {
             <ChatWindow
               controls={{ hiddenState: this.state.hiddenState, setHiddenState: this.setHiddenState }}
               state={this.state}
+              setStateFromChild={this.setStateFromChild}
             />
             <ChatList
               controls={{

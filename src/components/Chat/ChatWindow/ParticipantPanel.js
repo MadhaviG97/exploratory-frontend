@@ -18,62 +18,127 @@ import Chip from "@material-ui/core/Chip";
 import Checkbox from "@material-ui/core/Checkbox";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import Tooltip from '@material-ui/core/Tooltip';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Switch from '@material-ui/core/Switch';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+    width: '100%',
+    // maxWidth: 360,
+    backgroundColor: theme.palette.background.paper,
+    position: 'relative',
+    overflow: 'auto',
+    maxHeight: 200,
+  }
+}));
+
+const HtmlTooltip = withStyles((theme) => ({
+  tooltip: {
+    backgroundColor: '#f5f5f9',
+    color: 'rgba(0, 0, 0, 0.87)',
+    maxWidth: 220,
+    fontSize: theme.typography.pxToRem(12),
+    border: '1px solid #dadde9',
+  },
+}))(Tooltip);
 
 
 const ParticipantPanel = (props) => {
-console.log(props)
 
-  const[participants,setParticipants]=React.useState([])
+  const classes = useStyles();
+  const [participants, setParticipants] = React.useState([])
+  const [currentUser,setCurrentUser]= React.useState({})
+  const [reload,setReload]=React.useState(true)
 
-  React.useEffect(()=>{
-    console.log("running")
-    const fetchData= async()=>{
-      props.state.client.getChatroomParticipants(props.state.chatRooms[props.listID].chat_id,(res)=>{
-        console.log(res)
+  React.useEffect(() => {
+
+    const fetchData = async () => {
+      props.state.client.getChatroomParticipants(props.state.chatRooms[props.listID].chat_id, (res) => {
+
         setParticipants(res)
+        res.forEach(user=>{
+          if(user.user_id==props.state.user_id){
+            setCurrentUser(user)
+          }
+        })
+        
       })
-      
+
     }
     fetchData()
-  },[])
+  }, [reload])
 
+
+  const handleAdminSwitchChange = (event) => {
+    var userUpdate={
+      chat_id:props.state.currentChatID,
+      user_id:event.target.name,
+      isAdmin:event.target.checked
+    }
+    props.state.client.changeAdmin(userUpdate, (res) => {
+      setReload(!reload)
+    })
+  };
+  
   return (
 
-    <List >
-      {/* className={classes.root} */}
-      <ListItem>
-        {/* <ListItemAvatar>
-          <Avatar
-            src={
-              option.profile_picture
+    <List className={classes.root} >
+
+      {participants.map(option => (
+        option?(
+          <ListItem>
+          {/* <ListItemAvatar>
+            <Avatar
+              src={
+                option.profile_picture
+              }
+            />
+          </ListItemAvatar>
+          <ListItemText
+            primary={option.first_name.concat(" ").concat(option.last_name)}
+            secondary={option.institution}
+          /> */}
+
+          <HtmlTooltip
+            title={
+              <React.Fragment>
+                <Typography varient="body" color="inherit">Email: {option.email}</Typography>
+
+              </React.Fragment>
             }
+          >
+
+            <Chip
+              label={option.first_name.concat(" ").concat(option.last_name).concat(" - ").concat(option.institution)}
+
+              avatar={
+                <Avatar
+                  alt="propic"
+                  src={
+                    option.profile_picture
+                  }
+                />
+              }
+            />
+          </HtmlTooltip>
+          <FormControlLabel
+        control={
+          <Switch
+            checked={option.isAdmin}
+            onChange={handleAdminSwitchChange}
+            name={option.user_id}
+            disabled={(option.user_id==currentUser.user_id)||(currentUser.isAdmin==0)}
+            color="primary"
           />
-        </ListItemAvatar>
-        <ListItemText
-          primary={option.first_name
-            .concat(" ")
-            .concat(option.last_name)}
-          secondary={option.institution}
-        /> */}
-        <Typography>Participant1</Typography>
-      </ListItem>
-
-      <ListItem>
-
-        <Typography>Participant1</Typography>
-      </ListItem>
-
-      <ListItem>
-
-        <Typography>Participant1</Typography>
-      </ListItem>
-{/* 
-      {props.state.chatRooms[props.listID].participants.forEach(element => (
-        <ListItem>
-
-          <Typography>element.first_name</Typography>
+        }
+        label="Admin"
+      />
         </ListItem>
-      ))} */}
+        ):null
+        
+      ))}
     </List>
 
   )

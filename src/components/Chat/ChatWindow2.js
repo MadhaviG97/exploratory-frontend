@@ -165,6 +165,7 @@ const ChatWindow = (props) => {
           state={props.state}
           controls={props.controls}
           listID={listID}
+          setStateFromChild={props.setStateFromChild}
         />
 
         <GridList cellHeight={160} className={classes.gridList} cols={1}>

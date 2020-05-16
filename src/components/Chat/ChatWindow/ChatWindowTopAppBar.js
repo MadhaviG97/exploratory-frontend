@@ -16,13 +16,16 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Divider from '@material-ui/core/Divider';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
 import ParticipantPanel from './ParticipantPanel'
 
 // import AddParticipant from './AddParticipant'
-// import ResponseDialog from './ResponseDialog'
+import ResponseDialog from '../ResponseDialog'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,17 +37,29 @@ const useStyles = makeStyles((theme: Theme) =>
     grow: {
       flexGrow: 1,
     },
+    fabButton: {
+      position: 'absolute',
+      zIndex: 1,
+      // top: -30,
+      left: 0,
+      right: 0,
+      margin: '0 auto',
+    },
   }),
 );
 
 
 
 const ChatWindowTopAppBar = (props) => {
-
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+  const [inputName, setInputName] = React.useState(props.state.chatRooms[props.listID].name)
+  const [inputDescription, setInputDescription] = React.useState(props.state.chatRooms[props.listID].description)
+
+  const [openResponseDialog, setOpenResponseDialog] = React.useState(false);
+  const [responseDialogMsg, setResponseDialogMsg] = React.useState("")
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -62,7 +77,31 @@ const ChatWindowTopAppBar = (props) => {
   const handleDialogClose = () => {
     setOpen(false);
   };
-  
+
+  const handleClickSave = () => {
+    var chatInfo = {
+      id: props.state.currentChatID,
+      name: inputName,
+      description: inputDescription
+    }
+
+    props.state.client.updateChatInfo(chatInfo, (res) => {
+      setResponseDialogMsg(res.message)
+      handleClickOpenResponseDialog()
+    })
+    // handleDialogClose()
+  }
+
+  const handleClickOpenResponseDialog = () => {
+    setOpenResponseDialog(true);
+  };
+
+  const handleCloseResponseDialog = () => {
+    setOpenResponseDialog(false);
+    props.state.client.getChatrooms((err, res) => {
+      props.setStateFromChild({ chatRooms: res })
+    })
+  };
   return (
     <AppBar position="relative" color="primary" className={classes.appBar}>
       <Toolbar>
@@ -76,7 +115,7 @@ const ChatWindowTopAppBar = (props) => {
         <div className={classes.grow} />
 
         <IconButton edge="end" color="inherit">
-          <MoreIcon aria-controls="chatList-menu" aria-haspopup="true" onClick={handleMenuClick}/>
+          <MoreIcon aria-controls="chatList-menu" aria-haspopup="true" onClick={handleMenuClick} />
         </IconButton>
 
         <Menu
@@ -105,9 +144,9 @@ const ChatWindowTopAppBar = (props) => {
             type="text"
             fullWidth
             defaultValue={props.state.chatRooms[props.listID].name}
-            // onChange={(event) => {
-            //   setInputName(event.target.value);
-            // }}
+            onChange={(event) => {
+              setInputName(event.target.value);
+            }}
           />
 
           <TextField
@@ -120,20 +159,31 @@ const ChatWindowTopAppBar = (props) => {
             multiline
             rows="3"
             defaultValue={props.state.chatRooms[props.listID].description}
-            // onChange={(event) => {
-            //   setInputDescription(event.target.value);
-            // }}
+            onChange={(event) => {
+              setInputDescription(event.target.value);
+            }}
           />
-            <Divider />
 
-            <Typography variant="subtitle2">
-              Participants
+          <DialogActions>
+            <Button onClick={handleClickSave} color="primary">
+              Update
+          </Button>
+            {/* <Button onClick={handleClickCreate} color="primary">
+            Create
+          </Button> */}
+          </DialogActions>
+
+          <Divider />
+
+          <Typography variant="subtitle2">
+            Participants
             </Typography>
 
-            <ParticipantPanel
-             state={props.state}
-             listID={props.listID}
-            />
+          <ParticipantPanel
+            state={props.state}
+            listID={props.listID}
+            setStateFromChild={props.setStateFromChild}
+          />
 
           {/* <AddParticipant
             handleSearchResearchers={props.handleSearchResearchers}
@@ -141,6 +191,12 @@ const ChatWindowTopAppBar = (props) => {
             state={state}
             setState={setState}
           /> */}
+
+          <Fab alignItems="center" color="primary" size="small" aria-label="add"
+          className={classes.fabButton}
+          >
+            <AddIcon />
+          </Fab>
 
         </DialogContent>
         <DialogActions>
@@ -153,6 +209,12 @@ const ChatWindowTopAppBar = (props) => {
         </DialogActions>
       </Dialog>
 
+      <ResponseDialog
+        open={openResponseDialog}
+        handleCloseResponseDialog={handleCloseResponseDialog}
+        title={responseDialogMsg}
+      // description={"Group Created Successfully"}
+      />
 
     </AppBar>
   );
