@@ -35,7 +35,6 @@ import CompareDoc from "./views/research/fileFolder/CompareDoc";
 import ProjectSettings from "./views/research/index/ProjectSettings";
 
 import Project from "./views/research/index/ViewResearchPublic";
-import ScreenShare from "./views/research/screenShare/ScreenShare"
 import Receive from "./views/research/screenShare/Receive"
 import Send from "./views/research/screenShare/Send"
 
