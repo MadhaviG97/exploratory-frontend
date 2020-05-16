@@ -4,7 +4,7 @@
 module.exports = {
     // Automatically clear mock calls and instances between every test
     clearMocks: true,
-  
+    
     // An array of glob patterns indicating a set of files for which coverage information should be collected
     collectCoverageFrom: ['src/**/*.{js,jsx,mjs}'],
   
@@ -13,7 +13,11 @@ module.exports = {
   
     // An array of file extensions your modules use
     moduleFileExtensions: ['js', 'json', 'jsx'],
-  
+    //
+    moduleNameMapper: {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    },
     // The paths to modules that run some code to configure or set up the testing environment before each test
     setupFiles: ['<rootDir>/enzyme.config.js'],
   

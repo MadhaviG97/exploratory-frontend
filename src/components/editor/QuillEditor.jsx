@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ReactQuill, { Quill } from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 //import openSocket from 'socket.io-client';
@@ -78,7 +79,7 @@ class QuillEditor extends React.Component {
     }
 
     modules = {
-        syntax: true,
+        syntax: false,
         toolbar: {
             container:  [
                 [{ 'font': [] }],

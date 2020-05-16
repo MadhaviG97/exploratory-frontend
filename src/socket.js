@@ -15,37 +15,46 @@ socket.on('join', (room) => {
     
     if (room.substr(room.length - 6) == 'caller') {
     socket.join(room);
-    grouproom=room
+    grouproom=room.substr(0,room.length - 6)
     caller.push(socket.id);
     }
     else if (room.substr(room.length - 6) == 'callee') {
     socket.join(room);
-    grouproom=room
+    grouproom=room.substr(0,room.length - 6)
     callee.push(socket.id);
     }
     else {
+    console.log(room)
     throw new Error('Neither Caller and Callee');
     }
     console.log(socket.id, 'is', room);
 });
 
-socket.on('offer', (offer) => {
-    console.log('Offer', offer != null);
-    io.to(grouproom).emit('offer', offer);
+socket.on('offer', (data) => {
+    console.log('Offer', data.offer != null );
+    //console.log('roomoffer',grouproom.concat('callee') );
+    io.to(grouproom.concat('callee')).emit('offer', data.offer);
+    io.to(grouproom.concat('caller')).emit('offer', data.offer);
 });
 
-socket.on('answer', (answer) => {
-    console.log('Answer', answer != null);
-    io.to(grouproom).emit('answer', answer);
+socket.on('answer', (data) => {
+    console.log('Answer', data.answer!=null);
+    //console.log('roomanswer', grouproom.concat('caller'));
+    io.to(grouproom.concat('caller')).emit('answer', data.answer);
+    io.to(grouproom.concat('callee')).emit('answer', data.answer);
 });
 
-socket.on('candidate', (candidate) => {
-    console.log('Candidate', candidate != null);
+socket.on('candidate', (data) => {
+    
     if (caller.includes(socket.id) == true) {
-    io.to(grouproom).emit('candidate', candidate);
+        console.log('Callerroom', data.candidate != null );
+        //console.log('roomcacaller', grouproom.concat('callee'));
+        io.to(grouproom.concat('callee')).emit('candidate', data.candidate);
     }
     else if (callee.includes(socket.id) == true) {
-    io.to(grouproom).emit('candidate', candidate);
+        console.log('Calleeeroom', data.candidate != null );
+        //console.log('roomcacallee', grouproom.concat('caller'));
+        io.to(grouproom.concat('caller')).emit('candidate', data.candidate);
     }
 });
 

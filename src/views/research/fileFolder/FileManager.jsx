@@ -33,7 +33,7 @@ import FileSaver from 'file-saver';
 
 
 
-function Edit2Page(props) {
+function FileManager(props) {
     const classes = useStyles();
     const user = useSelector(state => state.user);
     let folder=props.match.params.folderId
@@ -364,4 +364,4 @@ function Edit2Page(props) {
 
 
 
-export default Edit2Page
+export default FileManager

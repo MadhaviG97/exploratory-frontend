@@ -14,14 +14,14 @@ const RTC_CONFIGURATION = {
     ]
   };
 var callee;
-var group="GeeFour"
+var group="1234"
 var callee="callee"
-var room=group.concat(callee)
+var room=group.concat('callee')
 function sendAnswer(answer) {
-    socket.emit('answer', answer);
+    socket.emit('answer', {room: '1234',answer:answer});
   }
   function sendCandidate(candidate) {
-    socket.emit('candidate', candidate);
+    socket.emit('candidate', {room: '1234',candidate:candidate});
   }
   function makePeerConnection() {
     if (callee) { callee=null }
@@ -48,14 +48,9 @@ class Receiver extends React.Component {
 
     constructor(props) {
         super(props);
-        
-      
         this.state = {
             
         };
-        
-
-		
     }
     
       

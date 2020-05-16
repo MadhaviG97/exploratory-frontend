@@ -59,6 +59,7 @@
     "socket.io-client": "^2.1.0",
     "twilio-video": "^2.0.0-beta4",
     "typeface-roboto": "0.0.75",
+    "uws": "^10.148.1",
     "webrtc-adapter": "^7.1.1",
     "window-size": "^1.1.1",
     "ws": "^7.2.3",
@@ -89,11 +90,12 @@
     ]
   },
   "devDependencies": {
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react-app": "^7.0.0",
-    "babel-jest": "^26.0.1",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "enzyme": "^3.11.0",
-    "enzyme-adapter-react-16": "^1.15.2"
+    "enzyme-adapter-react-16": "^1.15.2",
+    "identity-obj-proxy": "^3.0.0",
+    "mutation-observer": "^1.0.3"
   }
 }
