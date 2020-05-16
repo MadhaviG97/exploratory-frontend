@@ -70,7 +70,7 @@ export default function SignInSide() {
 
         <Grid item xs={false} sm={4} md={7} className={classes.image} />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-          <div className={classes.paper}>
+          <div className={classes.paper} data-testid="form">
             <Avatar className={classes.avatar}>
               <LockOutlinedIcon />
             </Avatar>
@@ -84,6 +84,9 @@ export default function SignInSide() {
                 required
                 fullWidth
                 id="email"
+                inputProps={{
+                  'data-testid': 'emailInput'
+                }}
                 label="Email Address"
                 name="email"
                 autoComplete="email"
@@ -91,7 +94,7 @@ export default function SignInSide() {
                 onChange={handleChange("email")}
               />
 
-              <InputLabel htmlFor="outlined-adornment-password">
+              <InputLabel htmlFor="outlined-adornment-password" data-testid="label">
                 Password
               </InputLabel>
               <OutlinedInput
@@ -99,6 +102,9 @@ export default function SignInSide() {
                 id="outlined-adornment-password"
                 type={values.showPassword ? "text" : "password"}
                 value={values.password}
+                inputProps={{
+                  'data-testid': 'passwordInput'
+                }}
                 onChange={handleChange("password")}
                 endAdornment={
                   <InputAdornment position="end">
@@ -126,6 +132,7 @@ export default function SignInSide() {
                 fullWidth
                 variant="contained"
                 color="primary"
+                data-testid="submit"
                 className={classes.submit}
                 onClick={(e) =>
                   handleSubmit(e, () => {

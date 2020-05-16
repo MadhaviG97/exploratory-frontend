@@ -100,9 +100,6 @@ export default function DialogSelect() {
           }
     })
   }, [])
-  React.useEffect(() => {
-    
-}, []);
 
   const handleChange1 = (event) => {
     setDocO(event.target.value) ;

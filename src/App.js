@@ -120,11 +120,6 @@ function App() {
             />
             <Route
               exact
-              path="/screenshare/share"
-              component={Auth(ScreenShare, true)}
-            />
-            <Route
-              exact
               path="/screenshare/receive"
               component={Auth(Receive, true)}
             />

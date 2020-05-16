@@ -14,7 +14,7 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from "@material-ui/core/Divider";
-import photo1 from "../../assets/images/user-profile/faces/kendall.jpg"
+
 import { withStyles } from "@material-ui/core/styles";
 import history from '../../history'
 

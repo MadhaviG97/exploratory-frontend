@@ -196,7 +196,7 @@ function FileManager(props) {
     useEffect(() => {
         if (folder){
             console.log(folder)
-            //folder=props.match.params.folderId
+            folder=props.match.params.folderId
           }
           else{
             folder="root"
@@ -292,7 +292,7 @@ function FileManager(props) {
                                                 </CardContent>
                                                 <Divider variant="middle" />
                                                 <CardActions  justify="center" >
-                                                    <IconButton aria-label="delete document"  href={`/document/filemanager/${folder._id}`}>
+                                                    <IconButton aria-label="get files"  href={`/document/filemanager/${folder._id}`}>
                                                         <ArrowForwardIosIcon/>
                                                     </IconButton>
                                                     <Typography

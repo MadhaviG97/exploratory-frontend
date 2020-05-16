@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import  EditorBlog  from './EditorBlog';
 import { mount } from 'enzyme';
 import axios from 'axios';
@@ -6,6 +7,8 @@ import { act } from 'react-dom/test-utils';
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux'
+import renderer from 'react-test-renderer';
+
 const mockStore = configureMockStore([thunk]);
 const mLocalStorage = {
   _storage: {},
@@ -20,10 +23,18 @@ Object.defineProperty(window, 'localStorage', {
   value: mLocalStorage,
 });
 const store = mockStore({
-    user: { userDate: {isAuth:true,first_name:'yogya'} }
+    user: { userData: {isAuth:true,first_name:'yogya'} }
   });
+jest.mock('react-router-dom', () => ({
+  useHistory: () => ({
+    push: jest.fn(),
+  }),
+  useLocation: () => ({
+    push: jest.fn(),
+  }),
+}));
 
-describe('MyComponent', () => {
+describe('editor blog', () => {
   afterEach(() => {
     jest.restoreAllMocks();
     jest.resetAllMocks();
@@ -46,4 +57,20 @@ describe('MyComponent', () => {
       headers: { Authorization: 'JWT ' + token },
     }*/);
   });
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(
+    <Provider store={store}>
+        <EditorBlog />
+    </Provider>, div);
+  });
+  it('renders correctly', () => {
+      const tree = renderer
+        .create(
+        <Provider store={store}>
+          <EditorBlog />
+        </Provider>)
+        .toJSON();
+      expect(tree).toMatchSnapshot();
+    });
 });
