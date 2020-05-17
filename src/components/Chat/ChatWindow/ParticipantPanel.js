@@ -55,7 +55,7 @@ const ParticipantPanel = (props) => {
   React.useEffect(() => {
 
     const fetchData = async () => {
-      props.state.client.getChatroomParticipants(props.state.chatRooms[props.listID].chat_id, (res) => {
+      props.state.client.getChatroomParticipants(props.state.chatRooms[props.state.currentChatListID].chat_id, (res) => {
 
         setParticipants(res)
         res.forEach(user=>{
@@ -68,7 +68,7 @@ const ParticipantPanel = (props) => {
 
     }
     fetchData()
-  }, [reload])
+  }, [reload,props.state.globalReload])
 
 
   const handleAdminSwitchChange = (event) => {

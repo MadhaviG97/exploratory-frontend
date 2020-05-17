@@ -21,8 +21,13 @@ const ChatItem = (props) => {
         <div>
             <ListItem alignItems="flex-start"
                 button onClick={() => {
-                    props.controls.setCurrentChatID(props.chatDetails.chat_id);
-                    props.controls.setHiddenState(false);
+                    // props.controls.setCurrentChatID(props.chatDetails.chat_id);
+                    // props.controls.setHiddenState(false);
+                    props.setStateFromChild({currentChatID:props.chatDetails.chat_id})
+                    props.setStateFromChild({hiddenState:false})
+                    props.setStateFromChild({currentChatListID:props.ind})
+                    // console.log("set currentChatListID",props.ind)
+                    // console.log(props.chatDetails)
                 }}
                 style={{ outerWidth: '100%' }}>
                 <ListItemAvatar>

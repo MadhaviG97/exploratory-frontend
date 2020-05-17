@@ -18,24 +18,26 @@ export default class Chat extends React.Component {
       client: null,
       hiddenState: true,
       currentChatID: null,
+      currentChatListID:null,
       chatRooms: null,
+      globalReload:true,
       user:props.user,
       token:props.token
     }
 
-    this.setHiddenState = this.setHiddenState.bind(this)
-    this.setCurrentChatID = this.setCurrentChatID.bind(this)
+    // this.setHiddenState = this.setHiddenState.bind(this)
+    // this.setCurrentChatID = this.setCurrentChatID.bind(this)
     this.onMessageReceived = this.onMessageReceived.bind(this)
     this.setStateFromChild = this.setStateFromChild.bind(this)
   }
 
-  setHiddenState(newHidden) {
-    this.setState({ hiddenState: newHidden })
-  }
+  // setHiddenState(newHidden) {
+  //   this.setState({ hiddenState: newHidden })
+  // }
 
-  setCurrentChatID(newChatID) {
-    this.setState({ currentChatID: newChatID })
-  }
+  // setCurrentChatID(newChatID) {
+  //   this.setState({ currentChatID: newChatID })
+  // }
   
   setStateFromChild(newState){
     this.setState(newState)
@@ -79,19 +81,19 @@ export default class Chat extends React.Component {
           <Paper style={{ height: '100%' }}>
 
             <ChatWindow
-              controls={{ hiddenState: this.state.hiddenState, setHiddenState: this.setHiddenState }}
+              // controls={{ hiddenState: this.state.hiddenState, setHiddenState: this.setHiddenState }}
               state={this.state}
               setStateFromChild={this.setStateFromChild}
             />
             <ChatList
-              controls={{
-                hiddenState: this.state.hiddenState,
-                setHiddenState: this.setHiddenState,
-                setCurrentChatID: this.setCurrentChatID
-              }}
+              // controls={{
+              //   hiddenState: this.state.hiddenState,
+              //   setHiddenState: this.setHiddenState,
+              //   setCurrentChatID: this.setCurrentChatID
+              // }}
               state={this.state}
               setStateFromChild={this.setStateFromChild}
-              chatRooms={this.state.chatRooms}
+              // chatRooms={this.state.chatRooms}
             />
 
           </Paper>

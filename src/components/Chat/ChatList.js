@@ -103,7 +103,7 @@ const ChatList = (props) => {
 
   return (
 
-    <div className={classes.upperRoot} hidden={!props.controls.hiddenState}>
+    <div className={classes.upperRoot} hidden={!props.state.hiddenState}>
       <div className={classes.root}>
         
         <ChatListTopAppBar 
@@ -123,11 +123,14 @@ const ChatList = (props) => {
               <List className={classes.list} style={{ width: '100%' }}>
 
                 {
-                  props.chatRooms.map(currentChat => (
+                  props.state.chatRooms.map((currentChat,ind) => (
                     currentChat ? <ChatItem
                       key={currentChat.chat_id}
-                      controls={props.controls}
+                      // controls={props.controls}
+                      state={props.state}
+                      setStateFromChild={props.setStateFromChild}
                       chatDetails={currentChat}
+                      ind={ind}
                     /> : null
                   ))
                 }

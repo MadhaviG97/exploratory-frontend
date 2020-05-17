@@ -30,6 +30,10 @@ export default function (user_id, token, controls) {
     socket.emit('changeAdmin',userInfo,cb)
   }
 
+  function addMoreParticipants(usersInfo,cb){
+    socket.emit('addMoreParticipants',usersInfo,cb)
+  }
+
   function sendMessage(msg = {}, cb) {
     socket.emit('message', msg, cb)
   }
@@ -51,6 +55,7 @@ export default function (user_id, token, controls) {
     getChatroomParticipants,
     updateChatInfo,
     changeAdmin,
+    addMoreParticipants,
     sendMessage,
     searchResearchers,
     allResearchers,

@@ -109,19 +109,33 @@ const ChatWindow = (props) => {
   // var listID= props.state.chatRooms.forEach((chat,ind)=>{
   //   chat.chat_id==props.state.currentChatID?listID=ind:None
   // })
-  var listID = 0
-  const getListID = () => {
-    props.state.chatRooms.forEach((chat, ind) => {
-      if (chat.chat_id == props.state.currentChatID) {
-        listID = ind
-      }
-      // chat.chat_id == props.state.currentChatID ? listID = ind : null
-    })
-  }
-  getListID()
-  // console.log("listID IS ",listID)
-  // console.log("Selected")
-  // console.log(props.state.chatRooms[listID].chatMesseges)
+  // const[listID,setListID]=React.useState(0)
+  // var listID = 0
+  // const getListID = () => {
+  //   props.state.chatRooms.forEach((chat, ind) => {
+  //     if (chat.chat_id == props.state.currentChatID) {
+  //       // listID = ind
+  //       setListID(ind)
+  //     }
+  //     // chat.chat_id == props.state.currentChatID ? listID = ind : null
+  //   })
+  // }
+  // getListID()
+
+  // React.useEffect(()=>{
+  //   const setCurrentListID= async()=>{
+  //     props.state.chatRooms.forEach((chat, ind) => {
+  //       if (chat.chat_id == props.state.currentChatID) {
+  //         // listID = ind
+  //         setListID(ind)
+  //         console.log("Setting ListID",listID)
+  //       }
+  //       // chat.chat_id == props.state.currentChatID ? listID = ind : null
+  //     })
+  //   }
+  //   setCurrentListID()
+    
+  // },[props.state.currentChatID])
 
   const onInput = (e) => {
     setInput(e.target.value)
@@ -156,15 +170,19 @@ const ChatWindow = (props) => {
       setInput("")
       props.state.client.sendMessage(newMessege,(res)=>console.log("res is",res))
     }
-  return (
 
-    <div className={classes.upperRoot} hidden={props.controls.hiddenState}>
+  if(!props.state.currentChatListID){
+    return(<div/>)
+  }
+  return (
+    
+    <div className={classes.upperRoot} hidden={props.state.hiddenState}>
       <div className={classes.root}>
-       
+      {/* {console.log("currentChatID",props.state.currentChatID)} */}
         <ChatWindowTopAppBar
           state={props.state}
-          controls={props.controls}
-          listID={listID}
+          // controls={props.controls}
+          // listID={listID}
           setStateFromChild={props.setStateFromChild}
         />
 
@@ -176,14 +194,16 @@ const ChatWindow = (props) => {
               <List className={classes.list}>
 
                 {
-                  props.state.chatRooms[listID].chatMesseges.map((currentMsg, ind) => (
-                    currentMsg ?
-                      <Message
-                        key={currentMsg.id}
-                        msg={currentMsg}
-                      />
-                      : null
-                  ))
+                  props.state.currentChatListID?(
+                    props.state.chatRooms[props.state.currentChatListID].chatMesseges.map((currentMsg, ind) => (
+                      currentMsg ?
+                        <Message
+                          key={currentMsg.id}
+                          msg={currentMsg}
+                        />
+                        : null
+                    ))
+                  ):null
                 }
 
               </List>

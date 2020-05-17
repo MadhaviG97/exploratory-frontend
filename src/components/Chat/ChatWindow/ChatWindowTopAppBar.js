@@ -26,6 +26,7 @@ import ParticipantPanel from './ParticipantPanel'
 
 // import AddParticipant from './AddParticipant'
 import ResponseDialog from '../ResponseDialog'
+import AddNewParticipant from './AddNewParticipant'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -55,11 +56,24 @@ const ChatWindowTopAppBar = (props) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
-  const [inputName, setInputName] = React.useState(props.state.chatRooms[props.listID].name)
-  const [inputDescription, setInputDescription] = React.useState(props.state.chatRooms[props.listID].description)
+  const [inputName, setInputName] = React.useState(props.state.chatRooms[props.state.currentChatListID].name)
+  const [inputDescription, setInputDescription] = React.useState(props.state.chatRooms[props.state.currentChatListID].description)
 
   const [openResponseDialog, setOpenResponseDialog] = React.useState(false);
   const [responseDialogMsg, setResponseDialogMsg] = React.useState("")
+
+  const [addNewParticipantOpen,setAddNewParticipantOpen] = React.useState(false)
+
+
+  React.useEffect(()=>{
+    const setData= async()=>{
+     setInputName(props.state.chatRooms[props.state.currentChatListID].name)
+     setInputDescription(props.state.chatRooms[props.state.currentChatListID].description)
+    }
+    setData()
+    
+  },[props.state.currentChatListID,props.state.globalReload])
+
 
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -84,7 +98,7 @@ const ChatWindowTopAppBar = (props) => {
       name: inputName,
       description: inputDescription
     }
-
+  
     props.state.client.updateChatInfo(chatInfo, (res) => {
       setResponseDialogMsg(res.message)
       handleClickOpenResponseDialog()
@@ -102,16 +116,19 @@ const ChatWindowTopAppBar = (props) => {
       props.setStateFromChild({ chatRooms: res })
     })
   };
+
+ 
+
   return (
     <AppBar position="relative" color="primary" className={classes.appBar}>
       <Toolbar>
-        <IconButton edge="start" color="inherit" onClick={() => { props.controls.setHiddenState(true); }} >
+        <IconButton edge="start" color="inherit" onClick={() => { props.setStateFromChild({hiddenState:true}) }} >
           <ArrowBackIcon />
         </IconButton>
 
-        <Avatar alt={props.state.chatRooms[props.listID].logo} src={props.state.chatRooms[props.listID].logo} />
+        <Avatar alt={props.state.chatRooms[props.state.currentChatListID].logo} src={props.state.chatRooms[props.state.currentChatListID].logo} />
 
-        <Typography>{props.state.chatRooms[props.listID].name}</Typography>
+        <Typography>{props.state.chatRooms[props.state.currentChatListID].name}</Typography>
         <div className={classes.grow} />
 
         <IconButton edge="end" color="inherit">
@@ -143,7 +160,7 @@ const ChatWindowTopAppBar = (props) => {
             label="Group Name"
             type="text"
             fullWidth
-            defaultValue={props.state.chatRooms[props.listID].name}
+            defaultValue={props.state.chatRooms[props.state.currentChatListID].name}
             onChange={(event) => {
               setInputName(event.target.value);
             }}
@@ -158,7 +175,7 @@ const ChatWindowTopAppBar = (props) => {
             fullWidth
             multiline
             rows="3"
-            defaultValue={props.state.chatRooms[props.listID].description}
+            defaultValue={props.state.chatRooms[props.state.currentChatListID].description}
             onChange={(event) => {
               setInputDescription(event.target.value);
             }}
@@ -181,7 +198,7 @@ const ChatWindowTopAppBar = (props) => {
 
           <ParticipantPanel
             state={props.state}
-            listID={props.listID}
+            // listID={props.listID}
             setStateFromChild={props.setStateFromChild}
           />
 
@@ -195,7 +212,7 @@ const ChatWindowTopAppBar = (props) => {
           <Fab alignItems="center" color="primary" size="small" aria-label="add"
           className={classes.fabButton}
           >
-            <AddIcon />
+            <AddIcon onClick={()=>{setAddNewParticipantOpen(true);}}/>
           </Fab>
 
         </DialogContent>
@@ -216,6 +233,13 @@ const ChatWindowTopAppBar = (props) => {
       // description={"Group Created Successfully"}
       />
 
+      <AddNewParticipant
+        open={addNewParticipantOpen}
+        setAddNewParticipantOpen={setAddNewParticipantOpen}
+        state={props.state}
+        // listID={props.listID}
+        setStateFromChild={props.setStateFromChild}
+      />
     </AppBar>
   );
 }
