@@ -23,7 +23,6 @@ import CheckBoxIcon from "@material-ui/icons/CheckBox";
 const AddParticipant = (props) => {
 
   const { state, setState } = props
-
   const [inputValue, setInputValue] = React.useState('');
 
   const handleChange = (e) => {
@@ -55,7 +54,7 @@ const AddParticipant = (props) => {
   React.useEffect(() => {
     const fetchData = async () => {
 
-      props.handleAllResearchers(res => {
+      props.client.allResearchers(res => {
         setState({
           ...state,
           allCollaborators: res,

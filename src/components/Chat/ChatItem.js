@@ -15,19 +15,15 @@ import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import TimerIcon from '@material-ui/icons/Timer';
 
 const ChatItem = (props) => {
-    // console.log("keys is ", props.chatDetails.chat_id)
+
     return (
 
         <div>
             <ListItem alignItems="flex-start"
                 button onClick={() => {
-                    // props.controls.setCurrentChatID(props.chatDetails.chat_id);
-                    // props.controls.setHiddenState(false);
-                    props.setStateFromChild({currentChatID:props.chatDetails.chat_id})
-                    props.setStateFromChild({hiddenState:false})
-                    props.setStateFromChild({currentChatListID:props.ind})
-                    // console.log("set currentChatListID",props.ind)
-                    // console.log(props.chatDetails)
+                    props.setStateFromChild({ currentChatID: props.chatDetails.chat_id })
+                    props.setStateFromChild({ hiddenState: false })
+                    props.setStateFromChild({ currentChatListID: props.ind })
                 }}
                 style={{ outerWidth: '100%' }}>
                 <ListItemAvatar>

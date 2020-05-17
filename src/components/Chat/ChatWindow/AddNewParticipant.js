@@ -45,7 +45,7 @@ const AddNewParticipant = (props) => {
     const fetchData = async () => {
 
       props.state.client.allResearchers(res => {
-        console.log("listID",props.state.currentChatListID)
+       
         props.state.client.getChatroomParticipants(props.state.chatRooms[props.state.currentChatListID].chat_id, async (res2)=>{
           var participantSet = new Set()
           await res2.forEach(p=>{
@@ -53,49 +53,25 @@ const AddNewParticipant = (props) => {
           })
           var collaboratorsArray=[]
           
-          console.log("parti",participantSet)
-          console.log("res",res)
-
+       
           await res.forEach(p=>{
             if(!participantSet.has(p.id)){
               collaboratorsArray.push(p)
             }
           })
-          console.log("collabarr",collaboratorsArray)
-          // collaboratorsArray=res
+        
           setState({
             ...state,
             allCollaborators: collaboratorsArray,
           });
         })
-        // setState({
-        //   ...state,
-        //   allCollaborators: res,
-        // });
-        // console.log(res)
+
       })
 
     }
     fetchData()
 
   }, [props.state.currentChatID]);
-
-  // React.useEffect(() => {
-
-  //   const fetchData = async () => {
-  //     props.state.client.getChatroomParticipants(props.state.chatRooms[props.state.currentChatListID].chat_id, (res) => {      
-  //       console.log(res)
-  //       res.forEach(p=>{
-  //         participantSet.add(p.user_id)
-  //       })
-        
-  //       // console.log("keycheck",participantSet.has(10001))
-  //       setLoading(false)
-  //     })
-
-  //   }
-  //   fetchData()
-  // }, [])
 
   const handleChange = (e) => {
     setState({

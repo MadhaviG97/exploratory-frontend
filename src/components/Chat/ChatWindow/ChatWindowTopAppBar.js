@@ -198,16 +198,8 @@ const ChatWindowTopAppBar = (props) => {
 
           <ParticipantPanel
             state={props.state}
-            // listID={props.listID}
             setStateFromChild={props.setStateFromChild}
           />
-
-          {/* <AddParticipant
-            handleSearchResearchers={props.handleSearchResearchers}
-            handleAllResearchers={props.handleAllResearchers}
-            state={state}
-            setState={setState}
-          /> */}
 
           <Fab alignItems="center" color="primary" size="small" aria-label="add"
           className={classes.fabButton}
@@ -220,9 +212,6 @@ const ChatWindowTopAppBar = (props) => {
           <Button onClick={handleDialogClose} color="primary">
             Cancel
           </Button>
-          {/* <Button onClick={handleClickCreate} color="primary">
-            Create
-          </Button> */}
         </DialogActions>
       </Dialog>
 
@@ -237,7 +226,6 @@ const ChatWindowTopAppBar = (props) => {
         open={addNewParticipantOpen}
         setAddNewParticipantOpen={setAddNewParticipantOpen}
         state={props.state}
-        // listID={props.listID}
         setStateFromChild={props.setStateFromChild}
       />
     </AppBar>

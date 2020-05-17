@@ -47,7 +47,7 @@ const ChatListTopAppBar = (props) => {
     collaborators: [],
     tags: [],
     allCollaborators: [],
-    user_id: props.user_id
+    user_id: props.state.user_id
   });
 
   const [inputName, setInputName] = React.useState("")
@@ -92,7 +92,7 @@ const ChatListTopAppBar = (props) => {
       participants: participants
     }
 
-    props.client.createChatroom(chatDetails, (res) => {
+    props.state.client.createChatroom(chatDetails, (res) => {
       setResponseDialogMsg(res.message)
       handleClickOpenResponseDialog()
     })
@@ -166,10 +166,9 @@ const ChatListTopAppBar = (props) => {
           />
 
           <AddParticipant
-            handleSearchResearchers={props.handleSearchResearchers}
-            handleAllResearchers={props.handleAllResearchers}
             state={state}
             setState={setState}
+            client={props.state.client}
           />
 
         </DialogContent>
