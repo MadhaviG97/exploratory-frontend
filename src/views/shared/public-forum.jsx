@@ -40,6 +40,7 @@ export default function Forum() {
   const classes = useStyles();
   const questions = useSelector((state) => state.questions);
   const forum = useSelector((state) => state.forum);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -55,7 +56,7 @@ export default function Forum() {
 
   return (
     <div>
-      <ForumAppBar />
+      <ForumAppBar userDetails={user.userData} />
       <div className={classes.root}>
         <Grid container>
           <Grid item xs>

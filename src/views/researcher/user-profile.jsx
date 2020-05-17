@@ -24,6 +24,8 @@ import TabPanel from "../../components/UserProfileSections/TabBarSection";
 import EditProfile from "../../components/UserProfileSections/EditProfileDialog";
 import profile from "../../assets/images/user-profile/faces/marc.jpg";
 
+import { useDispatch, useSelector } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -48,10 +50,16 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CenteredGrid() {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const [value, setValue] = React.useState(0);
+
+ 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+
+
   return (
     <div className={classes.root}>
       <NavBar />
@@ -61,7 +69,7 @@ export default function CenteredGrid() {
           <Paper className={classes.paper}  >
             <div className={classes.paper}>
               <img
-                src={profile}
+                src={`data:image/jpeg;base64,${user.userData.profile_picture}`}
                 alt="profile photo"
                 className={classes.profileImage}
               />
@@ -85,16 +93,16 @@ export default function CenteredGrid() {
                 </label>
               </div>
               <Typography variant="h5" color="primary" gutterBottom>
-                Christian Ferdinand
+                {user.userData.first_name} {user.userData.last_name}
               </Typography>
               <Typography variant="body2" color="inherit" gutterBottom>
-                Programmer
+              {user.userData.profession}
               </Typography>
               <div className={classes.paper}>
-                <IconButton aria-label="LinkedIn" href="" color="primary">
+                <IconButton aria-label="LinkedIn" href={user.userData.linkedIn} color="primary">
                   <LinkedInIcon />
                 </IconButton>
-                <IconButton aria-label="Twitter" href="" color="primary">
+                <IconButton aria-label="Twitter" href={user.userData.twitter} color="primary">
                   <TwitterIcon color="primary" />
                 </IconButton>
               </div>
@@ -104,21 +112,10 @@ export default function CenteredGrid() {
                 <ListItem>
                   <ListItemAvatar>
                     <Avatar>
-                      <WorkIcon color="primary" />
-                    </Avatar>
-                  </ListItemAvatar>
-                  <ListItemText
-                    primary="Institute"
-                    secondary="University of Moratuwa"
-                  />
-                </ListItem>
-                <ListItem>
-                  <ListItemAvatar>
-                    <Avatar>
                       <EmailIcon color="primary" />
                     </Avatar>
                   </ListItemAvatar>
-                  <ListItemText primary="Email" secondary="christian@uom.lk" />
+                  <ListItemText primary="Email" secondary={user.userData.email} />
                 </ListItem>
                 <ListItem>
                   <ListItemAvatar>
@@ -128,26 +125,14 @@ export default function CenteredGrid() {
                   </ListItemAvatar>
                   <ListItemText
                     primary="Personal Description"
-                    secondary="Directed art history research on famous artists utilizing major
-                museums and libraries across the United States, Germany, France
-                and England. Worked in Paris to instruct business professional
-                on the English language to enhance presentations and
-                correspondence. Utilized bilingual ability to create, prepare
-                and implement language lesson plans for young children up to
-                adults. Chosen for prestigious internship program at one of the
-                top museums in the world. Taught French class at U.S. university
-                and received letter of recommendation. Assisted with the process
-                of evaluating, cataloging and indexing collections for the
-                institution. Researched artist for exhibit-related educational
-                program. Conducted several presentations son influential artists
-                at the University of Paris."
+                    secondary={user.userData.description}
                     className={classes.textRoot}
                   />
                 </ListItem>
               </List>
             </div>
             <div className={classes.root}>
-              <EditProfile />
+              <EditProfile profileDetails = {user.userData}/>
             </div>
           </Paper>
           </Container>

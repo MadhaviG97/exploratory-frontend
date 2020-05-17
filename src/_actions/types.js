@@ -12,3 +12,5 @@ export const EDIT_QUESTION = "edit_question";
 export const RATE_QUESTION = "rate_question";
 export const GET_ANSWERS = "get_answers";
 export const ADD_ANSWER = "add_answer";
+export const ADD_MESSAGE = "add_message";
+export const UPDATE_PROFILE = "update_profile";
