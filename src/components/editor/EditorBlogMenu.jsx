@@ -61,7 +61,7 @@ export default function FolderMenu(props) {
                 <Paper component="form" className={classes.root}>
                     <InputBase
                         className={classes.input}
-                        placeholder="Search Drive"
+                        placeholder="Search Documents"
                         inputProps={{ 'aria-label': 'search drive' }}
                         onChange={onChange}
                     />

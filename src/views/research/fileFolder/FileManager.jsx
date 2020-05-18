@@ -274,7 +274,7 @@ function FileManager(props) {
     }, [])
     
         return (
-        <div>
+        <div >
             <Dialog open={deleteopen} onClose={handleDeleteClose} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>
@@ -347,7 +347,7 @@ function FileManager(props) {
                     </Alert>
                 </Collapse>
             </div>
-            <Box p={2}></Box>
+            <Box p={1.4}></Box>
                 <Menu
                     id="simple-menu"
                     
@@ -368,7 +368,7 @@ function FileManager(props) {
                 </Menu>
                 
                 
-                <div className={classNames(classes.main)} > 
+                <div className={classNames(classes.main2)} > 
                     
                     {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
                     
@@ -382,7 +382,7 @@ function FileManager(props) {
                         
                         <Grid item xs={8}>
                             <Box boxShadow={2} >
-                                <Box p={1}  >
+                                <Box p={1}  style={{  background: '#FFFFFF'}}>
                                         <h1 align='center' className={classes.topic3}>Drive</h1>
                                 </Box>
                             </Box>

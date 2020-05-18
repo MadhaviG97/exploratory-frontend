@@ -121,7 +121,7 @@ export default function CreatePage(props) {
         
     };
     return(
-        <div className={classNames(classes.main)}>
+        <div className={classNames(classes.main2)}>
             <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
                 <DialogContent>
                     <DialogContentText>

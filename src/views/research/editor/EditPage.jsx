@@ -21,7 +21,7 @@ function Edit2Page(props) {
     console.log(user)
     
         return (
-        <div>
+        <div className={classNames(classes.main)}>
             <NavBar/>
             
             
@@ -31,7 +31,7 @@ function Edit2Page(props) {
                     </div>
                 </Box>
                 
-                <div className={classNames(classes.main, classes.mainRaised2)} > 
+                <div className={classNames(classes.main, classes.mainRaised3)} > 
                     <YJSQuill user={user} variable={props.match.params.postId}/>
                     <Box p={4}  /> 
                 </div>

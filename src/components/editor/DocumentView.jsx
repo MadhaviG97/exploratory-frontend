@@ -90,7 +90,7 @@ function DocumentView(props) {
                         </Button>
                         
                     </div>
-                    <Box boxShadow={2} >
+                    <Box boxShadow={2} style={{  background: '#FFFFFF'}}>
                         <Box p={4}>
                             <div >
                                 <h1 align='center' className={classes.topic2}>{post.name}</h1>

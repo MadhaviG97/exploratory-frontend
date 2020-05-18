@@ -18,7 +18,7 @@ function ViewDocument(props) {
     console.log(user)
     
         return (
-        <div className={classNames(classes.main)}>
+        <div className={classNames(classes.main2)}>
             <NavBar/>
                 <div  > 
                     <ViewPage user={user} postId={props.match.params.postId}/>

@@ -66,6 +66,11 @@ export const useStyles = makeStyles((theme) => ({
     position: "relative",
     zIndex: "3"
   },
+  main2: {
+    background: "#f7fbfd",
+    position: "relative",
+    zIndex: "3"
+  },
   mainRaised: {
     margin: "0px 30px 30px 30px",
     borderRadius: "6px",
