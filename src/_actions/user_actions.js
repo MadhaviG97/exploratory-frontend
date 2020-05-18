@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER } from "./types";
+import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER, LOGGED_USER } from "./types";
 
 export function registerUser(request) {
   return {
@@ -40,7 +40,7 @@ export function auth() {
   //}
   return {
     type: AUTH_USER,
-    payload: request,
+    payload: request
   };
 }
 

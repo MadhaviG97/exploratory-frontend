@@ -10,6 +10,7 @@ import signIn from "./views/researcher/sign-in";
 
 import Feed from "./views/researcher/feed";
 import Search from "./views/home/search";
+import Chat from "./views/researcher/chat";
 
 //hoc
 import Auth from "./hoc/auth";
@@ -34,12 +35,12 @@ import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
 import CompareDoc from "./views/research/fileFolder/CompareDoc";
 import ProjectSettings from "./views/research/index/ProjectSettings";
-
 import Project from "./views/research/index/ViewResearchPublic";
 import Receive from "./views/research/screenShare/Receive"
 import Send from "./views/research/screenShare/Send"
 
 import Demo from "./views/whiteboard/Demo";
+import TaskTracker from "./components/Project/task_tracker";
 
 function App() {
   return (
@@ -149,6 +150,16 @@ function App() {
             />
 
             <Route exact path="/whiteboard" component={Demo} />
+
+
+            <Route
+              exact
+              path="/chat"
+              component={Auth(Chat, null)}
+            />
+
+            <Route exact path="/tasktracker" component={Auth(TaskTracker, true)} />
+
           </Switch>
         </div>
       </ThemeProvider>

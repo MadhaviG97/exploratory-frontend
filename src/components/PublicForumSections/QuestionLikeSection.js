@@ -7,6 +7,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import EditIcon from "@material-ui/icons/Edit";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,15 +20,18 @@ const useStyles = makeStyles((theme) => ({
       marginRight: theme.spacing(0),
     },
   },
-  buttonPlace:{
-    flexDirection: "row-reverse"
-  }
+  buttonPlace: {
+    flexDirection: "row-reverse",
+  },
 }));
 
-export default function QuestionLike() {
+export default function QuestionLike(props) {
   const classes = useStyles();
   const [count, setCount] = React.useState(1);
   const [invisible, setInvisible] = React.useState(false);
+  const user = useSelector((state) => state.user);
+  const is_logged = useSelector((state) => state.is_logged);
+  const questions = useSelector((state) => state.questions);
 
   const handleBadgeVisibility = () => {
     setInvisible(!invisible);
@@ -35,8 +39,8 @@ export default function QuestionLike() {
 
   return (
     <div className={classes.root}>
-      <div>
-
+      {user.userData.isAuth ? (
+        <div>
           <Button
             aria-label="increase"
             onClick={() => {
@@ -47,15 +51,25 @@ export default function QuestionLike() {
               <ThumbUpIcon fontSize="small" />
             </Badge>
           </Button>
-          <ButtonGroup color="primary" aria-label="outlined primary button group" >
-          <IconButton aria-label="delete">
-            <DeleteIcon />
-          </IconButton>
-          <IconButton aria-label="edit">
-            <EditIcon />
-          </IconButton>
-        </ButtonGroup>
-      </div>
+          {user.userData._id === props.Q_id ? (
+            <ButtonGroup
+              color="primary"
+              aria-label="outlined primary button group"
+            >
+              <IconButton aria-label="delete">
+                <DeleteIcon />
+              </IconButton>
+              <IconButton aria-label="edit">
+                <EditIcon />
+              </IconButton>
+            </ButtonGroup>
+          ) : (
+            <div></div>
+          )}
+        </div>
+      ) : (
+        <div></div>
+      )}
     </div>
   );
 }
