@@ -34,6 +34,10 @@ export default function (user_id, token, controls) {
     socket.emit('addMoreParticipants',usersInfo,cb)
   }
 
+  function removeParticipant(chat_id,user_id,cb){
+    socket.emit('removeParticipant',chat_id,user_id,cb)
+  }
+
   function sendMessage(msg = {}, cb) {
     socket.emit('message', msg, cb)
   }
@@ -56,6 +60,7 @@ export default function (user_id, token, controls) {
     updateChatInfo,
     changeAdmin,
     addMoreParticipants,
+    removeParticipant,
     sendMessage,
     searchResearchers,
     allResearchers,

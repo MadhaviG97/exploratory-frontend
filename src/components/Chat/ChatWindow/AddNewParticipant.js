@@ -102,7 +102,7 @@ const AddNewParticipant = (props) => {
   };
 
   const handleAddNewParticipants = () => {
-    console.log("adding",state.collaborators)
+    // console.log("adding",state.collaborators)
     var usersInfo={
       chat_id:props.state.currentChatID,
       participants:state.collaborators,
@@ -121,6 +121,10 @@ const AddNewParticipant = (props) => {
 
   const handleCloseResponseDialog = () => {
     setOpenResponseDialog(false);
+    setState({
+      ...state,
+      collaborators: [],
+    });
     props.state.client.getChatrooms((err, res) => {
       props.setStateFromChild({ chatRooms: res })
     })

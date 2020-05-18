@@ -53,7 +53,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ChatWindowTopAppBar = (props) => {
   const classes = useStyles();
-
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
   const [inputName, setInputName] = React.useState(props.state.chatRooms[props.state.currentChatListID].name)
@@ -202,6 +201,7 @@ const ChatWindowTopAppBar = (props) => {
           />
 
           <Fab alignItems="center" color="primary" size="small" aria-label="add"
+          // disabled={true}
           className={classes.fabButton}
           >
             <AddIcon onClick={()=>{setAddNewParticipantOpen(true);}}/>
