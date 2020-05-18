@@ -1,6 +1,16 @@
 export const LOGIN_USER = "login_user";
+export const LOGGED_USER = "logged_user";
 export const REGISTER_USER = "register_user";
 export const AUTH_USER = "auth_user";
 export const LOGOUT_USER = "logout_user";
 export const SEARCH = "search";
 export const RENDER = "render";
+export const GET_QUESTIONS = "get_questions";
+export const ADD_QUESTION = "add_question";
+export const DELETE_QUESTION = "delete_question";
+export const EDIT_QUESTION = "edit_question";
+export const RATE_QUESTION = "rate_question";
+export const GET_ANSWERS = "get_answers";
+export const ADD_ANSWER = "add_answer";
+export const ADD_MESSAGE = "add_message";
+export const UPDATE_PROFILE = "update_profile";

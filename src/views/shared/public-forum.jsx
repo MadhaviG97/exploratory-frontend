@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { useEffect, useState } from "react";
 
 // nodejs library that concatenates classes
 
@@ -8,7 +8,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Divider from "@material-ui/core/Divider";
-import Container from '@material-ui/core/Container';
+import Container from "@material-ui/core/Container";
 // @material-ui/icons
 
 // core components
@@ -21,9 +21,13 @@ import AddQuestionDialog from "../../components/PublicForumSections/AddQuestionD
 import PopularSectionTab from "../../components/PublicForumSections/PopularSectionTab";
 import UserSection from "../../components/PublicForumSections/UserSection";
 
+import { getQuestions, getAnswers } from "../../_actions/forum_actions";
+import { useDispatch, useSelector } from "react-redux";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    minWidth: 250
   },
   paper: {
     padding: theme.spacing(2),
@@ -32,16 +36,31 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AutoGrid() {
+export default function Forum() {
   const classes = useStyles();
+  const questions = useSelector((state) => state.questions);
+  const forum = useSelector((state) => state.forum);
+  const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAnswers());
+  }, []);
+
+  useEffect(() => {
+    dispatch(getQuestions());
+  }, []);
+
+
+ 
 
   return (
     <div>
-      <ForumAppBar />
-      <div className={classes.root} >
+      <ForumAppBar userDetails={user.userData} />
+      <div className={classes.root}>
         <Grid container>
           <Grid item xs>
-            <Paper >
+            <Paper>
               <UserSection />
             </Paper>
           </Grid>
@@ -49,13 +68,16 @@ export default function AutoGrid() {
           <Divider orientation="vertical" variant="fullWidth" />
 
           <Grid item xs={6}>
-            <Container  style={{backgroundColor: 'white', padding:'5px'}}>
-            <ForumPost />
-            <Divider />
-            <ForumPost />
-            <Divider />
-            <ForumPost />
-            <Divider />
+            <Container style={{ backgroundColor: "white", padding: "5px" }}>
+              {Object.keys(questions).length > 0 ? (
+                questions.questions.map((question) => (
+                  <ForumPost postDetails={question}  />
+                ))
+              ) : (
+                <div className={classes.paper}>No Questions</div>
+              )}
+
+              <Divider />
             </Container>
           </Grid>
 
@@ -63,16 +85,16 @@ export default function AutoGrid() {
 
           <Grid item xs>
             <Paper className={classes.paper}>
-              <AddQuestionDialog />
+              <AddQuestionDialog  />
             </Paper>
             <Divider />
-            <Paper >
+            <Paper>
               <CountGrid />
             </Paper>
             <Divider />
-            <Paper >
+            <Paper>
               <PopularSectionTab />
-            </Paper>            
+            </Paper>
           </Grid>
         </Grid>
       </div>

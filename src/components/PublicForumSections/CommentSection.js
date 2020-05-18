@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -21,6 +21,9 @@ import EditIcon from "@material-ui/icons/Edit";
 import photo1 from "../../assets/images/user-profile/faces/kendall.jpg";
 import AnswerLikeSection from "./AnswerLikeSection";
 import AddComment from "./AddComment";
+
+import { useDispatch, useSelector } from "react-redux";
+import { getAnswers } from "../../_actions/forum_actions";
 
 const messages = [
   {
@@ -104,8 +107,14 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function CommentSection() {
+export default function CommentSection(props) {
   const classes = useStyles();
+  console.log(props);
+  const forum = useSelector((state) => state.forum);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAnswers());
+  }, []);
 
   return (
     <React.Fragment>
@@ -115,37 +124,31 @@ export default function CommentSection() {
           Answers
         </Typography>
         <List className={classes.list}>
-          {messages.map(({ id, primary, secondary, person }) => (
-            <React.Fragment key={id}>
-              {id === 1 && (
-                <ListSubheader className={classes.subheader}>
-                  Today
-                </ListSubheader>
-              )}
-              {id === 3 && (
-                <ListSubheader className={classes.subheader}>
-                  Yesterday
-                </ListSubheader>
-              )}
-              <ListItem>
-                <ListItemAvatar>
-                  <Avatar alt="Profile Picture" src={person} />
-                </ListItemAvatar>
-                <ListItemText primary={primary} secondary={secondary} />
-                <AnswerLikeSection />
-                <ButtonGroup
-                  color="primary"
-                  aria-label="outlined primary button group"
-                >
-                  <IconButton aria-label="delete">
-                    <DeleteIcon />
-                  </IconButton>
-                  <IconButton aria-label="edit">
-                    <EditIcon />
-                  </IconButton>
-                </ButtonGroup>
-              </ListItem>
-            </React.Fragment>
+          {forum.answers.map((answer) => (
+            props.question_id === answer.question_id ? (
+              <React.Fragment key={answer.question_id}>
+                <ListItem>
+                  <ListItemAvatar>
+                    <Avatar alt="Profile Picture" src={answer.profile_picture} />
+                  </ListItemAvatar>
+                  <ListItemText primary={answer.first_name + " " + answer.last_name } secondary={answer.answer} />
+                  <AnswerLikeSection />
+                  <ButtonGroup
+                    color="primary"
+                    aria-label="outlined primary button group"
+                  >
+                    <IconButton aria-label="delete">
+                      <DeleteIcon />
+                    </IconButton>
+                    <IconButton aria-label="edit">
+                      <EditIcon />
+                    </IconButton>
+                  </ButtonGroup>
+                </ListItem>
+              </React.Fragment>
+            ) : (
+              <div></div>
+            )
           ))}
         </List>
       </Paper>

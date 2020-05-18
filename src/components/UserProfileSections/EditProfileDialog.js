@@ -7,15 +7,38 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
-export default function EditProfile() {
+import { updateProfile } from "../../_actions/user_profile";
+
+export default function EditProfile(props) {
   const [open, setOpen] = React.useState(false);
+  const [details, setDetails] = React.useState({
+    profession: "",
+    linkedIn: "",
+    twitter:"",
+    description:""
+  });
 
   const handleClickOpen = () => {
     setOpen(true);
   };
 
   const handleClose = () => {
+    setOpen(false)
+  };
+
+  const handleSubmit = () => {
     setOpen(false);
+    updateProfile(details);
+    setDetails({
+      profession: "",
+      linkedIn: "",
+      twitter:"",
+      description:""
+    });
+  }
+
+  const handleChange = (prop) => (event) => {
+    setDetails({ ...details, [prop]: event.target.value });
   };
 
   return (
@@ -26,34 +49,16 @@ export default function EditProfile() {
       <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Edit Profile Info</DialogTitle>
         <DialogContent>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Username"
-            fullWidth
-          />
+
           <TextField
             autoFocus
             margin="dense"
             id="profession"
             label="Profession"
             fullWidth
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="institute"
-            label="Institute"
-            fullWidth
-          />
-          <TextField
-            autoFocus
-            margin="dense"
-            id="email"
-            label="Email"
-            type="email"
-            fullWidth
+            multiline
+            defaultValue={props.profileDetails.profession}
+            onChange={handleChange("profession")}
           />
           <TextField
             autoFocus
@@ -61,6 +66,9 @@ export default function EditProfile() {
             id="linkedIn"
             label="LinkedIn"
             fullWidth
+            multiline
+            defaultValue={props.profileDetails.linkedIn}
+            onChange={handleChange("linkedIn")}
           />
           <TextField
             autoFocus
@@ -68,6 +76,9 @@ export default function EditProfile() {
             id="twitter"
             label="Twitter"
             fullWidth
+            multiline
+            defaultValue={props.profileDetails.twitter}
+            onChange={handleChange("twitter")}
           />
           <TextField
             autoFocus
@@ -76,13 +87,15 @@ export default function EditProfile() {
             label="Personal Description"
             fullWidth
             multiline
+            defaultValue={props.profileDetails.description}
+            onChange={handleChange("description")}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleSubmit} variant="contained" color="primary">
             Update Profile
           </Button>
         </DialogActions>

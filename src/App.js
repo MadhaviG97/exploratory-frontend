@@ -34,8 +34,8 @@ import ProjectPublic from "./views/research/index/ViewResearchPublic";
 import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
 import ProjectSettings from "./views/research/index/ProjectSettings";
-
 import Project from "./views/research/index/ViewResearchPublic";
+import TaskTracker from "./components/Project/task_tracker";
 
 function App() {
   return (
@@ -118,6 +118,7 @@ function App() {
               path="/project/settings/:id"
               component={Auth(ProjectSettings, null)}
             />
+<<<<<<< HEAD
 
             <Route
               exact
@@ -125,6 +126,9 @@ function App() {
               component={Auth(Chat, null)}
             />
 
+=======
+            <Route exact path="/tasktracker" component={Auth(TaskTracker, true)} />
+>>>>>>> origin/janith
           </Switch>
         </div>
       </ThemeProvider>
