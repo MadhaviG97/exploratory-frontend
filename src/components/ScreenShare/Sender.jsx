@@ -11,10 +11,11 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { withStyles } from "@material-ui/core/styles";
+import axios from 'axios';
 const socket = openSocket('http://localhost:8000');
 var caller;
 //var group="GeeFour"
-var caller="caller"
+var callername="caller"
 //var clients = io.sockets.clients('room');
 //var room=group.concat(caller)
 const RTC_CONFIGURATION = {
@@ -54,7 +55,7 @@ function sendOffer(offer,id) {
     });
   }
   function makePeerConnection(stream,id) {
-    if (caller) { caller=null }
+    if (caller) { caller.close() }
     caller = new RTCPeerConnection(RTC_CONFIGURATION);
     caller.addStream(stream);
     caller.onicecandidate = (event) => {
@@ -71,16 +72,14 @@ function sendOffer(offer,id) {
       sendOffer(caller.localDescription,id);
     });
   }
-const researchers= [ {name: 'mocked name 1',_id:'1234'},{name: 'mocked name 2',_id:'1235'} ]
+const researchers= [ {name: 'mocked name 1',_id:'10001'},{name: 'mocked name 2',_id:'1235'} ]
 class Sender extends React.Component {
-
-    
-
   constructor(props) {
     super(props);
     this.state = {
         open:false,
-        researcher:{}
+        researcher:{},
+        collaborators:[]
     };
     this.ITEM_HEIGHT = 48;
     this.ITEM_PADDING_TOP = 8;
@@ -111,7 +110,29 @@ class Sender extends React.Component {
     
     
     componentDidMount() {
+        const variable = { 
+          group:'10012'
+        //writer: "GeeFour",
+        //name: name
+        }
+        console.log(variable)
+        /*
+        const token = localStorage.token;
+        let config = {
+            headers: {
+            'Authorization': `Bearer ${token}`
+            }
+          }
         
+        */
+        axios.post('/project/get-collaborators', variable)
+            .then(response => {
+                if (response.data) {
+                    this.setState({collaborators:response.data})
+                    
+                }
+            })
+            
         socket.on('answer', (answer) => {
             console.log(answer);
             caller.setRemoteDescription(answer);
@@ -129,11 +150,11 @@ class Sender extends React.Component {
         //console.log(this.state)
         this.setState({
             open:false});
-        var room=this.state.researcher._id.concat('caller')
+        var room=this.state.researcher.researcher_id.toString().concat('caller')
         socket.emit('join', room);
         getStream().then((stream) => {
             document.getElementById('screen').srcObject = stream;
-            makePeerConnection(stream,this.state.researcher._id);
+            makePeerConnection(stream,this.state.researcher.researcher_id.toString());
         });
         
     }
@@ -157,9 +178,9 @@ class Sender extends React.Component {
                         MenuProps={this.MenuProps}
                       >
                       
-                      {researchers.map((researcher) => (
-                        <MenuItem key={researcher._id} value={researcher} >
-                          {researcher.name}
+                      {this.state.collaborators.map((researcher) => (
+                        <MenuItem key={researcher.researcher_id} value={researcher} >
+                          {researcher.first_name} {researcher.last_name}
                         </MenuItem>
                       ))}
                       </Select>

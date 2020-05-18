@@ -19,6 +19,9 @@ import Paper from '@material-ui/core/Paper';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import history from '../../history'
+import Alert from '@material-ui/lab/Alert';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
 const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/fileAvatar.png'
 const folderImage=process.env.PUBLIC_URL + '/images/fileFolder/grey-folder-full-icon-png-5.png'
 const useStyles = makeStyles((theme) => ({
@@ -39,13 +42,20 @@ const useStyles = makeStyles((theme) => ({
   iconButton: {
     padding: 10,
   },
+  roota: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 export default function FolderMenu(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [file,setFile]=React.useState('');
-  
+  const [foldercreated, setFolderCreated] = React.useState(false);
+  const [fileadded, setFileAdded] = React.useState(false);
   const [name,setName]=React.useState('');
   let folder=props.folderParams.folderId
   console.log(folder)
@@ -88,7 +98,7 @@ export default function FolderMenu(props) {
        .then(response => {
             if (response) {
               console.log('yep2')
-              alert('Folder Created!')
+              setFolderCreated(true)
 
                 setTimeout(() => {
                   window.location.reload();
@@ -131,7 +141,7 @@ export default function FolderMenu(props) {
         .then(data => {
           if (data.success) {
             console.log('yep3')
-              alert('File Added!')
+              setFileAdded(true)
               setTimeout(() => {
                 window.location.reload();
               }, 2000);
@@ -146,7 +156,44 @@ export default function FolderMenu(props) {
 
   return (
     <div>
-        
+     <div className={classes.roota}>
+      <Collapse in={foldercreated}>
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setFolderCreated(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          Folder Created!
+        </Alert>
+      </Collapse>
+      <Collapse in={fileadded}>
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setFileAdded(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          File Added!
+        </Alert>
+      </Collapse>
+    </div>
     <List className={classes.root}>
         <ListItem alignItems="flex-start">
             

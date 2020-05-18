@@ -80,7 +80,7 @@ export default function DialogSelect() {
         'Authorization': `Bearer ${token}`
         }
       }
-    axios.post('/editor/getBlogs')
+    axios.get('/editor/getBlogs',config)
         .then(response => {
             if (response.data.success) {
                 console.log(response.data.blogs)
@@ -201,7 +201,7 @@ export default function DialogSelect() {
     // green for additions, red for deletions
     // grey for common parts
     color = part.added ? 'green' :
-    part.removed ? 'red' : 'grey';
+    part.removed ? 'red' : 'black';
     span = document.createElement('span');
     span.style.color = color;
     span.appendChild(document

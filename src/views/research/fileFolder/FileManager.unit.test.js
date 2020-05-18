@@ -39,7 +39,7 @@ const props = {
     match: { params: { folder: '123' } },
   }
 
-describe('MyComponent', () => {
+describe('FileManager', () => {
   afterEach(() => {
     jest.restoreAllMocks();
     jest.resetAllMocks();

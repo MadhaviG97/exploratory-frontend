@@ -12,30 +12,54 @@ import CardActions from '@material-ui/core/CardActions';
 import EditorBlogMenu from '../../../components/editor/EditorBlogMenu'
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import ShareIcon from '@material-ui/icons/Share';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
+
 import Divider from '@material-ui/core/Divider';
 import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/projectFolderGrid";
 import Avatar from '@material-ui/core/Avatar';
 import Grid from '@material-ui/core/Grid';
 import EditIcon from '@material-ui/icons/Edit';
-
-
+import Tooltip from "@material-ui/core/Tooltip";
+import PictureAsPdfIcon from '@material-ui/icons/PictureAsPdf';
+import Alert from '@material-ui/lab/Alert';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 
 export default function CreatePage(props) {
  
     const [blogs, setBlogs] = useState([])
     const classes = useStyles();
     const [name,setName]=useState('');
+    const [open,setOpen]=useState(false);
+    const [id,setId]=useState('');
+    const [documentdeleted,setDocumentDeleted]=useState(false);
+    const handleClickOpen = (id) => {
+        setId(id)
+        setOpen(true);
+      };
+    
+    const handleClose = () => {
+        setOpen(false);
+    };
     useEffect(() => {
-        axios.post('/editor/getBlogs')
+        const token = localStorage.token;
+        let config = {
+          headers: {
+          'Authorization': `Bearer ${token}`
+          }
+        }
+        axios.get('/editor/getBlogs',config)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data.blogs)
                     setBlogs(response.data.blogs)
                 } else {
-                    alert('Couldnt get blog`s lists')
+                    alert('Could not get blog`s lists')
                 }
             })
     }, [])
@@ -64,12 +88,13 @@ export default function CreatePage(props) {
                 console.log(response.data.blogs)
                 setBlogs(response.data.blogs)
             } else {
-                alert('Couldnt get blog`s lists')
+                alert('Could not get blog`s lists')
             }
             })
         
     }
-    const handleDelete = (id) => {
+    const handleDelete = () => {
+        setOpen(false);
         const variable = { 
             postId:id
         }
@@ -84,7 +109,7 @@ export default function CreatePage(props) {
         axios.post('/editor/deletepost', variable,config)
             .then(response => {
                 if (response.data.success) {
-                    alert('Document Successfully Deleted')
+                    setDocumentDeleted(true)
                     setTimeout(() => {
                         window.location.reload();
                         }, 1000);
@@ -96,17 +121,43 @@ export default function CreatePage(props) {
         
     };
     return(
-        <div>
+        <div className={classNames(classes.main)}>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogContent>
+                    <DialogContentText>
+                        Delete Document?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={handleDelete} color="primary">
+                    Delete
+                </Button>
+                </DialogActions>
+            </Dialog>
             <NavBar/>
-            
-            <div className={classNames(classes.main)}>
-                <Box p={1}  style={{  background: '#014f82'}}>
+            <Collapse in={documentdeleted}>
+                    <Alert
+                    action={
+                        <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setDocumentDeleted(false);
+                        }}
+                        >
+                        <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    >
+                    Document Succesfully Deleted!
+                    </Alert>
+                </Collapse>
+            <div >
                 
-                    <div className={classes.name} >
-                        <h1 align='center' className={classes.title}>Documents</h1>
-                    </div>
-                    
-                </Box>
                  {/*marginTop={7} />*/}
                  
                  
@@ -132,11 +183,7 @@ export default function CreatePage(props) {
                                                     {blog.name[0]}
                                                     </Avatar>
                                                 }
-                                                action={
-                                                <IconButton aria-label="settings">
-                                                    <MoreVertIcon />
-                                                </IconButton>
-                                                }
+                                                
                                                 title={blog.name}
                                                 subheader={blog.updatedAt}
                                             />
@@ -152,13 +199,21 @@ export default function CreatePage(props) {
                                             </CardContent>
                                             <Divider variant="middle" />
                                             <CardActions disableSpacing>
-                                            <IconButton aria-label="delete document" href={`/document/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
-                                                <EditIcon/>
-                                            </IconButton>
-                                                
-                                                <IconButton aria-label="delete document" onClick={()=>handleDelete(blog._id)} >{/*href ={`/editor/delete/${blog._id}`} */}
-                                                <DeleteIcon />
+                                            <Tooltip title="Edit Document">
+                                                <IconButton aria-label="delete document" href={`/document/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                    <EditIcon/>
                                                 </IconButton>
+                                            </Tooltip>
+                                            <Tooltip title="Turn to PDF format">
+                                                    <IconButton aria-label="settings" href={`/document/view/${blog._id}`}>
+                                                        <PictureAsPdfIcon />
+                                                    </IconButton>
+                                                </Tooltip>
+                                            <Tooltip title="Delete Document">
+                                                <IconButton aria-label="delete document" onClick={()=>handleClickOpen(blog._id)} >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </Tooltip>
                                             </CardActions>
                                         
                                         </Card>

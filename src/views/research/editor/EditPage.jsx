@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 
-import axios from 'axios';
 import { useSelector } from "react-redux";
 
 import classNames from "classnames";
@@ -9,11 +8,7 @@ import NavBar from "../../../components/Navbar/Navbar";
 import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/editor";
 
-import UserSection from "../../../components/PublicForumSections/UserSection";
-import Divider from "@material-ui/core/Divider";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import EditorMenu from "../../../components/editor/EditorMenu"
+
 import '../../../assets/css/editor.css';
 
 
@@ -24,16 +19,6 @@ function Edit2Page(props) {
     const classes = useStyles();
     const user = useSelector(state => state.user);
     console.log(user)
-    
-    const [text, setText] = useState("")
-    const [name, setName] = useState("")
-    const [variable,setVariable]=useState("")
-    useEffect(() => {
-        
-      },[]);
-      
-
- 
     
         return (
         <div>
@@ -47,21 +32,13 @@ function Edit2Page(props) {
                 </Box>
                 
                 <div className={classNames(classes.main, classes.mainRaised2)} > 
-                    
-                            <YJSQuill user={user} variable={props.match.params.postId}/>
-                        
-                    
+                    <YJSQuill user={user} variable={props.match.params.postId}/>
                     <Box p={4}  /> 
                 </div>
             
             <Footer/>
         </div>
         );
-
-
     }
-
-
-
 
 export default Edit2Page

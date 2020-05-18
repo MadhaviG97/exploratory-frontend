@@ -25,9 +25,19 @@ import CardActions from '@material-ui/core/CardActions';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import IconButton from '@material-ui/core/IconButton';
 
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Typography } from '@material-ui/core';
+
+import Alert from '@material-ui/lab/Alert';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
 
 import FileSaver from 'file-saver';
 
@@ -40,9 +50,13 @@ function FileManager(props) {
     
     const [files, setFiles] = useState([])
     const [name,setName]=useState('');
+    const [deleteopen, setDeleteOpen] = React.useState(false);
     const [fileDetail, setFileDetail] = useState('')
     const [folders, setFolders] = useState([])
     const [anchorEl, setAnchorEl] =useState(null);
+    const [filedeleted,setFileDeleted]=useState(false);
+    const [fileshared,setFileShared]=useState(false);
+    const [filenotshared,setFileNotShared]=useState(false);
     const handleClick = param => event  => {
         setAnchorEl(event.currentTarget);
         setFileDetail(param)
@@ -80,6 +94,7 @@ function FileManager(props) {
             if (response.data.success) {
                 console.log(response.data.files)
                 setFiles(response.data.files)
+                setFolders([])
             } else {
                 console.log('not')
                 alert('Could not get files ')
@@ -102,7 +117,7 @@ function FileManager(props) {
             axios.post('/drive/sharefile', variable,config)
                 .then(response => {
                     if (response.data.success) {
-                        alert('File shared with public')
+                        setFileShared(true)
                         setTimeout(() => {
                             window.location.reload();
                           }, 2000);
@@ -116,7 +131,7 @@ function FileManager(props) {
             axios.post('/drive/notsharefile', variable,config)
                 .then(response => {
                     if (response.data.success) {
-                        alert('Stopped Sharing with public')
+                        setFileNotShared(true)
                         setTimeout(() => {
                             window.location.reload();
                           }, 1000);
@@ -159,14 +174,20 @@ function FileManager(props) {
                 FileSaver.saveAs(response.data);
                 
             } else {
-                alert('Could not Delete File ')
+                alert('Could not Download File ')
             }
         })
-            
-        
         setAnchorEl(null);
     };
+    const handleDeleteOpen = () => {
+        setDeleteOpen(true);
+      };
+    
+    const handleDeleteClose = () => {
+        setDeleteOpen(false);
+    };
     const handleDelete = () => {
+        setDeleteOpen(false)
         const variable = { 
             id:fileDetail._id
         }
@@ -177,19 +198,34 @@ function FileManager(props) {
             'Authorization': `Bearer ${token}`
             }
           }
-        
-        axios.post('/drive/deletefile', variable,config)
-            .then(response => {
-                if (response.data.success) {
-                    alert('File Successfully Deleted')
-                    setTimeout(() => {
-                        window.location.reload();
-                        }, 1000);
-                    
-                } else {
-                    alert('Could not Delete File ')
-                }
+        if (fileDetail.metadata.folder=='deleted'){//change this later == to !=
+            axios.post('/drive/softdeletefile', variable,config)
+                .then(response => {
+                    if (response.data.success) {
+                        setFileDeleted(true)
+                        setTimeout(() => {
+                            window.location.reload();
+                            }, 1000);
+                        
+                    } else {
+                        alert('Could not Delete File ')
+                    }
+                })
+        }
+        else{
+            axios.post('/drive/deletefile', variable,config)
+                .then(response => {
+                    if (response.data.success) {
+                        setFileDeleted(true)
+                        setTimeout(() => {
+                            window.location.reload();
+                            }, 1000);
+                        
+                    } else {
+                        alert('Could not Delete File ')
+                    }
             })
+        }
         
         setAnchorEl(null);
     };
@@ -220,7 +256,7 @@ function FileManager(props) {
                     console.log(response.data.folders)
                     setFolders(response.data.folders)
                 } else {
-                    alert('Couldnt get folders ')
+                    alert('Could not get folders ')
                 }
             })
         
@@ -239,7 +275,79 @@ function FileManager(props) {
     
         return (
         <div>
+            <Dialog open={deleteopen} onClose={handleDeleteClose} aria-labelledby="form-dialog-title">
+                <DialogContent>
+                    <DialogContentText>
+                        Delete File?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleDeleteClose} color="primary">
+                    Cancel
+                </Button>
+                <Button onClick={handleDelete} color="primary">
+                    Delete
+                </Button>
+                </DialogActions>
+            </Dialog>
             <NavBar/>
+            <div >
+                <Collapse in={fileshared}>
+                    <Alert
+                    action={
+                        <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setFileShared(false);
+                        }}
+                        >
+                        <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    >
+                    File Shared With Public!
+                    </Alert>
+                </Collapse>
+                <Collapse in={filedeleted}>
+                    <Alert
+                    action={
+                        <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setFileDeleted(false);
+                        }}
+                        >
+                        <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    >
+                    File Successfully Deleted!
+                    </Alert>
+                </Collapse>
+                <Collapse in={filenotshared}>
+                    <Alert
+                    action={
+                        <IconButton
+                        aria-label="close"
+                        color="inherit"
+                        size="small"
+                        onClick={() => {
+                            setFileNotShared(false);
+                        }}
+                        >
+                        <CloseIcon fontSize="inherit" />
+                        </IconButton>
+                    }
+                    >
+                    Stopped Sharing With Public!
+                    </Alert>
+                </Collapse>
+            </div>
+            <Box p={2}></Box>
                 <Menu
                     id="simple-menu"
                     
@@ -256,16 +364,12 @@ function FileManager(props) {
                         : <MenuItem style={{ fontSize: 14 }} onClick={handleShare}>Stop Sharing</MenuItem>
                     }
                     <MenuItem style={{fontSize: 14 }} onClick={fileDownload}>Download</MenuItem>
-                    <MenuItem style={{ color: '#d60009',fontSize: 14 }} onClick={handleDelete}>Delete</MenuItem>
+                    <MenuItem style={{ color: '#d60009',fontSize: 14 }} onClick={handleDeleteOpen}>Delete</MenuItem>
                 </Menu>
                 
                 
                 <div className={classNames(classes.main)} > 
-                    <Box p={1}  style={{  background: '#014f82'}}>
-                        <div className={classes.name} >
-                            <h1 align='center' className={classes.title}>Drive</h1>
-                        </div>
-                    </Box>
+                    
                     {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
                     
                     <Grid container spacing={5} >
@@ -277,6 +381,12 @@ function FileManager(props) {
                         <Divider orientation="vertical" variant="fullWidth" />
                         
                         <Grid item xs={8}>
+                            <Box boxShadow={2} >
+                                <Box p={1}  >
+                                        <h1 align='center' className={classes.topic3}>Drive</h1>
+                                </Box>
+                            </Box>
+                            <Box p={2}></Box>
                             <Grid container spacing={4} direction="row"  >
                                 {folders.map((folder,index) => (
                                     <Grid item lg={3} md={4} xs={8}>

@@ -14,17 +14,17 @@ const RTC_CONFIGURATION = {
     ]
   };
 var callee;
-var group="1234"
-var callee="callee"
+var group="10001"
+var calleename="callee"
 var room=group.concat('callee')
 function sendAnswer(answer) {
-    socket.emit('answer', {room: '1234',answer:answer});
+    socket.emit('answer', {room: '10001',answer:answer});
   }
   function sendCandidate(candidate) {
-    socket.emit('candidate', {room: '1234',candidate:candidate});
+    socket.emit('candidate', {room: '10001',candidate:candidate});
   }
   function makePeerConnection() {
-    if (callee) { callee=null }
+    if (callee) { callee.close() }
     callee = new RTCPeerConnection(RTC_CONFIGURATION);
     callee.onaddstream = (event) => {
         document.getElementById('screen').srcObject = event.stream;

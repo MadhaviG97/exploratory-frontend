@@ -5,19 +5,32 @@ import { QuillBinding } from 'y-quill'
 import Quill from 'quill'
 import QuillCursors from 'quill-cursors'
 import axios from 'axios';
-
+import { withStyles } from "@material-ui/core/styles";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import EditorMenu from "../../components/editor/EditorMenu"
+import Alert from '@material-ui/lab/Alert';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 Quill.register('modules/cursors', QuillCursors)
-
-export default class YJSQuill extends React.Component {
+const styles = theme => ({
+  roota: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
+  
+});
+class YJSQuill extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
       online: [],
+      fileSaved:false
   };
     this.editor= null;
     this.quillRef=null;
@@ -51,7 +64,7 @@ handleSave=()=> {
     
       .then(response => {
           if (response) {
-              alert('Document saved!')
+              this.setState({fileSaved:true})
               
           }
       })
@@ -130,6 +143,7 @@ componentDidMount() {
 }
 
 render() {
+    const { classes } = this.props;
     if (this.props.user.userData){
       this.provider.awareness.setLocalStateField('user', {
         name: this.props.user.userData.first_name,
@@ -157,6 +171,26 @@ render() {
     
     return (
       <div >
+        <div className={classes.roota}>
+            <Collapse in={this.state.fileSaved}>
+                <Alert
+                action={
+                    <IconButton
+                    aria-label="close"
+                    color="inherit"
+                    size="small"
+                    onClick={() => {
+                        this.setState({fileSaved:false})
+                    }}
+                    >
+                    <CloseIcon fontSize="inherit" />
+                    </IconButton>
+                }
+                >
+                File Saved!
+                </Alert>
+            </Collapse>
+        </div>
         <Grid container spacing={5}>
             <Grid item xs={3}>
                 <Paper >
@@ -183,7 +217,7 @@ render() {
     )
   }
 }
-
+export default withStyles(styles)(YJSQuill);
 
 
   /*

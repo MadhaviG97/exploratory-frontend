@@ -24,6 +24,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import CreatePage from "./views/research/editor/CreatePage";
 import EditPage from "./views/research/editor/EditPage";
 import EditorBlog from "./views/research/editor/EditorBlog";
+import ViewDocument from "./views/research/editor/ViewDocument";
 import FileManager from "./views/research/fileFolder/FileManager";
 import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 
@@ -76,6 +77,11 @@ function App() {
               exact
               path="/document/compare"
               component={Auth(CompareDoc, true)}
+            />
+            <Route
+              exact
+              path="/document/view/:postId"
+              component={Auth(ViewDocument, true)}
             />
             <Route
               exact

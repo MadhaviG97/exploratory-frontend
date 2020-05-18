@@ -32,13 +32,13 @@ describe('Compare Doc', () => {
           <CompareDialog />
       </Provider>, div);
   });
-  it('renders correctly', () => {
-      const tree = renderer
-        .create(
-        <Provider store={store}>
-          <CompareDialog />
-        </Provider>)
-        .toJSON();
-      expect(tree).toMatchSnapshot();
+    it('renders correctly', () => {
+        const tree = renderer
+          .create(
+          <Provider store={store}>
+            <CompareDialog />
+          </Provider>)
+          .toJSON();
+        expect(tree).toMatchSnapshot();
+      });
     });
-  });

@@ -55,6 +55,12 @@ export const useStyles = makeStyles((theme) => ({
   name: {
     marginTop: "-20px"
   },
+  roota: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
   main: {
     background: "#FFFFFF",
     position: "relative",
