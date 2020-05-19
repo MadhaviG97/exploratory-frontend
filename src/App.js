@@ -118,7 +118,6 @@ function App() {
               path="/project/settings/:id"
               component={Auth(ProjectSettings, null)}
             />
-<<<<<<< HEAD
 
             <Route
               exact
@@ -126,9 +125,7 @@ function App() {
               component={Auth(Chat, null)}
             />
 
-=======
             <Route exact path="/tasktracker" component={Auth(TaskTracker, true)} />
->>>>>>> origin/janith
           </Switch>
         </div>
       </ThemeProvider>
@@ -137,3 +134,4 @@ function App() {
 }
 
 export default App;
+
