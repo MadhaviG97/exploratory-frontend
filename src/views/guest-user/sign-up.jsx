@@ -27,6 +27,7 @@ import Footer from "../../components/Footer/Footer";
 //redux
 import { useDispatch } from "react-redux";
 import { registerUser } from "../../_actions/user_actions";
+import axios from "axios";
 
 //routing
 import { useHistory, useLocation } from "react-router-dom";
@@ -79,24 +80,15 @@ export default function SignUp(props) {
       confirm_password: values.confirm_password,
     };
 
-    dispatch(registerUser(formData))
+    const request = axios
+      .post(`/register`, formData)
+      .then((response) => response.data);
+
+    dispatch(registerUser(request))
       .then((result) => {
-        console.log(result);
         history.replace(from);
       })
       .catch((e) => console.log(e));
-
-    // const response = await fetch("/register", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({ ...formData }),
-    // })
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     console.log(result);
-    //   });
   };
 
   return (

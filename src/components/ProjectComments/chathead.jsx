@@ -9,39 +9,11 @@ import Grid from "@material-ui/core/Grid";
 import Badge from "@material-ui/core/Badge";
 import MailIcon from "@material-ui/icons/Mail";
 import Box from "@material-ui/core/Box";
-import { TextField } from "@material-ui/core";
 import CardContent from "@material-ui/core/CardContent";
 import ChatThread from "./chatThread";
-
-const chats = [
-  {
-    id: 10002,
-    first_name: "malani",
-    last_name: "fonseka",
-    university: "University of Moratuwa",
-    email: "melani@123.com",
-    profile_picture: "avatar-2.jpg",
-    count: 2,
-  },
-  {
-    id: 10003,
-    first_name: "gamlath",
-    last_name: "perera",
-    university: "University of Moratuwa",
-    email: "gamlath@123.com",
-    profile_picture: "avatar-3.jpg",
-    count: 2,
-  },
-  {
-    id: 10004,
-    first_name: "peshaka",
-    last_name: "dhananjaya",
-    university: "University of Moratuwa",
-    email: "peshaka@123.com",
-    profile_picture: "avatar-4.jpg",
-    count: 2,
-  },
-];
+import { useSelector } from "react-redux";
+import axios from "axios";
+import AddNewComment from "./AddNewComment";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,13 +32,40 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.text.secondary,
     padding: theme.spacing(0, 4),
   },
+  newComment: {
+    padding: theme.spacing(2, 2, 1),
+  },
 }));
 
-export default function Comments() {
+export default function Comments(props) {
+  const classes = useStyles();
+  const [comments, setComments] = React.useState(props.comments);
+  const project = useSelector((state) => state.project).renderData.project;
+
+  const handleRefreshComment = () => {
+    axios
+      .post("/project/comments/view-comments", { id: project.id })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data) {
+          setComments(response.data);
+        } else {
+          setComments([]);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   return (
     <React.Fragment>
-      {chats.map((chat) => {
-        return <CommentHeads chat={chat} />;
+      <Grid md="12" align="right" className={classes.newComment}>
+        <AddNewComment onNewComment={handleRefreshComment} />
+      </Grid>
+      {/* {Array.isArray(comments) && emptyArray.length} */}
+      {comments.map((chat) => {
+        return (
+          <CommentHeads chat={chat} onCommentDelete={handleRefreshComment} />
+        );
       })}
     </React.Fragment>
   );
@@ -74,10 +73,66 @@ export default function Comments() {
 
 function CommentHeads(props) {
   const classes = useStyles();
+
+  const user = useSelector((state) => state.user);
+
   const [expanded, setExpanded] = React.useState(false);
 
+  const [replies, setReplies] = React.useState([]);
+
   const handleChange = (panel) => (event, isExpanded) => {
-    setExpanded(isExpanded ? panel : false);
+    rerenderReplies(() => {
+      setExpanded(isExpanded ? panel : false);
+    });
+  };
+
+  const handleEdit = (reply_id, message) => {
+    const formData = {
+      id: reply_id,
+      message: message,
+    };
+
+    axios
+      .post("/project/comments/edit-reply", formData)
+      .then((response) => {
+        rerenderReplies(() => console.log(response));
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const rerenderReplies = (cb) => {
+    axios
+      .post("/project/comments/view-replies", { id: props.chat.comment_id })
+      .then((response) => {
+        setReplies(response.data);
+        cb();
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleReplyDelete = () => {
+    rerenderReplies(() => console.log(props.chat));
+  };
+
+  const handleCommentDelete = () => {
+    props.onCommentDelete();
+  };
+
+  const handleReply = (reply) => {
+    const formData = {
+      author_id: user.userData._id,
+      comment_id: props.chat.comment_id,
+      message: reply,
+      no_of_likes: 0,
+      initial_comment: 0,
+    };
+    console.log(formData);
+    axios
+      .post("/project/comments/reply-comment", formData)
+      .then((response) => {
+        rerenderReplies(() => console.log(response));
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
@@ -104,7 +159,7 @@ function CommentHeads(props) {
                 {props.chat.first_name.concat(" ").concat(props.chat.last_name)}
               </Typography>
               <Typography className={classes.secondaryHeading}>
-                {props.chat.university}
+                {props.chat.institution}
               </Typography>
 
               {/* <Typography variant="button" className={classes.heading}>
@@ -113,14 +168,25 @@ function CommentHeads(props) {
             </Box>
 
             <Box>
-              <Badge color="secondary" badgeContent={props.chat.count} showZero>
+              <Badge
+                color="secondary"
+                badgeContent={props.chat.length}
+                showZero
+              >
                 <MailIcon />
               </Badge>
             </Box>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <CardContent>
-              <ChatThread />
+              <ChatThread
+                replies={replies}
+                onReply={handleReply}
+                onEdit={handleEdit}
+                onReplyDelete={handleReplyDelete}
+                onCommentDelete={handleCommentDelete}
+              />
+              {/* should pass replies as props */}
             </CardContent>
           </ExpansionPanelDetails>
         </ExpansionPanel>

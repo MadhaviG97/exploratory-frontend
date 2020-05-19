@@ -1,4 +1,5 @@
 import React from 'react';
+
 import ReactQuill, { Quill } from 'react-quill';
 import "react-quill/dist/quill.snow.css";
 //import openSocket from 'socket.io-client';
@@ -40,15 +41,6 @@ class QuillEditor extends React.Component {
     
     componentDidMount() {
         this._isMounted = true;
-        
-        
-        ////this.provider = new WebsocketProvider("ws://localhost:3000/blog/create");// change to 'ws://localhost:3000' for local development
-        
-        //socket.on('subscribeToText', (text) => {
-        //    this.setState({text: text});
-        //    console.log('socket',text);
-        //  });
-        
      
     }
 
@@ -56,11 +48,7 @@ class QuillEditor extends React.Component {
     
     handleChange = (value) => {
         let status = '';
-    if (value.length !== this.state.text.length) {
-        console.log("I am Emitting");
-        //socket.emit('toText', value);
-        
-      };
+    
       
       this.setState({
         text: value
@@ -91,7 +79,7 @@ class QuillEditor extends React.Component {
     }
 
     modules = {
-        syntax: true,
+        syntax: false,
         toolbar: {
             container:  [
                 [{ 'font': [] }],

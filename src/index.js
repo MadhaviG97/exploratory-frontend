@@ -4,8 +4,8 @@ import App from "./App";
 import Theme from "./assets/themes/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter } from "react-router-dom";
-
+import { Router } from "react-router-dom";
+import history from './history';
 import Reducer from "./_reducers";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
@@ -24,9 +24,9 @@ render(
         window.__REDUX_DEVTOOLS_EXTENSION__()
     )}
   >
-    <BrowserRouter>
+    <Router  history={history}>
       <App />
-    </BrowserRouter>
+    </Router>
   </Provider>,
   document.getElementById("root")
 );
