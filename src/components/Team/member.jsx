@@ -5,7 +5,7 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
-
+import Box from "@material-ui/core/Box";
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     flex: "1",
+    width: 180,
   },
   cover: {
     width: 100,
@@ -44,10 +45,13 @@ export default function Team(props) {
         <div className={classes.details}>
           <CardContent className={classes.content}>
             <Typography variant="subtitle1" color="textPrimary">
-              {props.username}
+              {" "}
+              <Box fontWeight="fontWeightBold">{props.username}</Box>
             </Typography>
+
             <Typography variant="caption" color="textSecondary">
-              {props.university}
+              {" "}
+              <Box fontWeight="fontWeightBold">{props.university}</Box>
             </Typography>
           </CardContent>
         </div>

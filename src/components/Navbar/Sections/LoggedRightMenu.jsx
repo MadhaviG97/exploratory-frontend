@@ -132,10 +132,7 @@ function LoggedRightMenu(props) {
   let profileImage =
     process.env.PUBLIC_URL + "/images/profile-pictures/profilePic.png";
   if (user.userData.profile_picture) {
-    profileImage =
-      process.env.PUBLIC_URL +
-      "/images/profile-pictures/" +
-      user.userData.profile_picture;
+    profileImage = user.userData.profile_picture;
   }
 
   const name = user.userData.first_name;

@@ -91,12 +91,7 @@ export default function CommentSection(props) {
                 )}
                 <ListItem>
                   <ListItemAvatar>
-                    <Avatar
-                      alt="Profile Picture"
-                      src={"/images/profile-pictures/".concat(
-                        reply.profile_picture
-                      )}
-                    />
+                    <Avatar alt="Profile Picture" src={reply.profile_picture} />
                   </ListItemAvatar>
                   <ListItemText
                     primary={reply.first_name.concat(reply.last_name)}

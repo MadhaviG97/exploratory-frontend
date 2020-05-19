@@ -180,14 +180,7 @@ export default function Form() {
                   label={option.first_name.concat(" ").concat(option.last_name)}
                   {...getTagProps({ index })}
                   disabled={index === 0}
-                  avatar={
-                    <Avatar
-                      alt="propic"
-                      src={"../images/profile-pictures/".concat(
-                        option.profile_picture
-                      )}
-                    />
-                  }
+                  avatar={<Avatar alt="propic" src={option.profile_picture} />}
                 />
               ))
             }
@@ -203,11 +196,7 @@ export default function Form() {
                 <List className={classes.root}>
                   <ListItem>
                     <ListItemAvatar>
-                      <Avatar
-                        src={"../images/profile-pictures/".concat(
-                          option.profile_picture
-                        )}
-                      />
+                      <Avatar src={option.profile_picture} />
                     </ListItemAvatar>
                     <ListItemText
                       primary={option.first_name

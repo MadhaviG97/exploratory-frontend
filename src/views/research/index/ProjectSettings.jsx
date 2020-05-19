@@ -18,6 +18,10 @@ import Alert from "../../../components/Project/AlertBox";
 import FileUploader from "../../../components/Project/FileUploader";
 import Avatar from "@material-ui/core/Avatar";
 import Loader from "../../../components/Loader";
+
+import CollaboratorForm from "../../../components/Forms/FormComponents/collaboratorForm";
+import TagForm from "../../../components/Forms/FormComponents/TagForm";
+
 //redux
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -61,7 +65,17 @@ export default function Form() {
     tags: [],
     disabled: true,
     alertOpen: false,
+    all_researchers: [],
+    all_tags: [],
   });
+
+  const handleCollaboratorUpdate = (new_list) => {
+    setState({ ...state, collaborators: new_list });
+  };
+
+  const handleTagUpdate = (new_list) => {
+    setState({ ...state, tags: new_list });
+  };
 
   useEffect(() => {
     console.log(project);
@@ -75,9 +89,21 @@ export default function Form() {
           },
         };
 
+        axios
+          .post("/researcher/get-all-users", {})
+          .then((res) => {
+            setState({
+              ...state,
+              all_researchers: res.data,
+            });
+            console.log(res.data);
+          })
+          .catch((err) => console.log(err.message));
+
         var request = axios
           .post("/project/view-project", { id: id })
           .then((response) => {
+            console.log();
             return response.data;
           })
           .catch((err) => console.log(err.message));
@@ -154,7 +180,7 @@ export default function Form() {
           var project = response.payload.project_details.project;
           var collaborators = response.payload.project_details.collaborators;
           var tags = response.payload.project_details.tags;
-          console.log(project);
+          console.log("visibility", project.visibility_public);
           setState({
             ...state,
             title: project.title,
@@ -190,10 +216,11 @@ export default function Form() {
   const handleAlertSubmit = () => {
     console.log("submit");
     const formData = {
+      id: id,
       title: state.title,
       description: state.description,
       abstract: state.abstract,
-      creator: state.creator,
+      // creator: state.creator,
       collaborators: state.collaborators,
       visibility_public: state.visibility_public,
       tags: state.tags,
@@ -242,6 +269,21 @@ export default function Form() {
       ...state,
       collaborators: newList,
     });
+
+    // const formData = {
+    //   project_id: id,
+    //   researcher_id: value._id,
+    // };
+
+    // axios
+    //   .post(`/project/update-collaborators`, formData)
+    //   .then((response) => {
+    //     setState({
+    //       ...state,
+    //       collaborators: newList,
+    //     });
+    //   })
+    //   .catch((e) => console.log(e.message));
   };
 
   return (
@@ -285,13 +327,9 @@ export default function Form() {
                       value={state.title}
                     />
                   </Grid>
-
-                  <Grid item xs={12}>
-                    <ToggleButton
-                      visibility={state.visibility_public}
-                      onChange={handleToggle}
-                    />
-                  </Grid>
+                  {/* <Grid item xs={12}>
+                    <CollaboratorList />
+                  </Grid> */}
 
                   <Grid item xs={12}>
                     <TextField
@@ -344,9 +382,7 @@ export default function Form() {
                             avatar={
                               <Avatar
                                 alt="propic"
-                                src={"../images/profile-pictures/".concat(
-                                  option.profile_picture
-                                )}
+                                src={option.profile_picture}
                               />
                             }
                           />
@@ -363,96 +399,34 @@ export default function Form() {
                       )}
                     />
                   </Grid>
-
                   <Grid item xs={12}>
-                    <Autocomplete
-                      multiple
+                    <CollaboratorForm
                       disabled={state.disabled}
-                      id="fixed-tags-demo"
-                      options={collaborators}
-                      defaultValue={collaborators}
-                      name="collaborators"
-                      onChange={(event, value) => {
-                        onCollaboratorChange(value);
-                      }}
-                      getOptionLabel={(option) =>
-                        option.first_name.concat(" ").concat(option.last_name)
-                      }
-                      renderInput={(state, getTagProps) =>
-                        state.map((option, index) => (
-                          <Chip
-                            label={option.first_name
-                              .concat(" ")
-                              .concat(option.last_name)}
-                            {...getTagProps({ index })}
-                            disabled={index === 0}
-                            avatar={
-                              <Avatar
-                                src={"images/profile-pictures/".concat(
-                                  option.profile_picture
-                                )}
-                              />
-                            }
-                          />
-                        ))
-                      }
-                      style={{ width: 500 }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="collaborators"
-                          name="collaborators"
-                          variant="outlined"
-                        />
-                      )}
+                      onChange={handleCollaboratorUpdate}
+                      collaborators={collaborators.map((user) => {
+                        return {
+                          first_name: user.first_name,
+                          last_name: user.last_name,
+                          id: user.researcher_id,
+                          institution: user.institution_name,
+                          profile_picture: user.profile_picture,
+                          isAdmin: user.isAdmin,
+                        };
+                      })}
                     />
                   </Grid>
 
                   <Grid item xs={12}>
-                    <Autocomplete
-                      multiple
+                    <TagForm
                       disabled={state.disabled}
-                      id="fixed-tags-demo"
-                      options={tags}
-                      defaultValue={tags}
-                      name="tags"
-                      onChange={(event, value) => {
-                        onTagsChange(value);
-                      }}
-                      getOptionLabel={(option) => option.title}
-                      renderInput={(state, getTagProps) =>
-                        state.map((option, index) => (
-                          <Chip
-                            label={option.title}
-                            {...getTagProps({ index })}
-                            disabled={index === 0}
-                          />
-                        ))
-                      }
-                      style={{ width: 500 }}
-                      renderInput={(params) => (
-                        <TextField
-                          {...params}
-                          label="tags"
-                          name="tags"
-                          variant="outlined"
-                        />
-                      )}
+                      onChange={handleTagUpdate}
+                      tags={tags.map((tag) => {
+                        return {
+                          tag_id: tag.tag_id,
+                          title: tag.title,
+                        };
+                      })}
                     />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <Typography variant="button">Related Images</Typography>
-                    <Paper className={classes.fileUploader} elevation={3}>
-                      <FileUploader
-                        maxFiles={5}
-                        multiple={true}
-                        accept={"image/*"}
-                        folder="Related Images"
-                        project_id={id}
-                        // default={related_images}
-                      />
-                    </Paper>
                   </Grid>
 
                   <Grid item xs={12}>
@@ -484,6 +458,21 @@ export default function Form() {
                   </Grid>
                   <Grid item xs={12}>
                     {/* //image uploader */}
+                  </Grid>
+
+                  <Grid item xs={12} container>
+                    <Grid item xs={6}>
+                      <Typography variant="button">
+                        Public Visibility
+                      </Typography>
+                    </Grid>
+                    <Grid item align="end" xs={6}>
+                      <ToggleButton
+                        visibility={state.visibility_public}
+                        onChange={handleToggle}
+                        disabled={state.disabled}
+                      />
+                    </Grid>
                   </Grid>
 
                   <Grid item xs={12} align="end">

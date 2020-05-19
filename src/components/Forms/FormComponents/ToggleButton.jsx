@@ -9,6 +9,7 @@ export default function ToggleButtons(props) {
 
   const handleAlignment = (event, newAlignment) => {
     setAlignment(newAlignment);
+    console.log(newAlignment);
     props.onChange(newAlignment);
   };
 
@@ -16,6 +17,7 @@ export default function ToggleButtons(props) {
     <ToggleButtonGroup
       value={alignment}
       exclusive
+      disabled={props.disabled}
       onChange={handleAlignment}
       aria-label="Visibility Public"
     >

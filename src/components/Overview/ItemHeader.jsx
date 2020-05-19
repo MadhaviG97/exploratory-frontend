@@ -14,7 +14,7 @@ export default function ItemHeader(props) {
   }
 
   const isCollaborator = (logged_in_user) => {
-    var collaborators = project.collaborators;
+    var collaborators = project.collaborators.concat(project.admins);
     var i;
     for (i = 0; i < collaborators.length; i++) {
       if (collaborators[i].researcher_id === logged_in_user) {
