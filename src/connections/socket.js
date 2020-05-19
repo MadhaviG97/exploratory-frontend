@@ -54,6 +54,10 @@ export default function (user_id, token, controls) {
     socket.emit('createChatroom', chatDetails, cb)
   }
 
+  function markSeen(MsgInfo,cb){
+    socket.emit('markSeen',MsgInfo,cb)
+  }
+
   return {
     getChatrooms,
     getChatroomParticipants,
@@ -65,6 +69,7 @@ export default function (user_id, token, controls) {
     searchResearchers,
     allResearchers,
     createChatroom,
+    markSeen,
   }
 }
 

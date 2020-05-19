@@ -98,6 +98,9 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+
+
+
 const ChatWindow = (props) => {
   const classes = useStyles();
 
@@ -136,9 +139,61 @@ const ChatWindow = (props) => {
     props.state.client.sendMessage(newMessege, (res) => console.log("res is", res))
   }
 
+  const onFocus = () => {
+    props.setStateFromChild({ tabInfocus: true })
+  };
+
+
+  const onBlur = () => {
+    props.setStateFromChild({ tabInfocus: false })
+  };
+
+  React.useEffect(() => {
+    window.addEventListener('focus', onFocus);
+    window.addEventListener('blur', onBlur);
+    // Specify how to clean up after this effect:
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      window.removeEventListener('blur', onBlur);
+    };
+  });
+
+  React.useEffect(() => {
+
+    if (!props.state.hiddenState && props.state.tabInfocus) {
+
+      props.state.chatRooms[props.state.currentChatListID].chatMesseges.forEach(msg => {
+        if (msg.id > props.state.chatRooms[props.state.currentChatListID].lastSeenACK) {
+          var MsgInfo = {
+            chat_id: props.state.currentChatID,
+            user_id: props.state.user_id,
+            message_id: msg.id
+          }
+          props.state.client.markSeen(MsgInfo, (res) => {
+
+            if (res) {
+              props.setStateFromChild((state) => {
+                state.chatRooms[props.state.currentChatListID].lastSeenACK = Math.max(state.chatRooms[props.state.currentChatListID].lastSeenACK, msg.id)
+                return ({
+                  chatRooms: state.chatRooms
+                })
+              })
+            }
+          })
+        }
+      })
+    }
+
+  })
+  
+  React.useEffect(() => {
+    onFocus()
+  }, [])
+
   if (!props.state.currentChatListID) {
     return (<div />)
   }
+  
   return (
 
     <div className={classes.upperRoot} hidden={props.state.hiddenState}>

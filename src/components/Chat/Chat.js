@@ -19,7 +19,8 @@ export default class Chat extends React.Component {
       chatRooms: null,
       globalReload: true,
       user: props.user,
-      token: props.token
+      token: props.token,
+      tabInfocus: false,
     }
 
     this.onMessageReceived = this.onMessageReceived.bind(this)
@@ -31,13 +32,22 @@ export default class Chat extends React.Component {
   }
 
   onMessageReceived(msg) {
-    var newChatRooms = this.state.chatRooms.slice()
-    newChatRooms.forEach(chat => {
-      if (chat.chat_id == msg.chat_id) {
-        chat.chatMesseges.push(msg)
-      }
+    // var newChatRooms = this.state.chatRooms.slice()
+    // newChatRooms.forEach(chat => {
+    //   if (chat.chat_id == msg.chat_id) {
+    //     chat.chatMesseges.push(msg)
+    //   }
+    // })
+    // this.setState({ chatRooms: newChatRooms })
+
+    this.setState((state)=>{
+      state.chatRooms.forEach(chat=>{
+        if (chat.chat_id == msg.chat_id) {
+          chat.chatMesseges.push(msg)
+        }
+      })
+      return({chatRooms:state.chatRooms})
     })
-    this.setState({ chatRooms: newChatRooms })
   }
 
   async componentDidMount() {
