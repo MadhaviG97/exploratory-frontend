@@ -1,29 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import MuiAlert from "@material-ui/lab/Alert";
 
 // @material-ui/icons
-import Icon from '@material-ui/core/Icon';
+import Icon from "@material-ui/core/Icon";
+import TextField from "@material-ui/core/TextField";
+import Button from "@material-ui/core/Button";
+import Snackbar from "@material-ui/core/Snackbar";
 
 // core components
 import GridContainer from "../../components/Grid/GridContainer.js";
 import GridItem from "../../components/Grid/GridItem.js";
-import CustomInput from "../../components/CustomInput/CustomInput.js";
-import Button from "../../components/CustomButtons/Button.js";
 
 import styles from "../../assets/jss/material-kit-react/views/landingPageSections/workStyle.js";
 
+import { addMessage } from "../../_actions/aboutus_actions";
+
 const useStyles = makeStyles(styles);
-const useStyles2 = makeStyles((theme) => ({
+
+function Alert(props) {
+  return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
+
+const useNewStyles = makeStyles((theme) => ({
   button: {
+    margin: theme.spacing(3),
+  },
+  textField: {
     margin: theme.spacing(1),
   },
 }));
 
 export default function WorkSection() {
   const classes = useStyles();
-  const classes2 = useStyles2();
+  const newClasses = useNewStyles();
+  const [open, setOpen] = useState(false);
+  const [contact, setContact] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [response, setResponse] = useState("");
+
+  const handleClose = (event, reason) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+
+  const handleChange = (prop) => (event) => {
+    setContact({ ...contact, [prop]: event.target.value });
+  };
+
+  const submitMessage = () => {
+    const res = addMessage(contact);
+    Promise.resolve(res).then((val) => setResponse(val) );
+    setContact({
+      name: "",
+      email: "",
+      message: "",
+    });
+    setOpen(true);
+  };
+
   return (
     <div className={classes.section}>
       <GridContainer justify="center">
@@ -35,49 +77,73 @@ export default function WorkSection() {
           </h4>
 
           <form>
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
-                  labelText="Your Name"
-                  id="name"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                />
-              </GridItem>
-              <GridItem xs={12} sm={12} md={6}>
-                <CustomInput
-                  labelText="Your Email"
-                  id="email"
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                />
-              </GridItem>
-              <CustomInput
-                labelText="Your Message"
-                id="message"
-                formControlProps={{
-                  fullWidth: true,
-                  className: classes.textArea,
-                }}
-                inputProps={{
-                  multiline: true,
-                  rows: 5,
-                }}
+            <GridContainer justify="center">
+              <TextField
+                className={newClasses.textField}
+                id="name"
+                label="Your Name"
+                required
+                multiline
+                rowsMax={2}
+                onChange={handleChange("name")}
+                fullWidth="true"
+                value={contact.name}
               />
-              <GridContainer justify="center">
-                <GridItem xs={12} sm={12} md={4} className={classes.textCenter}>
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes2.button}
-                    endIcon={<Icon>send</Icon>}
-                  >
-                    Send
-                  </Button>
-                </GridItem>
-              </GridContainer>
+
+              <TextField
+                className={newClasses.textField}
+                id="email"
+                label="Your Email"
+                required
+                multiline
+                rowsMax={2}
+                onChange={handleChange("email")}
+                fullWidth="true"
+                value={contact.email}
+              />
+              <TextField
+                className={newClasses.textField}
+                id="message"
+                label="Your Message"
+                required
+                multiline
+                rowsMax={5}
+                onChange={handleChange("message")}
+                fullWidth="true"
+                value={contact.message}
+              />
+
+              <Button
+                variant="contained"
+                color="primary"
+                className={newClasses.button}
+                endIcon={<Icon>send</Icon>}
+                onClick={submitMessage}
+                justify="center"
+              >
+                Send Message
+              </Button>
+              {response == "1" ? (
+                <Snackbar
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="success">
+                    Message sent successfully...!
+                  </Alert>
+                </Snackbar>
+              ) : (
+                <Snackbar
+                  open={open}
+                  autoHideDuration={6000}
+                  onClose={handleClose}
+                >
+                  <Alert onClose={handleClose} severity="error">
+                    Message send failed...!
+                  </Alert>
+                </Snackbar>
+              )}
             </GridContainer>
           </form>
         </GridItem>

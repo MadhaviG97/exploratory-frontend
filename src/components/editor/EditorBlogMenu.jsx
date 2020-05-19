@@ -13,15 +13,13 @@ import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
 import Paper from '@material-ui/core/Paper';
-import { useHistory } from "react-router-dom";
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+import history from '../../history'
 
-import { createBrowserHistory } from 'history';
+
 const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/fileAvatar.png'
 
 
-const history = createBrowserHistory();
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -42,10 +40,17 @@ const useStyles = makeStyles((theme) => ({
     padding: 10,
   },
 }));
-
+ 
 export default function FolderMenu(props) {
   const classes = useStyles();
-  const history = useHistory();
+  const [name,setName]=React.useState('');
+  
+  const onChange = (event) => {
+    
+        props.onSearchChange(event.target.value);
+    
+  };
+  
   return (
     <div>
         
@@ -56,10 +61,11 @@ export default function FolderMenu(props) {
                 <Paper component="form" className={classes.root}>
                     <InputBase
                         className={classes.input}
-                        placeholder="Search Drive"
+                        placeholder="Search Documents"
                         inputProps={{ 'aria-label': 'search drive' }}
+                        onChange={onChange}
                     />
-                    <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                    <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick={props.handleSearch}>
                         <SearchIcon />
                     </IconButton>
                 </Paper>
@@ -76,9 +82,10 @@ export default function FolderMenu(props) {
                 primary={
                     <React.Fragment>
                         <Button
-                            backgroundColor='#b2beb5'
+                            backgroundcolor='#b2beb5'
                             height={50}
                             component="label"
+                            onClick={()=>history.push('/document/create')}
                             //onClick={props.history.push('/document/create')}
                             >
                             <Typography
@@ -104,8 +111,9 @@ export default function FolderMenu(props) {
             primary={
                 <React.Fragment>
                 <Button
-                    backgroundColor='#b2beb5'
+                    backgroundcolor='#b2beb5'
                     component="label"
+                    onClick={()=>history.push('/document/compare')}
                     
                     >
                     <Typography

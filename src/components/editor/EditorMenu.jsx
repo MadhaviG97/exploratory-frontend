@@ -14,11 +14,11 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Divider from "@material-ui/core/Divider";
-import photo1 from "../../assets/images/user-profile/faces/kendall.jpg"
-import { withStyles } from "@material-ui/core/styles";
-import { createBrowserHistory } from 'history';
 
-const history = createBrowserHistory();
+import { withStyles } from "@material-ui/core/styles";
+import history from '../../history'
+
+
 const styles = theme => ({
     root: {
         width: "100%",
@@ -38,7 +38,17 @@ const styles = theme => ({
 
  
 class EditorMenu extends React.Component {
-  
+    constructor(props) {
+        super(props);
+    
+        this.state = {
+          onlineUsers: [],
+          online:[]
+      };
+        
+        
+    
+    }
     componentDidUpdate(prevProps, prevState) {
         console.log(this.props.nowOnline)
         if (this.state.online !== this.props.nowOnline) {
@@ -77,6 +87,7 @@ class EditorMenu extends React.Component {
                   <ListItem
                       key={2}
                       button
+                      onClick={()=>history.push('/document/editorBlog')}
                       //onClick={this.props.history.push('/document/editorBlog')}
                     >
                       <ListItemText
@@ -87,6 +98,7 @@ class EditorMenu extends React.Component {
                   <ListItem
                       key={3}
                       button
+                      onClick={()=>history.push('/document/create')}
                       //onClick={this.props.history.push('/document/create')}
                     >
                       <ListItemText

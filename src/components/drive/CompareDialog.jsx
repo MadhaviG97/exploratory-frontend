@@ -44,6 +44,7 @@ function extractContent(html) {
   return text;
 
 }
+
 export default function DialogSelect() {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -53,6 +54,9 @@ export default function DialogSelect() {
   const [textt, setTextT] = React.useState('');
   const [blogs, setBlogs] = React.useState([])
   const [files, setFiles] = React.useState([]);
+  let fileTextO=''
+  let fileTextT=''
+  const wait=ms=>new Promise(resolve => setTimeout(resolve, ms));
   const imagex=process.env.PUBLIC_URL + '/images/fileFolder/images.jpg'
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -76,7 +80,7 @@ export default function DialogSelect() {
         'Authorization': `Bearer ${token}`
         }
       }
-    axios.post('/editor/getBlogs')
+    axios.get('/editor/getBlogs',config)
         .then(response => {
             if (response.data.success) {
                 console.log(response.data.blogs)
@@ -96,6 +100,7 @@ export default function DialogSelect() {
           }
     })
   }, [])
+
   const handleChange1 = (event) => {
     setDocO(event.target.value) ;
   };
@@ -113,7 +118,36 @@ export default function DialogSelect() {
     document.getElementById('display').innerHTML=''
     setOpen(true);
   };
+  const extractText=(file,num)=>{
+    const variable = {
+      filename:file.filename
+    }
+    const token = localStorage.token;
+    let config = {
+        headers: {
+        'Authorization': `Bearer ${token}`
+        }
+      }
+    axios.post('/drive/readtxtfile',variable,config)
+        .then(response => {
+            if (response.data.success) {
+                if (num==1){
+                  fileTextO=(response.data.buffer)
+                }
+                else{
+                  console.log(response.data.buffer,'oplopp')
+                  fileTextT=(response.data.buffer)
+                }
 
+                //setBlogs(response.data.blogs)
+            }else {
+              console.log('not')
+              alert('Could not get the file ')
+              
+            }
+        })
+    
+  }
   const handleClose = () => {
     setOpen(false);
   };
@@ -123,13 +157,36 @@ export default function DialogSelect() {
     var other=textt
     handleCompare(one,other)
   };
-  const handleDocCompare=()=>{
-    var one = extractContent(doco.content)
-    var other = extractContent(doct.content)
-    handleCompare(one,other)
+  const handleDocCompare=async()=>{
+    console.log(doct)
+    console.log(doct.contentType)
+    console.log(doct.filename)
+    console.log(doct['filename'])
+    if (doco.filename){
+      extractText(doco,1)
+    }
+    if (doct.filename){
+      extractText(doct,2)
+    }
+    wait(2*1000).then(() => {
+      if (!doco.filename){
+        var one = extractContent(doco.content)
+      }
+      else{
+        var one=fileTextO
+      }
+      if (!doct.filename){
+        var other = extractContent(doct.content)
+      }
+      else{
+        var other=fileTextT
+      }
+      handleCompare(one,other)
+     
+    })
+    
   }
   const handleCompare=(one, other)=>{
-    console.log(doco.content)
     console.log(one)
     console.log(other)
     var one = one
@@ -144,7 +201,7 @@ export default function DialogSelect() {
     // green for additions, red for deletions
     // grey for common parts
     color = part.added ? 'green' :
-    part.removed ? 'red' : 'grey';
+    part.removed ? 'red' : 'black';
     span = document.createElement('span');
     span.style.color = color;
     span.appendChild(document
@@ -239,7 +296,7 @@ export default function DialogSelect() {
                 <ListSubheader disableSticky>Select from Drive</ListSubheader>
                 <Divider variant="fullWidth" />
                 {files.map((file) => (
-                  <MenuItem key={file._id} value={file.metadata.originalname} >
+                  <MenuItem key={file._id} value={file} >
                     {file.metadata.originalname}
                   </MenuItem>
                 ))}

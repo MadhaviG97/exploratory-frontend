@@ -1,27 +1,31 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Divider from "@material-ui/core/Divider";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import TextField from "@material-ui/core/TextField";
-import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
-import IconButton from "@material-ui/core/IconButton";
-import SearchIcon from "@material-ui/icons/Search";
-import axios from "axios";
-import { useHistory } from "react-router-dom";
-import InputBase from "@material-ui/core/InputBase";
-import Paper from "@material-ui/core/Paper";
-import DialogContent from "@material-ui/core/DialogContent";
-import DialogContentText from "@material-ui/core/DialogContentText";
-const fileImage = process.env.PUBLIC_URL + "/images/fileFolder/fileAvatar.png";
-const folderImage =
-  process.env.PUBLIC_URL + "/images/fileFolder/grey-folder-full-icon-png-5.png";
+
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItemAvatar from '@material-ui/core/ListItemAvatar';
+import Avatar from '@material-ui/core/Avatar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import IconButton from '@material-ui/core/IconButton';
+import SearchIcon from '@material-ui/icons/Search';
+import axios from 'axios';
+import InputBase from '@material-ui/core/InputBase';
+import Paper from '@material-ui/core/Paper';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import history from '../../history'
+import Alert from '@material-ui/lab/Alert';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
+const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/fileAvatar.png'
+const folderImage=process.env.PUBLIC_URL + '/images/fileFolder/grey-folder-full-icon-png-5.png'
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -40,20 +44,31 @@ const useStyles = makeStyles((theme) => ({
   iconButton: {
     padding: 10,
   },
+  roota: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 }));
 
 export default function FolderMenu(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [file, setFile] = React.useState("");
-  const history = useHistory();
-  const [name, setName] = React.useState("");
-  let folder = props.folderParams.folderId;
-  console.log(folder);
+  const [file,setFile]=React.useState('');
+  const [foldercreated, setFolderCreated] = React.useState(false);
+  const [fileadded, setFileAdded] = React.useState(false);
+  const [name,setName]=React.useState('');
+  let folder=props.folderParams.folderId
+  console.log(folder)
   const handleClickOpen = () => {
     setOpen(true);
   };
-
+  const onChange = (event) => {
+    
+        props.onSearchChange(event.target.value);
+    
+  };
   const handleClose = () => {
     setOpen(false);
   };
@@ -76,13 +91,14 @@ export default function FolderMenu(props) {
     };
     let config = {
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
-    axios.post("/drive/createfolder", variables, config).then((response) => {
-      if (response) {
-        console.log("yep2");
-        alert("Folder Created!");
+      'Authorization': `Bearer ${token}`
+      }
+    }
+    axios.post('/drive/createfolder', variables,config)
+       .then(response => {
+            if (response) {
+              console.log('yep2')
+              setFolderCreated(true)
 
         setTimeout(() => {
           window.location.reload();
@@ -111,24 +127,23 @@ export default function FolderMenu(props) {
     console.log(token);
     let config = {
       headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+      'Authorization': `Bearer ${token}`
+      }
+    }
+    console.log(data)
+    fetch('/drive/upload', {
+        method: 'POST',
+        body: data,
+        //headers:config
+      }).then(res => res.json())
+        .then(data => {
+          if (data.success) {
+            console.log('yep3')
+              setFileAdded(true)
+              setTimeout(() => {
+                window.location.reload();
+              }, 2000);
 
-    fetch("/drive/upload", {
-      method: "POST",
-      body: data,
-      //headers:config
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.success) {
-          console.log("yep3");
-          alert("File Added!");
-
-          setTimeout(() => {
-            window.location.reload();
-          }, 2000);
         } else {
           alert("Upload failed");
         }
@@ -137,24 +152,59 @@ export default function FolderMenu(props) {
 
   return (
     <div>
-      <List className={classes.root}>
+     <div className={classes.roota}>
+      <Collapse in={foldercreated}>
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setFolderCreated(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          Folder Created!
+        </Alert>
+      </Collapse>
+      <Collapse in={fileadded}>
+        <Alert
+          action={
+            <IconButton
+              aria-label="close"
+              color="inherit"
+              size="small"
+              onClick={() => {
+                setFileAdded(false);
+              }}
+            >
+              <CloseIcon fontSize="inherit" />
+            </IconButton>
+          }
+        >
+          File Added!
+        </Alert>
+      </Collapse>
+    </div>
+    <List className={classes.root}>
         <ListItem alignItems="flex-start">
           <ListItemText
             primary={
-              <Paper component="form" className={classes.root}>
-                <InputBase
-                  className={classes.input}
-                  placeholder="Search Drive"
-                  inputProps={{ "aria-label": "search drive" }}
-                />
-                <IconButton
-                  type="submit"
-                  className={classes.iconButton}
-                  aria-label="search"
-                >
-                  <SearchIcon />
-                </IconButton>
-              </Paper>
+                <Paper component="form" className={classes.root}>
+                    <InputBase
+                        className={classes.input}
+                        placeholder="Search Drive"
+                        inputProps={{ 'aria-label': 'search drive' }}
+                        onChange={onChange}
+                    />
+                    <IconButton type="submit" className={classes.iconButton} aria-label="search" onClick={props.handleSearch}>
+                        <SearchIcon />
+                    </IconButton>
+                </Paper>
             }
           />
         </ListItem>
@@ -245,16 +295,16 @@ export default function FolderMenu(props) {
             primary={
               <React.Fragment>
                 <Button
-                  backgroundColor="#b2beb5"
-                  component="label"
-                  onClick={handleClickOpen}
-                >
-                  <Typography
-                    component="span"
-                    variant="body2"
-                    className={classes.inline}
-                    color="textPrimary"
-                  >
+                    backgroundColor='#b2beb5'
+                    component="label"
+                    onClick={()=>history.push('/document/compare')}
+                    >
+                    <Typography
+                        component="span"
+                        variant="body2"
+                        className={classes.inline}
+                        color="textPrimary"
+                    >   
                     Compare Two Documents
                   </Typography>
                 </Button>

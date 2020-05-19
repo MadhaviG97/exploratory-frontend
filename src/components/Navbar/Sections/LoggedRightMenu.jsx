@@ -253,14 +253,14 @@ function LoggedRightMenu(props) {
             </div>
           }
           buttonText={
-            <img src={profileImage} className={classes.img} alt="profile" />
+            <img src={`data:image/jpeg;base64,${user.userData.profile_picture}`} className={classes.img} alt="profile" />
           }
           buttonProps={{
             className: classes.navLink + " " + classes.imageDropdownButton,
             color: "transparent",
           }}
           dropdownList={[
-            <Link to="/#" style={{ color: "inherit" }}>
+            <Link to="/userProfile" style={{ color: "inherit" }}>
               <LinkTo component="button">My Profile</LinkTo>
             </Link>,
             <Link to="/project/viewproject/1" style={{ color: "inherit" }}>

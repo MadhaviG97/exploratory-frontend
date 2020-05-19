@@ -10,6 +10,7 @@ import signIn from "./views/researcher/sign-in";
 
 import Feed from "./views/researcher/feed";
 import Search from "./views/home/search";
+import Chat from "./views/researcher/chat";
 
 //hoc
 import Auth from "./hoc/auth";
@@ -24,6 +25,7 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import CreatePage from "./views/research/editor/CreatePage";
 import EditPage from "./views/research/editor/EditPage";
 import EditorBlog from "./views/research/editor/EditorBlog";
+import ViewDocument from "./views/research/editor/ViewDocument";
 import FileManager from "./views/research/fileFolder/FileManager";
 import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 
@@ -33,13 +35,12 @@ import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
 import CompareDoc from "./views/research/fileFolder/CompareDoc";
 import ProjectSettings from "./views/research/index/ProjectSettings";
-
 import Project from "./views/research/index/ViewResearchPublic";
-import ScreenShare from "./views/research/screenShare/ScreenShare"
 import Receive from "./views/research/screenShare/Receive"
 import Send from "./views/research/screenShare/Send"
 
 import Demo from "./views/whiteboard/Demo";
+import TaskTracker from "./components/Project/task_tracker";
 
 function App() {
   return (
@@ -76,17 +77,22 @@ function App() {
             <Route
               exact
               path="/document/compare"
-              component={Auth(CompareDoc, null)}
+              component={Auth(CompareDoc, true)}
+            />
+            <Route
+              exact
+              path="/document/view/:postId"
+              component={Auth(ViewDocument, true)}
             />
             <Route
               exact
               path="/document/filemanager"
-              component={Auth(FileManager, null)}
+              component={Auth(FileManager, true)}
             />
             <Route
               exact
               path="/document/filemanager/:folderId"
-              component={Auth(FileManager, null)}
+              component={Auth(FileManager, true)}
             />
             <Route
               exact
@@ -106,32 +112,27 @@ function App() {
             <Route
               exact
               path="/document/projectfolder"
-              component={Auth(ProjectFolder, null)}
+              component={Auth(ProjectFolder, true)}
             />
             <Route
               exact
               path="/document/edit/:postId"
-              component={Auth(EditPage, null)}
+              component={Auth(EditPage, true)}
             />
             <Route
               exact
               path="/document/editorblog"
-              component={Auth(EditorBlog, null)}
-            />
-            <Route
-              exact
-              path="/screenshare/share"
-              component={Auth(ScreenShare, null)}
+              component={Auth(EditorBlog, true)}
             />
             <Route
               exact
               path="/screenshare/receive"
-              component={Auth(Receive, null)}
+              component={Auth(Receive, true)}
             />
             <Route
               exact
               path="/screenshare/send"
-              component={Auth(Send, null)}
+              component={Auth(Send, true)}
             />
 
             <Route exact path="/project" component={Auth(Project, null)} />
@@ -149,6 +150,16 @@ function App() {
             />
 
             <Route exact path="/whiteboard" component={Demo} />
+
+
+            <Route
+              exact
+              path="/chat"
+              component={Auth(Chat, null)}
+            />
+
+            <Route exact path="/tasktracker" component={Auth(TaskTracker, true)} />
+
           </Switch>
         </div>
       </ThemeProvider>

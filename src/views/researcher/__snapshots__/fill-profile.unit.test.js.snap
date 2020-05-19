@@ -1,0 +1,397 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`fillprofile renders correctly 1`] = `
+<main
+  className="MuiContainer-root MuiContainer-maxWidthXs"
+>
+  <div
+    className="makeStyles-paper-1"
+  >
+    <div
+      className="MuiAvatar-root MuiAvatar-circle makeStyles-avatar-2 MuiAvatar-colorDefault"
+    >
+      <svg
+        aria-hidden="true"
+        className="MuiSvgIcon-root"
+        focusable="false"
+        viewBox="0 0 24 24"
+      >
+        <path
+          d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zM9 6c0-1.66 1.34-3 3-3s3 1.34 3 3v2H9V6zm9 14H6V10h12v10zm-6-3c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2z"
+        />
+      </svg>
+    </div>
+    <h1
+      className="MuiTypography-root MuiTypography-h5"
+    >
+      Your Profile Details
+    </h1>
+    <form
+      className="makeStyles-form-3"
+      noValidate={true}
+    >
+      <div
+        className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2"
+      >
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+        >
+          <div>
+            <div>
+              <div
+                style={
+                  Object {
+                    "border": "2px solid #979797",
+                    "borderRadius": "8px",
+                    "borderStyle": "dashed",
+                    "height": 300,
+                    "textAlign": "center",
+                    "width": "100%",
+                  }
+                }
+              >
+                <input
+                  accept="image/jpeg,image/png"
+                  id="avatar_loader-3ef9-80c2-20d2"
+                  name="avatar_loader-3ef9-80c2-20d2"
+                  onChange={[Function]}
+                  style={
+                    Object {
+                      "height": 0.1,
+                      "opacity": 0,
+                      "overflow": "hidden",
+                      "position": "absolute",
+                      "width": 0.1,
+                      "zIndex": -1,
+                    }
+                  }
+                  type="file"
+                />
+                <label
+                  htmlFor="avatar_loader-3ef9-80c2-20d2"
+                  style={
+                    Object {
+                      "color": "black",
+                      "cursor": "pointer",
+                      "display": "inline-block",
+                      "fontFamily": "sans-serif",
+                      "fontSize": "1.25em",
+                      "fontWeight": "700",
+                      "lineHeight": "300px",
+                    }
+                  }
+                >
+                  Choose a file
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+        >
+          <div
+            className="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-space-around"
+          >
+            <div
+              className="MuiFormControl-root MuiTextField-root MuiFormControl-marginNormal MuiFormControl-fullWidth"
+            >
+              <label
+                className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-filled"
+                data-shrink={true}
+                htmlFor="date-picker-inline"
+                id="date-picker-inline-label"
+              >
+                Your Birthday
+              </label>
+              <div
+                className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd"
+                onClick={[Function]}
+              >
+                <input
+                  aria-invalid={false}
+                  autoFocus={false}
+                  className="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
+                  disabled={false}
+                  id="date-picker-inline"
+                  onAnimationStart={[Function]}
+                  onBlur={[Function]}
+                  onChange={[Function]}
+                  onFocus={[Function]}
+                  required={false}
+                  type="text"
+                  value="08/18/2014"
+                />
+                <div
+                  className="MuiInputAdornment-root MuiInputAdornment-positionEnd"
+                >
+                  <button
+                    aria-label="change date"
+                    className="MuiButtonBase-root MuiIconButton-root"
+                    disabled={false}
+                    onBlur={[Function]}
+                    onClick={[Function]}
+                    onDragLeave={[Function]}
+                    onFocus={[Function]}
+                    onKeyDown={[Function]}
+                    onKeyUp={[Function]}
+                    onMouseDown={[Function]}
+                    onMouseLeave={[Function]}
+                    onMouseUp={[Function]}
+                    onTouchEnd={[Function]}
+                    onTouchMove={[Function]}
+                    onTouchStart={[Function]}
+                    tabIndex={0}
+                    type="button"
+                  >
+                    <span
+                      className="MuiIconButton-label"
+                    >
+                      <svg
+                        aria-hidden="true"
+                        className="MuiSvgIcon-root"
+                        focusable="false"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"
+                        />
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                      </svg>
+                    </span>
+                  </button>
+                </div>
+                <fieldset
+                  aria-hidden={true}
+                  className="PrivateNotchedOutline-root-241 MuiOutlinedInput-notchedOutline"
+                >
+                  <legend
+                    className="PrivateNotchedOutline-legendLabelled-243 PrivateNotchedOutline-legendNotched-244"
+                  >
+                    <span>
+                      Your Birthday
+                    </span>
+                  </legend>
+                </fieldset>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+        >
+          <div
+            className="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined Mui-required Mui-required"
+              data-shrink={true}
+              htmlFor="phone_number"
+              id="phone_number-label"
+            >
+              Mobile Number
+              <span
+                className="MuiFormLabel-asterisk MuiInputLabel-asterisk"
+              >
+                 
+                *
+              </span>
+            </label>
+            <div
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedStart MuiOutlinedInput-adornedStart"
+              onClick={[Function]}
+            >
+              <div
+                className="MuiInputAdornment-root MuiInputAdornment-positionStart"
+              >
+                <p
+                  className="MuiTypography-root MuiTypography-body1 MuiTypography-colorTextSecondary"
+                >
+                  +94
+                </p>
+              </div>
+              <input
+                aria-invalid={false}
+                autoComplete="phone number"
+                autoFocus={false}
+                className="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputAdornedStart MuiOutlinedInput-inputAdornedStart"
+                disabled={false}
+                id="phone_number"
+                name="phone_number"
+                onAnimationStart={[Function]}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={true}
+                type="text"
+              />
+              <fieldset
+                aria-hidden={true}
+                className="PrivateNotchedOutline-root-241 MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  className="PrivateNotchedOutline-legendLabelled-243 PrivateNotchedOutline-legendNotched-244"
+                >
+                  <span>
+                    Mobile Number
+                     *
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-6"
+        >
+          <div
+            className="MuiFormControl-root MuiFormControl-fullWidth"
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+              data-shrink={false}
+              htmlFor="outlined-age-native-simple"
+            >
+              Age
+            </label>
+            <div
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+              onClick={[Function]}
+            >
+              <select
+                aria-invalid={false}
+                className="MuiSelect-root MuiSelect-select MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
+                disabled={false}
+                id="outlined-age-native-simple"
+                multiple={false}
+                name="age"
+                onAnimationStart={[Function]}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                value=""
+              >
+                <option
+                  aria-label="None"
+                  value=""
+                />
+                <option
+                  value={10}
+                >
+                  University of Moratuwa
+                </option>
+                <option
+                  value={20}
+                >
+                  University of Colombo
+                </option>
+                <option
+                  value={30}
+                >
+                  University of Kelaniya
+                </option>
+              </select>
+              <svg
+                aria-hidden="true"
+                className="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M7 10l5 5 5-5z"
+                />
+              </svg>
+              <fieldset
+                aria-hidden={true}
+                className="PrivateNotchedOutline-root-241 MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  className="PrivateNotchedOutline-legendLabelled-243"
+                >
+                  <span>
+                    Age
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
+        >
+          <div
+            className="MuiFormControl-root MuiTextField-root MuiFormControl-fullWidth"
+          >
+            <label
+              className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
+              data-shrink={false}
+              htmlFor="outlined-multiline-static"
+              id="outlined-multiline-static-label"
+            >
+              Bio
+            </label>
+            <div
+              className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-multiline MuiOutlinedInput-multiline"
+              onClick={[Function]}
+            >
+              <textarea
+                aria-invalid={false}
+                autoFocus={false}
+                className="MuiInputBase-input MuiOutlinedInput-input MuiInputBase-inputMultiline MuiOutlinedInput-inputMultiline"
+                disabled={false}
+                id="outlined-multiline-static"
+                onAnimationStart={[Function]}
+                onBlur={[Function]}
+                onChange={[Function]}
+                onFocus={[Function]}
+                required={false}
+                rows="4"
+              />
+              <fieldset
+                aria-hidden={true}
+                className="PrivateNotchedOutline-root-241 MuiOutlinedInput-notchedOutline"
+              >
+                <legend
+                  className="PrivateNotchedOutline-legendLabelled-243"
+                >
+                  <span>
+                    Bio
+                  </span>
+                </legend>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+      <button
+        className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-submit-4 MuiButton-containedPrimary MuiButton-fullWidth"
+        disabled={false}
+        onBlur={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
+        type="submit"
+      >
+        <span
+          className="MuiButton-label"
+        >
+          Proceed
+        </span>
+      </button>
+    </form>
+  </div>
+</main>
+`;

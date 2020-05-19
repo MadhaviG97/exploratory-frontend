@@ -14,13 +14,17 @@ const RTC_CONFIGURATION = {
     ]
   };
 var callee;
+var group="10001"
+var calleename="callee"
+var room=group.concat('callee')
 function sendAnswer(answer) {
-    socket.emit('answer', answer);
+    socket.emit('answer', {room: '10001',answer:answer});
   }
   function sendCandidate(candidate) {
-    socket.emit('candidate', candidate);
+    socket.emit('candidate', {room: '10001',candidate:candidate});
   }
   function makePeerConnection() {
+    if (callee) { callee.close() }
     callee = new RTCPeerConnection(RTC_CONFIGURATION);
     callee.onaddstream = (event) => {
         document.getElementById('screen').srcObject = event.stream;
@@ -44,14 +48,9 @@ class Receiver extends React.Component {
 
     constructor(props) {
         super(props);
-        
-      
         this.state = {
             
         };
-        
-
-		
     }
     
       
@@ -71,7 +70,7 @@ class Receiver extends React.Component {
 
     render() {
         
-            socket.emit('join', '1234callee');
+            socket.emit('join', room);
             makePeerConnection();
         
         return (

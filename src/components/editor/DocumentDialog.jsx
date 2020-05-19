@@ -5,14 +5,19 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-import { useHistory, useLocation } from "react-router-dom";
+import history from '../../history'
 import axios from 'axios';
+import { useStyles } from "../../assets/css/editor";
 import Alert from '@material-ui/lab/Alert';
+import Collapse from '@material-ui/core/Collapse';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
 import { useSelector } from "react-redux";
 export default function DocumentDialog(props) {
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [name,setName]=React.useState('');
-  const history = useHistory();
+  const [filecreated,setFileCreated]=React.useState(false);
   const user = useSelector(state => state.user);
   const handleClickOpen = () => {
     setOpen(true);
@@ -44,7 +49,7 @@ export default function DocumentDialog(props) {
        .then(response => {
             if (response) {
               console.log('yep2')
-              alert('Document Created!')
+              setFileCreated(true)
 
                 setTimeout(() => {
                     history.push('/document/editorblog')
@@ -55,7 +60,26 @@ export default function DocumentDialog(props) {
 }
   return (
     <div>
-       
+       <div className={classes.roota}>
+          <Collapse in={filecreated}>
+            <Alert
+              action={
+                <IconButton
+                  aria-label="close"
+                  color="inherit"
+                  size="small"
+                  onClick={() => {
+                    setFileCreated(false);
+                  }}
+                >
+                  <CloseIcon fontSize="inherit" />
+                </IconButton>
+              }
+            >
+              Document Created!
+            </Alert>
+          </Collapse>
+        </div>
         <Button
           size="large"
           htmlType="submit"

@@ -4,6 +4,12 @@ export const useStyles = makeStyles((theme) => ({
   root: {
     maxWidth: 875,
   },
+  roota: {
+    width: '100%',
+    '& > * + *': {
+      marginTop: theme.spacing(2),
+    },
+  },
 
     container: {
         display: 'flex',
