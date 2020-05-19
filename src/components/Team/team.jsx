@@ -55,11 +55,9 @@ export default function Team(props) {
                   <Member
                     username={member.first_name
                       .concat(" ")
-                      .concat(member.first_name)}
-                    university={member.university}
-                    image={"/images/profile-pictures/".concat(
-                      member.profile_picture
-                    )}
+                      .concat(member.last_name)}
+                    university={member.institution_name}
+                    image={member.profile_picture}
                   />
                 </Grid>
               );

@@ -5,7 +5,7 @@ import Grid from "@material-ui/core/Grid";
 export default function Loader() {
   return (
     <div>
-      <Grid justifyContent="center" container>
+      <Grid container>
         <Grid item>
           <Circle color="#be97e8" size={200} />
         </Grid>

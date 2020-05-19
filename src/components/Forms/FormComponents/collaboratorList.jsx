@@ -25,7 +25,11 @@ const useStyles = makeStyles((theme) => ({
 export default function InstitutionList(props) {
   const [state, setState] = React.useState({
     input: "",
-    currentuser: props.currentuser,
+    currentuser: {
+      id: "1",
+      name: "madhavi gayathri",
+      university: "university of moratuwa",
+    },
     suggestions: [
       {
         id: "1",

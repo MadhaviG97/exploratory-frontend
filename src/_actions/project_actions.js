@@ -1,5 +1,13 @@
 import axios from "axios";
-import { SEARCH, RENDER, COMMENTS, REPLIES } from "./types";
+import {
+  SEARCH,
+  RENDER,
+  COMMENTS,
+  REPLIES,
+  RELATEDIMAGES,
+  FINALPAPER,
+  PUBLICFILES,
+} from "./types";
 
 export function search(dataToSubmit) {
   const request = axios
@@ -29,6 +37,27 @@ export function getComments(request) {
 export function getReplies(request) {
   return {
     type: REPLIES,
+    payload: request,
+  };
+}
+
+export function getRelatedImages(request) {
+  return {
+    type: RELATEDIMAGES,
+    payload: request,
+  };
+}
+
+export function getFinalPaper(request) {
+  return {
+    type: FINALPAPER,
+    payload: request,
+  };
+}
+
+export function getPublicFiles(request) {
+  return {
+    type: PUBLICFILES,
     payload: request,
   };
 }
