@@ -218,6 +218,7 @@ const ChatWindow = (props) => {
                         <Message
                           key={currentMsg.id}
                           msg={currentMsg}
+                          client={props.state.client}
                         />
                         : null
                     ))

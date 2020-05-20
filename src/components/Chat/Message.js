@@ -7,46 +7,122 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListSubheader from '@material-ui/core/ListSubheader';
 import Avatar from '@material-ui/core/Avatar';
 
-import  {Divider, ListItemSecondaryAction} from '@material-ui/core'
+import { Divider, ListItemSecondaryAction, Typography } from '@material-ui/core'
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import { Button } from '@material-ui/core'
 
 import CheckIcon from '@material-ui/icons/Check';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import TimerIcon from '@material-ui/icons/Timer';
+// import MoreIcon from '@material-ui/icons/MoreVert';
+import MoreIcon from '@material-ui/icons/More';
+import FeedbackIcon from '@material-ui/icons/Feedback';
+import Chip from "@material-ui/core/Chip";
+import Tooltip from '@material-ui/core/Tooltip';
+import { withStyles } from '@material-ui/core/styles';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Paper from '@material-ui/core/Paper';
 
-const Message =({msg}) => {
+import {getDateTime} from './Utility/DTUtility';
 
-    const getDateTime=(timestamp)=>{
-        var a = new Date(timestamp);
-        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        var year = a.getFullYear();
-        var month = months[a.getMonth()];
-        var date = a.getDate();
-        var hour = a.getHours();
-        var min = a.getMinutes();
-        var sec = a.getSeconds();
-        var time = date + ' ' + month + ' ' + year + ' - ' + hour + ':' + min
-        return time;
-        // console.log(date)
+
+const HtmlTooltip = withStyles((theme) => ({
+    tooltip: {
+        backgroundColor: '#f5f5f9',
+        color: 'rgba(0, 0, 0, 0.87)',
+        maxWidth: 220,
+        fontSize: theme.typography.pxToRem(12),
+        border: '1px solid #dadde9',
+    },
+}))(Tooltip);
+
+const Message = ({ msg, client }) => {
+
+    const [open, setOpen] = React.useState(false);
+    const [seenParticipants, setSeenParticipants] = React.useState([])
+
+    const handleClickDialogOpen = () => {
+        setOpen(true);
+        loadSeenParticipants()
+    };
+
+    const handleDialogClose = () => {
+        setOpen(false);
+    };
+
+    const loadSeenParticipants = () => {
+        client.getSeen(msg.chat_id, msg.id, (res) => {
+            if (res.length > 0) {
+                setSeenParticipants(res)
+            }
+        })
     }
-    return(
+
+    return (
         <React.Fragment>
             <ListItem alignItems="flex-start" button>
                 <ListItemAvatar>
-                <Avatar alt={msg.first_name} src={msg.profile_picture} />
+                    <Avatar alt={msg.first_name} src={msg.profile_picture} />
                 </ListItemAvatar>
-                <ListItemText primary={msg.message} 
+                <ListItemText primary={msg.message}
                     secondary={getDateTime(msg.message_time)}
                 />
 
                 <ListItemSecondaryAction>
                     <IconButton edge="end">
-                        {/* <CheckIcon /> */}
-                        {/* <DoneAllIcon/> */}
-                        {/* <HourglassEmptyIcon/> */}
-                        <TimerIcon/>
+                        <ExpandMoreIcon aria-haspopup="true" onClick={handleClickDialogOpen} />
                     </IconButton>
                 </ListItemSecondaryAction>
+
+                <Dialog open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Message Status</DialogTitle>
+                    <DialogContent>
+
+                        <Typography variant="subtitle2">Seen</Typography>
+
+                        <TableContainer component={Paper}>
+                            <Table aria-label="simple table">
+
+                                <TableBody>
+                                    {seenParticipants.map((option) => (
+                                        <TableRow key={option.user_id}>
+                                            <TableCell component="th" scope="row">
+                                                <Chip
+                                                    label={option.first_name.concat(" ").concat(option.last_name).concat(" - ").concat(option.institution)}
+                                                    color="primary"
+                                                    avatar={ <Avatar  alt="propic"  src={option.profile_picture}/> }
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={getDateTime(option.seen_time)}
+                                                    color="secondary"
+                                                    avatar={<AccessTimeIcon/>}
+                                                />
+                                            </TableCell>
+
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
+                    </DialogContent>
+
+                </Dialog>
 
             </ListItem>
             <Divider variant="inset" component="li" />
