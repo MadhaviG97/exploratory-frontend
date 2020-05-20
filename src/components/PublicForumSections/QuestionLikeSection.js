@@ -7,6 +7,8 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import EditIcon from "@material-ui/icons/Edit";
+
+import DeleteQuestion from "./QuestionDeleteDialog"
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -56,9 +58,7 @@ export default function QuestionLike(props) {
               color="primary"
               aria-label="outlined primary button group"
             >
-              <IconButton aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
+              <DeleteQuestion question_id={props.question_id} />
               <IconButton aria-label="edit">
                 <EditIcon />
               </IconButton>
