@@ -148,11 +148,7 @@ function CommentHeads(props) {
             id="panel4bh-header"
           >
             <Box>
-              <Avatar
-                src={"/images/profile-pictures/".concat(
-                  props.chat.profile_picture
-                )}
-              />
+              <Avatar src={props.chat.profile_picture} />
             </Box>
             <Box flexGrow="1">
               <Typography variant="button" className={classes.heading}>

@@ -1,4 +1,12 @@
-import { SEARCH, RENDER, COMMENTS, REPLIES } from "../_actions/types";
+import {
+  SEARCH,
+  RENDER,
+  COMMENTS,
+  REPLIES,
+  FINALPAPER,
+  RELATEDIMAGES,
+  PUBLICFILES,
+} from "../_actions/types";
 //import { connect } from 'react-redux'
 
 export default function (state = {}, action) {
@@ -15,7 +23,7 @@ export default function (state = {}, action) {
         project: data.project_details.project,
         tags: data.project_details.tags,
         collaborators: data.project_details.collaborators,
-        images: data.project_details.images,
+        // images: data.project_details.images,
         admins: data.project_details.admins,
         comments: data.project_details.comments,
       };
@@ -30,6 +38,24 @@ export default function (state = {}, action) {
       return {
         ...state,
         replies: data,
+      };
+
+    case RELATEDIMAGES:
+      return {
+        ...state,
+        related_images: data.files,
+      };
+
+    case FINALPAPER:
+      return {
+        ...state,
+        final_paper: data.files,
+      };
+
+    case PUBLICFILES:
+      return {
+        ...state,
+        public_files: data.files,
       };
     default:
       return state;
