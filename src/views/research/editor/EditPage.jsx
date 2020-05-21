@@ -7,10 +7,10 @@ import Footer from "../../../components/Footer/Footer";
 import NavBar from "../../../components/Navbar/Navbar";
 import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/editor";
-
-
+import NavComponent from '../../../components/AppNavigation/NavigationComponent';
+import Divider from '@material-ui/core/Divider';
+import Grid from "@material-ui/core/Grid";
 import '../../../assets/css/editor.css';
-
 
 //import '../../../assets/css/editor.css';
 import YJSQuill from '../../../components/editor/YjsQuill';
@@ -21,19 +21,31 @@ function Edit2Page(props) {
     console.log(user)
     
         return (
-        <div className={classNames(classes.main)}>
+        <div className={classNames(classes.main2)}>
             <NavBar/>
-            
-            
-                <Box p={1}  style={{  background: '#014f82'}}>
-                    <div className={classes.name} >
-                        <h1 align='center' className={classes.title}>Editor</h1>
-                    </div>
-                </Box>
                 
-                <div className={classNames(classes.main, classes.mainRaised3)} > 
-                    <YJSQuill user={user} variable={props.match.params.postId}/>
-                    <Box p={4}  /> 
+            
+                
+                
+                <div className={classNames(classes.main2, classes.mainRaised3)} > 
+                    <Grid container spacing={5} direction="row" >
+                        <Grid item xs={3} align='right'>
+                            <Box >
+                                <NavComponent projectId={props.match.params.projectId}/>
+                            </Box>
+                        </Grid>
+                        
+                        <Grid item xs={8} >
+                            <Box boxShadow={2} flexDirection="row">
+                                <Box p={1} style={{  background: '#FFFFFF'}}>
+                                    <h1 align='center' className={classes.topic4}>Editor</h1>
+                                </Box>
+                            </Box>
+                        </Grid>
+                    </Grid>
+                    <Box p={1.5} />
+                    <YJSQuill user={user} variable={props.match.params.postId} group={props.match.params.projectId}/>
+                    <Box p={3}  /> 
                 </div>
             
             <Footer/>

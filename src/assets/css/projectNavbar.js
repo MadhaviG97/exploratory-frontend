@@ -15,6 +15,10 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#cfe8fc",
     height: "100vh",
   },
+  icon: {
+    marginLeft: "230px",
+    marginRight: "230px"
+  },
   container: {
     display: "flex",
     flexDirection: "coloumn",

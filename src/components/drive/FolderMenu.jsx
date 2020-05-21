@@ -60,6 +60,7 @@ export default function FolderMenu(props) {
   const [fileadded, setFileAdded] = React.useState(false);
   const [name,setName]=React.useState('');
   let folder=props.folderParams.folderId
+  const group=props.group
   console.log(folder)
   const handleClickOpen = () => {
     setOpen(true);
@@ -85,7 +86,7 @@ export default function FolderMenu(props) {
       folder = "root";
     }
     const variables = {
-      group: "GeeFour",
+      group: group,
       name: name,
       folder: folder,
     };
@@ -119,7 +120,7 @@ export default function FolderMenu(props) {
     event.preventDefault();
     let data = new FormData();
     data.append("file", f);
-    data.append("group", "GeeFour");
+    data.append("group", group);
     data.append("sensitivity", "private");
     data.append("folder", folder);
     console.log(event.target.files[0]);
@@ -211,7 +212,7 @@ export default function FolderMenu(props) {
         <Divider variant="fullWidth" />
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
-            <Avatar variant="square" alt="Cindy Baker" src={fileImage} />
+            <Avatar variant="square" alt="fileImage" src={fileImage} />
           </ListItemAvatar>
           <ListItemText
             primary={
@@ -297,7 +298,7 @@ export default function FolderMenu(props) {
                 <Button
                     backgroundColor='#b2beb5'
                     component="label"
-                    onClick={()=>history.push('/document/compare')}
+                    onClick={()=>history.push(`/document/${group}/compare`)}
                     >
                     <Typography
                         component="span"

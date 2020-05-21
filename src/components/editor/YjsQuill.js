@@ -14,6 +14,8 @@ import Alert from '@material-ui/lab/Alert';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import Box from '@material-ui/core/Box';
+import NavComponent from '../../components/AppNavigation/NavigationComponent';
 Quill.register('modules/cursors', QuillCursors)
 const styles = theme => ({
   roota: {
@@ -35,7 +37,7 @@ class YJSQuill extends React.Component {
     this.editor= null;
     this.quillRef=null;
     this.ydoc = new Y.Doc()
-
+    this.group=props.group
     this.provider = new WebsocketProvider('ws://localhost:1234',this.props.variable , this.ydoc)
     this.type = this.ydoc.getText('quill')
     this.st=(this.provider.awareness.getStates())
@@ -48,7 +50,7 @@ handleSave=()=> {
       postId: this.props.variable,
       content: this.editor.root.innerHTML,
       
-      //writer: "GeeFour",
+      writer: this.group,
       //name: name
   }
   console.log(variable)
@@ -130,7 +132,7 @@ componentDidMount() {
           userOnly: true
         }
       },
-      placeholder: 'Start collaborating...',
+      placeholder: '',
       theme: 'snow' // or 'bubble'
     })
     
@@ -191,10 +193,11 @@ render() {
                 </Alert>
             </Collapse>
         </div>
-        <Grid container spacing={5}>
+        <Grid container spacing={5} >
             <Grid item xs={3}>
                 <Paper >
                 <EditorMenu 
+                  group={this.group}
                   savedVersion={this.savedVersion} 
                   handleSave={this.handleSave} 
                   nowOnline={this.state.online}
@@ -203,11 +206,14 @@ render() {
             </Grid>
             <Divider orientation="vertical" variant="fullWidth" />
             
-            <Grid item xs={8} id='parent'>
-              <div id="QuillEditor-container">
-              {/* <!-- Create the editor container --> */}
-
-              </div>
+            <Grid item xs={8} >
+              
+              <Paper id='parent'>
+                <div id="QuillEditor-container" style={{backgroundColor: '#FFFFFF'}}>
+                {/* <!-- Create the editor container --> */}
+                </div>
+              </Paper>
+              
                 
             </Grid>
             

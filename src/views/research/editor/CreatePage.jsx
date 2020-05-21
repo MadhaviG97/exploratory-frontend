@@ -13,11 +13,7 @@ import QuillEditor from '../../../components/editor/QuillEditor';
 //import { useSelector } from "react-redux";
 import DocumentrDialog from '../../../components/editor/DocumentDialog';
 
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-
-import MenuIcon from "@material-ui/icons/Menu";
-import IconButton from '@material-ui/core/IconButton';
+import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 
 import '../../../assets/css/editor.css';
 function CreatePage(props) {
@@ -27,13 +23,8 @@ function CreatePage(props) {
     const [content, setContent] = useState("")
     const [files, setFiles] = useState([])
     const [anchorEl, setAnchorEl] =useState(null);
-    const handleClick =  event  => {
-        setAnchorEl(event.currentTarget);
-        
-    };
-    const handleClose = () => {
-        setAnchorEl(null);
-    };
+    const group=props.match.params.projectId
+    
     const onEditorChange = (value) => {
         setContent(value)
         console.log(content)
@@ -46,19 +37,8 @@ function CreatePage(props) {
     return (
         <div>
             <NavBar/>
-            <Menu
-                    id="simple-menu"
-                    
-                    anchorEl={anchorEl}
-                    getContentAnchorEl={null}
-                    anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-                    transformOrigin={{ vertical: "top", horizontal: "center" }}
-                    open={Boolean(anchorEl)}
-                    onClose={handleClose}
-                    MenuListProps={{ onMouseLeave: handleClose }}
-                >   
-                    <MenuItem style={{fontSize: 14 }}  onClick={()=>history.push('/document/editorblog')}>All Documents</MenuItem>
-                </Menu>
+            
+            
             <div className={classNames(classes.main, classes.mainRaised)} >
                 <Box p={1.7}  style={{  background: '#014f82'}}>
                     <div className={classes.name} >
@@ -69,15 +49,7 @@ function CreatePage(props) {
                     {/*marginTop={7}*/}
                     
                         <Box p={1} style={{ display: "flex" }} flexDirection="row" > 
-                            <IconButton
-                                edge="start"
-                                className={classes.menuButton}
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={handleClick}
-                                >
-                                <MenuIcon />
-                            </IconButton>  
+                             <NavComponent projectId={group}/>
                         </Box>
                         <QuillEditor
                             placeholder={""}
@@ -89,7 +61,7 @@ function CreatePage(props) {
                         <div style={{ textAlign: 'center', margin: '2rem', }}>
                             <DocumentrDialog
                                 content= {content}
-                                writer= "GeeFour"
+                                group= {group}
                             />
                         </div>
                         

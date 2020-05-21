@@ -9,7 +9,6 @@ import NavBar from "../../../components/Navbar/Navbar";
 import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/editor";
 
-import UserSection from "../../../components/PublicForumSections/FrequentUsersSection";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -30,7 +29,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-
+import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Typography } from '@material-ui/core';
@@ -57,6 +56,7 @@ function FileManager(props) {
     const [filedeleted,setFileDeleted]=useState(false);
     const [fileshared,setFileShared]=useState(false);
     const [filenotshared,setFileNotShared]=useState(false);
+    const group=props.match.params.projectId
     const handleClick = param => event  => {
         setAnchorEl(event.currentTarget);
         setFileDetail(param)
@@ -81,7 +81,7 @@ function FileManager(props) {
         const variables = {
             folder:folder,
             name: name,
-            group:"GeeFour"
+            group:group
         }
         let config = {
           headers: {
@@ -153,7 +153,7 @@ function FileManager(props) {
           }
         const variable = { 
             filename:fileDetail.filename,
-            group: "GeeFour",
+            group: group,
             folder:folder
         }
         console.log(variable)
@@ -239,7 +239,7 @@ function FileManager(props) {
           }
         const variable = { 
             folder:folder,
-            group: "GeeFour",
+            group: group,
             //name: name
         }
         console.log(variable)
@@ -347,7 +347,7 @@ function FileManager(props) {
                     </Alert>
                 </Collapse>
             </div>
-            <Box p={1.4}></Box>
+            <Box p={1.3}></Box>
                 <Menu
                     id="simple-menu"
                     
@@ -374,23 +374,30 @@ function FileManager(props) {
                     
                     <Grid container spacing={5} >
                         <Grid item xs={3} >
+                            <Box p={2}/>
                             <Paper >
-                            <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params}/>
+                            <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params} group={group}/>
                             </Paper>
                         </Grid>
                         <Divider orientation="vertical" variant="fullWidth" />
                         
                         <Grid item xs={8}>
+                            
+                            <Box  style={{ display: "flex" }} flexDirection="row" >
+                                    <NavComponent projectId={group}/>
+                            </Box>
+                            <Divider  variant="fullWidth" />
+                            <Box p={1} />
                             <Box boxShadow={2} >
                                 <Box p={1}  style={{  background: '#FFFFFF'}}>
                                         <h1 align='center' className={classes.topic3}>Drive</h1>
                                 </Box>
                             </Box>
-                            <Box p={2}></Box>
+                            <Box p={1}/>
                             <Grid container spacing={4} direction="row"  >
                                 {folders.map((folder,index) => (
                                     <Grid item lg={3} md={4} xs={8}>
-                                        <CardActionArea component="a" href={`/document/filemanager/${folder._id}`}>
+                                        <CardActionArea component="a" href={`/document/${group}/filemanager/${folder._id}`}>
                                             <Card >
                                                 
                                                 <CardContent>
@@ -402,7 +409,7 @@ function FileManager(props) {
                                                 </CardContent>
                                                 <Divider variant="middle" />
                                                 <CardActions  justify="center" >
-                                                    <IconButton aria-label="get files"  href={`/document/filemanager/${folder._id}`}>
+                                                    <IconButton aria-label="get files"  href={`/document/${group}/filemanager/${folder._id}`}>
                                                         <ArrowForwardIosIcon/>
                                                     </IconButton>
                                                     <Typography

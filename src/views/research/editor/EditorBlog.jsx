@@ -29,7 +29,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-
+import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 export default function CreatePage(props) {
  
     const [blogs, setBlogs] = useState([])
@@ -38,6 +38,7 @@ export default function CreatePage(props) {
     const [open,setOpen]=useState(false);
     const [id,setId]=useState('');
     const [documentdeleted,setDocumentDeleted]=useState(false);
+    const group=props.match.params.projectId
     const handleClickOpen = (id) => {
         setId(id)
         setOpen(true);
@@ -48,12 +49,13 @@ export default function CreatePage(props) {
     };
     useEffect(() => {
         const token = localStorage.token;
+        const variable={group:group}
         let config = {
           headers: {
           'Authorization': `Bearer ${token}`
           }
         }
-        axios.get('/editor/getBlogs',config)
+        axios.post('/editor/getBlogs',variable,config)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data.blogs)
@@ -73,7 +75,7 @@ export default function CreatePage(props) {
         const token = localStorage.token;
         
         const variables = {
-            //writer: "GeeFour",
+            group: group,
             name: name
         }
         let config = {
@@ -106,7 +108,7 @@ export default function CreatePage(props) {
             }
           }
         
-        axios.post('/editor/deletepost', variable,config)
+        axios.post('/editor/softdeletepost', variable,config)
             .then(response => {
                 if (response.data.success) {
                     setDocumentDeleted(true)
@@ -166,12 +168,20 @@ export default function CreatePage(props) {
                     <Grid container spacing={5} >
                         <Grid item xs={3}>
                             <Paper >
-                            <EditorBlogMenu handleSearch={handleSearch} onSearchChange={onSearchChange}/>
+                            <EditorBlogMenu handleSearch={handleSearch} onSearchChange={onSearchChange} group={group}/>
                             </Paper>
                         </Grid>
                         <Divider orientation="vertical" variant="fullWidth" />
                         
                         <Grid item xs={8}>
+                            <Box  style={{ display: "flex" }} flexDirection="row" > 
+                                <Box alignSelf="flex-end">
+                                    <NavComponent projectId={group}/>
+                                </Box>
+                                
+                            </Box>
+                            <Divider  variant="fullWidth" />
+                            <Box p={1} />
                             <Grid container spacing={4} direction="row" >
                                 {blogs.map((blog,index) => (
                                     <Grid item lg={4} md={6} xs={12}>
@@ -200,12 +210,12 @@ export default function CreatePage(props) {
                                             <Divider variant="middle" />
                                             <CardActions disableSpacing>
                                             <Tooltip title="Edit Document">
-                                                <IconButton aria-label="delete document" href={`/document/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                <IconButton aria-label="delete document" href={`/document/${group}/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
                                                     <EditIcon/>
                                                 </IconButton>
                                             </Tooltip>
                                             <Tooltip title="Turn to PDF format">
-                                                    <IconButton aria-label="settings" href={`/document/view/${blog._id}`}>
+                                                    <IconButton aria-label="settings" href={`/document/${group}/view/${blog._id}`}>
                                                         <PictureAsPdfIcon />
                                                     </IconButton>
                                                 </Tooltip>
@@ -227,7 +237,7 @@ export default function CreatePage(props) {
                
             </div>
             
-            
+            <Box p={5}></Box>
         </div>
     );
 

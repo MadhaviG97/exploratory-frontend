@@ -15,13 +15,13 @@ import ViewPage from '../../../components/editor/DocumentView';
 function ViewDocument(props) {
     const classes = useStyles();
     const user = useSelector(state => state.user);
-    console.log(user)
     
         return (
         <div className={classNames(classes.main2)}>
             <NavBar/>
+                
                 <div  > 
-                    <ViewPage user={user} postId={props.match.params.postId}/>
+                    <ViewPage user={user} postId={props.match.params.postId} group={props.match.params.projectId}/>
                     <Box p={4}  /> 
                 </div>
             

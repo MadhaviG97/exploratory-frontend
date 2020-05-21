@@ -14,15 +14,11 @@ export default function CompareDoc(props) {
     return(
         <div>
             <NavBar/>
-            <Box p={1}  style={{  background: '#014f82'}}>
-                <div className={classes.name} >
-                    <h1 align='center' className={classes.title}>Compare Documents</h1>
-                </div>
-            </Box>
+            
                 
             <div className={classNames(classes.main, classes.mainRaised2)} > 
             
-                <CompareDialog/>
+                <CompareDialog group={props.match.params.projectId}/>
             </div>
             
             <Footer/>
