@@ -90,7 +90,12 @@ export default function Post(props) {
           <Divider />
         </CardContent>
         <CardActions disableSpacing>
-          <QuestionLike Q_id={props.postDetails.researcher_id} question_id={props.postDetails.question_id}/>
+          <QuestionLike
+            Q_id={props.postDetails.researcher_id}
+            question_id={props.postDetails.question_id}
+            title={props.postDetails.title}
+            description={props.postDetails.description}
+          />
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,

@@ -92,3 +92,33 @@ export const deleteAnswer = async (answerData) => {
     payload: res,
   };
 };
+
+export const editQuestion = async (questionData) => {
+  const response = await fetch(`/forum/editquestion`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ...questionData }),
+  });
+  const res = await response.json();
+  return {
+    type: EDIT_QUESTION,
+    payload: res,
+  };
+};
+
+export const editAnswer = async (answerData) => {
+  const response = await fetch(`/forum/editanswer`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ...answerData }),
+  });
+  const res = await response.json();
+  return {
+    type: EDIT_ANSWER,
+    payload: res,
+  };
+};

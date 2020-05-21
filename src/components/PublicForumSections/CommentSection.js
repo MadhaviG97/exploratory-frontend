@@ -18,9 +18,11 @@ import EditIcon from "@material-ui/icons/Edit";
 import AnswerLikeSection from "./AnswerLikeSection";
 import AddComment from "./AddComment";
 import DeleteAnswer from "./AnswerDeleteDialog";
+import EditAnswer from "./EditAnswerDialog";
 
 import { useDispatch, useSelector } from "react-redux";
 import { getAnswers } from "../../_actions/forum_actions";
+import EdtAnswer from "./EditAnswerDialog";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -90,9 +92,7 @@ export default function CommentSection(props) {
                       aria-label="outlined primary button group"
                     >
                       <DeleteAnswer answer_id={answer.answer_id} />
-                      <IconButton aria-label="edit">
-                        <EditIcon />
-                      </IconButton>
+                      <EditAnswer answer={answer.answer} answer_id={answer.answer_id} />
                     </ButtonGroup>
                   ) : (
                     <div></div>
