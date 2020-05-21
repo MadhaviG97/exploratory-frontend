@@ -38,11 +38,7 @@ export default function ProjectNavbar(props) {
               </ListItem>
               <ListItem className={classes.heading}>
                 <ListItemIcon>
-                  <Avatar
-                    src={"/images/profile-pictures/".concat(
-                      props.authour_image
-                    )}
-                  ></Avatar>
+                  <Avatar src={props.authour_image}></Avatar>
                   {/* <AccountCircleIcon color="primary" /> */}
                 </ListItemIcon>
                 <ListItemText

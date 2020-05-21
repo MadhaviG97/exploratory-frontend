@@ -5,22 +5,16 @@ import PDFViewer from "./PDFViewer";
 import ImageViewer from "./ImageViewer";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-
 import ItemHeader from "./ItemHeader";
-export default function Overview(props) {
+
+export default function Overview() {
   const classes = useStyles();
   let history = useHistory();
   let location = useLocation();
   var project = useSelector((state) => state.project);
-
   var user = useSelector((state) => state.user);
+  let user_id = user.userData !== undefined ? user.userData._id : 0;
 
-  let user_id;
-  if (user.userData !== undefined) {
-    user_id = user.userData._id;
-  } else {
-    user_id = 0;
-  }
   //props.project.abstract
   const text =
     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut ";
@@ -100,13 +94,13 @@ export default function Overview(props) {
       <Box className={classes.container} display="flex" flexDirection="column">
         <Box className={classes.box}>
           <Paper className={classes.abstract} elevation={3}>
-            <Abstract text={text} />
+            <Abstract text={project.project.abstract} />
           </Paper>
         </Box>
 
         <Box className={classes.box}>
           <Paper className={classes.abstract}>
-            <ImageView images={props.images} />
+            <ImageView images={project.images} />
           </Paper>
         </Box>
 

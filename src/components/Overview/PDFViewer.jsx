@@ -1,5 +1,6 @@
 import React from "react";
 import PDFViewer from "pdf-viewer-reactjs";
+import "../../assets/css/canvas.css";
 
 export default function PDFViewerComponent(props) {
   return (
@@ -9,22 +10,15 @@ export default function PDFViewerComponent(props) {
       }}
       scale={1.25}
       scaleStep={0.5}
-      canvasCss={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
       watermark={{
         text: "Exploratory", //Watermark text
         diagonal: true, // Watermark placement true for Diagonal, false for Horizontal
-        opacity: 0.1, // Watermark opacity ranges from 0 to 1
-        size: 100,
+        opacity: "0.1", // Watermark opacity ranges from 0 to 1
+        size: "100",
         color: "#000",
       }}
       navigation={{
-        css: {
-          navbarWrapper: {},
-        },
+        css: "canvas",
       }}
       hideNavbar={!props.view}
     />

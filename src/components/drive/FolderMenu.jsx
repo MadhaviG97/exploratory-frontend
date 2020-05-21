@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -24,16 +25,17 @@ import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/fileAvatar.png'
 const folderImage=process.env.PUBLIC_URL + '/images/fileFolder/grey-folder-full-icon-png-5.png'
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '100%',
-    maxWidth: '36ch',
+    width: "100%",
+    maxWidth: "36ch",
     backgroundColor: theme.palette.background.paper,
   },
   inline: {
-    display: 'inline',
-    fontSize:18,
-    color:'inherit'
+    display: "inline",
+    fontSize: 18,
+    color: "inherit",
   },
   input: {
     marginLeft: theme.spacing(1),
@@ -74,21 +76,19 @@ export default function FolderMenu(props) {
     setName(event.target.value);
   };
   const handleSubmit = (event) => {
-    console.log('yep')
+    console.log("yep");
     event.preventDefault();
     const token = localStorage.token;
-    if (folder){
-      console.log('folderinside')
-      
-    }
-    else{
-      folder="root"
+    if (folder) {
+      console.log("folderinside");
+    } else {
+      folder = "root";
     }
     const variables = {
-        group: "GeeFour",
-        name: name,
-        folder:folder
-    }
+      group: "GeeFour",
+      name: name,
+      folder: folder,
+    };
     let config = {
       headers: {
       'Authorization': `Bearer ${token}`
@@ -100,33 +100,31 @@ export default function FolderMenu(props) {
               console.log('yep2')
               setFolderCreated(true)
 
-                setTimeout(() => {
-                  window.location.reload();
-                }, 2000);
-            }
-        })
-}
+        setTimeout(() => {
+          window.location.reload();
+        }, 2000);
+      }
+    });
+  };
 
-  const fileChanged=(event) =>{
-    
+  const fileChanged = (event) => {
     const f = event.target.files[0];
-    if (folder){
-      console.log('folderinside')
-    }
-    else{
-      folder="root"
+    console.log(f);
+    if (folder) {
+      console.log("folderinside");
+    } else {
+      folder = "root";
     }
     setFile(f);
     event.preventDefault();
     let data = new FormData();
-    data.append('file', f);
-    data.append('group', "GeeFour");
-    data.append('sensitivity', "private");
-    data.append('folder', folder);
-    console.log(event.target.files[0])
+    data.append("file", f);
+    data.append("group", "GeeFour");
+    data.append("sensitivity", "private");
+    data.append("folder", folder);
+    console.log(event.target.files[0]);
     const token = localStorage.token;
-    
-    
+    console.log(token);
     let config = {
       headers: {
       'Authorization': `Bearer ${token}`
@@ -146,13 +144,11 @@ export default function FolderMenu(props) {
                 window.location.reload();
               }, 2000);
 
-                
         } else {
-          alert('Upload failed');
+          alert("Upload failed");
         }
       });
-    
-  }
+  };
 
   return (
     <div>
@@ -196,8 +192,7 @@ export default function FolderMenu(props) {
     </div>
     <List className={classes.root}>
         <ListItem alignItems="flex-start">
-            
-            <ListItemText
+          <ListItemText
             primary={
                 <Paper component="form" className={classes.root}>
                     <InputBase
@@ -211,103 +206,94 @@ export default function FolderMenu(props) {
                     </IconButton>
                 </Paper>
             }
-            
-            />
+          />
         </ListItem>
         <Divider variant="fullWidth" />
         <ListItem alignItems="flex-start">
-            <ListItemAvatar >
-            <Avatar variant='square'alt="Cindy Baker" src={fileImage} />
-            </ListItemAvatar>
-            <ListItemText
-                primary={
-                    <React.Fragment>
-                        <Button
-                            backgroundColor='#b2beb5'
-                            height={50}
-                            component="label">
-                            <input
-                                type="file"
-                                style={{ display: "none" }}
-                                onChange={fileChanged.bind(this)}
-                            />
-                            <Typography
-                                component="span"
-                                variant="body2"
-                                className={classes.inline}
-                                color="textPrimary"
-                            >   
-                            New File
-                            </Typography>
-                            
-                        </Button>
-                    </React.Fragment>
-                }
-            >
-            </ListItemText>
-            
-        </ListItem>
-        <Divider variant="fullWidth" />
-        <ListItem alignItems="flex-start">
-        <ListItemAvatar >
-            <Avatar variant='square'alt="Cindy Baker" src={folderImage} />
-            </ListItemAvatar>
-            <ListItemText
+          <ListItemAvatar>
+            <Avatar variant="square" alt="Cindy Baker" src={fileImage} />
+          </ListItemAvatar>
+          <ListItemText
             primary={
-                <React.Fragment>
-                <Button
-                    backgroundColor='#b2beb5'
-                    component="label"
-                    onClick={handleClickOpen}
-                    >
-                    <Typography
-                        component="span"
-                        variant="body2"
-                        className={classes.inline}
-                        color="textPrimary"
-                    >   
-                    New Folder
-                    </Typography>
-                    
+              <React.Fragment>
+                <Button backgroundColor="#b2beb5" height={50} component="label">
+                  <input
+                    type="file"
+                    style={{ display: "none" }}
+                    onChange={fileChanged.bind(this)}
+                  />
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    className={classes.inline}
+                    color="textPrimary"
+                  >
+                    New File
+                  </Typography>
                 </Button>
-            </React.Fragment>
+              </React.Fragment>
             }
-            
-            />
+          ></ListItemText>
         </ListItem>
-        <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-            <DialogContent>
-            <DialogContentText>
-                Enter Folder Name
-            </DialogContentText>
-            <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label=""
-                type="text"
-                fullWidth
-                required
-                onChange={handleChange}
-            />
-            </DialogContent>
-            <DialogActions>
-            
-            <Button onClick={handleClose} color="primary">
-                Cancel
-            </Button>
-            
-            <Button onClick={handleSubmit} color="primary">
-                Create
-            </Button>
-            </DialogActions>
-        </Dialog>
-        <Divider variant="fullWidth"  />
+        <Divider variant="fullWidth" />
         <ListItem alignItems="flex-start">
-            
-            <ListItemText
+          <ListItemAvatar>
+            <Avatar variant="square" alt="Cindy Baker" src={folderImage} />
+          </ListItemAvatar>
+          <ListItemText
             primary={
-                <React.Fragment>
+              <React.Fragment>
+                <Button
+                  backgroundColor="#b2beb5"
+                  component="label"
+                  onClick={handleClickOpen}
+                >
+                  <Typography
+                    component="span"
+                    variant="body2"
+                    className={classes.inline}
+                    color="textPrimary"
+                  >
+                    New Folder
+                  </Typography>
+                </Button>
+              </React.Fragment>
+            }
+          />
+        </ListItem>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="form-dialog-title"
+        >
+          <DialogContent>
+            <DialogContentText>Enter Folder Name</DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label=""
+              type="text"
+              fullWidth
+              required
+              onChange={handleChange}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+
+            <Button onClick={handleSubmit} color="primary">
+              Create
+            </Button>
+          </DialogActions>
+        </Dialog>
+        <Divider variant="fullWidth" />
+        <ListItem alignItems="flex-start">
+          <ListItemText
+            primary={
+              <React.Fragment>
                 <Button
                     backgroundColor='#b2beb5'
                     component="label"
@@ -320,16 +306,13 @@ export default function FolderMenu(props) {
                         color="textPrimary"
                     >   
                     Compare Two Documents
-                    </Typography>
-                    
+                  </Typography>
                 </Button>
-            </React.Fragment>
+              </React.Fragment>
             }
-            
-            />
+          />
         </ListItem>
-        
-        </List>
+      </List>
     </div>
   );
 }
