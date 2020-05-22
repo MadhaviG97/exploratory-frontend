@@ -60,6 +60,11 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 'auto',
       height: '60px',
     },
+    appBarBottom: {
+      top: 0,
+      bottom: 'auto',
+      height: 'auto',
+    },
     grow: {
       flexGrow: 1,
     },
@@ -128,6 +133,7 @@ const ChatWindow = (props) => {
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
   }
   const onSendMessage = () => {
+    if(input=="")return
     var date = new Date()
     var newMessege = {
       chat_id: props.state.currentChatID,
@@ -231,7 +237,7 @@ const ChatWindow = (props) => {
           </div>
         </GridList>
 
-        <AppBar position="relative" color="primary" className={classes.appBar}>
+        <AppBar position="relative" color="primary" className={classes.appBarBottom}>
           <Toolbar>
 
             <div className={classes.search}>
@@ -239,6 +245,8 @@ const ChatWindow = (props) => {
                 placeholder="Send..."
                 onChange={onInput}
                 value={input}
+                // multiline={true}
+                // rows={3}
                 onKeyPress={e => (e.key === 'Enter' ? onSendMessage() : null)}
                 classes={{
                   root: classes.inputRoot,
@@ -251,6 +259,7 @@ const ChatWindow = (props) => {
               variant="contained"
               color="primary"
               className={classes.button}
+              disabled={input==""}
               onClick={onSendMessage}
               endIcon={<Icon>send</Icon>}
             >
