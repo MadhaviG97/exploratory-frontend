@@ -16,6 +16,7 @@ import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import TimerIcon from '@material-ui/icons/Timer';
 import Badge from '@material-ui/core/Badge';
 import MailIcon from '@material-ui/icons/Mail';
+import {getDateTime} from './Utility/DTUtility';
 
 const useStyles = makeStyles((theme) => ({
     badge: {
@@ -58,7 +59,7 @@ const ChatItem = (props) => {
                     <Avatar alt="Profile Picture" src={props.chatDetails.logo} />
                 </ListItemAvatar>
                 <ListItemText primary={props.chatDetails.name}
-                    secondary={"Today 8:30 pm"}
+                    secondary={getDateTime(props.chatDetails.chatMesseges.length > 0 ? props.chatDetails.chatMesseges[props.chatDetails.chatMesseges.length - 1].message_time : props.chatDetails.joined_at)}
                 />
 
                 <div className={classes.badge}>
