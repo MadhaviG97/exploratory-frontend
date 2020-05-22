@@ -36,18 +36,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 
-import {getDateTime} from './Utility/DTUtility';
-
-
-const HtmlTooltip = withStyles((theme) => ({
-    tooltip: {
-        backgroundColor: '#f5f5f9',
-        color: 'rgba(0, 0, 0, 0.87)',
-        maxWidth: 220,
-        fontSize: theme.typography.pxToRem(12),
-        border: '1px solid #dadde9',
-    },
-}))(Tooltip);
+import { getDateTime } from './Utility/DTUtility';
+import HtmlTooltip from './HtmlToolTip'
 
 const Message = ({ msg, client }) => {
 
@@ -74,9 +64,20 @@ const Message = ({ msg, client }) => {
     return (
         <React.Fragment>
             <ListItem alignItems="flex-start" button>
-                <ListItemAvatar>
-                    <Avatar alt={msg.first_name} src={msg.profile_picture} />
-                </ListItemAvatar>
+                <HtmlTooltip
+                    title={
+                        <React.Fragment>
+                            <Typography varient="body" color="inherit">Name: {msg.first_name.concat(" ".concat(msg.last_name))}</Typography>
+                            <Typography varient="body" color="inherit">Email: {msg.email}</Typography>
+
+                        </React.Fragment>
+                    }
+                >
+                    <ListItemAvatar>
+                        <Avatar alt={msg.first_name} src={msg.profile_picture} />
+                    </ListItemAvatar>
+                </HtmlTooltip>
+
                 <ListItemText primary={msg.message}
                     secondary={getDateTime(msg.message_time)}
                 />
@@ -103,14 +104,14 @@ const Message = ({ msg, client }) => {
                                                 <Chip
                                                     label={option.first_name.concat(" ").concat(option.last_name).concat(" - ").concat(option.institution)}
                                                     color="primary"
-                                                    avatar={ <Avatar  alt="propic"  src={option.profile_picture}/> }
+                                                    avatar={<Avatar alt="propic" src={option.profile_picture} />}
                                                 />
                                             </TableCell>
                                             <TableCell align="right">
                                                 <Chip
                                                     label={getDateTime(option.seen_time)}
                                                     color="secondary"
-                                                    avatar={<AccessTimeIcon/>}
+                                                    avatar={<AccessTimeIcon />}
                                                 />
                                             </TableCell>
 
