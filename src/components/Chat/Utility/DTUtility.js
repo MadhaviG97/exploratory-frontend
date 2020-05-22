@@ -21,7 +21,8 @@
     var year = a.getFullYear();
     var month = months[a.getMonth()];
     var date = a.getDate();
-    var hour = a.getHours();
+    var hour = a.getHours().toString();
+    hour=(hour.length<2)?"0"+hour:hour
     var min = a.getMinutes().toString();
     min=(min.length<2)?"0"+min:min
 
