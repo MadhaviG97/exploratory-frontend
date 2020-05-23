@@ -6,6 +6,9 @@ export default useStyles = makeStyles((theme) => ({
   container: {
     backgroundImage: `url(${img})`,
   },
+  background: {
+    backgroundImage: "url(/images/sign-up/sign-up.jpg)",
+  },
   paper: {
     marginTop: theme.spacing(5),
     display: "flex",

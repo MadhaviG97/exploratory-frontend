@@ -253,7 +253,11 @@ function LoggedRightMenu(props) {
             </div>
           }
           buttonText={
-            <img src={`data:image/jpeg;base64,${user.userData.profile_picture}`} className={classes.img} alt="profile" />
+            <img
+              src={`${user.userData.profile_picture}`}
+              className={classes.img}
+              alt="profile"
+            />
           }
           buttonProps={{
             className: classes.navLink + " " + classes.imageDropdownButton,
