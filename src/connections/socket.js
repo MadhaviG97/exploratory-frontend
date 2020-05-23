@@ -22,6 +22,10 @@ export default function (user_id, token, controls) {
     socket.emit('getChatroomParticipants',chat_id,cb)
   }
 
+  function getMoreMessages(chat_id,lastMsg_id,cb){
+    socket.emit('getMoreMsg',chat_id,lastMsg_id,cb)
+  }
+
   function updateChatInfo(chatInfo,cb){
     socket.emit('updateChatInfo',chatInfo,cb)
   }
@@ -65,6 +69,7 @@ export default function (user_id, token, controls) {
   return {
     getChatrooms,
     getChatroomParticipants,
+    getMoreMessages,
     updateChatInfo,
     changeAdmin,
     addMoreParticipants,

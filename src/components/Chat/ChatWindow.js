@@ -17,10 +17,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Container, GridList, InputBase, GridListTile, Button } from '@material-ui/core'
+import { Container, GridList, InputBase, GridListTile, Button, Grid } from '@material-ui/core'
 import Icon from '@material-ui/core/Icon';
 import Message from './Message'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Link from '@material-ui/core/Link';
 
 import ChatWindowTopAppBar from './ChatWindow/ChatWindowTopAppBar'
 
@@ -110,7 +111,7 @@ const ChatWindow = (props) => {
   const classes = useStyles();
 
   const [input, setInput] = useState("")
-
+  const [loadMoreDisabled, setLoadMoreDisabled] = React.useState(false)
   const messagesEndRef = React.useRef(null)
 
   const scrollToBottom = () => {
@@ -161,6 +162,22 @@ const ChatWindow = (props) => {
     props.setStateFromChild({ tabInfocus: false })
   };
 
+  const clickLoadMore = (event) => {
+    event.preventDefault();
+    props.state.client.getMoreMessages(props.state.currentChatID, props.state.chatRooms[props.state.currentChatListID].chatMesseges[0].id, (res) => {
+
+      if (res.length > 0) {
+        var chatRoomsCopy = props.state.chatRooms.slice()
+        chatRoomsCopy[props.state.currentChatListID].chatMesseges = res.concat(props.state.chatRooms[props.state.currentChatListID].chatMesseges)
+        props.setStateFromChild({ chatRooms: chatRoomsCopy }
+        )
+      }
+      else {
+        setLoadMoreDisabled(true)
+      }
+    })
+  }
+
   React.useEffect(() => {
     window.addEventListener('focus', onFocus);
     window.addEventListener('blur', onBlur);
@@ -174,7 +191,6 @@ const ChatWindow = (props) => {
   React.useEffect(() => {
 
     if (!props.state.hiddenState && props.state.tabInfocus) {
-
       props.state.chatRooms[props.state.currentChatListID].chatMesseges.forEach(msg => {
         if (msg.id > props.state.chatRooms[props.state.currentChatListID].lastSeenACK) {
           var MsgInfo = {
@@ -195,10 +211,18 @@ const ChatWindow = (props) => {
           })
         }
       })
-          scrollToBottom()
+      // scrollToBottom()
     }
 
   })
+
+  React.useEffect(() => {
+    if (props.state.tabInfocus) {
+      scrollToBottom()
+      setLoadMoreDisabled(false)
+    }
+
+  }, [props.state.hiddenState])
 
   React.useEffect(() => {
     onFocus()
@@ -223,7 +247,15 @@ const ChatWindow = (props) => {
             <CssBaseline />
             <Paper square className={classes.paper}>
 
-              <List className={classes.list}>
+              <List disabled className={classes.list}>
+
+                <Grid container justify="center">
+                  <Button size="small" color="primary" onClick={clickLoadMore}
+                    disabled={loadMoreDisabled || props.state.chatRooms[props.state.currentChatListID].chatMesseges.length < 20}>
+                    {loadMoreDisabled || props.state.chatRooms[props.state.currentChatListID].chatMesseges.length < 20
+                      ? "Begining of the Chat" : "Load More Messages"}
+                  </Button>
+                </Grid>
 
                 {
                   props.state.currentChatListID ? (
@@ -239,7 +271,7 @@ const ChatWindow = (props) => {
                   ) : null
                 }
                 <div ref={messagesEndRef} />
-               
+
               </List>
             </Paper>
 
