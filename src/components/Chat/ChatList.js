@@ -56,7 +56,7 @@ const ChatList = (props) => {
         />
 
         <GridList cellHeight={160} className={classes.gridList} cols={1}>
-          <React.Fragment>
+          <div>
             <CssBaseline />
             <Paper square className={classes.paper} style={{ width: '100%' }}>
 
@@ -82,7 +82,7 @@ const ChatList = (props) => {
               </List>
             </Paper>
 
-          </React.Fragment>
+          </div>
         </GridList>
 
       </div>

@@ -62,7 +62,7 @@ const Message = ({ msg, client }) => {
     }
 
     return (
-        <React.Fragment>
+        <div>
             <ListItem alignItems="flex-start" button>
                 <HtmlTooltip
                     title={
@@ -128,7 +128,7 @@ const Message = ({ msg, client }) => {
             </ListItem>
             <Divider variant="inset" component="li" />
 
-        </React.Fragment>
+        </div>
     )
 }
 
