@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import  CompareDoc  from './CompareDoc';
-import {shallow} from 'enzyme'
-import CompareDialog from "../../../components/drive/CompareDialog"
+import  Send  from './Send';
+import {shallow,mount} from 'enzyme'
+import Sender from "../../../components/ScreenShare/Sender"
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux'
@@ -17,27 +17,30 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 const mockStore = configureMockStore([thunk]);
-const store = mockStore({
-    user: { userData: {isAuth:true,first_name:'madhavi'} }
-  });
 const match = { params: { projectId: '10012' } }
-describe('Compare Doc', () => {
-    it('renders Compare Doc Dialog', () => {
-      const wrapper = shallow(<CompareDoc match={match}/>);
-      expect(wrapper.find(CompareDialog).exists()).toBeTruthy();
+const store = mockStore({
+    user: { userData: {isAuth:true,first_name:'yogya'} }
+  });
+describe('Share Screens', () => {
+    it('renders Sender Component', () => {
+      const wrapper = mount(
+      <Provider store={store}>
+        <Send match={match}/>
+      </Provider>);
+      expect(wrapper.find(Sender).exists()).toBeTruthy();
     });
     it('renders without crashing', () => {
       const div = document.createElement('div');
       ReactDOM.render(
       <Provider store={store}>
-          <CompareDialog match={match}/>
+          <Send match={match}/>
       </Provider>, div);
   });
     it('renders correctly', () => {
         const tree = renderer
           .create(
           <Provider store={store}>
-            <CompareDialog match={match}/>
+            <Send match={match}/>
           </Provider>)
           .toJSON();
         expect(tree).toMatchSnapshot();

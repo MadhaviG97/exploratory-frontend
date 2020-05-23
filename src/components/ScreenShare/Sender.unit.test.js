@@ -1,8 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import  CompareDoc  from './CompareDoc';
-import {shallow} from 'enzyme'
-import CompareDialog from "../../../components/drive/CompareDialog"
+import  Sender  from './Sender';
+import {shallow,mount} from 'enzyme';
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux'
@@ -18,28 +17,30 @@ jest.mock('react-router-dom', () => ({
 }));
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({
-    user: { userData: {isAuth:true,first_name:'madhavi'} }
+    user: { userData: {isAuth:true,first_name:'yogya'} }
   });
-const match = { params: { projectId: '10012' } }
-describe('Compare Doc', () => {
-    it('renders Compare Doc Dialog', () => {
-      const wrapper = shallow(<CompareDoc match={match}/>);
-      expect(wrapper.find(CompareDialog).exists()).toBeTruthy();
-    });
+describe('Sender of Screen Sharing', () => {
+    
+    it('able to find screen element', () => {
+        const wrapper = mount(<Provider store={store}><Sender /></Provider>);
+        expect(wrapper.find('video').length).toBe(1)
+       });
     it('renders without crashing', () => {
       const div = document.createElement('div');
       ReactDOM.render(
       <Provider store={store}>
-          <CompareDialog match={match}/>
+          <Sender />
       </Provider>, div);
   });
+  /*
     it('renders correctly', () => {
         const tree = renderer
           .create(
           <Provider store={store}>
-            <CompareDialog match={match}/>
+            <Receive />
           </Provider>)
           .toJSON();
         expect(tree).toMatchSnapshot();
       });
+      */
     });

@@ -29,6 +29,7 @@ const mLocalStorage = {
     mLocalStorage._storage[key] = value;
   }),
 };
+const match = { params: { projectId: '10012' } }
 Object.defineProperty(window, 'localStorage', {
   value: mLocalStorage,
 });
@@ -49,7 +50,7 @@ const store = mockStore({
     const onChangeMock = jest.fn();
     const component = mount(
         <Provider store={store}>
-            <CreatePage onEditorChange={onChangeMock} value="custom value" />
+            <CreatePage onEditorChange={onChangeMock} value="custom value" match={match}/>
         </Provider>
             );
     component.find('QuillEditor').simulate('change');
@@ -60,7 +61,7 @@ const store = mockStore({
         const div = document.createElement('div');
         ReactDOM.render(
         <Provider store={store}>
-            <CreatePage />
+            <CreatePage match={match}/>
         </Provider>, div);
     });
     /*

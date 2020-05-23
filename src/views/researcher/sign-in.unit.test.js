@@ -57,7 +57,7 @@ describe('login actions', () => {
       { type: types.LOGIN_USER, payload: promise  }
     ]
     const store = mockStore({
-        user: { userData: {isAuth:true,first_name:'madhavi'} }
+        user: { userData: {isAuth:false} }
       })
     store.dispatch(actions.loginUser({
         email: 'my@gmail.com',

@@ -27,7 +27,6 @@ import EditPage from "./views/research/editor/EditPage";
 import EditorBlog from "./views/research/editor/EditorBlog";
 import ViewDocument from "./views/research/editor/ViewDocument";
 import FileManager from "./views/research/fileFolder/FileManager";
-import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 
 //project
 import ProjectPublic from "./views/research/index/ViewResearchPublic";

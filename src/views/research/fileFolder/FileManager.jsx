@@ -144,17 +144,9 @@ function FileManager(props) {
         setAnchorEl(null);
     };
     const fileDownload = () => {
-        if (folder){
-            console.log(folder)
-            //folder=props.match.params.folderId
-          }
-          else{
-            folder="root"
-          }
+        
         const variable = { 
-            filename:fileDetail.filename,
-            group: group,
-            folder:folder
+            filename:fileDetail.filename
         }
         console.log(variable)
         const token = localStorage.token;
@@ -189,7 +181,7 @@ function FileManager(props) {
     const handleDelete = () => {
         setDeleteOpen(false)
         const variable = { 
-            id:fileDetail._id
+            filename:fileDetail.filename
         }
         console.log(variable)
         const token = localStorage.token;
@@ -198,35 +190,18 @@ function FileManager(props) {
             'Authorization': `Bearer ${token}`
             }
           }
-        if (fileDetail.metadata.folder=='deleted'){//change this later == to !=
-            axios.post('/drive/softdeletefile', variable,config)
-                .then(response => {
-                    if (response.data.success) {
-                        setFileDeleted(true)
-                        setTimeout(() => {
-                            window.location.reload();
-                            }, 1000);
-                        
-                    } else {
-                        alert('Could not Delete File ')
-                    }
-                })
-        }
-        else{
-            axios.post('/drive/deletefile', variable,config)
-                .then(response => {
-                    if (response.data.success) {
-                        setFileDeleted(true)
-                        setTimeout(() => {
-                            window.location.reload();
-                            }, 1000);
-                        
-                    } else {
-                        alert('Could not Delete File ')
-                    }
+        axios.post('/drive/softdeletefile', variable,config)
+            .then(response => {
+                if (response.data.success) {
+                    setFileDeleted(true)
+                    setTimeout(() => {
+                        window.location.reload();
+                        }, 1000);
+                    
+                } else {
+                    alert('Could not Delete File ')
+                }
             })
-        }
-        
         setAnchorEl(null);
     };
     useEffect(() => {
@@ -350,7 +325,6 @@ function FileManager(props) {
             <Box p={1.3}></Box>
                 <Menu
                     id="simple-menu"
-                    
                     anchorEl={anchorEl}
                     getContentAnchorEl={null}
                     anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -368,21 +342,18 @@ function FileManager(props) {
                 </Menu>
                 
                 
-                <div className={classNames(classes.main2)} > 
-                    
-                    {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
-                    
+                <div className={classNames(classes.main2)} >
                     <Grid container spacing={5} >
                         <Grid item xs={3} >
                             <Box p={2}/>
-                            <Paper >
-                            <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params} group={group}/>
+                            <Paper classname={classes.papermenu}>
+                            <Box p={1.5}>
+                                <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params} group={group}/>
+                            </Box>
                             </Paper>
                         </Grid>
                         <Divider orientation="vertical" variant="fullWidth" />
-                        
                         <Grid item xs={8}>
-                            
                             <Box  style={{ display: "flex" }} flexDirection="row" >
                                     <NavComponent projectId={group}/>
                             </Box>
@@ -399,9 +370,7 @@ function FileManager(props) {
                                     <Grid item lg={3} md={4} xs={8}>
                                         <CardActionArea component="a" href={`/document/${group}/filemanager/${folder._id}`}>
                                             <Card >
-                                                
                                                 <CardContent>
-                                                
                                                     <div style={{ height: 140, marginBottom: 2 }}>
                                                     <img src={process.env.PUBLIC_URL + '/images/fileFolder/folderImage.png'} alt={folder.name} />
                                                     </div>

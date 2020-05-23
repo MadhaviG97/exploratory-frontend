@@ -26,6 +26,7 @@ describe('about us', () => {
             <AboutUs />
         </Provider>, div);
     });
+    /*
     it('renders correctly', () => {
         const tree = renderer
           .create(
@@ -35,4 +36,5 @@ describe('about us', () => {
           .toJSON();
         expect(tree).toMatchSnapshot();
       });
-});
+    */
+    });

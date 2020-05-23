@@ -377,7 +377,7 @@ exports[`feed renders correctly 1`] = `
                         <img
                           alt="profile"
                           className="makeStyles-img-225"
-                          src="undefined/images/profile-pictures/profilePic.png"
+                          src="data:image/jpeg;base64,undefined"
                         />
                         <div
                           className="makeStyles-imageLink-215"
@@ -385,9 +385,6 @@ exports[`feed renders correctly 1`] = `
                         >
                           gamlath
                         </div>
-                        <b
-                          className="makeStyles-caret-319"
-                        />
                       </span>
                       <span
                         className="MuiTouchRipple-root"

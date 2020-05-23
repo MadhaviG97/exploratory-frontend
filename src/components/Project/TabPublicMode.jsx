@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function FullWidthTabs(props) {
-  const { OverView, Team, Comments } = props;
+  const { OverView, Team, Comments, Files } = props;
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
@@ -77,6 +77,7 @@ export default function FullWidthTabs(props) {
           <Tab label="Overview" {...a11yProps(0)} />
           <Tab label="Team" {...a11yProps(1)} />
           <Tab label="Comments" {...a11yProps(2)} />
+          <Tab label="Files" {...a11yProps(3)} />
         </Tabs>
       </Paper>
       <SwipeableViews
@@ -93,6 +94,9 @@ export default function FullWidthTabs(props) {
         <TabPanel value={value} index={2} dir={theme.direction}>
           {/* <Comments /> */}
           {Comments()}
+        </TabPanel>
+        <TabPanel value={value} index={3} dir={theme.direction}>
+          {Files()}
         </TabPanel>
       </SwipeableViews>
     </div>

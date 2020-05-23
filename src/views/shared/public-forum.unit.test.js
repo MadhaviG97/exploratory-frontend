@@ -8,7 +8,7 @@ import renderer from 'react-test-renderer';
 
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({
-    user: { userData: {isAuth:true,first_name:'janith'} }
+    user: { userData: {isAuth:true,first_name:'janith'},questions:{bla:"bla"},forum:{bla:"bla"} }//still does not work
   });
 jest.mock('react-router-dom', () => ({
     useHistory: () => ({

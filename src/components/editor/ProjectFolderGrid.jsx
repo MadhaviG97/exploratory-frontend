@@ -13,34 +13,23 @@ import { useStyles } from "../../assets/css/projectFolderGrid";
 
 export default function ProjectFolderGrid(props) {
   const classes = useStyles();
-  const { post } = props;
+  
 
   return (
-    <Grid item xs={8} md={4}>
-      <CardActionArea component="a" href={post.refr}>
-        <Card className={classes.card}>
-          <div className={classes.cardDetails}>
-            <CardContent>
-            <div className={classes.name} >
-                  <h2 className={classes.topic}>{post.title}</h2>
-                </div>
+    <Grid container justify="center" alignItems="center" spacing={3}>
+      <Grid item xs={8} md={4}>
+        <Box boxShadow={2} style={{  background: '#FFFFFF'}}>
+          <Box p={4}>
+              <div >
+                  <h1 align='center' className={classes.topic2}>You Don't seem to have any files here. Do you want to delete this folder?</h1>
+              </div>
               
               
-              <Typography variant="subtitle1" paragraph>
-                {post.description}
-              </Typography>
-              
-            </CardContent>
-          </div>
-         
-            <CardMedia className={classes.cardMedia} image={post.image} title={post.imageTitle} />
-          
-        </Card>
-      </CardActionArea>
+          </Box>
+            
+        </Box>
+      </Grid>
     </Grid>
   );
 }
 
-ProjectFolderGrid.propTypes = {
-  post: PropTypes.object,
-};

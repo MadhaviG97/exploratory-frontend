@@ -167,8 +167,11 @@ export default function CreatePage(props) {
                     <Box p={1}/>
                     <Grid container spacing={5} >
                         <Grid item xs={3}>
+                        <Box p={2}/>
                             <Paper >
-                            <EditorBlogMenu handleSearch={handleSearch} onSearchChange={onSearchChange} group={group}/>
+                                <Box p={1.5}>
+                                    <EditorBlogMenu handleSearch={handleSearch} onSearchChange={onSearchChange} group={group}/>
+                                </Box>
                             </Paper>
                         </Grid>
                         <Divider orientation="vertical" variant="fullWidth" />

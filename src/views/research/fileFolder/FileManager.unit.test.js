@@ -36,7 +36,7 @@ jest.mock('react-router-dom', () => ({
 }));
 
 const props = {
-    match: { params: { folder: '123' } },
+    match: { params: { folder: '123' ,group:'10012'} },
   }
 
 describe('FileManager', () => {
