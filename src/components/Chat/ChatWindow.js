@@ -111,6 +111,12 @@ const ChatWindow = (props) => {
 
   const [input, setInput] = useState("")
 
+  const messagesEndRef = React.useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
+
   const onInput = (e) => {
     setInput(e.target.value)
   }
@@ -133,7 +139,7 @@ const ChatWindow = (props) => {
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
   }
   const onSendMessage = () => {
-    if(input=="")return
+    if (input == "") return
     var date = new Date()
     var newMessege = {
       chat_id: props.state.currentChatID,
@@ -143,6 +149,7 @@ const ChatWindow = (props) => {
     }
     setInput("")
     props.state.client.sendMessage(newMessege, (res) => console.log("res is", res))
+    scrollToBottom()
   }
 
   const onFocus = () => {
@@ -188,10 +195,11 @@ const ChatWindow = (props) => {
           })
         }
       })
+          scrollToBottom()
     }
 
   })
-  
+
   React.useEffect(() => {
     onFocus()
   }, [])
@@ -199,7 +207,7 @@ const ChatWindow = (props) => {
   if (!props.state.currentChatListID) {
     return (<div />)
   }
-  
+
   return (
 
     <div className={classes.upperRoot} hidden={props.state.hiddenState}>
@@ -230,7 +238,8 @@ const ChatWindow = (props) => {
                     ))
                   ) : null
                 }
-
+                <div ref={messagesEndRef} />
+               
               </List>
             </Paper>
 
@@ -259,7 +268,7 @@ const ChatWindow = (props) => {
               variant="contained"
               color="primary"
               className={classes.button}
-              disabled={input==""}
+              disabled={input == ""}
               onClick={onSendMessage}
               endIcon={<Icon>send</Icon>}
             >
