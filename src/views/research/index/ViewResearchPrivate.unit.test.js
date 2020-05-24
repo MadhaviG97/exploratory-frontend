@@ -10,6 +10,7 @@ const mockStore = configureMockStore([thunk]);
 const store = mockStore({
     user: { userData: {isAuth:true,first_name:'madhavi'} }
   });
+const match = { params: { projectId: '10012' } }
 jest.mock('react-router-dom', () => ({
     useHistory: () => ({
       push: jest.fn(),
@@ -17,13 +18,16 @@ jest.mock('react-router-dom', () => ({
     useLocation: () => ({
         push: jest.fn(),
       }),
+    useParams: () => ({
+      push: jest.fn(),
+    }),
   }));
 describe('view research private', () => {
     it('renders without crashing', () => {
         const div = document.createElement('div');
         ReactDOM.render(
         <Provider store={store}>
-            <ResearchPrivate />
+            <ResearchPrivate match={match}/>
         </Provider>, div);
     });
     /*

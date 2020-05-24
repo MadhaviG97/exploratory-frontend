@@ -40,7 +40,7 @@ const styles = theme => ({
 class EditorMenu extends React.Component {
     constructor(props) {
         super(props);
-    
+        this.group=props.group
         this.state = {
           onlineUsers: [],
           online:[]
@@ -87,7 +87,7 @@ class EditorMenu extends React.Component {
                   <ListItem
                       key={2}
                       button
-                      onClick={()=>history.push('/document/editorBlog')}
+                      onClick={()=>history.push(`/document/${this.group}/editorBlog`)}
                       //onClick={this.props.history.push('/document/editorBlog')}
                     >
                       <ListItemText
@@ -98,7 +98,7 @@ class EditorMenu extends React.Component {
                   <ListItem
                       key={3}
                       button
-                      onClick={()=>history.push('/document/create')}
+                      onClick={()=>history.push(`/document/${this.group}/create`)}
                       //onClick={this.props.history.push('/document/create')}
                     >
                       <ListItemText

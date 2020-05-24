@@ -7,6 +7,9 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 import EditIcon from "@material-ui/icons/Edit";
+
+import DeleteQuestion from "./QuestionDeleteDialog";
+import EditQuestion from "./EditQuestionDialog";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -27,11 +30,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function QuestionLike(props) {
   const classes = useStyles();
-  const [count, setCount] = React.useState(1);
-  const [invisible, setInvisible] = React.useState(false);
   const user = useSelector((state) => state.user);
   const is_logged = useSelector((state) => state.is_logged);
-  const questions = useSelector((state) => state.questions);
+  const [count, setCount] = React.useState(1);
+  const [invisible, setInvisible] = React.useState(false);
+  
 
   const handleBadgeVisibility = () => {
     setInvisible(!invisible);
@@ -56,12 +59,8 @@ export default function QuestionLike(props) {
               color="primary"
               aria-label="outlined primary button group"
             >
-              <IconButton aria-label="delete">
-                <DeleteIcon />
-              </IconButton>
-              <IconButton aria-label="edit">
-                <EditIcon />
-              </IconButton>
+              <DeleteQuestion question_id={props.question_id} />
+              <EditQuestion question_id={props.question_id} title={props.title} description={props.description}/>
             </ButtonGroup>
           ) : (
             <div></div>

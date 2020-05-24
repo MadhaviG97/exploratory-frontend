@@ -7,6 +7,9 @@ export const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
+  papermenu: {
+    marginLeft: theme.spacing(5)
+  },
   form: {
     //width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
@@ -69,6 +72,19 @@ export const useStyles = makeStyles((theme) => ({
     minHeight: "50px",
     
   },
+  topic4: {
+    color: "#3C4858",
+    //margin: "1.75rem 0 0.875rem",
+    textDecoration: "none",
+    fontWeight: "450",
+    //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    fontSize:27,
+    //display: "inline-block",
+    //position: "relative",
+    //marginTop: "30px",
+    minHeight: "50px",
+    
+  },
   title2: {
     color: "#3C4858",
     margin: "1.75rem 0 0.875rem",
@@ -83,10 +99,8 @@ export const useStyles = makeStyles((theme) => ({
     textDecoration: "none"
   },
 
-  root:{
-    root: {
+  root: {
       flexGrow: 1,
-    },
   },
   name: {
     marginTop: "-20px"
@@ -97,7 +111,7 @@ export const useStyles = makeStyles((theme) => ({
     zIndex: "3"
   },
   main2: {
-    background: "#f7fbfd",
+    background: "#eceff1",
     position: "relative",
     zIndex: "3"
   },
@@ -118,5 +132,23 @@ export const useStyles = makeStyles((theme) => ({
     borderRadius: "2px",
 
   },
+  mainr3: {
+    margin: "50px 30px 60px 60px",
+
+  },
+  dialogTitle: {
+    display: "flex",
+    justifyContent: "spaceBetween",
+    alignItems: "center",
+},
+  paperGrid:{
+    height: 100,
+    width: 90,
+    elevation:3
+  },
+  large: {
+    width: theme.spacing(7),
+    height: theme.spacing(7),
+  }
   
 }))

@@ -16,6 +16,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import ResponseDialog from './ResponseDialog'
+import {groupName_validation, groupDescription_validation} from './Validation/validation'
 
 import AddParticipant from './AddParticipant'
 
@@ -55,6 +56,11 @@ const ChatListTopAppBar = (props) => {
   const [openResponseDialog, setOpenResponseDialog] = React.useState(false);
   const [responseDialogMsg, setResponseDialogMsg] = React.useState("")
 
+  const [nameError, setNameError] = React.useState(true)
+  const [descriptionError,setDescriptionError] = React.useState(true)
+  const [nameHT,setNameHT] = React.useState("")
+  const [descriptionHT,setDescriptionHT] = React.useState("")
+
   const handleMenuClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -91,7 +97,7 @@ const ChatListTopAppBar = (props) => {
       creator_id: state.user_id,
       participants: participants
     }
-
+    
     props.state.client.createChatroom(chatDetails, (res) => {
       setResponseDialogMsg(res.message)
       handleClickOpenResponseDialog()
@@ -109,6 +115,30 @@ const ChatListTopAppBar = (props) => {
       props.setStateFromChild({ chatRooms: res })
     })
   };
+
+  const validateGroupName = (value) =>{
+    const { error  } = groupName_validation(value);
+    if(error){
+      setNameError(true)
+      setNameHT(error.details[0].message)
+    }
+    else{
+      setNameError(false)
+      setNameHT("")
+    }
+  }
+  
+  const validateDescription = (value) =>{
+    const { error } = groupDescription_validation(value);
+    if(error){
+      setDescriptionError(true)
+      setDescriptionHT(error.details[0].message)
+    }
+    else{
+      setDescriptionError(false)
+      setDescriptionHT("")
+    }
+  }
 
   return (
     
@@ -145,24 +175,30 @@ const ChatListTopAppBar = (props) => {
             autoFocus
             margin="dense"
             id="name"
-            label="Name"
+            label="Group Name"
             type="text"
             fullWidth
             onChange={(event) => {
+              validateGroupName(event.target.value)
               setInputName(event.target.value);
             }}
+            error={nameError}
+            helperText={nameHT}
           />
 
           <TextField
-            autoFocus
+            // autoFocus
             margin="dense"
             id="description"
             label="Description"
             type="text"
             fullWidth
             onChange={(event) => {
+              validateDescription(event.target.value)
               setInputDescription(event.target.value);
             }}
+            error={descriptionError}
+            helperText={descriptionHT}
           />
 
           <AddParticipant
@@ -176,7 +212,7 @@ const ChatListTopAppBar = (props) => {
           <Button onClick={handleDialogClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleClickCreate} color="primary">
+          <Button disabled={nameError||descriptionError} onClick={handleClickCreate} color="primary">
             Create
           </Button>
         </DialogActions>

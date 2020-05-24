@@ -14,19 +14,21 @@ import BorderColorIcon from "@material-ui/icons/BorderColor";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CommentIcon from "@material-ui/icons/Comment";
 import Avatar from "@material-ui/core/Avatar";
-
+import NavComponent from '../../components/AppNavigation/NavigationComponent';
 import { useStyles } from "../../assets/css/projectNavbar";
 
 export default function ProjectNavbar(props) {
   const classes = useStyles();
-
+  console.log(props.projectId)
   return (
     <React.Fragment>
       <Paper className={classes.paperroot}>
         <Box display="flex" flexDirection="row" className={classes.root}>
+          <NavComponent projectId={props.projectId} />
           <Box flexGrow="2">
             <List component="nav" aria-label="main mailbox folders">
               <ListItem className={classes.heading}>
+              
                 <ListItemText
                   primary={
                     <Typography variant="h6">

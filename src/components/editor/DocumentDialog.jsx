@@ -19,6 +19,7 @@ export default function DocumentDialog(props) {
   const [name,setName]=React.useState('');
   const [filecreated,setFileCreated]=React.useState(false);
   const user = useSelector(state => state.user);
+  const group=props.group
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -36,7 +37,7 @@ export default function DocumentDialog(props) {
     
     const variables = {
         content: props.content,
-        //writer: "GeeFour",
+        group: group,
         name: name
     }
     let config = {
@@ -52,7 +53,7 @@ export default function DocumentDialog(props) {
               setFileCreated(true)
 
                 setTimeout(() => {
-                    history.push('/document/editorblog')
+                    history.push(`/document/${group}/editorblog`)
                 }, 2000);
             }
         })

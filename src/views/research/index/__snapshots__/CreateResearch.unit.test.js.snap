@@ -377,7 +377,7 @@ exports[`create research renders correctly 1`] = `
                         <img
                           alt="profile"
                           className="makeStyles-img-232"
-                          src="undefined/images/profile-pictures/profilePic.png"
+                          src="data:image/jpeg;base64,undefined"
                         />
                         <div
                           className="makeStyles-imageLink-222"
@@ -385,9 +385,6 @@ exports[`create research renders correctly 1`] = `
                         >
                           madhavi
                         </div>
-                        <b
-                          className="makeStyles-caret-326"
-                        />
                       </span>
                       <span
                         className="MuiTouchRipple-root"
@@ -580,7 +577,7 @@ exports[`create research renders correctly 1`] = `
                       <img
                         alt="propic"
                         className="MuiAvatar-img"
-                        src="../images/profile-pictures/avatar-1.jpg"
+                        src="avatar-1.jpg"
                       />
                     </div>
                     <span

@@ -17,6 +17,7 @@ import Loader from "../../../components/Loader";
 import OverView from "../../../components/Overview/OverViewPublic";
 import Team from "../../../components/Team/team";
 import Comments from "../../../components/ProjectComments/chathead";
+import FilesList from "../../../components/ProjectPublicFiles/DisplayList";
 
 const images = [
   { id: 10001, url: "default-0.jpg", caption: "Image-1" },
@@ -31,6 +32,7 @@ const comments = [];
 function Home() {
   let { id } = useParams();
   var dispatch = useDispatch();
+  const [files,setFiles]=React.useState([])
   var project = useSelector((state) => state.project);
   const [state, setState] = React.useState({
     project: {},
@@ -68,7 +70,7 @@ function Home() {
             return response.data;
           })
           .catch((err) => console.log(err.message));
-
+          
         var request_final_paper = axios
           .post(
             "/drive/getfiles",
@@ -104,6 +106,20 @@ function Home() {
           setState({ ...state, project: response });
           console.log(response);
         });
+        const variables = {
+          group:id
+        }
+        axios.post('/drive/getpublicfiles', variables,config)
+          .then(response => {
+           if (response.data.success) {
+               console.log(response.data.files)
+               setFiles(response.data.files)
+               
+           } else {
+               console.log('not')
+               alert('Could not get files ')
+           }
+       })
       }
     }
     return () => (mounted = false);
@@ -117,13 +133,14 @@ function Home() {
           followers="2"
           updates="8"
           projectName={project.project.title}
+          projectId={id}
           authour={project.admins[0].first_name
             .concat(" ")
             .concat(project.admins[0].last_name)}
           authour_image={project.admins[0].profile_picture}
           description={project.project.description}
         />
-        <Tab OverView={getOverView} Team={getTeam} Comments={getComments} />
+        <Tab OverView={getOverView} Team={getTeam} Comments={getComments} Files={getFiles}/>
       </React.Fragment>
     );
   };
@@ -142,6 +159,10 @@ function Home() {
     } else {
       return <Comments comments={[]} />;
     }
+  };
+  const getFiles = () => {
+    console.log(files)
+    return <FilesList files={files} />
   };
 
   return (

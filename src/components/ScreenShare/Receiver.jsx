@@ -1,50 +1,50 @@
-import React from "react";
-import "../../assets/css/screenshare.css";
-
-import openSocket from "socket.io-client";
-const socket = openSocket("http://localhost:8000");
+import React from 'react';
+import '../../assets/css/screenshare.css';
+import Box from '@material-ui/core/Box';
+import openSocket from 'socket.io-client';
+const socket = openSocket('http://localhost:8000');
 const RTC_CONFIGURATION = {
-  iceServers: [
-    { urls: "stun:stun.l.google.com:19302" },
-    {
-      url: "turn:numb.viagenie.ca",
-      credential: "muazkh",
-      username: "webrtc@live.com",
-    },
-  ],
-};
+    iceServers: [
+      { urls: 'stun:stun.l.google.com:19302' },
+      {
+        urls: 'turn:webrtcweb.com:80',
+        username: 'muazkh',
+        credential: 'muazkh'
+      },
+      {
+        urls: 'turn:webrtcweb.com:443',
+        username: 'muazkh',
+        credential: 'muazkh'
+      }
+    ]
+  };
 var callee;
-var group = "10001";
-var calleename = "callee";
-var room = group.concat("callee");
-function sendAnswer(answer) {
-  socket.emit("answer", { room: "10001", answer: answer });
-}
-function sendCandidate(candidate) {
-  socket.emit("candidate", { room: "10001", candidate: candidate });
-}
-function makePeerConnection() {
-  if (callee) {
-    callee.close();
+
+var calleename="callee"
+
+function sendAnswer(answer,group) {
+    socket.emit('answer', {room: group,answer:answer});
   }
-  callee = new RTCPeerConnection(RTC_CONFIGURATION);
-  callee.onaddstream = (event) => {
-    document.getElementById("screen").srcObject = event.stream;
-  };
-  callee.onicecandidate = (event) => {
-    if (event.candidate != null) {
-      sendCandidate(event.candidate);
+  function sendCandidate(candidate,group) {
+    socket.emit('candidate', {room: group,candidate:candidate});
+  }
+  function makePeerConnection(group) {
+    if (callee) { callee.close() }
+    callee = new RTCPeerConnection(RTC_CONFIGURATION);
+    callee.onaddstream = (event) => {
+        document.getElementById('screen').srcObject = event.stream;
+    };
+    callee.onicecandidate = (event) => {
+      if (event.candidate != null) {
+        sendCandidate(event.candidate,group);
+      }
     }
-  };
-}
-function makeAnswer() {
-  callee
-    .createAnswer()
-    .then((answer) => {
+  }
+  function makeAnswer(group) {
+    callee.createAnswer().then((answer) => {
       return callee.setLocalDescription(answer);
-    })
-    .then(() => {
-      sendAnswer(callee.localDescription);
+    }).then(() => {
+      sendAnswer(callee.localDescription,group);
     });
 }
 class Receiver extends React.Component {
@@ -56,20 +56,51 @@ class Receiver extends React.Component {
   componentDidMount() {
     this._isMounted = true;
 
-    socket.on("offer", (offer) => {
-      console.log(offer);
-      callee.setRemoteDescription(offer);
-      makeAnswer();
-    });
-    socket.on("candidate", (candidate) => {
-      console.log(candidate);
-      callee.addIceCandidate(candidate);
-    });
-  }
 
-  render() {
-    socket.emit("join", room);
-    makePeerConnection();
+    constructor(props) {
+        super(props);
+        this.state = {
+            sender:null
+        };
+        this.group=props.group
+    }
+    
+    shouldComponentUpdate(nextProps, nextState) {
+      return false;
+    }  
+    componentDidMount() {
+        this._isMounted = true;
+        
+        socket.on('offer', (offer) => {
+          console.log(offer);
+          callee.setRemoteDescription(offer);
+          makeAnswer(this.group)
+        });
+        socket.on('candidate', (candidate) => {
+          console.log(candidate);
+          callee.addIceCandidate(candidate);
+        });
+        socket.on('sender', (sender) => {
+          console.log(sender)
+          this.props.senderSet(sender)
+      });
+    }
+
+    render() {
+            var room=this.group.concat('callee')
+            socket.emit('join', room);
+            makePeerConnection(this.group);
+        
+        return (
+
+          <div>
+              
+              <div >
+                  <video controls playsInline autoPlay id="screen"></video>
+              </div>
+          </div>
+        )
+    }
 
     return (
       <div>

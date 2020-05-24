@@ -9,6 +9,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
+import { addAnswer, getAnswers } from "../../_actions/forum_actions";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -40,9 +42,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function AddComment() {
+export default function AddComment(props) {
   const classes = useStyles();
+  const user = useSelector((state) => state.user);
   const [open, setOpen] = React.useState(false);
+  const [answer, setAnswer] = React.useState("");
+  const dispatch = useDispatch();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -51,6 +56,23 @@ export default function AddComment() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const handleChange = (event) => {
+    setAnswer(event.target.value);
+  };
+
+  const handleSubmit = () => {
+    const answerData = {
+      answer:answer,
+      question_id:props.question_id,
+      researcher_id:user.userData._id
+    }
+    setOpen(false);
+    dispatch(addAnswer(answerData));
+    dispatch(getAnswers());
+    setAnswer("");
+  };
+
 
   return (
     <div>
@@ -70,8 +92,7 @@ export default function AddComment() {
         <DialogTitle id="form-dialog-title">Add Answer</DialogTitle>
         <DialogContent>
           <DialogContentText>
-            Please try to give your answer shortly to the question in a way that
-            others understand it clearly.
+            {props.question_title}
           </DialogContentText>
           <TextField
             autoFocus
@@ -81,13 +102,14 @@ export default function AddComment() {
             type="text"
             fullWidth
             multiline
+            onChange={handleChange}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handleClose} color="primary" variant="contained">
+          <Button onClick={handleSubmit} color="primary" variant="contained">
             Post
           </Button>
         </DialogActions>

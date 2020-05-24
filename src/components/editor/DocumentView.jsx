@@ -1,14 +1,14 @@
 import React, { useEffect } from 'react'
 import axios from 'axios';
-import Title from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useStyles } from "../../assets/css/editor";
-import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import Alert from '@material-ui/lab/Alert';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
+import NavComponent from '../../components/AppNavigation/NavigationComponent';
+import Divider from "@material-ui/core/Divider";
 function DocumentView(props) {
 
     const [post, setPost] = React.useState({})
@@ -20,7 +20,7 @@ function DocumentView(props) {
         const token = localStorage.token;
         const variables = {
             postId:props.postId,
-            group:"GeeFour"
+            group:props.group
         }
         let config = {
             headers: {
@@ -79,17 +79,20 @@ function DocumentView(props) {
                             File Added to the Drive!
                         </Alert>
                     </Collapse>
-                </div>
-                <div className="Document View" style={{ width: '80%', margin: '3rem auto' }}>
-                    
-                    
+                </div> 
+                <div className="Document View" style={{ width: '80%', margin: '2rem auto' }}>
+                    <Box >
+                        <NavComponent projectId={props.group}/>
+                    </Box>
+                    <Divider  variant="fullWidth" />
+                    <Box p={2} />
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         
                         <Button variant="outlined" color="primary" onClick={handleTurn}>
                                     Turn to PDF Format
                         </Button>
-                        
                     </div>
+                    <Box p={1}/>
                     <Box boxShadow={2} style={{  background: '#FFFFFF'}}>
                         <Box p={4}>
                             <div >

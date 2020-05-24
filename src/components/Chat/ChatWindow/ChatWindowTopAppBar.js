@@ -19,6 +19,7 @@ import Divider from '@material-ui/core/Divider';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
+import {groupName_validation, groupDescription_validation} from '../Validation/validation'
 
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
@@ -63,6 +64,10 @@ const ChatWindowTopAppBar = (props) => {
 
   const [addNewParticipantOpen,setAddNewParticipantOpen] = React.useState(false)
 
+  const [nameError, setNameError] = React.useState(false)
+  const [descriptionError,setDescriptionError] = React.useState(false)
+  const [nameHT,setNameHT] = React.useState("")
+  const [descriptionHT,setDescriptionHT] = React.useState("")
 
   React.useEffect(()=>{
     const setData= async()=>{
@@ -85,6 +90,8 @@ const ChatWindowTopAppBar = (props) => {
   const handleClickDialogOpen = () => {
     setAnchorEl(null);
     setOpen(true);
+    setInputName(props.state.chatRooms[props.state.currentChatListID].name)
+    setInputDescription(props.state.chatRooms[props.state.currentChatListID].description)
   };
 
   const handleDialogClose = () => {
@@ -116,7 +123,32 @@ const ChatWindowTopAppBar = (props) => {
     })
   };
 
- 
+  const validateGroupName = (value) =>{
+    const { error  } = groupName_validation(value);
+    if(error){
+      setNameError(true)
+      setNameHT(error.details[0].message)
+    }
+    else{
+      setNameError(false)
+      setNameHT("")
+    }
+  }
+  
+  const validateDescription = (value) =>{
+    const { error } = groupDescription_validation(value);
+    if(error){
+      setDescriptionError(true)
+      setDescriptionHT(error.details[0].message)
+    }
+    else{
+      setDescriptionError(false)
+      setDescriptionHT("")
+    }
+  }
+
+  // validateGroupName(inputName)
+  // validateDescription(inputDescription)
 
   return (
     <AppBar position="relative" color="primary" className={classes.appBar}>
@@ -147,13 +179,11 @@ const ChatWindowTopAppBar = (props) => {
 
       </Toolbar>
 
-
       <Dialog open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Group Information</DialogTitle>
         <DialogContent>
 
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             label="Group Name"
@@ -161,12 +191,14 @@ const ChatWindowTopAppBar = (props) => {
             fullWidth
             defaultValue={props.state.chatRooms[props.state.currentChatListID].name}
             onChange={(event) => {
+              validateGroupName(event.target.value)
               setInputName(event.target.value);
             }}
+            error={nameError}
+            helperText={nameHT}
           />
 
           <TextField
-            autoFocus
             margin="dense"
             id="description"
             label="Group Description"
@@ -176,17 +208,20 @@ const ChatWindowTopAppBar = (props) => {
             rows="3"
             defaultValue={props.state.chatRooms[props.state.currentChatListID].description}
             onChange={(event) => {
+              validateDescription(event.target.value)
               setInputDescription(event.target.value);
             }}
+            error={descriptionError}
+            helperText={descriptionHT}
           />
 
           <DialogActions>
-            <Button onClick={handleClickSave} color="primary">
+            <Button 
+            disabled={((inputName==props.state.chatRooms[props.state.currentChatListID].name)&&(inputDescription==props.state.chatRooms[props.state.currentChatListID].description))||nameError||descriptionError} 
+            onClick={handleClickSave} color="primary">
               Update
           </Button>
-            {/* <Button onClick={handleClickCreate} color="primary">
-            Create
-          </Button> */}
+
           </DialogActions>
 
           <Divider />

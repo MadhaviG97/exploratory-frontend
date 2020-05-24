@@ -44,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 export default function FolderMenu(props) {
   const classes = useStyles();
   const [name,setName]=React.useState('');
-  
+  const group=props.group
   const onChange = (event) => {
     
         props.onSearchChange(event.target.value);
@@ -85,7 +85,7 @@ export default function FolderMenu(props) {
                             backgroundcolor='#b2beb5'
                             height={50}
                             component="label"
-                            onClick={()=>history.push('/document/create')}
+                            onClick={()=>history.push(`/document/${group}/create`)}
                             //onClick={props.history.push('/document/create')}
                             >
                             <Typography
@@ -113,7 +113,7 @@ export default function FolderMenu(props) {
                 <Button
                     backgroundcolor='#b2beb5'
                     component="label"
-                    onClick={()=>history.push('/document/compare')}
+                    onClick={()=>history.push(`/document/${group}/compare`)}
                     
                     >
                     <Typography

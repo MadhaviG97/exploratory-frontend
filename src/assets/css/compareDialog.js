@@ -88,11 +88,19 @@ export const useStyles = makeStyles((theme) => ({
   
   name: {
     marginTop: "-20px",
-    marginBottom: "-10px",
-    marginLeft:"120px"
+    marginBottom: "-10px"
+  },
+  icon: {
+    marginLeft: "230px",
+    marginRight: "230px"
   },
   main: {
     background: "#FFFFFF",
+    position: "relative",
+    zIndex: "3"
+  },
+  main2: {
+    background: "#eceff1",
     position: "relative",
     zIndex: "3"
   },

@@ -22,6 +22,7 @@ const mLocalStorage = {
 Object.defineProperty(window, 'localStorage', {
   value: mLocalStorage,
 });
+const match = { params: { projectId: '10012' } }
 const store = mockStore({
     user: { userData: {isAuth:true,first_name:'yogya'} }
   });
@@ -46,29 +47,29 @@ describe('editor blog', () => {
     jest.spyOn(axios, 'post').mockResolvedValueOnce(response);
     const wrapper = mount(
         <Provider store={store}>
-            <EditorBlog />
+            <EditorBlog match={match}/>
         </Provider>
         );
     await act(async () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
     //expect(wrapper.find('.org-docs-header').text()).toContain('mocked name');
-    expect(axios.post).toBeCalledWith('/editor/getBlogs'/*, {
-      headers: { Authorization: 'JWT ' + token },
-    }*/);
+    expect(axios.post).toBeCalledWith('/editor/getBlogs',{"group":"10012"}, {
+      headers: { Authorization: 'Bearer undefined' },
+    });
   });
   it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(
     <Provider store={store}>
-        <EditorBlog />
+        <EditorBlog match={match}/>
     </Provider>, div);
   });
   it('renders correctly', () => {
       const tree = renderer
         .create(
         <Provider store={store}>
-          <EditorBlog />
+          <EditorBlog match={match}/>
         </Provider>)
         .toJSON();
       expect(tree).toMatchSnapshot();

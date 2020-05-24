@@ -18,13 +18,30 @@ var caller;
 var callername="caller"
 //var clients = io.sockets.clients('room');
 //var room=group.concat(caller)
+/*{
+        url: 'turn:numb.viagenie.ca',
+        credential: 'muazkh',
+        username: 'webrtc@live.com'
+      }
+      {
+      "urls": [
+      "turn:13.250.13.83:3478?transport=udp"
+      ],
+      "username": "YzYNCouZM1mhqhmseWk6",
+      "credential": "YzYNCouZM1mhqhmseWk6"
+      }*/ 
 const RTC_CONFIGURATION = {
     iceServers: [
       { urls: 'stun:stun.l.google.com:19302' },
       {
-        url: 'turn:numb.viagenie.ca',
-        credential: 'muazkh',
-        username: 'webrtc@live.com'
+        urls: 'turn:webrtcweb.com:80',
+        username: 'muazkh',
+        credential: 'muazkh'
+      },
+      {
+        urls: 'turn:webrtcweb.com:443',
+        username: 'muazkh',
+        credential: 'muazkh'
       }
     ]
   };
@@ -40,12 +57,18 @@ const styles = theme => ({
   },
 });
 
-function sendOffer(offer,id) {
+  function sendOffer(offer,id) {
     socket.emit('offer', {room: id,offer:offer});
     
   }
-  function sendCandidate(candidate,id) {
+  function sendCandidate(candidate,id,user) {
+    let sender=''
+    console.log(user)
+    if (user.userData){
+      sender=user.userData.first_name.concat(' ').concat(user.userData.last_name)
+    }
     socket.emit('candidate', {room: id,candidate:candidate});
+    socket.emit('sender', {sender:sender});
   }
   function getStream() {
     return new Promise((resolve, reject) => {
@@ -54,13 +77,13 @@ function sendOffer(offer,id) {
       })
     });
   }
-  function makePeerConnection(stream,id) {
+  function makePeerConnection(stream,id,user) {
     if (caller) { caller.close() }
     caller = new RTCPeerConnection(RTC_CONFIGURATION);
     caller.addStream(stream);
     caller.onicecandidate = (event) => {
       if (event.candidate != null) {
-        sendCandidate(event.candidate,id);
+        sendCandidate(event.candidate,id,user);
       }
     }
     makeOffer(id)
@@ -83,6 +106,7 @@ class Sender extends React.Component {
     };
     this.ITEM_HEIGHT = 48;
     this.ITEM_PADDING_TOP = 8;
+    this.group=props.group
     this.MenuProps = {
       PaperProps: {
         style: {
@@ -110,10 +134,10 @@ class Sender extends React.Component {
     
     
     componentDidMount() {
+        
         const variable = { 
-          group:'10012'
-        //writer: "GeeFour",
-        //name: name
+          group:this.group
+        
         }
         console.log(variable)
         /*
@@ -134,11 +158,9 @@ class Sender extends React.Component {
             })
             
         socket.on('answer', (answer) => {
-            console.log(answer);
             caller.setRemoteDescription(answer);
         });
         socket.on('candidate', (candidate) => {
-            console.log(candidate);
             caller.addIceCandidate(candidate);
         });
 
@@ -146,7 +168,7 @@ class Sender extends React.Component {
     }
 
     
-    handleSubmit=()=>{
+    handleSubmit=(user)=>{
         //console.log(this.state)
         this.setState({
             open:false});
@@ -154,13 +176,14 @@ class Sender extends React.Component {
         socket.emit('join', room);
         getStream().then((stream) => {
             document.getElementById('screen').srcObject = stream;
-            makePeerConnection(stream,this.state.researcher.researcher_id.toString());
+            makePeerConnection(stream,this.state.researcher.researcher_id.toString(),user);
         });
         
     }
     
 
     render() {
+      let user=this.props.user
       const { classes } = this.props;
         return (
             <div>
@@ -191,7 +214,10 @@ class Sender extends React.Component {
                     <Button onClick={this.handleClose} color="primary">
                       Cancel
                     </Button>
-                    <Button onClick={this.handleSubmit} color="primary">
+                    <Button onClick={() => {
+                            this.handleSubmit(user);
+                        }} 
+                        color="primary">
                       Connect
                     </Button>
                   </DialogActions>

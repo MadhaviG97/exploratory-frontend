@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
-
+import axios from 'axios';
 import { useSelector } from "react-redux";
-
+import NotFound from '../../../components/NotFound/NotFound'
 import classNames from "classnames";
 import Footer from "../../../components/Footer/Footer";
 import NavBar from "../../../components/Navbar/Navbar";
@@ -15,19 +15,38 @@ import ViewPage from '../../../components/editor/DocumentView';
 function ViewDocument(props) {
     const classes = useStyles();
     const user = useSelector(state => state.user);
-    console.log(user)
-    
+    let user_id=0
+    if (user.userData){
+        user_id=user.userData._id
+    }
+    const [collabs, setCollabs] = useState([])
+    useEffect(() => {
+        const variable = { 
+            group: props.match.params.projectId,
+        }
+        axios.post('/project/get-collaborators', variable)
+            .then(response => {
+                if (response.data) {
+                    setCollabs(response.data)
+                    
+                }
+            })
+    }, [])
+    if (collabs.some(e => e.researcher_id == user_id)){
         return (
         <div className={classNames(classes.main2)}>
             <NavBar/>
+                
                 <div  > 
-                    <ViewPage user={user} postId={props.match.params.postId}/>
+                    <ViewPage user={user} postId={props.match.params.postId} group={props.match.params.projectId}/>
                     <Box p={4}  /> 
                 </div>
             
             
         </div>
         );
-
-    }
+    }return(
+        <NotFound/>
+        );
+}
 export default ViewDocument

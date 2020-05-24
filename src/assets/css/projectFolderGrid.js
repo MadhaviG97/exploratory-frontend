@@ -28,6 +28,18 @@ export const useStyles = makeStyles((theme) => ({
     minHeight: "50px",
     
   },
+  topic2: {
+    color: "#3C4858",
+    textDecoration: "none",
+    fontWeight: "400",
+    //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    fontSize:22,
+    //display: "inline-block",
+    //position: "relative",
+    //marginTop: "30px",
+    minHeight: "50px",
+    
+  },
   avatar: {
     backgroundColor: "#014f82",
   },
@@ -39,6 +51,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   cardMedia: {
     width: 160,
+  },
+  icon: {
+    marginLeft: "230px",
+    marginRight: "230px"
   },
   titletwo: {
     color: "#3C4858",
@@ -67,7 +83,7 @@ export const useStyles = makeStyles((theme) => ({
     zIndex: "3"
   },
   main2: {
-    background: "#f7fbfd",
+    background: "#eceff1",
     position: "relative",
     zIndex: "3"
   },
