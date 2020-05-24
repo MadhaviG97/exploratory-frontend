@@ -17,10 +17,11 @@ import MenuIcon from '@material-ui/icons/Menu';
 import AddIcon from '@material-ui/icons/Add';
 import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Container, GridList, InputBase, GridListTile, Button } from '@material-ui/core'
+import { Container, GridList, InputBase, GridListTile, Button, Grid } from '@material-ui/core'
 import Icon from '@material-ui/core/Icon';
 import Message from './Message'
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Link from '@material-ui/core/Link';
 
 import ChatWindowTopAppBar from './ChatWindow/ChatWindowTopAppBar'
 
@@ -60,6 +61,11 @@ const useStyles = makeStyles((theme: Theme) =>
       bottom: 'auto',
       height: '60px',
     },
+    appBarBottom: {
+      top: 0,
+      bottom: 'auto',
+      height: 'auto',
+    },
     grow: {
       flexGrow: 1,
     },
@@ -98,10 +104,19 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
+
+
+
 const ChatWindow = (props) => {
   const classes = useStyles();
 
   const [input, setInput] = useState("")
+  const [loadMoreDisabled, setLoadMoreDisabled] = React.useState(false)
+  const messagesEndRef = React.useRef(null)
+
+  const scrollToBottom = () => {
+    messagesEndRef.current.scrollIntoView({ behavior: "smooth" })
+  }
 
   const onInput = (e) => {
     setInput(e.target.value)
@@ -125,6 +140,7 @@ const ChatWindow = (props) => {
     return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
   }
   const onSendMessage = () => {
+    if (input == "") return
     var date = new Date()
     var newMessege = {
       chat_id: props.state.currentChatID,
@@ -134,11 +150,88 @@ const ChatWindow = (props) => {
     }
     setInput("")
     props.state.client.sendMessage(newMessege, (res) => console.log("res is", res))
+    scrollToBottom()
   }
+
+  const onFocus = () => {
+    props.setStateFromChild({ tabInfocus: true })
+  };
+
+
+  const onBlur = () => {
+    props.setStateFromChild({ tabInfocus: false })
+  };
+
+  const clickLoadMore = (event) => {
+    event.preventDefault();
+    props.state.client.getMoreMessages(props.state.currentChatID, props.state.chatRooms[props.state.currentChatListID].chatMesseges[0].id, (res) => {
+
+      if (res.length > 0) {
+        var chatRoomsCopy = props.state.chatRooms.slice()
+        chatRoomsCopy[props.state.currentChatListID].chatMesseges = res.concat(props.state.chatRooms[props.state.currentChatListID].chatMesseges)
+        props.setStateFromChild({ chatRooms: chatRoomsCopy }
+        )
+      }
+      else {
+        setLoadMoreDisabled(true)
+      }
+    })
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('focus', onFocus);
+    window.addEventListener('blur', onBlur);
+    // Specify how to clean up after this effect:
+    return () => {
+      window.removeEventListener('focus', onFocus);
+      window.removeEventListener('blur', onBlur);
+    };
+  });
+
+  React.useEffect(() => {
+
+    if (!props.state.hiddenState && props.state.tabInfocus) {
+      props.state.chatRooms[props.state.currentChatListID].chatMesseges.forEach(msg => {
+        if (msg.id > props.state.chatRooms[props.state.currentChatListID].lastSeenACK) {
+          var MsgInfo = {
+            chat_id: props.state.currentChatID,
+            user_id: props.state.user_id,
+            message_id: msg.id
+          }
+          props.state.client.markSeen(MsgInfo, (res) => {
+
+            if (res) {
+              props.setStateFromChild((state) => {
+                state.chatRooms[props.state.currentChatListID].lastSeenACK = Math.max(state.chatRooms[props.state.currentChatListID].lastSeenACK, msg.id)
+                return ({
+                  chatRooms: state.chatRooms
+                })
+              })
+            }
+          })
+        }
+      })
+      // scrollToBottom()
+    }
+
+  })
+
+  React.useEffect(() => {
+    if (props.state.tabInfocus) {
+      scrollToBottom()
+      setLoadMoreDisabled(false)
+    }
+
+  }, [props.state.hiddenState])
+
+  React.useEffect(() => {
+    onFocus()
+  }, [])
 
   if (!props.state.currentChatListID) {
     return (<div />)
   }
+
   return (
 
     <div className={classes.upperRoot} hidden={props.state.hiddenState}>
@@ -154,7 +247,15 @@ const ChatWindow = (props) => {
             <CssBaseline />
             <Paper square className={classes.paper}>
 
-              <List className={classes.list}>
+              <List disabled className={classes.list}>
+
+                <Grid container justify="center">
+                  <Button size="small" color="primary" onClick={clickLoadMore}
+                    disabled={loadMoreDisabled || props.state.chatRooms[props.state.currentChatListID].chatMesseges.length < 20}>
+                    {loadMoreDisabled || props.state.chatRooms[props.state.currentChatListID].chatMesseges.length < 20
+                      ? "Begining of the Chat" : "Load More Messages"}
+                  </Button>
+                </Grid>
 
                 {
                   props.state.currentChatListID ? (
@@ -163,11 +264,13 @@ const ChatWindow = (props) => {
                         <Message
                           key={currentMsg.id}
                           msg={currentMsg}
+                          client={props.state.client}
                         />
                         : null
                     ))
                   ) : null
                 }
+                <div ref={messagesEndRef} />
 
               </List>
             </Paper>
@@ -175,7 +278,7 @@ const ChatWindow = (props) => {
           </div>
         </GridList>
 
-        <AppBar position="relative" color="primary" className={classes.appBar}>
+        <AppBar position="relative" color="primary" className={classes.appBarBottom}>
           <Toolbar>
 
             <div className={classes.search}>
@@ -183,6 +286,8 @@ const ChatWindow = (props) => {
                 placeholder="Send..."
                 onChange={onInput}
                 value={input}
+                // multiline={true}
+                // rows={3}
                 onKeyPress={e => (e.key === 'Enter' ? onSendMessage() : null)}
                 classes={{
                   root: classes.inputRoot,
@@ -195,6 +300,7 @@ const ChatWindow = (props) => {
               variant="contained"
               color="primary"
               className={classes.button}
+              disabled={input == ""}
               onClick={onSendMessage}
               endIcon={<Icon>send</Icon>}
             >
