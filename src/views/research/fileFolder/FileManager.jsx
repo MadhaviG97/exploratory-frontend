@@ -23,7 +23,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import IconButton from '@material-ui/core/IconButton';
-
+import NotFound from '../../../components/NotFound/NotFound'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -48,6 +48,7 @@ function FileManager(props) {
     let folder=props.match.params.folderId
     
     const [files, setFiles] = useState([])
+    const [collabs, setCollabs] = useState([])
     const [name,setName]=useState('');
     const [deleteopen, setDeleteOpen] = React.useState(false);
     const [fileDetail, setFileDetail] = useState('')
@@ -64,6 +65,11 @@ function FileManager(props) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    console.log(user.userData)
+    let user_id=0
+    if (user.userData){
+        user_id=user.userData._id
+    }
     const onSearchChange = (value) => {
         setName(value)
     }
@@ -245,9 +251,15 @@ function FileManager(props) {
                     alert('Could not get files ')
                 }
             })
-            console.log('not')
+        axios.post('/project/get-collaborators', variable)
+        .then(response => {
+            if (response.data) {
+                setCollabs(response.data)
+                
+            }
+        })
     }, [])
-    
+        if (collabs.some(e => e.researcher_id == user_id)){
         return (
         <div >
             <Dialog open={deleteopen} onClose={handleDeleteClose} aria-labelledby="form-dialog-title">
@@ -441,13 +453,13 @@ function FileManager(props) {
             
         </div>
         );
-
-
+    }
+    else{
+        return(
+        <NotFound/>
+        );
     }
 
-    
-
-
-
+}
 
 export default FileManager

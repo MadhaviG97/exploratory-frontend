@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react'
-
+import axios from 'axios';
 import { useSelector } from "react-redux";
-
+import NotFound from '../../../components/NotFound/NotFound'
 import classNames from "classnames";
 import Footer from "../../../components/Footer/Footer";
 import NavBar from "../../../components/Navbar/Navbar";
 import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/editor";
 import NavComponent from '../../../components/AppNavigation/NavigationComponent';
-import Divider from '@material-ui/core/Divider';
 import Grid from "@material-ui/core/Grid";
 import '../../../assets/css/editor.css';
 
@@ -19,7 +18,25 @@ function Edit2Page(props) {
     const classes = useStyles();
     const user = useSelector(state => state.user);
     console.log(user)
+    let user_id=0
+    if (user.userData){
+        user_id=user.userData._id
+    }
+    const [collabs, setCollabs] = useState([])
+    useEffect(() => {
+        const variable = { 
+            group: props.match.params.projectId,
+        }
+        axios.post('/project/get-collaborators', variable)
+            .then(response => {
+                if (response.data) {
+                    setCollabs(response.data)
+                    
+                }
+            })
+    }, [])
     
+    if (collabs.some(e => e.researcher_id == user_id)){
         return (
         <div className={classNames(classes.main2)}>
             <NavBar/>
@@ -51,6 +68,11 @@ function Edit2Page(props) {
             <Footer/>
         </div>
         );
+    }else{
+        return(
+            <NotFound/>
+            );
     }
+}
 
 export default Edit2Page
