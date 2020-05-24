@@ -22,6 +22,7 @@ import Card from '@material-ui/core/CardMedia';
 import CardMedia from '@material-ui/core/CardMedia';
 import CardHeader from '@material-ui/core/CardHeader';
 import Box from '@material-ui/core/Box';
+import NavComponent from '../../components/AppNavigation/NavigationComponent';
 import classNames from "classnames";
 import Typography from '@material-ui/core/Typography';
 var jsdiff = require('diff');
@@ -45,7 +46,7 @@ function extractContent(html) {
 
 }
 
-export default function DialogSelect() {
+export default function DialogSelect(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [doco, setDocO] = React.useState('');
@@ -68,9 +69,10 @@ export default function DialogSelect() {
       },
     },
   };  
+  const group=props.group
   React.useEffect(() => {
     const variable = {
-      group: "GeeFour",
+      group:group,
       //name: name
     }
     console.log(variable)
@@ -80,7 +82,7 @@ export default function DialogSelect() {
         'Authorization': `Bearer ${token}`
         }
       }
-    axios.get('/editor/getBlogs',config)
+    axios.post('/editor/getBlogs',variable,config)
         .then(response => {
             if (response.data.success) {
                 console.log(response.data.blogs)
@@ -214,18 +216,25 @@ export default function DialogSelect() {
   }
 
   return (
-    <div >
-        <Box p={3}/>
+    <div className={classes.main2}>
+        <Box p={1}/>
+        <div className={classes.icon}>
+          <Box  style={{ display: "flex" }} flexDirection="row" >
+              <NavComponent projectId={group}/>
+          </Box>
+          <Divider  variant="fullWidth" />
+          <Box p={2} />
+        </div>         
         <Grid container spacing={4} direction="row" justify="center"  alignItems="center">
-            
         
-          <Grid item xs={8} md={4}>
+        
+          <Grid item xs={8} md={4} item align="center" >
             <CardActionArea component="a" onClick={handleClickOpen}>
-              <Card className={classes.card}>
+              <Card className={classes.card} style={{  background: '#FFFFFF'}}>
                 <div className={classes.cardDetails}>
                   <CardContent>
                     <div className={classes.name} >
-                        <h2 className={classes.topic}>Select Two Documents </h2>
+                        <h2 className={classes.topic}>Select Two Documents to Compare</h2>
                     </div>
                     
                   </CardContent>
@@ -271,7 +280,7 @@ export default function DialogSelect() {
                 </Select>
               </FormControl>
               
-              <FormControl className={classes.formControl}>
+              <FormControl className={classes.formControl} >
                 <InputLabel id="demo-dialog-select-label">Select</InputLabel>
                 <Select
                   labelId="demo-dialog-select-label"
@@ -322,9 +331,9 @@ export default function DialogSelect() {
           </Grid>
         </Grid>
         <Box p={3}/> 
-        <Grid container spacing={4} direction="row" justify="center"  alignItems="center">
+        <Grid container spacing={4} direction="row" justify="center"  alignItems="center" >
           
-          <Grid item >
+          <Grid item style={{  background: '#FFFFFF'}}>
             <TextField
               id="outlined-multiline-static"
               label="Old Text"
@@ -336,7 +345,7 @@ export default function DialogSelect() {
               onChange={handleTextChange1}
             />
           </Grid>
-          <Grid item >
+          <Grid item style={{  background: '#FFFFFF'}}>
             <TextField
               id="outlined-multiline-static"
               label="New Text"
@@ -370,11 +379,11 @@ export default function DialogSelect() {
           </Grid>
         </Grid>
         <Box p={2}/> 
-        <Grid container spacing={4} direction="row" justify="center"  alignItems="center">
+        <Grid container spacing={4} direction="row" justify="center"  alignItems="center" >
             
         
           <Grid item >
-            <Card variant="outlined" className={classes.card2}>
+            <Card variant="outlined" className={classes.card2} style={{  background: '#FFFFFF'}}>
               <CardHeader
                   title="Comparison Results"
                   style={{ textAlign: 'center' }}  

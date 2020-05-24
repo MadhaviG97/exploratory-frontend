@@ -57,7 +57,9 @@ socket.on('candidate', (data) => {
         io.to(grouproom.concat('caller')).emit('candidate', data.candidate);
     }
 });
-
+socket.on('sender', (sender) => {
+    io.to(grouproom.concat('callee')).emit('sender', sender);
+});
 socket.on('disconnect', () => {
     console.log('Socket Disconnected', socket.id);
 });

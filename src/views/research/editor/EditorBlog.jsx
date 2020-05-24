@@ -29,7 +29,9 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-
+import { useSelector } from "react-redux";
+import NotFound from '../../../components/NotFound/NotFound'
+import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 export default function CreatePage(props) {
  
     const [blogs, setBlogs] = useState([])
@@ -38,6 +40,13 @@ export default function CreatePage(props) {
     const [open,setOpen]=useState(false);
     const [id,setId]=useState('');
     const [documentdeleted,setDocumentDeleted]=useState(false);
+    const group=props.match.params.projectId
+    const user = useSelector(state => state.user);
+    let user_id=0
+    if (user.userData){
+        user_id=user.userData._id
+    }
+    const [collabs, setCollabs] = useState([])
     const handleClickOpen = (id) => {
         setId(id)
         setOpen(true);
@@ -48,18 +57,27 @@ export default function CreatePage(props) {
     };
     useEffect(() => {
         const token = localStorage.token;
+        const variable={group:group}
         let config = {
           headers: {
           'Authorization': `Bearer ${token}`
           }
         }
-        axios.get('/editor/getBlogs',config)
+        axios.post('/editor/getBlogs',variable,config)
             .then(response => {
                 if (response.data.success) {
                     console.log(response.data.blogs)
                     setBlogs(response.data.blogs)
                 } else {
                     alert('Could not get blog`s lists')
+                }
+            })
+            
+        axios.post('/project/get-collaborators', variable)
+            .then(response => {
+                if (response.data) {
+                    setCollabs(response.data)
+                    
                 }
             })
     }, [])
@@ -73,7 +91,7 @@ export default function CreatePage(props) {
         const token = localStorage.token;
         
         const variables = {
-            //writer: "GeeFour",
+            group: group,
             name: name
         }
         let config = {
@@ -106,7 +124,7 @@ export default function CreatePage(props) {
             }
           }
         
-        axios.post('/editor/deletepost', variable,config)
+        axios.post('/editor/softdeletepost', variable,config)
             .then(response => {
                 if (response.data.success) {
                     setDocumentDeleted(true)
@@ -120,115 +138,132 @@ export default function CreatePage(props) {
             })
         
     };
-    return(
-        <div className={classNames(classes.main2)}>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogContent>
-                    <DialogContentText>
-                        Delete Document?
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                <Button onClick={handleClose} color="primary">
-                    Cancel
-                </Button>
-                <Button onClick={handleDelete} color="primary">
-                    Delete
-                </Button>
-                </DialogActions>
-            </Dialog>
-            <NavBar/>
-            <Collapse in={documentdeleted}>
-                    <Alert
-                    action={
-                        <IconButton
-                        aria-label="close"
-                        color="inherit"
-                        size="small"
-                        onClick={() => {
-                            setDocumentDeleted(false);
-                        }}
+    if (collabs.some(e => e.researcher_id == user_id)){
+        return(
+            <div className={classNames(classes.main2)}>
+                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                    <DialogContent>
+                        <DialogContentText>
+                            Delete Document?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button onClick={handleDelete} color="primary">
+                        Delete
+                    </Button>
+                    </DialogActions>
+                </Dialog>
+                <NavBar/>
+                <Collapse in={documentdeleted}>
+                        <Alert
+                        action={
+                            <IconButton
+                            aria-label="close"
+                            color="inherit"
+                            size="small"
+                            onClick={() => {
+                                setDocumentDeleted(false);
+                            }}
+                            >
+                            <CloseIcon fontSize="inherit" />
+                            </IconButton>
+                        }
                         >
-                        <CloseIcon fontSize="inherit" />
-                        </IconButton>
-                    }
-                    >
-                    Document Succesfully Deleted!
-                    </Alert>
-                </Collapse>
-            <div >
-                
-                 {/*marginTop={7} />*/}
-                 
-                 
-                    {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
-                    <Box p={1}/>
-                    <Grid container spacing={5} >
-                        <Grid item xs={3}>
-                            <Paper >
-                            <EditorBlogMenu handleSearch={handleSearch} onSearchChange={onSearchChange}/>
-                            </Paper>
-                        </Grid>
-                        <Divider orientation="vertical" variant="fullWidth" />
-                        
-                        <Grid item xs={8}>
-                            <Grid container spacing={4} direction="row" >
-                                {blogs.map((blog,index) => (
-                                    <Grid item lg={4} md={6} xs={12}>
-                                        <CardActionArea component="a" >
-                                        <Card >
-                                            <CardHeader
-                                                avatar={
-                                                    <Avatar aria-label="recipe" className={classes.avatar}>
-                                                    {blog.name[0]}
-                                                    </Avatar>
-                                                }
+                        Document Succesfully Deleted!
+                        </Alert>
+                    </Collapse>
+                <div >
+                    
+                    {/*marginTop={7} />*/}
+                    
+                    
+                        {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
+                        <Box p={1}/>
+                        <Grid container spacing={5} >
+                            <Grid item xs={3}>
+                            <Box p={2}/>
+                                <Paper >
+                                    <Box p={1.5}>
+                                        <EditorBlogMenu handleSearch={handleSearch} onSearchChange={onSearchChange} group={group}/>
+                                    </Box>
+                                </Paper>
+                            </Grid>
+                            <Divider orientation="vertical" variant="fullWidth" />
+                            
+                            <Grid item xs={8}>
+                                <Box  style={{ display: "flex" }} flexDirection="row" > 
+                                    <Box alignSelf="flex-end">
+                                        <NavComponent projectId={group}/>
+                                    </Box>
+                                    
+                                </Box>
+                                <Divider  variant="fullWidth" />
+                                <Box p={1} />
+                                <Grid container spacing={4} direction="row" >
+                                    {blogs.map((blog,index) => (
+                                        <Grid item lg={4} md={6} xs={12}>
+                                            <CardActionArea component="a" >
+                                            <Card >
+                                                <CardHeader
+                                                    avatar={
+                                                        <Avatar aria-label="recipe" className={classes.avatar}>
+                                                        {blog.name[0]}
+                                                        </Avatar>
+                                                    }
+                                                    
+                                                    title={blog.name}
+                                                    subheader={blog.updatedAt}
+                                                />
+                                                <Divider variant="middle" />
+                                                <CardContent>
                                                 
-                                                title={blog.name}
-                                                subheader={blog.updatedAt}
-                                            />
-                                            <Divider variant="middle" />
-                                            <CardContent>
-                                            
-                                                
-                                                
-                                                <div style={{ height: 150, overflowY: 'scroll', marginTop: 10 }}>
-                                                    <div dangerouslySetInnerHTML={{ __html: blog.content }} />
-                                                </div>
-                                                
-                                            </CardContent>
-                                            <Divider variant="middle" />
-                                            <CardActions disableSpacing>
-                                            <Tooltip title="Edit Document">
-                                                <IconButton aria-label="delete document" href={`/document/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
-                                                    <EditIcon/>
-                                                </IconButton>
-                                            </Tooltip>
-                                            <Tooltip title="Turn to PDF format">
-                                                    <IconButton aria-label="settings" href={`/document/view/${blog._id}`}>
-                                                        <PictureAsPdfIcon />
+                                                    
+                                                    
+                                                    <div style={{ height: 150, overflowY: 'scroll', marginTop: 10 }}>
+                                                        <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+                                                    </div>
+                                                    
+                                                </CardContent>
+                                                <Divider variant="middle" />
+                                                <CardActions disableSpacing>
+                                                <Tooltip title="Edit Document">
+                                                    <IconButton aria-label="delete document" href={`/document/${group}/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                        <EditIcon/>
                                                     </IconButton>
                                                 </Tooltip>
-                                            <Tooltip title="Delete Document">
-                                                <IconButton aria-label="delete document" onClick={()=>handleClickOpen(blog._id)} >{/*href ={`/editor/delete/${blog._id}`} */}
-                                                    <DeleteIcon />
-                                                </IconButton>
-                                            </Tooltip>
-                                            </CardActions>
-                                        
-                                        </Card>
-                                        </CardActionArea>
-                                    </Grid>
-                                ))}
+                                                <Tooltip title="Turn to PDF format">
+                                                        <IconButton aria-label="settings" href={`/document/${group}/view/${blog._id}`}>
+                                                            <PictureAsPdfIcon />
+                                                        </IconButton>
+                                                    </Tooltip>
+                                                <Tooltip title="Delete Document">
+                                                    <IconButton aria-label="delete document" onClick={()=>handleClickOpen(blog._id)} >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                        <DeleteIcon />
+                                                    </IconButton>
+                                                </Tooltip>
+                                                </CardActions>
+                                            
+                                            </Card>
+                                            </CardActionArea>
+                                        </Grid>
+                                    ))}
+                                </Grid>
                             </Grid>
                         </Grid>
-                    </Grid>
+                    
                 
-               
+                </div>
+                
+                <Box p={5}></Box>
             </div>
-            
-            
-        </div>
-    );
+        );
+     }else{
+        return(
+            <NotFound/>
+            );
+    }
 
 }

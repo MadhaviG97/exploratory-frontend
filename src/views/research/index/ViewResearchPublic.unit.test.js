@@ -17,6 +17,9 @@ jest.mock('react-router-dom', () => ({
     useLocation: () => ({
         push: jest.fn(),
       }),
+    useParams: () => ({
+      push: jest.fn(),
+    }),
   }));
 describe('view research public', () => {
     it('renders without crashing', () => {

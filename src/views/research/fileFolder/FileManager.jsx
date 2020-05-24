@@ -9,7 +9,6 @@ import NavBar from "../../../components/Navbar/Navbar";
 import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/editor";
 
-import UserSection from "../../../components/PublicForumSections/FrequentUsersSection";
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -24,13 +23,13 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import IconButton from '@material-ui/core/IconButton';
-
+import NotFound from '../../../components/NotFound/NotFound'
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
-
+import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Typography } from '@material-ui/core';
@@ -49,6 +48,7 @@ function FileManager(props) {
     let folder=props.match.params.folderId
     
     const [files, setFiles] = useState([])
+    const [collabs, setCollabs] = useState([])
     const [name,setName]=useState('');
     const [deleteopen, setDeleteOpen] = React.useState(false);
     const [fileDetail, setFileDetail] = useState('')
@@ -57,6 +57,7 @@ function FileManager(props) {
     const [filedeleted,setFileDeleted]=useState(false);
     const [fileshared,setFileShared]=useState(false);
     const [filenotshared,setFileNotShared]=useState(false);
+    const group=props.match.params.projectId
     const handleClick = param => event  => {
         setAnchorEl(event.currentTarget);
         setFileDetail(param)
@@ -64,6 +65,11 @@ function FileManager(props) {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    console.log(user.userData)
+    let user_id=0
+    if (user.userData){
+        user_id=user.userData._id
+    }
     const onSearchChange = (value) => {
         setName(value)
     }
@@ -81,7 +87,7 @@ function FileManager(props) {
         const variables = {
             folder:folder,
             name: name,
-            group:"GeeFour"
+            group:group
         }
         let config = {
           headers: {
@@ -144,17 +150,9 @@ function FileManager(props) {
         setAnchorEl(null);
     };
     const fileDownload = () => {
-        if (folder){
-            console.log(folder)
-            //folder=props.match.params.folderId
-          }
-          else{
-            folder="root"
-          }
+        
         const variable = { 
-            filename:fileDetail.filename,
-            group: "GeeFour",
-            folder:folder
+            filename:fileDetail.filename
         }
         console.log(variable)
         const token = localStorage.token;
@@ -189,7 +187,7 @@ function FileManager(props) {
     const handleDelete = () => {
         setDeleteOpen(false)
         const variable = { 
-            id:fileDetail._id
+            filename:fileDetail.filename
         }
         console.log(variable)
         const token = localStorage.token;
@@ -198,35 +196,18 @@ function FileManager(props) {
             'Authorization': `Bearer ${token}`
             }
           }
-        if (fileDetail.metadata.folder=='deleted'){//change this later == to !=
-            axios.post('/drive/softdeletefile', variable,config)
-                .then(response => {
-                    if (response.data.success) {
-                        setFileDeleted(true)
-                        setTimeout(() => {
-                            window.location.reload();
-                            }, 1000);
-                        
-                    } else {
-                        alert('Could not Delete File ')
-                    }
-                })
-        }
-        else{
-            axios.post('/drive/deletefile', variable,config)
-                .then(response => {
-                    if (response.data.success) {
-                        setFileDeleted(true)
-                        setTimeout(() => {
-                            window.location.reload();
-                            }, 1000);
-                        
-                    } else {
-                        alert('Could not Delete File ')
-                    }
+        axios.post('/drive/softdeletefile', variable,config)
+            .then(response => {
+                if (response.data.success) {
+                    setFileDeleted(true)
+                    setTimeout(() => {
+                        window.location.reload();
+                        }, 1000);
+                    
+                } else {
+                    alert('Could not Delete File ')
+                }
             })
-        }
-        
         setAnchorEl(null);
     };
     useEffect(() => {
@@ -239,7 +220,7 @@ function FileManager(props) {
           }
         const variable = { 
             folder:folder,
-            group: "GeeFour",
+            group: group,
             //name: name
         }
         console.log(variable)
@@ -270,9 +251,15 @@ function FileManager(props) {
                     alert('Could not get files ')
                 }
             })
-            console.log('not')
+        axios.post('/project/get-collaborators', variable)
+        .then(response => {
+            if (response.data) {
+                setCollabs(response.data)
+                
+            }
+        })
     }, [])
-    
+        if (collabs.some(e => e.researcher_id == user_id)){
         return (
         <div >
             <Dialog open={deleteopen} onClose={handleDeleteClose} aria-labelledby="form-dialog-title">
@@ -347,10 +334,9 @@ function FileManager(props) {
                     </Alert>
                 </Collapse>
             </div>
-            <Box p={1.4}></Box>
+            <Box p={1.3}></Box>
                 <Menu
                     id="simple-menu"
-                    
                     anchorEl={anchorEl}
                     getContentAnchorEl={null}
                     anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
@@ -368,33 +354,35 @@ function FileManager(props) {
                 </Menu>
                 
                 
-                <div className={classNames(classes.main2)} > 
-                    
-                    {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
-                    
+                <div className={classNames(classes.main2)} >
                     <Grid container spacing={5} >
                         <Grid item xs={3} >
-                            <Paper >
-                            <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params}/>
+                            <Box p={2}/>
+                            <Paper classname={classes.papermenu}>
+                            <Box p={1.5}>
+                                <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params} group={group}/>
+                            </Box>
                             </Paper>
                         </Grid>
                         <Divider orientation="vertical" variant="fullWidth" />
-                        
                         <Grid item xs={8}>
+                            <Box  style={{ display: "flex" }} flexDirection="row" >
+                                    <NavComponent projectId={group}/>
+                            </Box>
+                            <Divider  variant="fullWidth" />
+                            <Box p={1} />
                             <Box boxShadow={2} >
                                 <Box p={1}  style={{  background: '#FFFFFF'}}>
                                         <h1 align='center' className={classes.topic3}>Drive</h1>
                                 </Box>
                             </Box>
-                            <Box p={2}></Box>
+                            <Box p={1}/>
                             <Grid container spacing={4} direction="row"  >
                                 {folders.map((folder,index) => (
                                     <Grid item lg={3} md={4} xs={8}>
-                                        <CardActionArea component="a" href={`/document/filemanager/${folder._id}`}>
+                                        <CardActionArea component="a" href={`/document/${group}/filemanager/${folder._id}`}>
                                             <Card >
-                                                
                                                 <CardContent>
-                                                
                                                     <div style={{ height: 140, marginBottom: 2 }}>
                                                     <img src={process.env.PUBLIC_URL + '/images/fileFolder/folderImage.png'} alt={folder.name} />
                                                     </div>
@@ -402,7 +390,7 @@ function FileManager(props) {
                                                 </CardContent>
                                                 <Divider variant="middle" />
                                                 <CardActions  justify="center" >
-                                                    <IconButton aria-label="get files"  href={`/document/filemanager/${folder._id}`}>
+                                                    <IconButton aria-label="get files"  href={`/document/${group}/filemanager/${folder._id}`}>
                                                         <ArrowForwardIosIcon/>
                                                     </IconButton>
                                                     <Typography
@@ -465,13 +453,13 @@ function FileManager(props) {
             
         </div>
         );
-
-
+    }
+    else{
+        return(
+        <NotFound/>
+        );
     }
 
-    
-
-
-
+}
 
 export default FileManager

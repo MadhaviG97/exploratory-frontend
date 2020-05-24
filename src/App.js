@@ -27,7 +27,6 @@ import EditPage from "./views/research/editor/EditPage";
 import EditorBlog from "./views/research/editor/EditorBlog";
 import ViewDocument from "./views/research/editor/ViewDocument";
 import FileManager from "./views/research/fileFolder/FileManager";
-import ProjectFolder from "./views/research/fileFolder/ProjectFolder";
 
 //project
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
@@ -64,34 +63,27 @@ function App() {
             <Route exact path="/aboutus" component={Auth(AboutUs, null)} />
             <Route
               exact
-              path="/document/create"
+              path="/document/:projectId/create"
               component={Auth(CreatePage, true)}
             />
-            {/*<Route exact path="/document/edit" component={EditPage} />
-            <Route exact path="/blog/edit/:postId" component={Auth(EditPage, null)} />*/}
             <Route
               exact
-              path="/document/projectfolder"
-              component={Auth(ProjectFolder, null)}
-            />
-            <Route
-              exact
-              path="/document/compare"
+              path="/document/:projectId/compare"
               component={Auth(CompareDoc, true)}
             />
             <Route
               exact
-              path="/document/view/:postId"
+              path="/document/:projectId/view/:postId"
               component={Auth(ViewDocument, true)}
             />
             <Route
               exact
-              path="/document/filemanager"
+              path="/document/:projectId/filemanager"
               component={Auth(FileManager, true)}
             />
             <Route
               exact
-              path="/document/filemanager/:folderId"
+              path="/document/:projectId/filemanager/:folderId"
               component={Auth(FileManager, true)}
             />
             <Route
@@ -111,27 +103,22 @@ function App() {
             />
             <Route
               exact
-              path="/document/projectfolder"
-              component={Auth(ProjectFolder, true)}
-            />
-            <Route
-              exact
-              path="/document/edit/:postId"
+              path="/document/:projectId/edit/:postId"
               component={Auth(EditPage, true)}
             />
             <Route
               exact
-              path="/document/editorblog"
+              path="/document/:projectId/editorblog"
               component={Auth(EditorBlog, true)}
             />
             <Route
               exact
-              path="/screenshare/receive"
+              path="/screenshare/:projectId/receive"
               component={Auth(Receive, true)}
             />
             <Route
               exact
-              path="/screenshare/send"
+              path="/screenshare/:projectId/send"
               component={Auth(Send, true)}
             />
 
