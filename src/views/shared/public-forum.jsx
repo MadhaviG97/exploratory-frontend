@@ -27,7 +27,7 @@ import { useDispatch, useSelector } from "react-redux";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    minWidth: 250
+    minWidth: 250,
   },
   paper: {
     padding: theme.spacing(2),
@@ -38,22 +38,17 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Forum() {
   const classes = useStyles();
-  const questions = useSelector((state) => state.questions);
-  const forum = useSelector((state) => state.forum);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAnswers());
-  }, []);
-
-  useEffect(() => {
     dispatch(getQuestions());
   }, []);
 
-
+  const questions = useSelector((state) => state.questions);
+  const forum = useSelector((state) => state.forum);
  
-
   return (
     <div>
       <ForumAppBar userDetails={user.userData} />
@@ -71,7 +66,7 @@ export default function Forum() {
             <Container style={{ backgroundColor: "white", padding: "5px" }}>
               {Object.keys(questions).length > 0 ? (
                 questions.questions.map((question) => (
-                  <ForumPost postDetails={question}  />
+                  <ForumPost postDetails={question} />
                 ))
               ) : (
                 <div className={classes.paper}>No Questions</div>
@@ -85,7 +80,7 @@ export default function Forum() {
 
           <Grid item xs>
             <Paper className={classes.paper}>
-              <AddQuestionDialog  />
+              <AddQuestionDialog />
             </Paper>
             <Divider />
             <Paper>

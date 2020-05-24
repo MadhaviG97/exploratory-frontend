@@ -22,8 +22,7 @@ const useStyles = makeStyles((theme) => ({
 export default function CountGrid() {
   const classes = useStyles();
   const questions = useSelector((state) => state.questions);
-  var count = questions.questions;
-  function getQuestionLength(obj) {
+  function getLength(obj) {
     var length = 0;
     for (var p in obj) {
       if (obj.hasOwnProperty(p)) {
@@ -35,23 +34,13 @@ export default function CountGrid() {
   return (
     <div className={classes.root} spacing={2}>
       <Grid container className={classes.root} spacing={2}>
-        <Grid item xs={6}>
+        <Grid item xs >
           <Paper className={classes.paper}>
             <Typography variant="title" gutterBottom>
-              Questions
+              Total Questions
             </Typography>
             <Typography variant="h5" gutterBottom>
-              {getQuestionLength(questions.questions)}
-            </Typography>
-          </Paper>
-        </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>
-            <Typography variant="title" gutterBottom>
-              Answers
-            </Typography>
-            <Typography variant="h5" gutterBottom>
-              42
+              {getLength(questions.questions)}
             </Typography>
           </Paper>
         </Grid>

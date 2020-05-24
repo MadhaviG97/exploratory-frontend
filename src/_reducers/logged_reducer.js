@@ -1,9 +1,9 @@
-import { LOGGED_USER } from "../_actions/types"
+import { AUTH_USER } from "../_actions/types"
 
-const logged_Reducer = (state = true, action) => {
+const logged_Reducer = (state = false, action) => {
     switch(action.type){
-        case LOGGED_USER:
-            return !state;
+        case AUTH_USER:
+            return action.payload.isAuth;
         default:
             return state;
     }

@@ -16,10 +16,11 @@ import Divider from "@material-ui/core/Divider";
 
 import CommentSection from "./CommentSection";
 import QuestionLike from "./QuestionLikeSection";
+import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
+    width: "auto",
   },
   media: {
     height: 0,
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Post(props) {
   const classes = useStyles();
+  const is_logged = useSelector((state) => state.is_logged);
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -89,7 +91,17 @@ export default function Post(props) {
           <Divider />
         </CardContent>
         <CardActions disableSpacing>
-          <QuestionLike Q_id={props.postDetails.researcher_id} />
+          {is_logged ? (
+            <QuestionLike
+              Q_id={props.postDetails.researcher_id}
+              question_id={props.postDetails.question_id}
+              title={props.postDetails.title}
+              description={props.postDetails.description}
+            />
+          ) : (
+            <div></div>
+          )}
+
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,
@@ -103,7 +115,10 @@ export default function Post(props) {
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <CommentSection question_id={props.postDetails.question_id} />
+            <CommentSection
+              question_id={props.postDetails.question_id}
+              question_title={props.postDetails.title}
+            />
           </CardContent>
         </Collapse>
       </Card>

@@ -7,9 +7,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
-import { addAnswer, getAnswers } from "../../_actions/forum_actions";
+import { getComments, addComment } from "../../_actions/taskTracker_actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -46,7 +44,7 @@ export default function AddComment(props) {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const [open, setOpen] = React.useState(false);
-  const [answer, setAnswer] = React.useState("");
+  const [comment, setComment] = React.useState("");
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
@@ -58,47 +56,51 @@ export default function AddComment(props) {
   };
 
   const handleChange = (event) => {
-    setAnswer(event.target.value);
+    setComment(event.target.value);
   };
+
+  var date = new Date().getDate();
+  var month = new Date().getMonth() + 1;
+  var year = new Date().getFullYear();
 
   const handleSubmit = () => {
-    const answerData = {
-      answer:answer,
-      question_id:props.question_id,
-      researcher_id:user.userData._id
-    }
+    const commentData = {
+      project_id: props.project_id,
+      comment: comment,
+      commentor_id: user.userData._id,
+      created_at: year + "-" + month + "-" + date,
+      updated_at: year + "-" + month + "-" + date,
+    };
     setOpen(false);
-    dispatch(addAnswer(answerData));
-    dispatch(getAnswers());
-    setAnswer("");
+    dispatch(addComment(commentData));
+    dispatch(getComments(props.project_id));
+    setComment("");
   };
-
 
   return (
     <div>
-      <Fab
-        color="Primary"
-        aria-label="add"
-        className={classes.fabButton}
+      <Button
+        variant="contained"
+        color="primary"
+        padding={10}
         onClick={handleClickOpen}
       >
-        <AddIcon />
-      </Fab>
+        Add a Comment
+      </Button>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        fullWidth ="true"
       >
-        <DialogTitle id="form-dialog-title">Add Answer</DialogTitle>
+        <DialogTitle id="form-dialog-title">Add Comment</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {props.question_title}
-          </DialogContentText>
+          <DialogContentText>Add your Comment below...!</DialogContentText>
           <TextField
             autoFocus
             margin="dense"
-            id="name"
-            label="Your Answer"
+            id="comment"
+            label="Your Comment"
             type="text"
             fullWidth
             multiline

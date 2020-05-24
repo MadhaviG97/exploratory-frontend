@@ -11,7 +11,7 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { addQuestion } from "../../_actions/forum_actions";
+import { addQuestion,getQuestions,getAnswers } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -92,6 +92,8 @@ export default function QuestionDialog(props) {
       title: "",
       description: "",
     });
+    dispatch(getQuestions());
+    dispatch(getAnswers());
   };
 
   const handleChange = (prop) => (event) => {
