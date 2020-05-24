@@ -2,6 +2,9 @@ import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import signUp from "./views/guest-user/sign-up.jsx";
+import ConfirmEmail from "./views/guest-user/ConfirmEmail.jsx";
+import TemporaryRegister from "./views/guest-user/TemporaryRegister.jsx";
+
 import fillProfile from "./views/researcher/fill-profile";
 import UserProfile from "./views/researcher/user-profile.jsx";
 import AboutUs from "./views/shared/about-us.jsx";
@@ -39,7 +42,10 @@ import Receive from "./views/research/screenShare/Receive";
 import Send from "./views/research/screenShare/Send";
 
 import Demo from "./views/whiteboard/Demo";
-import TaskTracker from "./components/Project/TaskTracker";
+import CreateRoom from "./views/whiteboard/CreateRoom";
+import JoinRoom from "./views/whiteboard/JoinRoom";
+
+import TaskTracker from "./components/Project/task_tracker";
 
 function App() {
   return (
@@ -60,6 +66,19 @@ function App() {
               path="/fillProfile"
               component={Auth(fillProfile, true)}
             />
+
+            <Route
+              exact
+              path="/user/join-exploratory/:userId"
+              component={Auth(ConfirmEmail, false)}
+            />
+
+            <Route
+              exact
+              path="/user/temporary-register/:userId"
+              component={Auth(TemporaryRegister, null)}
+            />
+
             <Route exact path="/aboutus" component={Auth(AboutUs, null)} />
             <Route
               exact
@@ -94,7 +113,7 @@ function App() {
             <Route
               exact
               path="/project/createproject"
-              component={Auth(CreateProject, null)}
+              component={Auth(CreateProject, true)}
             />
             <Route
               exact
@@ -122,7 +141,7 @@ function App() {
               component={Auth(Send, true)}
             />
 
-            <Route exact path="/project" component={Auth(Project, null)} />
+            <Route exact path="/project" component={Auth(Project, true)} />
             <Route exact path="/forum" component={Auth(Forum, true)} />
             <Route
               exact
@@ -133,10 +152,18 @@ function App() {
             <Route
               exact
               path="/project/settings/:id"
-              component={Auth(ProjectSettings, null)}
+              component={Auth(ProjectSettings, true)}
             />
             <Route exact path="/whiteboard" component={Demo} />
+
+            <Route
+              exact
+              path="/project/whiteboard/join-room/:project_id"
+              component={Auth(JoinRoom, true)}
+            />
+
             <Route exact path="/chat" component={Auth(Chat, null)} />
+
             <Route
               exact
               path="/tasktracker"

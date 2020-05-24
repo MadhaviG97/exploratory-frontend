@@ -5,7 +5,7 @@ import Theme from "./assets/themes/Theme";
 import { ThemeProvider } from "@material-ui/core/styles";
 import * as serviceWorker from "./serviceWorker";
 import { Router } from "react-router-dom";
-import history from './history';
+import history from "./history";
 import Reducer from "./_reducers";
 import { Provider } from "react-redux";
 import { createStore, applyMiddleware } from "redux";
@@ -24,7 +24,7 @@ render(
         window.__REDUX_DEVTOOLS_EXTENSION__()
     )}
   >
-    <Router  history={history}>
+    <Router history={history}>
       <App />
     </Router>
   </Provider>,

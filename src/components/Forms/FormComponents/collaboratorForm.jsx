@@ -25,9 +25,10 @@ export default function Asynchronous(props) {
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
   const admins = useSelector((state) => state.project).admins;
-
-  const handleChange = (event, value) => {
-    setSelectedItems(value);
+  const logged_in_user = useSelector((state) => state.user);
+  const handleChange = async (event, value) => {
+    await setSelectedItems(value);
+    console.log(value);
     props.onChange(value);
   };
 
@@ -49,8 +50,12 @@ export default function Asynchronous(props) {
       await axios
         .post("/researcher/get-all-users", {})
         .then(async (res) => {
+          console.log(res.data);
           if (active) {
-            var without_admin = await filterAdmin(res.data, admins);
+            var without_admin =
+              (await admins) === undefined
+                ? filterAdmin(res.data, [logged_in_user.userData])
+                : filterAdmin(res.data, admins);
 
             setOptions(
               without_admin.map((user) => {
@@ -61,6 +66,7 @@ export default function Asynchronous(props) {
                   institution: user.institution_name,
                   profile_picture: user.profile_picture,
                   isAdmin: 0,
+                  email: user.researcher_email,
                 };
               })
             );
@@ -88,7 +94,7 @@ export default function Asynchronous(props) {
       disableClearable
       disabled={props.disabled}
       limitTags={3}
-      // defaultValue={props.collaborators}
+      defaultValue={props.collaborators}
       value={selectedItems}
       onChange={handleChange}
       open={open}

@@ -245,7 +245,7 @@ class Notification extends Component {
    * default props
    */
   static defaultProps = {
-    iconFillColor: "#fff",
+    iconFillColor: "action",
     zDepth: 1,
   };
 
@@ -505,7 +505,7 @@ class Notification extends Component {
               rightIconButton={desktopClose}
               innerDivStyle={listItemStyle}
               disabled={this.props.onClick ? false : true}
-              onTouchTap={() => {
+              onClick={() => {
                 if (this.props.onClick) {
                   this.props.onClick();
                   this.props.removeNotification();

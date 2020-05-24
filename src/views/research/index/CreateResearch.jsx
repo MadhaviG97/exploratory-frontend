@@ -8,100 +8,89 @@ import {
   Box,
 } from "@material-ui/core";
 import Navbar from "../../../components/Navbar/Navbar";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemText from "@material-ui/core/ListItemText";
-import ListItemAvatar from "@material-ui/core/ListItemAvatar";
-import Avatar from "@material-ui/core/Avatar";
 import { useStyles } from "../../../assets/css/createResearch";
 import Footer from "../../../components/Footer/Footer";
-import Autocomplete from "@material-ui/lab/Autocomplete";
-import Chip from "@material-ui/core/Chip";
-import Checkbox from "@material-ui/core/Checkbox";
-import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
-import CheckBoxIcon from "@material-ui/icons/CheckBox";
+import CollaboratorForm from "../../../components/Forms/FormComponents/collaboratorForm";
+import TagForm from "../../../components/Forms/FormComponents/TagForm";
+import Loader from "../../../components/Loader";
+
 //redux
 import { useSelector } from "react-redux";
 //routing
 import { useHistory, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const tags = [
-  { id: 10001, title: "tags-1" },
-  { id: 10002, title: "tags-2" },
-  { id: 10003, title: "tags-3" },
-  { id: 10004, title: "tags-4" },
-  { id: 10005, title: "tags-5" },
-];
-
 export default function Form() {
   const classes = useStyles();
   let user = useSelector((state) => state.user);
   let history = useHistory();
   let location = useLocation();
+  const [loggedInUser, setLoggedInUser] = React.useState({});
+  React.useEffect(() => {
+    setLoggedInUser(user.userData);
+  }, []);
 
   const AddressForm = () => {
     const [state, setState] = React.useState({
       title: "",
       description: "",
-      currentuser: collaborators[0],
-      collaborators: [collaborators[0]],
+      currentuser: "",
+      collaborators: [],
       tags: [],
     });
+
+    React.useEffect(() => {
+      setState({ ...state, currentuser: user.userData });
+    }, []);
+
+    const handleCollaboratorUpdate = (new_list) => {
+      setState({ ...state, collaborators: new_list });
+    };
+
+    const handleTagUpdate = (new_list) => {
+      setState({ ...state, tags: new_list });
+    };
 
     const handleChange = (e) => {
       setState({
         ...state,
         [e.target.name]: e.target.value,
       });
-      // console.log(state.title, state.description);
     };
 
-    const onTagsChange = (values) => {
-      const newList = [];
-      values.forEach((value) => {
-        newList.push(value.id);
-      });
-      setState({
-        ...state,
-        tags: newList,
-      });
-    };
-
-    const onCollaboratorChange = (values) => {
-      const newList = [];
-      values.forEach((value) => {
-        newList.push(value._id);
-      });
-      setState({
-        ...state,
-        collaborators: newList,
-      });
-    };
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
+      var collaborator_ids = await state.collaborators.map((user) => user.id);
+      var tag_ids = await state.tags.map((tag) => tag.tag_id);
       const formData = {
         title: state.title,
         description: state.description,
         creator: state.currentuser._id,
-        collaborators: state.collaborators,
-        tags: state.tags,
+        collaborators: [state.currentuser._id, ...collaborator_ids],
+        tags: tag_ids,
       };
 
       console.log(formData);
 
       axios
         .post(`/project/create-project`, formData)
-        .then((response) => {
+        .then(async (response) => {
           var id = response.data.insertId;
           createFolder(id, "Final Paper");
           createFolder(id, "Related Images");
           createFolder(id, "Public Files");
 
-          let { from } = location.state || {
-            from: { pathname: `/project/viewproject/${id}` },
-          };
-          history.replace(from);
+          await axios
+            .post("/email/new-project", {
+              id: id,
+              receivers: state.collaborators,
+            })
+            .then((result) => {
+              let { from } = location.state || {
+                from: { pathname: `/project/viewproject/${id}` },
+              };
+              history.replace(from);
+            })
+            .catch((e) => console.log(e));
         })
         .catch((e) => console.log(e));
     };
@@ -126,9 +115,6 @@ export default function Form() {
       });
     };
 
-    const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
-    const checkedIcon = <CheckBoxIcon fontSize="small" />;
-
     return (
       <Grid container spacing={3}>
         <Grid item xs={12}>
@@ -147,6 +133,7 @@ export default function Form() {
             autoComplete="project title"
             variant="outlined"
             onChange={handleChange}
+            value={state.title}
           />
         </Grid>
         <Grid item xs={12}>
@@ -159,95 +146,38 @@ export default function Form() {
             autoComplete="project description"
             variant="outlined"
             onChange={handleChange}
+            value={state.description}
           />
         </Grid>
 
         <Grid item xs={12}>
-          <Autocomplete
-            multiple
-            id="fixed-collaborators-demo"
-            options={[...collaborators]}
-            defaultValue={[collaborators[0]]}
-            onChange={(event, value) => {
-              onCollaboratorChange(value);
-            }}
-            getOptionLabel={(option) =>
-              option.first_name.concat(" ").concat(option.last_name)
-            }
-            renderTags={(value, getTagProps) =>
-              value.map((option, index) => (
-                <Chip
-                  label={option.first_name.concat(" ").concat(option.last_name)}
-                  {...getTagProps({ index })}
-                  disabled={index === 0}
-                  avatar={<Avatar alt="propic" src={option.profile_picture} />}
-                />
-              ))
-            }
-            renderOption={(option, { selected }) => (
-              <React.Fragment>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                  color="primary"
-                />
-                <List className={classes.root}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar src={option.profile_picture} />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={option.first_name
-                        .concat(" ")
-                        .concat(option.last_name)}
-                      secondary={option.institution}
-                    />
-                  </ListItem>
-                </List>
-              </React.Fragment>
-            )}
-            style={{ width: 500 }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Collaborators"
-                name="collaborators"
-                variant="outlined"
-              />
-            )}
+          <CollaboratorForm
+            disabled={false}
+            onChange={handleCollaboratorUpdate}
+            collaborators={[].map((user) => {
+              return {
+                first_name: user.first_name,
+                last_name: user.last_name,
+                id: user.researcher_id,
+                institution: user.institution_name,
+                profile_picture: user.profile_picture,
+                isAdmin: 1,
+                email: user.email,
+              };
+            })}
           />
         </Grid>
 
         <Grid item xs={12}>
-          <Autocomplete
-            multiple
-            id="fixed-tags-demo"
-            options={tags}
-            name="tags"
-            onChange={(event, value) => {
-              onTagsChange(value);
-            }}
-            getOptionLabel={(option) => option.title}
-            renderInput={(state, getTagProps) =>
-              state.map((option, index) => (
-                <Chip
-                  label={option.title}
-                  {...getTagProps({ index })}
-                  disabled={index === 0}
-                />
-              ))
-            }
-            style={{ width: 500 }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                label="tags"
-                name="tags"
-                variant="outlined"
-              />
-            )}
+          <TagForm
+            disabled={false}
+            onChange={handleTagUpdate}
+            tags={[].map((tag) => {
+              return {
+                tag_id: tag.tag_id,
+                title: tag.title,
+              };
+            })}
           />
         </Grid>
 
@@ -267,11 +197,15 @@ export default function Form() {
           <Navbar />
         </Box>
         <Box flexGrow="1" bgcolor="#eceff1">
-          <main className={classes.layout}>
-            <Paper className={classes.paper} elevation={5}>
-              <AddressForm />
-            </Paper>
-          </main>
+          {user.userData === undefined ? (
+            <Loader />
+          ) : (
+            <main className={classes.layout}>
+              <Paper className={classes.paper} elevation={5}>
+                <AddressForm />
+              </Paper>
+            </main>
+          )}
         </Box>
         <Box>
           <Footer />
