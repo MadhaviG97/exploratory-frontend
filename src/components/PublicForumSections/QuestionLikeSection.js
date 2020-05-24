@@ -31,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
 export default function QuestionLike(props) {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
+  const is_logged = useSelector((state) => state.is_logged);
   const [count, setCount] = React.useState(1);
   const [invisible, setInvisible] = React.useState(false);
   

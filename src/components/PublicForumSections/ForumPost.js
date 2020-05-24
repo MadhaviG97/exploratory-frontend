@@ -43,6 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Post(props) {
   const classes = useStyles();
+  const is_logged = useSelector((state) => state.is_logged);
   const [expanded, setExpanded] = React.useState(false);
   const handleExpandClick = () => {
     setExpanded(!expanded);
@@ -90,12 +91,17 @@ export default function Post(props) {
           <Divider />
         </CardContent>
         <CardActions disableSpacing>
-          <QuestionLike
-            Q_id={props.postDetails.researcher_id}
-            question_id={props.postDetails.question_id}
-            title={props.postDetails.title}
-            description={props.postDetails.description}
-          />
+          {is_logged ? (
+            <QuestionLike
+              Q_id={props.postDetails.researcher_id}
+              question_id={props.postDetails.question_id}
+              title={props.postDetails.title}
+              description={props.postDetails.description}
+            />
+          ) : (
+            <div></div>
+          )}
+
           <IconButton
             className={clsx(classes.expand, {
               [classes.expandOpen]: expanded,

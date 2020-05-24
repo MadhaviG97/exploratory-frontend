@@ -38,8 +38,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Forum() {
   const classes = useStyles();
-  const questions = useSelector((state) => state.questions);
-  const forum = useSelector((state) => state.forum);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
@@ -48,6 +46,8 @@ export default function Forum() {
     dispatch(getQuestions());
   }, []);
 
+  const questions = useSelector((state) => state.questions);
+  const forum = useSelector((state) => state.forum);
  
   return (
     <div>

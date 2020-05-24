@@ -40,7 +40,7 @@ import Receive from "./views/research/screenShare/Receive";
 import Send from "./views/research/screenShare/Send";
 
 import Demo from "./views/whiteboard/Demo";
-import TaskTracker from "./components/Project/task_tracker";
+import TaskTracker from "./components/Project/TaskTracker";
 
 function App() {
   return (
