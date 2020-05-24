@@ -3,8 +3,6 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
 import Link from "@material-ui/core/Link";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -13,7 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import { useStyles } from "../../assets/css/sign-in";
 import Navbar from "../../components/Navbar/Navbar";
 import Footer from "../../components/Footer/Footer";
-import { InputLabel, InputAdornment, OutlinedInput } from "@material-ui/core";
+import { InputAdornment } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
@@ -28,6 +26,9 @@ export default function SignInSide() {
     password: "",
     email: "",
     showPassword: false,
+    error: false,
+    helperTextEmail: "",
+    helperTextPassword: "",
   });
 
   const [submit, setSubmit] = React.useState(false);
@@ -52,10 +53,37 @@ export default function SignInSide() {
       password: values.password,
     };
 
-    dispatch(loginUser(formData)).then((result) => {
-      console.log(result);
-      cb();
-    });
+    dispatch(loginUser(formData))
+      .then((result) => {
+        console.log(result);
+        if (result.payload !== undefined) {
+          cb();
+        } else {
+          setValues({
+            ...values,
+            error: true,
+            helperTextEmail: "Invalid Login",
+            helperTextPassword: "Invalid Login",
+          });
+        }
+      })
+      .catch((err) => {
+        if (err.message === "Request failed with status code 400") {
+          setValues({
+            ...values,
+            error: true,
+            helperTextPassword: "Password Incorrect",
+          });
+        } else {
+          setValues({
+            ...values,
+            error: true,
+            helperTextEmail: "Invalid Login",
+            helperTextPassword: "Invalid Login",
+          });
+        }
+        console.log(err);
+      });
   };
 
   let history = useHistory();
@@ -78,75 +106,83 @@ export default function SignInSide() {
               Sign in
             </Typography>
             <form className={classes.form} noValidate>
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                inputProps={{
-                  'data-testid': 'emailInput'
-                }}
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-                onChange={handleChange("email")}
-              />
+              <Grid container spacing={2}>
+                <Grid item xs={12}>
+                  <TextField
+                    variant="outlined"
+                    margin="normal"
+                    required
+                    fullWidth
+                    error={values.error}
+                    helperText={values.helperTextEmail}
+                    id="email"
+                    inputProps={{
+                      "data-testid": "emailInput",
+                    }}
+                    label="Email Address"
+                    name="email"
+                    autoComplete="email"
+                    autoFocus
+                    onChange={handleChange("email")}
+                  />
+                </Grid>
+                <Grid item xs={12}>
+                  <TextField
+                    fullWidth
+                    error={values.password.error}
+                    value={values.password.value}
+                    error={values.error}
+                    helperText={values.helperTextPassword}
+                    onChange={handleChange("password")}
+                    type={values.showPassword ? "text" : "password"}
+                    label="Password"
+                    id="Password"
+                    // className={clsx(classes.margin, classes.textField)}
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={handleClickShowPassword}
+                            onMouseDown={handleMouseDownPassword}
+                            edge="end"
+                          >
+                            {values.showPassword ? (
+                              <Visibility />
+                            ) : (
+                              <VisibilityOff />
+                            )}
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    variant="outlined"
+                  />
+                </Grid>
+              </Grid>
 
-              <InputLabel htmlFor="outlined-adornment-password" data-testid="label">
-                Password
-              </InputLabel>
-              <OutlinedInput
-                fullWidth
-                id="outlined-adornment-password"
-                type={values.showPassword ? "text" : "password"}
-                value={values.password}
-                inputProps={{
-                  'data-testid': 'passwordInput'
-                }}
-                onChange={handleChange("password")}
-                endAdornment={
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      onMouseDown={handleMouseDownPassword}
-                      edge="end"
-                    >
-                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
-                }
-                labelWidth={70}
-                label="Password"
-              />
-
-              <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
-                label="Remember me"
-              />
-
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                data-testid="submit"
-                className={classes.submit}
-                onClick={(e) =>
-                  handleSubmit(e, () => {
-                    history.replace(from);
-                  })
-                }
-              >
-                Sign In
-              </Button>
+              <Grid item xs={12}>
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  data-testid="submit"
+                  className={classes.submit}
+                  onClick={(e) =>
+                    handleSubmit(e, () => {
+                      history.replace(from);
+                    })
+                  }
+                >
+                  Sign In
+                </Button>
+              </Grid>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
+                  {/* <Link href="#" variant="body2">
                     Forgot password?
-                  </Link>
+                  </Link> */}
                 </Grid>
                 <Grid item>
                   <Link href="/signup" variant="body2">
