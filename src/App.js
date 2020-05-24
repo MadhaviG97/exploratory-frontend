@@ -45,7 +45,7 @@ import Demo from "./views/whiteboard/Demo";
 import CreateRoom from "./views/whiteboard/CreateRoom";
 import JoinRoom from "./views/whiteboard/JoinRoom";
 
-import TaskTracker from "./components/Project/task_tracker";
+import TaskTracker from "./components/Project/TaskTracker";
 
 function App() {
   return (
