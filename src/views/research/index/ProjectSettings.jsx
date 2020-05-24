@@ -65,8 +65,8 @@ export default function Form() {
     tags: [],
     disabled: true,
     alertOpen: false,
-    all_researchers: [],
-    all_tags: [],
+    initialCollaborators: [],
+    spinner: true,
   });
 
   const handleCollaboratorUpdate = (new_list) => {
@@ -88,17 +88,6 @@ export default function Form() {
             Authorization: `Bearer ${localStorage.token}`,
           },
         };
-
-        axios
-          .post("/researcher/get-all-users", {})
-          .then((res) => {
-            setState({
-              ...state,
-              all_researchers: res.data,
-            });
-            console.log(res.data);
-          })
-          .catch((err) => console.log(err.message));
 
         var request = axios
           .post("/project/view-project", { id: id })
@@ -180,7 +169,6 @@ export default function Form() {
           var project = response.payload.project_details.project;
           var collaborators = response.payload.project_details.collaborators;
           var tags = response.payload.project_details.tags;
-          console.log("visibility", project.visibility_public);
           setState({
             ...state,
             title: project.title,
@@ -191,6 +179,8 @@ export default function Form() {
             visibility_public: project.visibility_public,
             // final_paper: final_paper,
             tags: tags,
+            initialCollaborators: collaborators,
+            spinner: false,
           });
         });
       }
@@ -213,8 +203,13 @@ export default function Form() {
     setState({ ...state, alertOpen: false });
   };
 
-  const handleAlertSubmit = () => {
-    console.log("submit");
+  const handleAlertSubmit = async () => {
+    setState({ ...state, spinner: true });
+    const newCollaborators = getNewCollaborators(
+      state.initialCollaborators,
+      state.collaborators
+    );
+
     const formData = {
       id: id,
       title: state.title,
@@ -229,12 +224,41 @@ export default function Form() {
     axios
       .post(`/project/update-project`, formData)
       .then((response) => {
-        let { from } = location.state || {
-          from: { pathname: `/project/viewproject/${id}` },
-        };
-        history.replace(from);
+        console.log(response);
+        axios
+          .post("/email/new-project", {
+            id: id,
+            receivers: newCollaborators,
+          })
+          .then((result) => {
+            console.log(result);
+            let { from } = location.state || {
+              from: { pathname: `/project/viewproject/${id}` },
+            };
+            history.replace(from);
+          })
+          .catch((e) => console.log(e));
       })
       .catch((e) => console.log(e));
+  };
+
+  const getNewCollaborators = (oldList, newList) => {
+    var newCollaborators = [];
+    var user;
+    var old;
+    for (user of newList) {
+      let exist = false;
+      for (old of oldList) {
+        if (old.researcher_id === user.id) {
+          exist = true;
+          break;
+        }
+      }
+      if (!exist) {
+        newCollaborators.push(user);
+      }
+    }
+    return newCollaborators;
   };
 
   const handleSubmit = (e) => {
@@ -269,21 +293,6 @@ export default function Form() {
       ...state,
       collaborators: newList,
     });
-
-    // const formData = {
-    //   project_id: id,
-    //   researcher_id: value._id,
-    // };
-
-    // axios
-    //   .post(`/project/update-collaborators`, formData)
-    //   .then((response) => {
-    //     setState({
-    //       ...state,
-    //       collaborators: newList,
-    //     });
-    //   })
-    //   .catch((e) => console.log(e.message));
   };
 
   return (
@@ -295,7 +304,7 @@ export default function Form() {
 
         <Box flexGrow="1" bgcolor="#eceff1">
           <main className={classes.layout}>
-            {project === undefined ? (
+            {state.spinner ? (
               <Loader />
             ) : (
               <Paper className={classes.paper} elevation={5}>
@@ -327,9 +336,6 @@ export default function Form() {
                       value={state.title}
                     />
                   </Grid>
-                  {/* <Grid item xs={12}>
-                    <CollaboratorList />
-                  </Grid> */}
 
                   <Grid item xs={12}>
                     <TextField
@@ -411,6 +417,7 @@ export default function Form() {
                           institution: user.institution_name,
                           profile_picture: user.profile_picture,
                           isAdmin: user.isAdmin,
+                          email: user.researcher_email,
                         };
                       })}
                     />

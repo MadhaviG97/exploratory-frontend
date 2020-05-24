@@ -7,48 +7,40 @@ import Footer from "../../components/Footer/Footer";
 import NavBar from "../../components/Navbar/Navbar";
 import JoinRoomButtonBase from "../../components/Whiteboard/JoinRoomButtonBase";
 import { useParams } from "react-router-dom";
-import SelectUsers from "../../components/Whiteboard/AddUsers";
-import Appbar from "../../components/Whiteboard/CustomAppBar";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
 
 export default function SignIn() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
-  let { project_id } = useParams();
+  let { userId } = useParams();
   var user = useSelector((state) => state.user);
+  let history = useHistory();
+  let location = useLocation();
 
   const handleClickOpen = async () => {
     const formData = {
-      room: project_id,
-      token: localStorage.token,
-      user_id: user.userData._id,
-      name: `${user.userData.first_name} ${user.userData.last_name}`,
-      email: user.userData.email,
+      id: userId,
     };
     console.log(formData);
     await axios
-      .post(`${process.env.REACT_APP_WHITE_BOARD_URL}/join`, formData, {
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-      })
+      .post("/register", formData)
       .then((result) => {
         console.log(result);
-        window.open(
-          `${process.env.REACT_APP_WHITE_BOARD_URL}/${project_id}&${localStorage.token}&${user.userData._id}`
-        );
+        let { from } = location.state || {
+          from: {
+            pathname: "/signin",
+          },
+        };
+        history.replace(from);
       })
       .catch((e) => console.log(e.message));
-  };
-
-  const handleClose = () => {
-    setOpen(false);
   };
 
   return (
     <React.Fragment>
       <Box>
         <NavBar />
-        <Appbar />
       </Box>
 
       <Container
@@ -59,11 +51,7 @@ export default function SignIn() {
       >
         <CssBaseline />
         <div className={classes.paper}>
-          <JoinRoomButtonBase
-            title="JOIN WHITE-BOARD"
-            onClick={handleClickOpen}
-          />
-          <SelectUsers open={open} handleClose={handleClose} />
+          <JoinRoomButtonBase title="CONFIRM EMAIL" onClick={handleClickOpen} />
         </div>
       </Container>
       <Box>

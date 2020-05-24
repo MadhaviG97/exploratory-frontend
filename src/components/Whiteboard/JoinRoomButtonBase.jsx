@@ -5,9 +5,7 @@ import Typography from "@material-ui/core/Typography";
 
 const images = [
   {
-    url: "/images/sign-in/sign-in-1.jpg",
-    title: "JOIN ROOM",
-    width: "30%",
+    width: "50%",
   },
 ];
 
@@ -112,7 +110,7 @@ export default function ButtonBases(props) {
               color="primary"
               className={classes.imageTitle}
             >
-              {image.title}
+              {props.title}
             </Typography>
           </span>
         </ButtonBase>

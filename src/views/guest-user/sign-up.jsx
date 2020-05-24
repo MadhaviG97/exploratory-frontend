@@ -204,7 +204,7 @@ export default function SignUp(props) {
         .then(async (result) => {
           console.log(result.data.inserted_id);
           await axios
-            .post("/email/send", {
+            .post("/email/join-exploratory", {
               name: `${values.first_name.value} ${values.last_name.value}`,
               email: values.email.value,
               message: result.data.inserted_id,
@@ -213,7 +213,7 @@ export default function SignUp(props) {
               console.log(res);
               let { from } = location.state || {
                 from: {
-                  pathname: `/join-exploratory/${result.data.inserted_id}`,
+                  pathname: `/user/temporary-register/${result.data.inserted_id}`,
                 },
               };
               history.replace(from);

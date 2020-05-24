@@ -2,7 +2,8 @@ import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 
 import signUp from "./views/guest-user/sign-up.jsx";
-import JoinExploratory from "./views/guest-user/join-exploratory.jsx";
+import ConfirmEmail from "./views/guest-user/ConfirmEmail.jsx";
+import TemporaryRegister from "./views/guest-user/TemporaryRegister.jsx";
 
 import fillProfile from "./views/researcher/fill-profile";
 import UserProfile from "./views/researcher/user-profile.jsx";
@@ -69,8 +70,14 @@ function App() {
 
             <Route
               exact
-              path="/join-exploratory/:userId"
-              component={Auth(JoinExploratory, false)}
+              path="/user/join-exploratory/:userId"
+              component={Auth(ConfirmEmail, false)}
+            />
+
+            <Route
+              exact
+              path="/user/temporary-register/:userId"
+              component={Auth(TemporaryRegister, null)}
             />
 
             <Route exact path="/aboutus" component={Auth(AboutUs, null)} />
