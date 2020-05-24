@@ -48,15 +48,6 @@ function sendAnswer(answer,group) {
     });
 }
 class Receiver extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  componentDidMount() {
-    this._isMounted = true;
-
-
     constructor(props) {
         super(props);
         this.state = {
@@ -102,12 +93,7 @@ class Receiver extends React.Component {
         )
     }
 
-    return (
-      <div>
-        <video controls playsInline autoPlay id="screen"></video>
-      </div>
-    );
-  }
+    
 }
 
 export default Receiver;
