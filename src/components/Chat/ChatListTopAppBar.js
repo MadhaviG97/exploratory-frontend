@@ -144,9 +144,9 @@ const ChatListTopAppBar = (props) => {
     
     <AppBar position="relative" color="primary" className={classes.appBar}>
       <Toolbar>
-        <Avatar alt="Chat" src="/static/images/avatar/1.jpg" />
 
-        <Typography>Chat</Typography>
+
+        <Typography>Exploratory Chat</Typography>
         <div className={classes.grow} />
 
         <IconButton edge="end" color="inherit">
@@ -160,7 +160,7 @@ const ChatListTopAppBar = (props) => {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleClickDialogOpen}>Create New Group</MenuItem>
+          <MenuItem onClick={handleClickDialogOpen}>Create a New Group</MenuItem>
 
         </Menu>
 

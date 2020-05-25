@@ -173,7 +173,7 @@ const ChatWindowTopAppBar = (props) => {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleClickDialogOpen}>Info</MenuItem>
+          <MenuItem onClick={handleClickDialogOpen}>Settings</MenuItem>
 
         </Menu>
 

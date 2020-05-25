@@ -20,6 +20,8 @@ import CheckIcon from '@material-ui/icons/Check';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import TimerIcon from '@material-ui/icons/Timer';
+import InfoIcon from '@material-ui/icons/Info';
+
 // import MoreIcon from '@material-ui/icons/MoreVert';
 import MoreIcon from '@material-ui/icons/More';
 import FeedbackIcon from '@material-ui/icons/Feedback';
@@ -95,7 +97,7 @@ const Message = ({ msg, client }) => {
 
                 <ListItemSecondaryAction>
                     <IconButton edge="end">
-                        <ExpandMoreIcon aria-haspopup="true" onClick={handleClickDialogOpen} />
+                        <InfoIcon aria-haspopup="true" onClick={handleClickDialogOpen} />
                     </IconButton>
                 </ListItemSecondaryAction>
 
