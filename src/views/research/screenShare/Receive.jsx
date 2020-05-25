@@ -21,7 +21,9 @@ export default function Receive(props) {
     const classes = useStyles();
     const user = useSelector(state => state.user);
     let user_id=0
+    let userProp={userData:{_id:''}}
     if (user.userData){
+        userProp=user
         user_id=user.userData._id
     }
     const [collabs, setCollabs] = React.useState([])
@@ -58,7 +60,7 @@ export default function Receive(props) {
                 </div> 
                 
                 <div  > 
-                    <Receiver group={props.match.params.projectId} senderSet={senderSet}/>
+                    <Receiver group={props.match.params.projectId} senderSet={senderSet} userProp={userProp}/>
                 </div>
                 <Box p={4}/>
                 <Footer/>

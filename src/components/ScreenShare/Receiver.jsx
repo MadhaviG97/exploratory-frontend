@@ -53,7 +53,7 @@ class Receiver extends React.Component {
         this.state = {
             sender:null
         };
-        this.group=props.group
+        this.group=props.userProp.userData._id
     }
     
     shouldComponentUpdate(nextProps, nextState) {
@@ -78,7 +78,8 @@ class Receiver extends React.Component {
     }
 
     render() {
-            var room=this.group.concat('callee')
+      console.log(this.group)
+            var room=this.group.toString().concat('callee')
             socket.emit('join', room);
             makePeerConnection(this.group);
         
