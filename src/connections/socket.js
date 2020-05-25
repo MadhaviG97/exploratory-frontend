@@ -67,6 +67,14 @@ export default function (user_id, token, controls) {
     socket.emit('getSeen',chat_id,message_id,cb)
   }
 
+  function markDeliver(MsgInfo,cb){
+    socket.emit('markDeliver',MsgInfo,cb)
+  }
+
+  function getDeliver(chat_id,message_id,cb){
+    socket.emit('getDeliver',chat_id,message_id,cb)
+  }
+
   return {
     getChatrooms,
     getChatroomParticipants,
@@ -81,6 +89,8 @@ export default function (user_id, token, controls) {
     createChatroom,
     markSeen,
     getSeen,
+    markDeliver,
+    getDeliver,
   }
 }
 
