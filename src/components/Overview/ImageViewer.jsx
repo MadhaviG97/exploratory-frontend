@@ -48,7 +48,7 @@ export default class ImageViwerClass extends React.Component {
       var dataSet = [];
       Images.forEach((image) => {
         var object = {
-          src: "/images/poster-images/".concat(image.url),
+          src: `${process.env.REACT_APP_BACK_END_URL}/related_images/${image.url}`,
           caption: image.caption,
         };
         dataSet.push(object);
@@ -84,10 +84,7 @@ export default class ImageViwerClass extends React.Component {
           {this.state.dataSet.map((tile) => (
             <GridListTile key={tile.src}>
               <Button onClick={this.handleViewImage}>
-                <img
-                  src={URL.createObjectURL(tile)}
-                  id={this.state.dataSet.indexOf(tile)}
-                />
+                <img src={tile.src} id={this.state.dataSet.indexOf(tile)} />
               </Button>
 
               <GridListTileBar

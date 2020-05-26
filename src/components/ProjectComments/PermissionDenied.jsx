@@ -48,6 +48,7 @@ export default function PermissionDenied(props) {
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Permission Denied!</DialogTitle>

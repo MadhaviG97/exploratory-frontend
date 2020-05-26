@@ -6,6 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Box from "@material-ui/core/Box";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
@@ -46,7 +47,9 @@ export default function Team(props) {
           <CardContent className={classes.content}>
             <Typography variant="subtitle1" color="textPrimary">
               {" "}
-              <Box fontWeight="fontWeightBold">{props.username}</Box>
+              <Box fontWeight="fontWeightBold" alignItems="center">
+                {props.username}
+              </Box>
             </Typography>
 
             <Typography variant="caption" color="textSecondary">

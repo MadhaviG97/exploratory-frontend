@@ -14,7 +14,6 @@ import ChatThread from "./chatThread";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import AddNewComment from "./AddNewComment";
-
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -22,14 +21,19 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
   },
   heading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: theme.typography.pxToRem(14),
     flexBasis: "33.33%",
     flexShrink: 0,
     padding: theme.spacing(0, 4),
   },
   secondaryHeading: {
-    fontSize: theme.typography.pxToRem(15),
+    fontSize: theme.typography.pxToRem(12),
     color: theme.palette.text.secondary,
+    padding: theme.spacing(0, 4),
+  },
+  firstComment: {
+    fontSize: theme.typography.pxToRem(14),
+    color: theme.palette.text.primary,
     padding: theme.spacing(0, 4),
   },
   newComment: {
@@ -41,7 +45,7 @@ export default function Comments(props) {
   const classes = useStyles();
   const [comments, setComments] = React.useState(props.comments);
   const project = useSelector((state) => state.project).renderData.project;
-
+  const [alertMessage, setAlertMessage] = React.useState(false);
   const handleRefreshComment = () => {
     axios
       .post("/project/comments/view-comments", { id: project.id })
@@ -49,6 +53,7 @@ export default function Comments(props) {
         console.log(response.data);
         if (response.data) {
           setComments(response.data);
+          setAlertMessage(true);
         } else {
           setComments([]);
         }
@@ -61,7 +66,7 @@ export default function Comments(props) {
       <Grid md="12" align="right" className={classes.newComment}>
         <AddNewComment onNewComment={handleRefreshComment} />
       </Grid>
-      {/* {Array.isArray(comments) && emptyArray.length} */}
+
       {comments.map((chat) => {
         return (
           <CommentHeads chat={chat} onCommentDelete={handleRefreshComment} />
@@ -157,10 +162,9 @@ function CommentHeads(props) {
               <Typography className={classes.secondaryHeading}>
                 {props.chat.institution}
               </Typography>
-
-              {/* <Typography variant="button" className={classes.heading}>
-                {props.chat.first_name.concat(" ").concat(props.chat.last_name)}
-              </Typography> */}
+              <Typography className={classes.firstComment}>
+                {props.chat.message}
+              </Typography>
             </Box>
 
             <Box>
