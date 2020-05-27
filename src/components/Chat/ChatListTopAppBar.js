@@ -19,6 +19,7 @@ import ResponseDialog from './ResponseDialog'
 import {groupName_validation, groupDescription_validation} from './Validation/validation'
 
 import AddParticipant from './AddParticipant'
+import DirrectChatDialog from './ChatList/DirrectChatDialog'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -40,6 +41,8 @@ const ChatListTopAppBar = (props) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [open, setOpen] = React.useState(false);
+
+  const [openDirectChatDialog,setOpenDirrectChatDialog] = React.useState(false);
 
   const [state, setState] = React.useState({
     title: "",
@@ -78,6 +81,15 @@ const ChatListTopAppBar = (props) => {
     setOpen(false);
   };
   
+  const handleClickDirrectChatDialogOpen = () => {
+    setAnchorEl(null);
+    setOpenDirrectChatDialog(true);
+  };
+
+  const handleDirrectChatDialogClose = () => {
+    setOpenDirrectChatDialog(false);
+  };
+
   const handleClickCreate = () => {
     var participants = [{
       user_id: state.user_id,
@@ -95,7 +107,8 @@ const ChatListTopAppBar = (props) => {
       name: inputName,
       description: inputDescription,
       creator_id: state.user_id,
-      participants: participants
+      participants: participants,
+      isDirrect:0
     }
     
     props.state.client.createChatroom(chatDetails, (res) => {
@@ -144,9 +157,9 @@ const ChatListTopAppBar = (props) => {
     
     <AppBar position="relative" color="primary" className={classes.appBar}>
       <Toolbar>
-        <Avatar alt="Chat" src="/static/images/avatar/1.jpg" />
 
-        <Typography>Chat</Typography>
+
+        <Typography>Exploratory Chat</Typography>
         <div className={classes.grow} />
 
         <IconButton edge="end" color="inherit">
@@ -160,8 +173,9 @@ const ChatListTopAppBar = (props) => {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleClickDialogOpen}>Create New Group</MenuItem>
-
+          <MenuItem onClick={handleClickDialogOpen}>Create a New Group</MenuItem>
+          <MenuItem onClick={handleClickDirrectChatDialogOpen}>Start a Dirrect Chat</MenuItem>
+        
         </Menu>
 
 
@@ -218,6 +232,12 @@ const ChatListTopAppBar = (props) => {
         </DialogActions>
       </Dialog>
 
+            <DirrectChatDialog
+            openDirectChatDialog={openDirectChatDialog}
+            handleDirrectChatDialogClose={handleDirrectChatDialogClose}
+            state={props.state}
+            setStateFromChild={props.setStateFromChild}
+            />
       <ResponseDialog
         open={openResponseDialog}
         handleCloseResponseDialog={handleCloseResponseDialog}
