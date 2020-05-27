@@ -23,7 +23,7 @@ export default function (state = {}, action) {
         project: data.project_details.project,
         tags: data.project_details.tags,
         collaborators: data.project_details.collaborators,
-        // images: data.project_details.images,
+        images: data.project_details.related_images,
         admins: data.project_details.admins,
         comments: data.project_details.comments,
       };

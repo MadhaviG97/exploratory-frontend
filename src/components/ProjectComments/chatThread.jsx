@@ -12,12 +12,12 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import Avatar from "@material-ui/core/Avatar";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { useSelector } from "react-redux";
-import AnswerLikeSection from "../PublicForumSections/AnswerLikeSection";
-import AnswerDislikeSection from "../PublicForumSections/AnswerDislikeSection";
-
+import LikeComment from "./LikeComment";
+import DislikeComment from "./DislikeComment";
 import AddReply from "./AddReply";
 import EditReply from "./EditReply";
 import DeleteReply from "./DeleteReply";
+import { Typography } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -94,10 +94,16 @@ export default function CommentSection(props) {
                     <Avatar alt="Profile Picture" src={reply.profile_picture} />
                   </ListItemAvatar>
                   <ListItemText
-                    primary={reply.first_name.concat(reply.last_name)}
+                    primary={
+                      <Typography variant="button">
+                        {reply.first_name + " " + reply.last_name}
+                      </Typography>
+                    }
                     secondary={reply.message}
                   />
-
+                  <Typography variant="caption">
+                    {getTimeAndDate(reply.created_at)}
+                  </Typography>
                   <ButtonGroup
                     color="primary"
                     aria-label="outlined primary button group"
@@ -120,8 +126,14 @@ export default function CommentSection(props) {
                     )}
                   </ButtonGroup>
 
-                  <AnswerLikeSection />
-                  <AnswerDislikeSection />
+                  <LikeComment
+                    count={reply.no_of_likes}
+                    reply_id={reply.reply_id}
+                  />
+                  <DislikeComment
+                    count={reply.no_of_dislikes}
+                    reply_id={reply.reply_id}
+                  />
                 </ListItem>
               </React.Fragment>
             ))
@@ -138,4 +150,9 @@ export default function CommentSection(props) {
       </AppBar>
     </React.Fragment>
   );
+}
+
+function getTimeAndDate(timestamp) {
+  var date = new Date(timestamp);
+  return date.toLocaleString();
 }

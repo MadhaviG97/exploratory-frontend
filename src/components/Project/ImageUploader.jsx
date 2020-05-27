@@ -1,17 +1,13 @@
 import React from "react";
-// import { defaultClassNames } from "react-dropzone-uploader/dist/styles.css";
+import { defaultClassNames } from "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
 import axios from "axios";
 import "react-dropzone-uploader/dist/styles.css";
 import Loader from "../Loader/PdfLoader";
-import { Button } from "@material-ui/core";
 
-export default function FileUploader(props) {
-  const [state, setState] = React.useState({
-    file: null,
-  });
+export default function ImageUploader(props) {
+  const [state, setState] = React.useState([]);
   const [reload, setReload] = React.useState(false);
-
   const Layout = ({
     input,
     previews,
@@ -25,16 +21,6 @@ export default function FileUploader(props) {
         {previews} ​
         <div {...dropzoneProps}>{files.length < maxFiles && input}</div> ​
         {files.length > 0 && submitButton}
-        {files.length == 0 && (
-          <React.Fragment>
-            <br />
-            <Button variant="contained" color="primary">
-              save
-            </Button>
-            <br />
-            <br />
-          </React.Fragment>
-        )}
       </div>
     );
   };
@@ -52,11 +38,12 @@ export default function FileUploader(props) {
           })
       );
 
-  React.useEffect(() => {
+  React.useEffect(async () => {
+    let imageArray = [];
     if (!reload) {
-      if (props.default !== {}) {
+      await props.default.map((image) => {
         toDataURL(
-          `${process.env.REACT_APP_BACK_END_URL}/final_paper/${props.default}`
+          `${process.env.REACT_APP_BACK_END_URL}/related_images/${image.url}`
         )
           .then((dataUrl) => {
             return dataUrl;
@@ -64,26 +51,29 @@ export default function FileUploader(props) {
           .then((imageDataUrl) => {
             fetch(imageDataUrl).then((res) => {
               res.arrayBuffer().then((buf) => {
-                const file = new File([buf], props.default, {
-                  type: "application/pdf",
+                const file = new File([buf], image.url, {
+                  type: `image/${image.url.slice(-3)}`,
                 });
-                console.log(file);
-                setState({ file });
+                setState([...state, file]);
+                imageArray.push(file);
               });
             });
           });
-      } else {
-        setState({ file: {} });
-      }
+      });
+
+      setReload(true);
     }
-    setReload(true);
   }, []);
 
   const handleSubmit = (type, file) => {
     let data = new FormData();
     var date = new Date();
     var type = file.name.slice(-3);
-    var name = `${props.project_id}.${type}`;
+    var name = `${
+      props.project_id
+    }-${date.valueOf()}-${date.getMilliseconds()}-${Math.floor(
+      Math.random() * 100000
+    )}.${type}`;
 
     data.append("project_id", props.project_id);
     data.append("type", props.type);
@@ -98,8 +88,11 @@ export default function FileUploader(props) {
 
     axios
       .post("/project/save-file", data, config)
-      .then((result) => alert(result.data.message))
+      .then((result) => {
+        console.log("Done!");
+      })
       .catch((err) => alert(err.message));
+    return name;
   };
 
   const handleChangeStatus = ({ meta, file }, status) => {
@@ -107,15 +100,29 @@ export default function FileUploader(props) {
   };
 
   const handleUpload = async (files, allFiles) => {
-    await files.map((f) => {
-      handleSubmit(props.type, f.file);
+    let fileList = [];
+    await files.map(async (f) => {
+      var name = handleSubmit(props.type, f.file);
+      fileList.push(name);
     });
+
+    axios
+      .post("/project/insert-image-files", {
+        project_id: props.project_id,
+        images: fileList,
+      })
+      .then((res) => {
+        alert("Saved!");
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
   };
 
   function CustomLayout() {
     return (
       <React.Fragment>
-        {state.file === null ? (
+        {state === false ? (
           <Loader />
         ) : (
           <Dropzone
@@ -124,10 +131,10 @@ export default function FileUploader(props) {
             submitButtonContent={"save"}
             onSubmit={handleUpload}
             multiple={props.multiple}
-            // onChangeStatus={handleChangeStatus}
+            onChangeStatus={handleChangeStatus}
             accept={props.accept}
             inputContent="..."
-            initialFiles={[state.file]}
+            initialFiles={state}
           />
         )}
       </React.Fragment>
