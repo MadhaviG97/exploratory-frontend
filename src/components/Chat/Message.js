@@ -20,6 +20,8 @@ import CheckIcon from '@material-ui/icons/Check';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import TimerIcon from '@material-ui/icons/Timer';
+import InfoIcon from '@material-ui/icons/Info';
+
 // import MoreIcon from '@material-ui/icons/MoreVert';
 import MoreIcon from '@material-ui/icons/More';
 import FeedbackIcon from '@material-ui/icons/Feedback';
@@ -43,10 +45,12 @@ const Message = ({ msg, client }) => {
 
     const [open, setOpen] = React.useState(false);
     const [seenParticipants, setSeenParticipants] = React.useState([])
+    const [deliverParticipants, setDeliverParticipants] = React.useState([])
 
     const handleClickDialogOpen = () => {
         setOpen(true);
         loadSeenParticipants()
+        loadDeliverParticipants()
     };
 
     const handleDialogClose = () => {
@@ -57,6 +61,14 @@ const Message = ({ msg, client }) => {
         client.getSeen(msg.chat_id, msg.id, (res) => {
             if (res.length > 0) {
                 setSeenParticipants(res)
+            }
+        })
+    }
+
+    const loadDeliverParticipants = () => {
+        client.getDeliver(msg.chat_id, msg.id, (res) => {
+            if (res.length > 0) {
+                setDeliverParticipants(res)
             }
         })
     }
@@ -84,7 +96,7 @@ const Message = ({ msg, client }) => {
 
                 <ListItemSecondaryAction>
                     <IconButton edge="end">
-                        <ExpandMoreIcon aria-haspopup="true" onClick={handleClickDialogOpen} />
+                        <InfoIcon aria-haspopup="true" onClick={handleClickDialogOpen} />
                     </IconButton>
                 </ListItemSecondaryAction>
 
@@ -92,7 +104,7 @@ const Message = ({ msg, client }) => {
                     <DialogTitle id="form-dialog-title">Message Status</DialogTitle>
                     <DialogContent>
 
-                        <Typography variant="subtitle2">Seen</Typography>
+                        <Typography variant="subtitle2">Seen Participants</Typography>
 
                         <TableContainer component={Paper}>
                             <Table aria-label="simple table">
@@ -110,6 +122,37 @@ const Message = ({ msg, client }) => {
                                             <TableCell align="right">
                                                 <Chip
                                                     label={getDateTime(option.seen_time)}
+                                                    color="secondary"
+                                                    avatar={<AccessTimeIcon />}
+                                                />
+                                            </TableCell>
+
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+
+
+
+                        <Typography style={{ marginTop: '30px' }} variant="subtitle2">Delivered Participants</Typography>
+
+                        <TableContainer component={Paper}>
+                            <Table aria-label="simple table">
+
+                                <TableBody>
+                                    {deliverParticipants.map((option) => (
+                                        <TableRow key={option.user_id}>
+                                            <TableCell component="th" scope="row">
+                                                <Chip
+                                                    label={option.first_name.concat(" ").concat(option.last_name).concat(" - ").concat(option.institution)}
+                                                    color="primary"
+                                                    avatar={<Avatar alt="propic" src={option.profile_picture} />}
+                                                />
+                                            </TableCell>
+                                            <TableCell align="right">
+                                                <Chip
+                                                    label={getDateTime(option.deliver_time)}
                                                     color="secondary"
                                                     avatar={<AccessTimeIcon />}
                                                 />

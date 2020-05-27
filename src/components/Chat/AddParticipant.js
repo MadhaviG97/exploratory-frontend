@@ -64,7 +64,7 @@ const AddParticipant = (props) => {
     }
     fetchData()
 
-  }, []);
+  }, [props.state.globalReload]);
 
   return (
 

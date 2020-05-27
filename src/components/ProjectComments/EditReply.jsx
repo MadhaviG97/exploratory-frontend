@@ -73,6 +73,7 @@ export default function EditComment(props) {
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">Reply</DialogTitle>

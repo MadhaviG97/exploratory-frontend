@@ -19,36 +19,41 @@ import Team from "../../../components/Team/team";
 import Comments from "../../../components/ProjectComments/chathead";
 import FilesList from "../../../components/ProjectPublicFiles/DisplayList";
 
-const images = [
-  { id: 10001, url: "default-0.jpg", caption: "Image-1" },
-  { id: 10002, url: "default-1.jpg", caption: "Image-2" },
-  { id: 10003, url: "default-2.jpg", caption: "Image-3" },
-];
-
-const collaborators = [];
-
-const comments = [];
-
 function Home() {
   let { id } = useParams();
   var dispatch = useDispatch();
-  const [files,setFiles]=React.useState([])
   var project = useSelector((state) => state.project);
+  const [files, setFiles] = React.useState([]);
   const [state, setState] = React.useState({
-    project: {},
+    loaded: false,
     collaborators: [],
     tags: [],
   });
 
   useEffect(() => {
     let mounted = true;
+
     if (mounted) {
-      if (JSON.stringify(state.project) === JSON.stringify({})) {
+      if (!state.loaded) {
         let config = {
           headers: {
             Authorization: `Bearer ${localStorage.token}`,
           },
         };
+        const variables = {
+          group: id,
+        };
+        axios
+          .post("/drive/getpublicfiles", variables, config)
+          .then((response) => {
+            if (response.data.success) {
+              console.log(response.data.files);
+              setFiles(response.data.files);
+            } else {
+              console.log("not");
+              alert("Could not get files ");
+            }
+          });
 
         var request = axios
           .post("/project/view-project", { id: id })
@@ -57,69 +62,14 @@ function Home() {
           })
           .catch((err) => console.log(err.message));
 
-        var request_images = axios
-          .post(
-            "/drive/getfiles",
-            {
-              group: id,
-              folder: "Related Images",
-            },
-            config
-          )
+        dispatch(render(request))
           .then((response) => {
-            return response.data;
+            setState({
+              ...state,
+              loaded: true,
+            });
           })
-          .catch((err) => console.log(err.message));
-          
-        var request_final_paper = axios
-          .post(
-            "/drive/getfiles",
-            {
-              group: id,
-              folder: "Final Paper",
-            },
-            config
-          )
-          .then((response) => {
-            console.log(response.data);
-            return response.data;
-          })
-          .catch((err) => console.log(err.message));
-
-        dispatch(getFinalPaper(request_final_paper))
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        dispatch(getRelatedImages(request_images))
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        dispatch(render(request)).then((response) => {
-          setState({ ...state, project: response });
-          console.log(response);
-        });
-        const variables = {
-          group:id
-        }
-        axios.post('/drive/getpublicfiles', variables,config)
-          .then(response => {
-           if (response.data.success) {
-               console.log(response.data.files)
-               setFiles(response.data.files)
-               
-           } else {
-               console.log('not')
-               alert('Could not get files ')
-           }
-       })
+          .catch((err) => setState({ ...state, loaded: true }));
       }
     }
     return () => (mounted = false);
@@ -140,7 +90,12 @@ function Home() {
           authour_image={project.admins[0].profile_picture}
           description={project.project.description}
         />
-        <Tab OverView={getOverView} Team={getTeam} Comments={getComments} Files={getFiles}/>
+        <Tab
+          OverView={getOverView}
+          Team={getTeam}
+          Comments={getComments}
+          Files={getFiles}
+        />
       </React.Fragment>
     );
   };
@@ -150,7 +105,9 @@ function Home() {
   };
 
   const getTeam = () => {
-    return <Team collaborators={project.collaborators} />;
+    return (
+      <Team collaborators={[...project.admins, ...project.collaborators]} />
+    );
   };
 
   const getComments = () => {
@@ -161,8 +118,8 @@ function Home() {
     }
   };
   const getFiles = () => {
-    console.log(files)
-    return <FilesList files={files} />
+    console.log(files);
+    return <FilesList files={files} />;
   };
 
   return (
@@ -171,13 +128,7 @@ function Home() {
         <Box>
           <Navbar />
         </Box>
-        <Box flexGrow="1">
-          {JSON.stringify(state.project) === JSON.stringify({}) ? (
-            <Loader />
-          ) : (
-            <Page />
-          )}
-        </Box>
+        <Box flexGrow="1">{!state.loaded ? <Loader /> : <Page />}</Box>
         <Box>
           <Footer />
         </Box>
