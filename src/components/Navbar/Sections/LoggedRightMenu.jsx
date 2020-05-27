@@ -26,6 +26,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { search } from "../../../_actions/project_actions";
+import { logoutUser } from "../../../_actions/user_actions";
+
 import FlatButton from "material-ui/FlatButton";
 
 const useStyles = makeStyles(styles);
@@ -145,14 +147,17 @@ function LoggedRightMenu(props) {
       },
     };
 
-    localStorage.removeItem("token");
-    axios.post(`/logout`, {}, config).then((response) => {
-      if (response.status === 200) {
-        history.push("/signin");
-      } else {
-        alert("Log Out Failed");
-      }
-    });
+    dispatch(logoutUser(config))
+      .then((response) => {
+        console.log(response);
+        if (response.payload.status === 200) {
+          localStorage.removeItem("token");
+          history.push("/signin");
+        } else {
+          alert("Log Out Failed");
+        }
+      })
+      .catch((err) => console.log(err.message));
   };
 
   const muiTheme = getMuiTheme();
