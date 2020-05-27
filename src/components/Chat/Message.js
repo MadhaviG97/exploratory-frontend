@@ -67,7 +67,6 @@ const Message = ({ msg, client }) => {
 
     const loadDeliverParticipants = () => {
         client.getDeliver(msg.chat_id, msg.id, (res) => {
-            console.log("deliver", res)
             if (res.length > 0) {
                 setDeliverParticipants(res)
             }

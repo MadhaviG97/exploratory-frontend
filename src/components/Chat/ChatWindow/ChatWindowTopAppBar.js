@@ -162,7 +162,8 @@ const ChatWindowTopAppBar = (props) => {
         <Typography>{props.state.chatRooms[props.state.currentChatListID].name}</Typography>
         <div className={classes.grow} />
 
-        <IconButton edge="end" color="inherit">
+        <IconButton disabled={props.state.chatRooms[props.state.currentChatListID].isDirrect}
+         edge="end" color="inherit">
           <MoreIcon aria-controls="chatList-menu" aria-haspopup="true" onClick={handleMenuClick} />
         </IconButton>
 
@@ -173,7 +174,7 @@ const ChatWindowTopAppBar = (props) => {
           open={Boolean(anchorEl)}
           onClose={handleMenuClose}
         >
-          <MenuItem onClick={handleClickDialogOpen}>Settings</MenuItem>
+          <MenuItem  onClick={handleClickDialogOpen}>Settings</MenuItem>
 
         </Menu>
 
