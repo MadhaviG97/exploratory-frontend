@@ -8,7 +8,8 @@ import {
   RATE_QUESTION,
   EDIT_ANSWER,
   DELETE_ANSWER,
-  RATE_ANSWER
+  RATE_ANSWER,
+  GET_FORUM_USERS
 } from "./types";
 
 export const getQuestions = async () => {
@@ -122,3 +123,14 @@ export const editAnswer = async (answerData) => {
     payload: res,
   };
 };
+
+export const getForumUsers = async () => {
+  const response = await fetch(`/forum/users`);
+  const data = await response.json();
+  const forumUsers = data.data;
+  return {
+    type: GET_FORUM_USERS,
+    payload: forumUsers,
+  };
+};
+

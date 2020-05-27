@@ -9,7 +9,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
-import { addAnswer, getAnswers } from "../../_actions/forum_actions";
+import { addAnswer, getAnswers, getForumUsers} from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -70,6 +70,7 @@ export default function AddComment(props) {
     setOpen(false);
     dispatch(addAnswer(answerData));
     dispatch(getAnswers());
+    dispatch(getForumUsers());
     setAnswer("");
   };
 
@@ -88,6 +89,7 @@ export default function AddComment(props) {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        fullWidth
       >
         <DialogTitle id="form-dialog-title">Add Answer</DialogTitle>
         <DialogContent>
