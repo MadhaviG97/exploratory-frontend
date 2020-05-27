@@ -184,7 +184,7 @@ class Sender extends React.Component {
         
     }
     
-
+    
     render() {
       let user=this.props.user
       const { classes } = this.props;
@@ -203,9 +203,7 @@ class Sender extends React.Component {
                         input={<Input />}
                         MenuProps={this.MenuProps}
                       >
-                      
-                      {this.state.collaborators.map((researcher) => (
-                        
+                      {this.state.collaborators.filter(researcher => researcher.researcher_id !== user.userData._id).map((researcher) => (
                         <MenuItem key={researcher.researcher_id} value={researcher} >
                           <Avatar alt="user" src={researcher.pofile_picture} />
                           <Box p={1}/>
