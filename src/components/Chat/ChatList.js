@@ -45,6 +45,44 @@ const ChatList = (props) => {
     chatRoomCopy.push(Object.assign({ ind: ind }, chatRoom))
   })
 
+  React.useEffect(() => {
+
+    const sendDeliverACK = async () => {
+      var change=false
+      await props.state.chatRooms.forEach((chatRoom, ind) => {
+        if (chatRoom.chatMesseges.length > 0 && chatRoom.lastDeliverACK < chatRoom.chatMesseges[chatRoom.chatMesseges.length - 1].id) {
+          chatRoom.chatMesseges.forEach((msg) => {
+            var MsgInfo = {
+              chat_id: chatRoom.chat_id,
+              user_id: props.state.user_id,
+              message_id: msg.id
+            }
+
+            change=true
+            props.state.client.markDeliver(MsgInfo, (res) => { })
+          })
+        }
+      })
+
+      if(change){
+        props.setStateFromChild((state) => {
+        
+          state.chatRooms.forEach((chatRoom, ind) => {
+            if (chatRoom.chatMesseges.length > 0) {
+              state.chatRooms[ind].lastDeliverACK = chatRoom.chatMesseges[chatRoom.chatMesseges.length - 1].id
+            }
+          })
+
+          return ({
+            chatRooms: state.chatRooms
+          })
+  
+        })
+      }
+    }
+    sendDeliverACK()
+  }, [props.state.chatRooms])
+
   return (
 
     <div className={classes.upperRoot} hidden={!props.state.hiddenState}>
@@ -67,7 +105,7 @@ const ChatList = (props) => {
                     const aTime = new Date(a.chatMesseges.length > 0 ? a.chatMesseges[a.chatMesseges.length - 1].message_time : a.joined_at)
                     const bTime = new Date(b.chatMesseges.length > 0 ? b.chatMesseges[b.chatMesseges.length - 1].message_time : b.joined_at)
 
-                    return (aTime.getTime()>bTime.getTime() ? -1 : 1)
+                    return (aTime.getTime() > bTime.getTime() ? -1 : 1)
                   })
                     .map((currentChat, ind) => (
                       currentChat ? <ChatItem

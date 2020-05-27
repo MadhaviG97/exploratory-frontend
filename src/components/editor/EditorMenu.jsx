@@ -136,7 +136,7 @@ class EditorMenu extends React.Component {
                                   return (
                                       <ListItem>
                                         <ListItemAvatar >
-                                          <Avatar alt="Cindy Baker" src={user.user.propic} />
+                                          <Avatar alt="user" src={user.user.propic} />
                                         </ListItemAvatar>
                                           <ListItemText
                                             primary={user.user.name}

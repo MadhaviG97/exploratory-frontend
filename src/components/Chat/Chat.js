@@ -32,13 +32,6 @@ export default class Chat extends React.Component {
   }
 
   onMessageReceived(msg) {
-    // var newChatRooms = this.state.chatRooms.slice()
-    // newChatRooms.forEach(chat => {
-    //   if (chat.chat_id == msg.chat_id) {
-    //     chat.chatMesseges.push(msg)
-    //   }
-    // })
-    // this.setState({ chatRooms: newChatRooms })
 
     this.setState((state)=>{
       state.chatRooms.forEach(chat=>{
@@ -48,6 +41,14 @@ export default class Chat extends React.Component {
       })
       return({chatRooms:state.chatRooms})
     })
+
+    var MsgInfo = {
+      chat_id: msg.chat_id,
+      user_id: this.state.user_id,
+      message_id: msg.id
+    }
+    this.state.client.markDeliver(MsgInfo, (res) => { })
+
   }
 
   async componentDidMount() {

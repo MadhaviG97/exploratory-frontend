@@ -4,6 +4,8 @@ import Box from "@material-ui/core/Box";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import { useSelector } from "react-redux";
+import { useParams, useHistory } from "react-router-dom";
+import axios from "axios";
 
 const dummyData2 = [
   {
@@ -62,7 +64,26 @@ const dummyInstitutions = [
 ];
 
 export default function Search(props) {
-  const searchResult = useSelector((state) => state.project).searchData;
+  let { string } = useParams();
+  const [searchResult,setSearchResult] = React.useState({
+    projects:[],
+    researchers:[],
+    institutions:[]
+  })
+  console.log(string)
+
+  React.useEffect(()=>{
+    var request = axios
+        .post("/search", { searchString: string })
+        .then((response) => {
+          console.log(response)
+          setSearchResult(response.data)
+          // return response.data;
+        });
+  },[string])
+
+  // console.log("props",props)
+  // const searchResult = useSelector((state) => state.project).searchData;
 
   return (
     <Box display="flex" flexDirection="column">
@@ -71,30 +92,30 @@ export default function Search(props) {
       </Box>
       <Box flexGrow="1">
         <main>
-          {!searchResult && (
+          {/* {!searchResult && (
             <SearchList
               projects={dummyData2}
               researchers={dummyData2}
               institutions={dummyInstitutions}
             />
-          )}
-          {searchResult && (
+          )} */}
+          {/* {searchResult && (
             <SearchList
               projects={searchResult.projects}
               researchers={searchResult.researchers}
               institutions={searchResult.institutions}
             />
-          )}
+          )} */}
           {/* <SearchList
             projects={dummyData2}
             researchers={dummyData2}
             institutions={dummyInstitutions}
           /> */}
-          {/* <SearchList
+          <SearchList
             projects={searchResult.projects}
             researchers={searchResult.researchers}
             institutions={searchResult.institutions}
-          /> */}
+          />
         </main>
       </Box>
       {/* <Box>

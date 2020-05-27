@@ -16,6 +16,8 @@ import IconButton from "@material-ui/core/IconButton";
 import BorderColorOutlinedIcon from "@material-ui/icons/BorderColorOutlined";
 import Alert from "../../../components/Project/AlertBox";
 import FileUploader from "../../../components/Project/FileUploader";
+import ImageUploader from "../../../components/Project/ImageUploader";
+
 import Avatar from "@material-ui/core/Avatar";
 import Loader from "../../../components/Loader";
 
@@ -67,6 +69,8 @@ export default function Form() {
     alertOpen: false,
     initialCollaborators: [],
     spinner: true,
+    related_images: [],
+    final_paper: [],
   });
 
   const handleCollaboratorUpdate = (new_list) => {
@@ -92,81 +96,13 @@ export default function Form() {
         var request = axios
           .post("/project/view-project", { id: id })
           .then((response) => {
-            console.log();
             return response.data;
           })
           .catch((err) => console.log(err.message));
-
-        var request_images = axios
-          .post(
-            "/drive/getfiles",
-            {
-              group: id,
-              folder: "Related Images",
-            },
-            config
-          )
-          .then((response) => {
-            return response.data;
-          })
-          .catch((err) => console.log(err.message));
-
-        var request_final_paper = axios
-          .post(
-            "/drive/getfiles",
-            {
-              group: id,
-              folder: "Final Paper",
-            },
-            config
-          )
-          .then((response) => {
-            console.log(response.data);
-            return response.data;
-          })
-          .catch((err) => console.log(err.message));
-
-        var request_public_files = axios
-          .post(
-            "/drive/getfiles",
-            {
-              group: id,
-              folder: "Public Files",
-            },
-            config
-          )
-          .then((response) => {
-            console.log(response.data);
-            return response.data;
-          })
-          .catch((err) => console.log(err.message));
-
-        dispatch(getFinalPaper(request_final_paper))
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        dispatch(getPublicFiles(request_public_files))
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
-
-        dispatch(getRelatedImages(request_images))
-          .then((response) => {
-            console.log(response);
-          })
-          .catch((err) => {
-            console.log(err);
-          });
 
         dispatch(render(request)).then((response) => {
           var project = response.payload.project_details.project;
+          var related_images = response.payload.project_details.related_images;
           var collaborators = response.payload.project_details.collaborators;
           var tags = response.payload.project_details.tags;
           setState({
@@ -177,7 +113,8 @@ export default function Form() {
             author: project.creator,
             collaborators: collaborators,
             visibility_public: project.visibility_public,
-            // final_paper: final_paper,
+            final_paper: project.final_paper,
+            related_images: related_images,
             tags: tags,
             initialCollaborators: collaborators,
             spinner: false,
@@ -203,6 +140,13 @@ export default function Form() {
     setState({ ...state, alertOpen: false });
   };
 
+  const handleImageSave = (new_image) => {
+    setState({
+      ...state,
+      related_images: [...state.related_images, new_image],
+    });
+  };
+
   const handleAlertSubmit = async () => {
     setState({ ...state, spinner: true });
     const newCollaborators = getNewCollaborators(
@@ -215,7 +159,6 @@ export default function Form() {
       title: state.title,
       description: state.description,
       abstract: state.abstract,
-      // creator: state.creator,
       collaborators: state.collaborators,
       visibility_public: state.visibility_public,
       tags: state.tags,
@@ -437,34 +380,33 @@ export default function Form() {
                   </Grid>
 
                   <Grid item xs={12}>
+                    <Typography variant="button">Related Images</Typography>
+                    <Paper className={classes.fileUploader} elevation={3}>
+                      <ImageUploader
+                        maxFiles={30}
+                        multiple={true}
+                        accept={"image/*"}
+                        type="related_images"
+                        project_id={id}
+                        default={
+                          state.related_images ? state.related_images : []
+                        }
+                      />
+                    </Paper>
+                  </Grid>
+
+                  <Grid item xs={12}>
                     <Typography variant="button">Final Paper</Typography>
                     <Paper className={classes.fileUploader} elevation={3}>
                       <FileUploader
                         maxFiles={1}
                         multiple={false}
                         accept={"application/pdf"}
-                        folder="Final Paper"
+                        type="final_paper"
                         project_id={id}
-                        // default={final_paper}
+                        default={state.final_paper ? state.final_paper : []}
                       />
                     </Paper>
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <Typography variant="button">Public Documents</Typography>
-                    <Paper className={classes.fileUploader} elevation={3}>
-                      <FileUploader
-                        maxFiles={100}
-                        multiple={true}
-                        accept={"*"}
-                        folder="Public Files"
-                        project_id={id}
-                        // default={public_files}
-                      />
-                    </Paper>
-                  </Grid>
-                  <Grid item xs={12}>
-                    {/* //image uploader */}
                   </Grid>
 
                   <Grid item xs={12} container>

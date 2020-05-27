@@ -28,14 +28,14 @@ export default function ResearcherItem({ ResearcherItem }) {
         avatar={
           <Avatar
             className={classes.avatar}
-            src={ResearcherItem.researcher.profile_picture}
+            src={ResearcherItem.profile_picture}
           />
         }
         title={
-          <Link href={ResearcherItem.researcher.profile_link}>
-            {ResearcherItem.researcher.first_name +
+          <Link href={ResearcherItem.profile_link}>
+            {ResearcherItem.first_name +
               " " +
-              ResearcherItem.researcher.last_name}
+              ResearcherItem.last_name}
           </Link>
         }
         subheader={ResearcherItem.institution}

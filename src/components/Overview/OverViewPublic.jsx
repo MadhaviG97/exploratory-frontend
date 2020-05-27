@@ -75,7 +75,11 @@ export default function Overview() {
         <React.Fragment>
           <ItemHeader handleEditState={handleEditState} title="" />
           <Divider />
-          <PDFViewer url={PDFprops.url} view={PDFprops.view} />
+          <PDFViewer
+            url={PDFprops.url}
+            project_id={project.project.id}
+            view={PDFprops.view}
+          />
         </React.Fragment>
       );
     } else {
@@ -106,7 +110,10 @@ export default function Overview() {
 
         <Box className={classes.box}>
           <Paper className={classes.abstract}>
-            <ExamplePDFViewer view={visibility_public} url={url} />
+            <ExamplePDFViewer
+              view={visibility_public}
+              url={project.project.final_paper}
+            />
           </Paper>
         </Box>
 

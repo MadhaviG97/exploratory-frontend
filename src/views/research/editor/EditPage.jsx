@@ -40,10 +40,6 @@ function Edit2Page(props) {
         return (
         <div className={classNames(classes.main2)}>
             <NavBar/>
-                
-            
-                
-                
                 <div className={classNames(classes.main2, classes.mainRaised3)} > 
                     <Grid container spacing={5} direction="row" >
                         <Grid item xs={3} align='right'>

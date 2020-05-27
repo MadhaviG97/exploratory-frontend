@@ -7,11 +7,10 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
+import Box from "@material-ui/core/Box";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import { getComments } from "../../_actions/project_actions";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -47,7 +46,7 @@ export default function AddComment(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [comment, setComment] = React.useState("");
-
+  const [sucess, setSuccess] = React.useState(false);
   const user = useSelector((state) => state.user);
   const project = useSelector((state) => state.project).renderData.project;
   const dispatch = useDispatch();
@@ -78,27 +77,36 @@ export default function AddComment(props) {
       .post("/project/comments/new-comment", formData)
       .then((response) => {
         setOpen(false);
+        setSuccess(true);
         props.onNewComment();
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <div>
-      {/* <Fab
-        color="Primary"
-        aria-label="add"
-        className={classes.fabButton}
-        onClick={handleClickOpen}
-      >
-        <AddIcon />
-      </Fab> */}
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
-        New Comment
-      </Button>
+    <React.Fragment>
+      <Box>
+        <Button variant="contained" color="primary" onClick={handleClickOpen}>
+          New Comment
+        </Button>
+      </Box>
+      <br />
+      {sucess && (
+        <Box>
+          <Alert
+            variant="filled"
+            onClose={() => {
+              setSuccess(false);
+            }}
+          >
+            Successfully added the comment !
+          </Alert>
+        </Box>
+      )}
       <Dialog
         open={open}
         onClose={handleClose}
+        fullWidth
         aria-labelledby="form-dialog-title"
       >
         <DialogTitle id="form-dialog-title">New Comment</DialogTitle>
@@ -129,6 +137,6 @@ export default function AddComment(props) {
           </Button>
         </DialogActions>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 }

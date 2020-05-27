@@ -56,32 +56,35 @@ export default function SignInSide() {
     dispatch(loginUser(formData))
       .then((result) => {
         console.log(result);
-        if (result.payload !== undefined) {
+        var status = result.payload.status;
+        var data = result.payload.data;
+        if (status === 200) {
           cb();
-        } else {
+          // alert("logged");
+        } else if (status === 406) {
           setValues({
             ...values,
             error: true,
-            helperTextEmail: "Invalid Login",
-            helperTextPassword: "Invalid Login",
+            helperTextPassword: data.error,
+            helperTextEmail: data.error,
+          });
+        } else if (status === 401) {
+          setValues({
+            ...values,
+            error: true,
+            helperTextPassword: data.error,
+            helperTextEmail: "",
+          });
+        } else if (status === 404) {
+          setValues({
+            ...values,
+            error: true,
+            helperTextEmail: data.error,
+            helperTextPassword: "",
           });
         }
       })
       .catch((err) => {
-        if (err.message === "Request failed with status code 400") {
-          setValues({
-            ...values,
-            error: true,
-            helperTextPassword: "Password Incorrect",
-          });
-        } else {
-          setValues({
-            ...values,
-            error: true,
-            helperTextEmail: "Invalid Login",
-            helperTextPassword: "Invalid Login",
-          });
-        }
         console.log(err);
       });
   };

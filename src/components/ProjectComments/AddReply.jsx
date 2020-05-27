@@ -75,6 +75,7 @@ export default function AddComment(props) {
       </Fab>
       <Dialog
         open={open}
+        fullWidth
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
       >

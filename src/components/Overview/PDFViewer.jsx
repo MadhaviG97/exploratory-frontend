@@ -1,12 +1,16 @@
 import React from "react";
 import PDFViewer from "pdf-viewer-reactjs";
 import "../../assets/css/canvas.css";
+import PdfLoader from "../Loader/PdfLoader";
 
 export default function PDFViewerComponent(props) {
+  console.log(
+    `${process.env.REACT_APP_BACK_END_URL}/final_paper/${props.project_id}.pdf`
+  );
   return (
     <PDFViewer
       document={{
-        url: "http://localhost:3000/pdf/".concat(props.url),
+        url: `${process.env.REACT_APP_BACK_END_URL}/final_paper/${props.project_id}.pdf`,
       }}
       scale={1.25}
       scaleStep={0.5}
@@ -20,6 +24,7 @@ export default function PDFViewerComponent(props) {
       navigation={{
         css: "canvas",
       }}
+      loader={<PdfLoader />}
       hideNavbar={!props.view}
     />
   );

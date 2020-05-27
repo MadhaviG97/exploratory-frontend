@@ -19,8 +19,13 @@ export default function (user_id, token, controls) {
   function getChatrooms(cb) {
     socket.emit('chatrooms', null, cb)
   }
+
   function getChatroomParticipants(chat_id,cb){
     socket.emit('getChatroomParticipants',chat_id,cb)
+  }
+
+  function getDirrectChat(user1_id,user2_id,cb){
+    socket.emit('getDirrectChat',user1_id,user2_id,cb)
   }
 
   function getMoreMessages(chat_id,lastMsg_id,cb){
@@ -67,9 +72,18 @@ export default function (user_id, token, controls) {
     socket.emit('getSeen',chat_id,message_id,cb)
   }
 
+  function markDeliver(MsgInfo,cb){
+    socket.emit('markDeliver',MsgInfo,cb)
+  }
+
+  function getDeliver(chat_id,message_id,cb){
+    socket.emit('getDeliver',chat_id,message_id,cb)
+  }
+
   return {
     getChatrooms,
     getChatroomParticipants,
+    getDirrectChat,
     getMoreMessages,
     updateChatInfo,
     changeAdmin,
@@ -81,6 +95,8 @@ export default function (user_id, token, controls) {
     createChatroom,
     markSeen,
     getSeen,
+    markDeliver,
+    getDeliver,
   }
 }
 
