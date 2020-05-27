@@ -21,7 +21,7 @@ import AddQuestionDialog from "../../components/PublicForumSections/AddQuestionD
 import PopularSectionTab from "../../components/PublicForumSections/PopularSectionTab";
 import UserSection from "../../components/PublicForumSections/UserSection";
 
-import { getQuestions, getAnswers } from "../../_actions/forum_actions";
+import { getQuestions, getAnswers,getForumUsers } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +44,7 @@ export default function Forum() {
   useEffect(() => {
     dispatch(getAnswers());
     dispatch(getQuestions());
+    dispatch(getForumUsers());
   }, []);
 
   const questions = useSelector((state) => state.questions);

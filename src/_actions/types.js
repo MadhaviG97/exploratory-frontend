@@ -30,3 +30,4 @@ export const GET_TASK_COMMENTS = "get_task_comments";
 export const ADD_TASK_COMMENT = "add_task_comment";
 export const DELETE_TASK_COMMENT = "delete_task_comment";
 export const EDIT_TASK_COMMENT = "edit_task_comment";
+export const GET_FORUM_USERS = "get_forum_users";
