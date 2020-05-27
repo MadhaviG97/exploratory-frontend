@@ -1,5 +1,11 @@
 import axios from "axios";
-import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER, LOGGED_USER } from "./types";
+import {
+  LOGIN_USER,
+  REGISTER_USER,
+  AUTH_USER,
+  LOGOUT_USER,
+  LOGGED_USER,
+} from "./types";
 
 export function registerUser(request) {
   return {
@@ -9,13 +15,15 @@ export function registerUser(request) {
 }
 
 export function loginUser(dataToSubmit) {
-  const request = axios.post(`/login`, dataToSubmit).then((response) => {
-    if (response.message) {
-    } else {
+  const request = axios
+    .post(`/login`, dataToSubmit)
+    .then((response) => {
       localStorage.setItem("token", response.data.token);
-      console.log(response.data.token);
-    }
-  });
+      return { data: response.data, status: response.status };
+    })
+    .catch((err) => {
+      return { data: err.response.data, status: err.response.status };
+    });
 
   return {
     type: LOGIN_USER,
@@ -40,7 +48,7 @@ export function auth() {
   //}
   return {
     type: AUTH_USER,
-    payload: request
+    payload: request,
   };
 }
 
