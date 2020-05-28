@@ -31,6 +31,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import { useSelector } from "react-redux";
 import NotFound from '../../../components/NotFound/NotFound'
+import EmptyDrive from '../../../components/editor/ProjectFolderGrid'
+import Loader from "../../../components/Loader";
 import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 export default function CreatePage(props) {
  
@@ -138,49 +140,45 @@ export default function CreatePage(props) {
             })
         
     };
-    if (collabs.some(e => e.researcher_id == user_id)){
-        return(
-            <div className={classNames(classes.main2)}>
-                <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                    <DialogContent>
-                        <DialogContentText>
-                            Delete Document?
-                        </DialogContentText>
-                    </DialogContent>
-                    <DialogActions>
-                    <Button onClick={handleClose} color="primary">
-                        Cancel
-                    </Button>
-                    <Button onClick={handleDelete} color="primary">
-                        Delete
-                    </Button>
-                    </DialogActions>
-                </Dialog>
-                <NavBar/>
-                <Collapse in={documentdeleted}>
-                        <Alert
-                        action={
-                            <IconButton
-                            aria-label="close"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                setDocumentDeleted(false);
-                            }}
+    if (collabs.length!==0){
+        if (collabs.some(e => e.researcher_id == user_id)){
+            return(
+                <div className={classNames(classes.main2)}>
+                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                        <DialogContent>
+                            <DialogContentText>
+                                Delete Document?
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                        <Button onClick={handleClose} color="primary">
+                            Cancel
+                        </Button>
+                        <Button onClick={handleDelete} color="primary">
+                            Delete
+                        </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <NavBar/>
+                    <Collapse in={documentdeleted}>
+                            <Alert
+                            action={
+                                <IconButton
+                                aria-label="close"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    setDocumentDeleted(false);
+                                }}
+                                >
+                                <CloseIcon fontSize="inherit" />
+                                </IconButton>
+                            }
                             >
-                            <CloseIcon fontSize="inherit" />
-                            </IconButton>
-                        }
-                        >
-                        Document Succesfully Deleted!
-                        </Alert>
-                    </Collapse>
-                <div >
-                    
-                    {/*marginTop={7} />*/}
-                    
-                    
-                        {/*<h3 align='center' className={classes.title2}>{ saveStatusRender() }</h3>*/}
+                            Document Succesfully Deleted!
+                            </Alert>
+                        </Collapse>
+                    <div >
                         <Box p={1}/>
                         <Grid container spacing={5} >
                             <Grid item xs={3}>
@@ -192,17 +190,17 @@ export default function CreatePage(props) {
                                 </Paper>
                             </Grid>
                             <Divider orientation="vertical" variant="fullWidth" />
-                            
                             <Grid item xs={8}>
                                 <Box  style={{ display: "flex" }} flexDirection="row" > 
                                     <Box alignSelf="flex-end">
                                         <NavComponent projectId={group}/>
                                     </Box>
-                                    
                                 </Box>
                                 <Divider  variant="fullWidth" />
                                 <Box p={1} />
-                                <Grid container spacing={4} direction="row" >
+                                {blogs.length===0 
+                                ? <EmptyDrive word='Documents'/>
+                                :<Grid container spacing={4} direction="row" >
                                     {blogs.map((blog,index) => (
                                         <Grid item lg={4} md={6} xs={12}>
                                             <CardActionArea component="a" >
@@ -219,13 +217,9 @@ export default function CreatePage(props) {
                                                 />
                                                 <Divider variant="middle" />
                                                 <CardContent>
-                                                
-                                                    
-                                                    
                                                     <div style={{ height: 150, overflowY: 'scroll', marginTop: 10 }}>
                                                         <div dangerouslySetInnerHTML={{ __html: blog.content }} />
                                                     </div>
-                                                    
                                                 </CardContent>
                                                 <Divider variant="middle" />
                                                 <CardActions disableSpacing>
@@ -251,19 +245,26 @@ export default function CreatePage(props) {
                                         </Grid>
                                     ))}
                                 </Grid>
+                                }
                             </Grid>
                         </Grid>
+                        
                     
-                
+                    </div>
+                    
+                    <Box p={10.5}  /> 
+                    <Footer/>
                 </div>
-                
-                <Box p={5}></Box>
-            </div>
-        );
-     }else{
-        return(
-            <NotFound/>
             );
+        }else{
+            return(
+                <NotFound/>
+                );
+        }
+    }else{
+        return(
+            <Loader />
+        )
     }
 
 }

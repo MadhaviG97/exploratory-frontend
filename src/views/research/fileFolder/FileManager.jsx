@@ -19,7 +19,7 @@ import FolderMenu from '../../../components/drive/FolderMenu'
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
-
+import EmptyDrive from '../../../components/editor/ProjectFolderGrid'
 import CardActions from '@material-ui/core/CardActions';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
 import IconButton from '@material-ui/core/IconButton';
@@ -37,7 +37,7 @@ import { Typography } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
-
+import Loader from "../../../components/Loader";
 import FileSaver from 'file-saver';
 
 
@@ -259,6 +259,7 @@ function FileManager(props) {
             }
         })
     }, [])
+    if (user.userData){
         if (collabs.some(e => e.researcher_id == user_id)){
         return (
         <div >
@@ -373,11 +374,13 @@ function FileManager(props) {
                             <Box p={1} />
                             <Box boxShadow={2} >
                                 <Box p={1}  style={{  background: '#FFFFFF'}}>
-                                        <h1 align='center' className={classes.topic3}>Drive</h1>
+                                        <h1 align='center' className={classes.topic4}>Drive</h1>
                                 </Box>
                             </Box>
-                            <Box p={1}/>
-                            <Grid container spacing={4} direction="row"  >
+                            <Box p={1.5}/>
+                            {files.length===0 && folders.length ===0
+                            ? <EmptyDrive word='files'/>
+                            :<Grid container spacing={4} direction="row"  >
                                 {folders.map((folder,index) => (
                                     <Grid item lg={3} md={4} xs={8}>
                                         <CardActionArea component="a" href={`/document/${group}/filemanager/${folder._id}`}>
@@ -386,7 +389,6 @@ function FileManager(props) {
                                                     <div style={{ height: 140, marginBottom: 2 }}>
                                                     <img src={process.env.PUBLIC_URL + '/images/fileFolder/folderImage.png'} alt={folder.name} />
                                                     </div>
-                                                    
                                                 </CardContent>
                                                 <Divider variant="middle" />
                                                 <CardActions  justify="center" >
@@ -406,22 +408,16 @@ function FileManager(props) {
                                     </Grid>
                                 ))}
                                 {files.map((file,index) => (
-                                    
                                 <Grid item lg={3} md={4} xs={8}>
                                     <CardActionArea component="a"  >
                                         <Card >
-                                            
                                             <CardContent>
-                                            
                                                 <div style={{ height: 140, marginBottom: 2 }}>
                                                 <img src={process.env.PUBLIC_URL + '/images/fileFolder/fileImage3.png'} alt={file.metadata.originalname} />
                                                 </div>
-                                                
                                             </CardContent>
                                             <Divider variant="middle" />
                                             <CardActions disableSpacing>
-                                                
-                                                
                                                 <IconButton aria-label={`info `} 
                                                     onClick={
                                                         handleClick(file)
@@ -435,29 +431,30 @@ function FileManager(props) {
                                                         {file.metadata.originalname}
                                                 </Typography>
                                             </CardActions>
-                                            
-                                            
                                         </Card>
                                     </CardActionArea>
                                 </Grid>
                                 ))}
                                 
                             </Grid>
+                            }
                         </Grid>
-                        
                     </Grid>
-                    
-                    <Box p={4}  /> 
+                    <Box p={10.3}  /> 
+                    <Footer/>
                 </div>
-            
-            
-        </div>
-        );
-    }
-    else{
+            </div>
+            );
+        }
+        else{
+            return(
+            <NotFound/>
+            );
+        }
+    }else{
         return(
-        <NotFound/>
-        );
+            <Loader />
+        )
     }
 
 }
