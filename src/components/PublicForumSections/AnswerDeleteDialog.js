@@ -6,7 +6,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import { deleteAnswer, getAnswers, getQuestions } from "../../_actions/forum_actions"
+import { deleteAnswer, getAnswers, getQuestions, getForumUsers } from "../../_actions/forum_actions"
 import { useDispatch } from "react-redux";
 
 export default function DeleteAnswer(props) {
@@ -33,6 +33,7 @@ export default function DeleteAnswer(props) {
     deleteAnswer(answerData);
     dispatch(getQuestions());
     dispatch(getAnswers());
+    dispatch(getForumUsers());
     console.log(answerData);
     setOpen(false);
   }
