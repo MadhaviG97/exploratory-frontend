@@ -131,12 +131,6 @@ function LoggedRightMenu(props) {
   const project = useSelector((state) => state.project);
   const dispatch = useDispatch();
 
-  let profileImage =
-    process.env.PUBLIC_URL + "/images/profile-pictures/profilePic.png";
-  if (user.userData.profile_picture) {
-    profileImage = user.userData.profile_picture;
-  }
-
   const name = user.userData.first_name;
   const logoutHandler = () => {
     const token = localStorage.token;
