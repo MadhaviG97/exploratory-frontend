@@ -16,7 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import history from '../../history'
 
 
-const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/plus.png'
+const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/plus2.png'
 
 
 
@@ -87,7 +87,7 @@ export default function FolderMenu(props) {
                             //onClick={props.history.push('/document/create')}
                             >
                             <ListItemAvatar >
-                                <Avatar variant='square'alt="Cindy Baker" src={fileImage} />
+                                <Avatar alt="add" src={fileImage} />
                             </ListItemAvatar>
                             <Typography
                                 component="span"
@@ -97,7 +97,7 @@ export default function FolderMenu(props) {
                             >   
                             Create New
                             </Typography>
-                            <Box p={1}/>
+                            <Box p={0.2}/>
                             
                         </Button>
                     </React.Fragment>

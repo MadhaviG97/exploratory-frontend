@@ -140,7 +140,7 @@ export default function CreatePage(props) {
             })
         
     };
-    if (collabs.length!==0){
+    if (collabs.length!==0 && user.userData){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
                 <div className={classNames(classes.main2)}>
@@ -252,7 +252,7 @@ export default function CreatePage(props) {
                     
                     </div>
                     
-                    <Box p={10.5}  /> 
+                    <Box p={13.5}  /> 
                     <Footer/>
                 </div>
             );

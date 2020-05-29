@@ -78,7 +78,7 @@ class Receiver extends React.Component {
     }
 
     render() {
-      console.log(this.group)
+            console.log(this.group)
             var room=this.group.toString().concat('callee')
             socket.emit('join', room);
             makePeerConnection(this.group);

@@ -37,7 +37,7 @@ function CreatePage(props) {
     if (user.userData){
         user_id=user.userData._id
     }
-    const [collabs, setCollabs] = useState([])
+    const [collabs, setCollabs] = React.useState([])
     useEffect(() => {
         const variable = { 
             group: group,
@@ -50,7 +50,7 @@ function CreatePage(props) {
                 }
             })
     }, [])
-    if (collabs.length!==0){
+    if (collabs.length!==0  && user.userData){
         if (collabs.some(e => e.researcher_id == user_id)){
             return (
                 <div>
@@ -95,7 +95,7 @@ function CreatePage(props) {
     }else{
         return(
             <Loader />
-        )
+        );
     }
 }
 

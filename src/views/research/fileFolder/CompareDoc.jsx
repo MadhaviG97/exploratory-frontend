@@ -18,7 +18,7 @@ export default function CompareDoc(props) {
     if (user.userData){
         user_id=user.userData._id
     }
-    const [collabs, setCollabs] = useState([])
+    const [collabs, setCollabs] = React.useState([])
     useEffect(() => {
         const variable = { 
             group: group,

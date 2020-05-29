@@ -440,7 +440,7 @@ function FileManager(props) {
                             }
                         </Grid>
                     </Grid>
-                    <Box p={10.3}  /> 
+                    <Box p={13.3}  /> 
                     <Footer/>
                 </div>
             </div>

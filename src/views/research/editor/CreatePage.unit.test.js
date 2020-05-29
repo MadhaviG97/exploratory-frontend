@@ -1,13 +1,14 @@
 import React from 'react';
 import  CreatePage  from './CreatePage';
-import { mount } from 'enzyme';
+import { mount ,shallow} from 'enzyme';
 import ReactDOM from 'react-dom';
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux'
 import MutationObserver from 'mutation-observer'
 import renderer from 'react-test-renderer';
-
+const realUseState = React.useState
+const stubInitialState = [{researcher:{researcher_id:'10002'}}]
 beforeAll(() => {
   window.MutationObserver = MutationObserver
   document.getSelection = () => {
@@ -42,11 +43,15 @@ jest.mock('react-router-dom', () => ({
   }),
 }));
 
+
 const store = mockStore({
-    user: { userData: {isAuth:true,first_name:'yogya'} }
+    user: { userData: {isAuth:true,first_name:'yogya',id:'10002'} }
   });
 
   it('should not call onChange prop with a value', () => {
+    jest
+    .spyOn(React, 'useState')
+    .mockImplementationOnce(() => realUseState(stubInitialState))
     const onChangeMock = jest.fn();
     const component = mount(
         <Provider store={store}>
