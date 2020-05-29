@@ -22,9 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function FrequentUsers() {
   const classes = useStyles();
-  var forumUsers = useSelector((state) => state.forum.users);
+  var freqUsers = useSelector((state) => state.forum.freqUsers);
   var forum = useSelector((state) => state.forum);
-  const [freqUsers, setFreqUsers] = useState(new Object(forumUsers));
   
 
   function getLength(obj) {
@@ -38,8 +37,9 @@ export default function FrequentUsers() {
   }
   return (
     <List className={classes.root}>
-      {getLength(forumUsers) > 0 ? (
-        forumUsers.map((user) => (
+      <Divider variant="fullWidth" component="li" />
+      {getLength(freqUsers) > 0 ? (
+        freqUsers.map((user) => (
           <div>
             <ListItem alignItems="flex-start">
               <ListItemAvatar>
