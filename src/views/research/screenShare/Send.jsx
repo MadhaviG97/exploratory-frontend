@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 import Divider from "@material-ui/core/Divider";
 import NotFound from '../../../components/NotFound/NotFound'
+import Loader from "../../../components/Loader";
 
 export default function Receive(props) {
     
@@ -34,35 +35,44 @@ export default function Receive(props) {
                 }
             })
     }, [])
-    if (collabs.some(e => e.researcher_id == user_id)){
-        return(
-            <div className={classNames(classes.main2)} >
-                <NavBar/>
-                
-                <div style={{ width: '70%', margin: '1rem auto' }}>
+    if (user.userData){
+        if (collabs.some(e => e.researcher_id == user_id)){
+            return(
+                <div className={classNames(classes.main2)} >
+                    <NavBar/>
                     
-                        <NavComponent projectId={props.match.params.projectId}/>
-                    
-                    <Divider  variant="fullWidth" />
-                    <Box p={1}/>
-                    <Box boxShadow={3} style={{  background: '#FFFFFF'}} >
-                    <Box p={2}>
-                        <div >
-                            <h1 align='center' className={classes.topic2}>Share Your Screen with Project members!</h1>
-                        </div>
-                    </Box>
-                </Box>
-                </div> 
-                <div > 
-                    <Sender group={props.match.params.projectId} user={user}/>
+                    <div style={{ width: '70%', margin: '1rem auto' }}>
+                        
+                            <NavComponent projectId={props.match.params.projectId}/>
+                        
+                        <Divider  variant="fullWidth" />
+                        <Box p={0.5}/>
+                        {/*
+                            <Box boxShadow={3} style={{  background: '#FFFFFF'}} >
+                                <Box p={0.5}>
+                                    <div >
+                                        <h1 align='center' className={classes.topic}>Share Your Screen with Project members</h1>
+                                    </div>
+                                </Box>
+                            </Box>
+                       
+                        */}
+                    </div> 
+                    <div > 
+                        <Sender group={props.match.params.projectId} user={user}/>
+                    </div>
+                    <Box p={5}/>
+                    <Footer/>
                 </div>
-                
-                <Footer/>
-            </div>
-        );
+            );
+        }else{
+            return(
+                <NotFound/>
+                );
+        }
     }else{
         return(
-            <NotFound/>
-            );
+            <Loader />
+        )
     }
 }

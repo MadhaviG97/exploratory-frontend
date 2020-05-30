@@ -94,62 +94,68 @@ savedVersion = () => {
                 }
             })
 };
-componentDidMount() {
-  console.log('mount',this.props.user)
+handleLoad=()=>{
+  const editorContainer = document.createElement('div')
+  editorContainer.setAttribute('id', 'editor')
+  var originalDiv = document.getElementById("QuillEditor-container");
   
-  window.addEventListener('load', () => {
-    const editorContainer = document.createElement('div')
-    editorContainer.setAttribute('id', 'editor')
-    var originalDiv = document.getElementById("QuillEditor-container");
-    
-    var parentDiv = document.getElementById("parent");
-    parentDiv.insertBefore(editorContainer, originalDiv.nextSibling);
-    this.editor = new Quill(editorContainer, {
-      modules: {
-        cursors: true,
-        toolbar: [
-          [{ 'font': [] }],
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-                ['blockquote', 'code-block'],
-                         
-                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
-                [{ 'indent': '-1'}, { 'indent': '+1' }],        // outdent/indent
-                [{ 'align': [] }],          
-                [{ 'direction': 'rtl' }],                         // text direction
+  var parentDiv = document.getElementById("parent");
+  parentDiv.insertBefore(editorContainer, originalDiv.nextSibling);
+  this.editor = new Quill(editorContainer, {
+    modules: {
+      cursors: true,
+      toolbar: [
+        [{ 'font': [] }],
+              [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
+              ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
+              ['blockquote', 'code-block'],
+                        
+              [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+              [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
+              [{ 'indent': '-1'}, { 'indent': '+1' }],        // outdent/indent
+              [{ 'align': [] }],          
+              [{ 'direction': 'rtl' }],                         // text direction
+            
+                // custom dropdown
               
-                  // custom dropdown
-                
+            
+              [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
               
-                [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-                
-                
-                ['video','formula','image'],
-                ['clean']     
-        ],
-        history: {
-          userOnly: true
-        }
-      },
-      placeholder: '',
-      theme: 'snow' // or 'bubble'
-    })
-    
-    
-    
-    const binding = new QuillBinding(this.type, this.editor, this.provider.awareness)
-   
-    window.example = ( this.provider, this.ydoc, this.type, binding )
+              
+              ['video','formula','image'],
+              ['clean']     
+      ],
+      history: {
+        userOnly: true
+      }
+    },
+    placeholder: '',
+    theme: 'snow' // or 'bubble'
   })
+  
+  const binding = new QuillBinding(this.type, this.editor, this.provider.awareness)
+  
+  window.example = ( this.provider, this.ydoc, this.type, binding )
+}
+componentDidMount() {
+  if (document.readyState === 'complete') {
+    this.handleLoad()
+  } else {
+    window.addEventListener("load", this.handleLoad);
+  }
+  
 }
 
+componentWillUnmount() { 
+  window.removeEventListener('load', this.handleLoad)  
+}
 render() {
     const { classes } = this.props;
     if (this.props.user.userData){
       this.provider.awareness.setLocalStateField('user', {
         name: this.props.user.userData.first_name,
         propic: this.props.user.userData.profile_picture,
+        email:this.props.user.userData.email
       })
       this.st=(this.provider.awareness.getStates())
     }
@@ -207,7 +213,6 @@ render() {
             <Divider orientation="vertical" variant="fullWidth" />
             
             <Grid item xs={8} >
-              
               <Paper id='parent'>
                 <div id="QuillEditor-container" style={{backgroundColor: '#FFFFFF'}}>
                 {/* <!-- Create the editor container --> */}

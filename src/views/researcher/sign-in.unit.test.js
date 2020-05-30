@@ -30,15 +30,11 @@ describe('Test case for testing login',() =>{
             <SignIn />
         </Provider>);
       const form = getByTestId('form');
-      const label = getByTestId('label');
       const emailInput = getByTestId('emailInput');
-      const passwordInput = getByTestId('passwordInput');
       const submit = getByTestId('submit');
     
       expect(form).toBeInTheDocument();
-      expect(label).toHaveTextContent('Password');
       expect(emailInput).toHaveValue('');
-      expect(passwordInput).toHaveValue('');
       expect(submit).toBeInTheDocument();
     });
 //this is not a complete test as it does not check values after the login action. this is just a start.
