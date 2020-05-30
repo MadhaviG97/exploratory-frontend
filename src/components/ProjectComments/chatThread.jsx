@@ -70,6 +70,7 @@ export default function CommentSection(props) {
   const isEditable = (authur_id) => {
     return authur_id === user.userData._id ? true : false;
   };
+  console.log(props.replies);
 
   return (
     <React.Fragment>
@@ -112,13 +113,13 @@ export default function CommentSection(props) {
                       <EditReply
                         onPost={props.onEdit}
                         message={reply.message}
-                        reply_id={reply.reply_id}
+                        reply_id={reply.message_id}
                       />
                     )}
                     {isDeletable(reply.author_id) && (
                       <DeleteReply
                         onPost={props.onDelete}
-                        reply_id={reply.reply_id}
+                        reply_id={reply.message_id}
                         comment_id={reply.comment_id}
                         onReplyDelete={props.onReplyDelete}
                         onCommentDelete={props.onCommentDelete}

@@ -6,6 +6,8 @@ import ImageViewer from "./ImageViewer";
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ItemHeader from "./ItemHeader";
+import EditRelatedImages from "../Project/EditRelatedImages";
+import EditFinalPaper from "../Project/EditFinalPaper";
 
 export default function Overview() {
   const classes = useStyles();
@@ -15,12 +17,8 @@ export default function Overview() {
   var user = useSelector((state) => state.user);
   let user_id = user.userData !== undefined ? user.userData._id : 0;
 
-  //props.project.abstract
-  const text =
-    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut ";
-
-  //props.project.final paper
-  const url = "test.pdf";
+  const [editImages, setEditImages] = React.useState(false);
+  const [editPaper, setEditPaper] = React.useState(false);
 
   //props.project.visibility_public
   const visibility_public = 1 ? true : false;
@@ -47,6 +45,7 @@ export default function Overview() {
     return (
       <React.Fragment>
         <ItemHeader handleEditState={handleEditState} title="Abstract" />
+
         <Divider />
         <Typography variant="caption">
           {TextProps.text ? TextProps.text : "To be Added..."}
@@ -58,7 +57,19 @@ export default function Overview() {
   const ImageView = (imageProps) => {
     return (
       <React.Fragment>
-        <ItemHeader handleEditState={handleEditState} title="Related Images" />
+        <ItemHeader
+          handleEditState={() => setEditImages(true)}
+          title="Related Images"
+        />
+        <EditRelatedImages
+          onClose={() => {
+            setEditImages(false);
+            history.go(0);
+          }}
+          open={editImages}
+          id={project.project.id}
+          related_images={imageProps.images}
+        />
         <Divider />
         {imageProps.images ? (
           <ImageViewer images={imageProps.images} />
@@ -70,11 +81,22 @@ export default function Overview() {
   };
 
   const ExamplePDFViewer = (PDFprops) => {
-    if (PDFprops.url) {
+    if (!(PDFprops.url === "NULL" || PDFprops.url === null)) {
       return (
         <React.Fragment>
-          <ItemHeader handleEditState={handleEditState} title="" />
+          <ItemHeader handleEditState={() => setEditPaper(true)} title="" />
+          <EditFinalPaper
+            onClose={() => {
+              setEditPaper(false);
+              history.go(0);
+            }}
+            open={editPaper}
+            id={project.project.id}
+            final_paper={[PDFprops.url]}
+          />
+
           <Divider />
+
           <PDFViewer
             url={PDFprops.url}
             project_id={project.project.id}
@@ -85,7 +107,19 @@ export default function Overview() {
     } else {
       return (
         <React.Fragment>
-          <ItemHeader handleEditState={handleEditState} title="Final Paper" />
+          <ItemHeader
+            handleEditState={() => setEditPaper(true)}
+            title="Final Paper"
+          />
+          <EditFinalPaper
+            onClose={() => {
+              setEditPaper(false);
+              history.go(0);
+            }}
+            open={editPaper}
+            id={project.project.id}
+            final_paper={[PDFprops.url]}
+          />
           <Divider />
           <Typography variant="caption">To be Published...</Typography>
         </React.Fragment>

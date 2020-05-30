@@ -28,7 +28,11 @@ export default function FileUploader(props) {
         {files.length == 0 && (
           <React.Fragment>
             <br />
-            <Button variant="contained" color="primary">
+            <Button
+              onClick={handleRemovePaper}
+              variant="contained"
+              color="primary"
+            >
               save
             </Button>
             <br />
@@ -37,6 +41,13 @@ export default function FileUploader(props) {
         )}
       </div>
     );
+  };
+
+  const handleRemovePaper = () => {
+    axios
+      .post("/project/remove-final-paper", { project_id: props.project_id })
+      .then((response) => alert(response.data.message))
+      .catch((err) => alert(err.response.data.message));
   };
 
   const toDataURL = (url) =>

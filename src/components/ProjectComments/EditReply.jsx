@@ -9,6 +9,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
+import ButtonLoader from "../Loader/ButtonLoader";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -44,6 +45,8 @@ export default function EditComment(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [reply, setReply] = React.useState(props.message);
+  const [loading, setLoading] = React.useState(false);
+  const [sucess, setSucess] = React.useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -55,8 +58,12 @@ export default function EditComment(props) {
   };
 
   const handlePost = () => {
-    props.onPost(props.reply_id, reply);
-    setOpen(false);
+    setLoading(true);
+    props.onPost(props.reply_id, reply, () => {
+      setLoading(false);
+      setReply("");
+      setOpen(false);
+    });
   };
 
   const handleChange = (e) => {
@@ -97,9 +104,12 @@ export default function EditComment(props) {
           <Button onClick={handleClose} color="primary" variant="outlined">
             Cancel
           </Button>
-          <Button onClick={handlePost} color="primary" variant="contained">
-            Confirm
-          </Button>
+          <ButtonLoader
+            name="Post"
+            success={sucess}
+            loading={loading}
+            onClick={handlePost}
+          />
         </DialogActions>
       </Dialog>
     </React.Fragment>

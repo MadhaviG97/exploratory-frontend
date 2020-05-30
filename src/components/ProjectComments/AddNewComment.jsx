@@ -11,6 +11,7 @@ import Box from "@material-ui/core/Box";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import Alert from "@material-ui/lab/Alert";
+import ButtonLoader from "../Loader/ButtonLoader";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -50,6 +51,7 @@ export default function AddComment(props) {
   const user = useSelector((state) => state.user);
   const project = useSelector((state) => state.project).renderData.project;
   const dispatch = useDispatch();
+  const [loading, setLoading] = React.useState(false);
 
   const handleClickOpen = (e) => {
     setOpen(true);
@@ -65,12 +67,14 @@ export default function AddComment(props) {
   };
 
   const handleNewComment = (e) => {
+    setLoading(true);
     console.log(project);
     const formData = {
       project_id: project.id,
       author_id: user.userData._id,
       message: comment,
       no_of_likes: 0,
+      no_of_dislikes: 0,
       initial_comment: 1,
     };
     axios
@@ -78,6 +82,8 @@ export default function AddComment(props) {
       .then((response) => {
         setOpen(false);
         setSuccess(true);
+        setLoading(false);
+        setComment("");
         props.onNewComment();
       })
       .catch((err) => console.log(err));
@@ -128,13 +134,13 @@ export default function AddComment(props) {
           <Button onClick={handleClose} color="primary" variant="outlined">
             Cancel
           </Button>
-          <Button
+
+          <ButtonLoader
+            name="Post"
+            success={sucess}
+            loading={loading}
             onClick={handleNewComment}
-            color="primary"
-            variant="contained"
-          >
-            Post
-          </Button>
+          />
         </DialogActions>
       </Dialog>
     </React.Fragment>

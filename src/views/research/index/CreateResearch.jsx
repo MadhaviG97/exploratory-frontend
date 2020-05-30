@@ -13,6 +13,7 @@ import Footer from "../../../components/Footer/Footer";
 import CollaboratorForm from "../../../components/Forms/FormComponents/collaboratorForm";
 import TagForm from "../../../components/Forms/FormComponents/TagForm";
 import Loader from "../../../components/Loader";
+import ButtonLoader from "../../../components/Loader/ButtonLoader";
 
 //redux
 import { useSelector } from "react-redux";
@@ -26,17 +27,29 @@ export default function Form() {
   let history = useHistory();
   let location = useLocation();
   const [loggedInUser, setLoggedInUser] = React.useState({});
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+
   React.useEffect(() => {
     setLoggedInUser(user.userData);
   }, []);
 
   const AddressForm = () => {
     const [state, setState] = React.useState({
+      id: "",
       title: "",
       description: "",
       currentuser: "",
       collaborators: [],
       tags: [],
+      helperTextTitle: "",
+      helperTextDescription: "",
+      helperTextCollaborators: "",
+      helperTextTags: "",
+      errorTitle: false,
+      errorDescription: false,
+      errorCollaborators: false,
+      errorTags: false,
     });
 
     React.useEffect(() => {
@@ -58,9 +71,39 @@ export default function Form() {
       });
     };
 
+    const validateForm = (formData) => {
+      if (formData.title.length === 0) {
+        setState({ ...state, helperTextTitle: "Required!", errorTitle: true });
+        return false;
+      } else if (formData.description.length === 0) {
+        setState({
+          ...state,
+          helperTextDescription: "Required!",
+          errorDescription: true,
+        });
+        return false;
+      } else if (formData.collaborators.length === 0) {
+        setState({
+          ...state,
+          helperTextCollaborators: "Required!",
+          errorCollaborators: true,
+        });
+        return false;
+      } else if (formData.tags.length === 0) {
+        setState({
+          ...state,
+          helperTextTags: "Required!",
+          errorTags: true,
+        });
+        return false;
+      } else {
+        return true;
+      }
+    };
+
     const handleSubmit = async (e) => {
-      var collaborator_ids = await state.collaborators.map((user) => user.id);
-      var tag_ids = await state.tags.map((tag) => tag.tag_id);
+      var collaborator_ids = state.collaborators.map((user) => user.id);
+      var tag_ids = state.tags.map((tag) => tag.tag_id);
       const formData = {
         title: state.title,
         description: state.description,
@@ -68,51 +111,33 @@ export default function Form() {
         collaborators: [state.currentuser._id, ...collaborator_ids],
         tags: tag_ids,
       };
+      var validated = validateForm(formData);
 
-      console.log(formData);
+      if (validated) {
+        setLoading(true);
 
-      axios
-        .post(`/project/create-project`, formData)
-        .then(async (response) => {
-          var id = response.data.insertId;
-          createFolder(id, "Final Paper");
-          createFolder(id, "Related Images");
-          createFolder(id, "Public Files");
+        axios
+          .post(`/project/create-project`, formData)
+          .then(async (response) => {
+            var id = response.data.insertId;
 
-          await axios
-            .post("/email/new-project", {
-              id: id,
-              receivers: state.collaborators,
-            })
-            .then((result) => {
-              let { from } = location.state || {
-                from: { pathname: `/project/viewproject/${id}` },
-              };
-              history.replace(from);
-            })
-            .catch((e) => console.log(e));
-        })
-        .catch((e) => console.log(e));
-    };
-
-    const createFolder = (project_id, folder_name) => {
-      const token = localStorage.token;
-      console.log(token);
-      const variables = {
-        group: project_id, //project_id
-        name: folder_name,
-        folder: "root",
-      };
-
-      let config = {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      };
-      axios.post("/drive/createfolder", variables, config).then((response) => {
-        console.log(response);
-        alert("Inserted");
-      });
+            await axios
+              .post("/email/new-project", {
+                id: id,
+                receivers: state.collaborators,
+              })
+              .then((result) => {
+                setLoading(false);
+                setSuccess(true);
+                let { from } = location.state || {
+                  from: { pathname: `/project/viewproject/${id}` },
+                };
+                history.replace(from);
+              })
+              .catch((e) => console.log(e));
+          })
+          .catch((e) => console.log(e));
+      }
     };
 
     return (
@@ -131,6 +156,8 @@ export default function Form() {
             label="Project Title"
             fullWidth
             autoComplete="project title"
+            helperText={state.helperTextTitle}
+            error={state.errorTitle}
             variant="outlined"
             onChange={handleChange}
             value={state.title}
@@ -143,7 +170,9 @@ export default function Form() {
             name="description"
             label="description"
             fullWidth
-            autoComplete="project description"
+            helperText={state.helperTextDescription}
+            error={state.errorDescription}
+            autoComplete="description"
             variant="outlined"
             onChange={handleChange}
             value={state.description}
@@ -154,6 +183,8 @@ export default function Form() {
           <CollaboratorForm
             disabled={false}
             onChange={handleCollaboratorUpdate}
+            errorCollaborators={state.errorCollaborators}
+            helperTextCollaborators={state.helperTextCollaborators}
             collaborators={[].map((user) => {
               return {
                 first_name: user.first_name,
@@ -171,6 +202,8 @@ export default function Form() {
         <Grid item xs={12}>
           <TagForm
             disabled={false}
+            helperTextTags={state.helperTextTags}
+            errorTags={state.errorTags}
             onChange={handleTagUpdate}
             tags={[].map((tag) => {
               return {
@@ -182,9 +215,12 @@ export default function Form() {
         </Grid>
 
         <Grid item xs={12} align="end">
-          <Button variant="contained" color="primary" onClick={handleSubmit}>
-            Create Project
-          </Button>
+          <ButtonLoader
+            name="create project"
+            success={success}
+            loading={loading}
+            onClick={handleSubmit}
+          />
         </Grid>
       </Grid>
     );
@@ -214,70 +250,3 @@ export default function Form() {
     </React.Fragment>
   );
 }
-
-let collaborators = [
-  {
-    _id: 10001,
-    first_name: "madhavi",
-    last_name: "gayathri",
-    institution: "University of Moratuwa",
-    email: "mad@123.com",
-    profile_picture: "avatar-1.jpg",
-  },
-  {
-    _id: 10002,
-    first_name: "malani",
-    last_name: "fonseka",
-    institution: "University of Moratuwa",
-    email: "melani@123.com",
-    profile_picture: "avatar-2.jpg",
-  },
-  {
-    _id: 10003,
-    first_name: "gamlath",
-    last_name: "perera",
-    institution: "University of Moratuwa",
-    email: "gamlath@123.com",
-    profile_picture: "avatar-3.jpg",
-  },
-  {
-    _id: 10004,
-    first_name: "peshaka",
-    last_name: "dhananjaya",
-    institution: "University of Moratuwa",
-    email: "peshaka@123.com",
-    profile_picture: "avatar-4.jpg",
-  },
-  {
-    _id: 10005,
-    first_name: "janith",
-    last_name: "janith",
-    institution: "University of Moratuwa",
-    email: "janith@123.com",
-    profile_picture: "avatar-5.jpg",
-  },
-  {
-    _id: 10006,
-    first_name: "eddie",
-    last_name: "silva",
-    institution: "University of Moratuwa",
-    email: "eddie@123.com",
-    profile_picture: "avatar-6.jpg",
-  },
-  {
-    _id: 10007,
-    first_name: "madhavi",
-    last_name: "gayathri",
-    institution: "University of Moratuwa",
-    email: "madhavi@123.com",
-    profile_picture: "avatar-7.jpg",
-  },
-  {
-    _id: 10008,
-    first_name: "jack",
-    last_name: "gamage",
-    institution: "University of Moratuwa",
-    email: "jack@123.com",
-    profile_picture: "avatar-8.jpg",
-  },
-];
