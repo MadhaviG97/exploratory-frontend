@@ -38,19 +38,21 @@ function CreatePage(props) {
         user_id=user.userData._id
     }
     const [collabs, setCollabs] = React.useState([])
+    const [mounted, setMounted] = React.useState(false)
     useEffect(() => {
         const variable = { 
             group: group,
         }
         axios.post('/project/get-collaborators', variable)
             .then(response => {
+                setMounted(true)
                 if (response.data) {
                     setCollabs(response.data)
                     
                 }
             })
     }, [])
-    if (collabs.length!==0  && user.userData){
+    if (mounted  && user.userData){
         if (collabs.some(e => e.researcher_id == user_id)){
             return (
                 <div>

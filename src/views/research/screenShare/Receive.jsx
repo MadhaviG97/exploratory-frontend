@@ -29,19 +29,21 @@ export default function Receive(props) {
         user_id=user.userData._id
     }
     const [collabs, setCollabs] = React.useState([])
+    const [mounted, setMounted] = React.useState(false)
     useEffect(() => {
         const variable = { 
             group: props.match.params.projectId,
         }
         axios.post('/project/get-collaborators', variable)
             .then(response => {
+                setMounted(true)
                 if (response.data) {
                     setCollabs(response.data)
                     
                 }
             })
     }, [])
-    if (user.userData){
+    if (user.userData && mounted){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
                 <div className={classNames(classes.main2)}>

@@ -49,6 +49,7 @@ export default function CreatePage(props) {
         user_id=user.userData._id
     }
     const [collabs, setCollabs] = useState([])
+    const [mounted, setMounted] = useState(false)
     const handleClickOpen = (id) => {
         setId(id)
         setOpen(true);
@@ -77,6 +78,7 @@ export default function CreatePage(props) {
             
         axios.post('/project/get-collaborators', variable)
             .then(response => {
+                setMounted(true)
                 if (response.data) {
                     setCollabs(response.data)
                     
@@ -140,7 +142,7 @@ export default function CreatePage(props) {
             })
         
     };
-    if (collabs.length!==0 && user.userData){
+    if (mounted && user.userData){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
                 <div className={classNames(classes.main2)}>
