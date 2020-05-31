@@ -19,12 +19,14 @@ export default function CompareDoc(props) {
         user_id=user.userData._id
     }
     const [collabs, setCollabs] = React.useState([])
+    const [mounted, setMounted] = React.useState(false)
     useEffect(() => {
         const variable = { 
             group: group,
         }
         axios.post('/project/get-collaborators', variable)
             .then(response => {
+                setMounted(true)
                 if (response.data) {
                     setCollabs(response.data)
                     
@@ -33,7 +35,7 @@ export default function CompareDoc(props) {
     }, [])
     
     const classes = useStyles();
-    if (user.userData){
+    if (user.userData && mounted){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
                 <div >
