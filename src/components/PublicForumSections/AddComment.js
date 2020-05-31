@@ -9,7 +9,14 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
-import { addAnswer, getAnswers } from "../../_actions/forum_actions";
+import {
+  addAnswer,
+  getAnswers,
+  getForumUsers,
+  getFreqUsers,
+  getPopularAnswers,
+  getPopularQuestions,
+} from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -63,16 +70,19 @@ export default function AddComment(props) {
 
   const handleSubmit = () => {
     const answerData = {
-      answer:answer,
-      question_id:props.question_id,
-      researcher_id:user.userData._id
-    }
+      answer: answer,
+      question_id: props.question_id,
+      researcher_id: user.userData._id,
+    };
     setOpen(false);
     dispatch(addAnswer(answerData));
     dispatch(getAnswers());
+    dispatch(getForumUsers());
+    dispatch(getFreqUsers());
+    dispatch(getPopularQuestions());
+    dispatch(getPopularAnswers());
     setAnswer("");
   };
-
 
   return (
     <div>
@@ -88,12 +98,11 @@ export default function AddComment(props) {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        fullWidth
       >
         <DialogTitle id="form-dialog-title">Add Answer</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            {props.question_title}
-          </DialogContentText>
+          <DialogContentText>{props.question_title}</DialogContentText>
           <TextField
             autoFocus
             margin="dense"

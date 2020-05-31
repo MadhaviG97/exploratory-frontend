@@ -81,7 +81,6 @@ export default function SimpleTable() {
     dispatch(getTasks(pId));
   }, []);
   const tasktracker = useSelector((state) => state.task_tracker);
-  console.log(tasktracker.tasks);
 
   function getLength(obj) {
     var length = 0;

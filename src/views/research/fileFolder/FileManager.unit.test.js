@@ -60,7 +60,7 @@ describe('FileManager', () => {
       await new Promise((resolve) => setTimeout(resolve, 0));
     });
     //expect(wrapper.find('.org-docs-header').text()).toContain('mocked name');
-    expect(axios.post).toHaveBeenCalledTimes(2);
+    expect(axios.post).toHaveBeenCalledTimes(3);
     //expect(wrapper.find("folders").length).toEqual(0)
 
   });

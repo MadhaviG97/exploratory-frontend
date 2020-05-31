@@ -269,7 +269,7 @@ function LoggedRightMenu(props) {
             color: "transparent",
           }}
           dropdownList={[
-            <Link to="/userProfile" style={{ color: "inherit" }}>
+            <Link to={`/userprofile/${user.userData._id}`} style={{ color: "inherit" }}>
               <LinkTo component="button">My Profile</LinkTo>
             </Link>,
             <Link to="/project/viewproject/1" style={{ color: "inherit" }}>

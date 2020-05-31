@@ -8,13 +8,18 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
-import { editAnswer, getAnswers} from "../../_actions/forum_actions"
+import {
+  editAnswer,
+  getAnswers,
+  getPopularAnswers,
+  getPopularQuestions,
+} from "../../_actions/forum_actions";
 import { useDispatch } from "react-redux";
 
 export default function EditAnswer(props) {
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = React.useState({
-      answer:props.answer
+    answer: props.answer,
   });
   const dispatch = useDispatch();
 
@@ -36,12 +41,14 @@ export default function EditAnswer(props) {
 
   const handleSubmit = () => {
     const answerData = {
-        answer_id:props.answer_id,
-        answer:edit.answer,
-        updated_at:year + "-" + month + "-" + date,
-    }
+      answer_id: props.answer_id,
+      answer: edit.answer,
+      updated_at: year + "-" + month + "-" + date,
+    };
     editAnswer(answerData);
     dispatch(getAnswers());
+    dispatch(getPopularQuestions());
+    dispatch(getPopularAnswers());
     setOpen(false);
   };
 
@@ -53,7 +60,7 @@ export default function EditAnswer(props) {
         color="primary"
         onClick={handleClickOpen}
       >
-        <EditIcon />
+        <EditIcon fontSize="small"/>
       </IconButton>
       <Dialog
         open={open}

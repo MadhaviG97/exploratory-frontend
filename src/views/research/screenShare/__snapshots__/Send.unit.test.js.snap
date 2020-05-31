@@ -2,7 +2,7 @@
 
 exports[`Share Screens renders correctly 1`] = `
 <div
-  className="makeStyles-main2-13"
+  className="makeStyles-main2-349"
 >
   <div>
     <header
@@ -374,7 +374,7 @@ exports[`Share Screens renders correctly 1`] = `
                       <img
                         alt="profile"
                         className="makeStyles-img-237"
-                        src="data:image/jpeg;base64,undefined"
+                        src="undefined"
                       />
                       <div
                         className="makeStyles-imageLink-227"
@@ -396,142 +396,31 @@ exports[`Share Screens renders correctly 1`] = `
     </header>
   </div>
   <div
+    className="Document View"
     style={
       Object {
-        "margin": "1rem auto",
-        "width": "70%",
+        "margin": "3rem auto",
+        "width": "60%",
       }
     }
   >
-    <div>
-      <button
-        aria-describedby={null}
-        className="MuiButtonBase-root MuiIconButton-root"
-        disabled={false}
-        onBlur={[Function]}
-        onClick={[Function]}
-        onDragLeave={[Function]}
-        onFocus={[Function]}
-        onKeyDown={[Function]}
-        onKeyUp={[Function]}
-        onMouseDown={[Function]}
-        onMouseLeave={[Function]}
-        onMouseOver={[Function]}
-        onMouseUp={[Function]}
-        onTouchEnd={[Function]}
-        onTouchMove={[Function]}
-        onTouchStart={[Function]}
-        tabIndex={0}
-        title="Apps"
-        type="button"
-      >
-        <span
-          className="MuiIconButton-label"
-        >
-          <svg
-            aria-hidden="true"
-            className="MuiSvgIcon-root"
-            focusable="false"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"
-            />
-          </svg>
-        </span>
-        <span
-          className="MuiTouchRipple-root"
-        />
-      </button>
-    </div>
-    <hr
-      className="MuiDivider-root"
-    />
     <div
-      className="MuiBox-root MuiBox-root-457"
-    />
-    <div
-      className="MuiBox-root MuiBox-root-458"
+      className="MuiBox-root MuiBox-root-454"
       style={
         Object {
           "background": "#FFFFFF",
         }
       }
     >
-      <div
-        className="MuiBox-root MuiBox-root-459"
-      >
-        <div>
-          <h1
-            align="center"
-            className="makeStyles-topic2-3"
-          >
-            Share Your Screen with Project members!
-          </h1>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div>
-    <div>
-      <video
-        autoPlay={true}
-        controls={true}
-        id="screen"
-        playsInline={true}
+      <img
+        alt="page not found"
+        src="undefined/images/appnav/error.png"
       />
-      <div
-        style={
-          Object {
-            "margin": "2rem",
-            "textAlign": "center",
-          }
-        }
-      >
-        <label
-          aria-disabled={false}
-          className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeLarge MuiButton-sizeLarge"
-          htmlType="submit"
-          onBlur={[Function]}
-          onClick={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
-          role="button"
-          style={
-            Object {
-              "background": "#014f82",
-              "boxShadow": Array [
-                "none",
-              ],
-              "color": "#FFFFFF",
-              "height": 40,
-            }
-          }
-          tabIndex={0}
-        >
-          <span
-            className="MuiButton-label"
-          >
-            Share the Screen
-          </span>
-          <span
-            className="MuiTouchRipple-root"
-          />
-        </label>
-      </div>
     </div>
   </div>
   <div>
     <footer
-      className="makeStyles-footer2-398"
+      className="makeStyles-footer2-397"
     >
       <div
         className="MuiContainer-root MuiContainer-maxWidthSm"

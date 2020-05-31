@@ -64,6 +64,7 @@ export default function TaskComments(props) {
     }
     return length;
   }
+  
 
   return (
     <Paper className={classes.root}>

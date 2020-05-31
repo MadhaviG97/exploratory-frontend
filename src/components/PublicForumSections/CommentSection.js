@@ -12,10 +12,10 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import ListItemText from "@material-ui/core/ListItemText";
 import Avatar from "@material-ui/core/Avatar";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import DeleteIcon from "@material-ui/icons/Delete";
-import EditIcon from "@material-ui/icons/Edit";
+import Badge from "@material-ui/core/Badge";
+import StarsIcon from "@material-ui/icons/Stars";
 
-import AnswerLikeSection from "./AnswerLikeSection";
+import AnswerLike from "./AddALike";
 import AddComment from "./AddComment";
 import DeleteAnswer from "./AnswerDeleteDialog";
 import EditAnswer from "./EditAnswerDialog";
@@ -60,9 +60,6 @@ export default function CommentSection(props) {
   const forum = useSelector((state) => state.forum);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getAnswers());
-  }, []);
 
   return (
     <React.Fragment>
@@ -85,9 +82,40 @@ export default function CommentSection(props) {
                     </ListItemAvatar>
                     <ListItemText
                       primary={answer.first_name + " " + answer.last_name}
-                      secondary={answer.answer}
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            className={classes.inline}
+                            color="inherit"
+                          >
+                            {new Date(answer.updated_at).toDateString() +
+                              " :- "}
+                          </Typography>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            className={classes.inline}
+                            color="textPrimary"
+                          >
+                            {answer.answer}
+                          </Typography>
+                        </React.Fragment>
+                      }
                     />
-                    <AnswerLikeSection />
+                    {answer.like_count > 0 ? (
+                      <div className={classes.star}>
+                        <Badge color="primary" badgeContent={answer.like_count}>
+                          <StarsIcon fontSize="medium" color="primary" />
+                        </Badge>
+                      </div>
+                    ) : (
+                      <div className={classes.star}>
+                        <StarsIcon fontSize="medium" color="primary" />
+                      </div>
+                    )}
+                    <AnswerLike question_id={answer.question_id} answer_id={answer.answer_id} />
                     {answer.researcher_id === user.userData._id ? (
                       <ButtonGroup
                         color="primary"
@@ -123,8 +151,39 @@ export default function CommentSection(props) {
                     </ListItemAvatar>
                     <ListItemText
                       primary={answer.first_name + " " + answer.last_name}
-                      secondary={answer.answer}
+                      secondary={
+                        <React.Fragment>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            className={classes.inline}
+                            color="inherit"
+                          >
+                            {new Date(answer.updated_at).toDateString() +
+                              " :- "}
+                          </Typography>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            className={classes.inline}
+                            color="textPrimary"
+                          >
+                            {answer.answer}
+                          </Typography>
+                        </React.Fragment>
+                      }
                     />
+                    {answer.like_count > 0 ? (
+                      <div className={classes.star}>
+                        <Badge color="primary" badgeContent={answer.like_count}>
+                          <StarsIcon fontSize="medium" color="primary" />
+                        </Badge>
+                      </div>
+                    ) : (
+                      <div className={classes.star}>
+                        <StarsIcon fontSize="medium" color="primary" />
+                      </div>
+                    )}
                   </ListItem>
                 </React.Fragment>
               ) : (

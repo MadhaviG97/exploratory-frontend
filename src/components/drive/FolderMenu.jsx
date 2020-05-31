@@ -23,8 +23,8 @@ import history from '../../history'
 import Alert from '@material-ui/lab/Alert';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
-const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/fileAvatar.png'
-const folderImage=process.env.PUBLIC_URL + '/images/fileFolder/grey-folder-full-icon-png-5.png'
+const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/fileImage3.png'
+const folderImage=process.env.PUBLIC_URL + '/images/fileFolder/folderImage.png'
 
 const useStyles = makeStyles((theme) => ({
   root: {

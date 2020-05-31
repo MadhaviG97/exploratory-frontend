@@ -12,7 +12,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { withStyles } from "@material-ui/core/styles";
 import axios from 'axios';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import Avatar from '@material-ui/core/Avatar';
+import Box from '@material-ui/core/Box';
 const socket = openSocket('http://localhost:8000');
+
 var caller;
 //var group="GeeFour"
 var callername="caller"
@@ -152,8 +156,9 @@ class Sender extends React.Component {
         axios.post('/project/get-collaborators', variable)
             .then(response => {
                 if (response.data) {
+                  console.log(response.data)
                     this.setState({collaborators:response.data})
-                    
+                    console.log(response.data[0].profile_picture)
                 }
             })
             
@@ -181,7 +186,7 @@ class Sender extends React.Component {
         
     }
     
-
+    
     render() {
       let user=this.props.user
       const { classes } = this.props;
@@ -200,10 +205,11 @@ class Sender extends React.Component {
                         input={<Input />}
                         MenuProps={this.MenuProps}
                       >
-                      
-                      {this.state.collaborators.map((researcher) => (
+                      {this.state.collaborators.filter(researcher => researcher.researcher_id !== user.userData._id).map((researcher) => (
                         <MenuItem key={researcher.researcher_id} value={researcher} >
-                          {researcher.first_name} {researcher.last_name}
+                          <Avatar alt="user" src={researcher.pofile_picture} />
+                          <Box p={1}/>
+                          {researcher.researcher_email}
                         </MenuItem>
                       ))}
                       </Select>
@@ -222,7 +228,8 @@ class Sender extends React.Component {
                     </Button>
                   </DialogActions>
                 </Dialog>
-                <video controls playsInline autoPlay id="screen"></video>
+                
+                
                 
                 <div style={{ textAlign: 'center', margin: '2rem', }}>
                     <Button
@@ -237,9 +244,10 @@ class Sender extends React.Component {
                         onClick={this.handleClickOpen}
                         //onSubmit={onSubmit}
                         >
-                            Share the Screen
+                            Share the Screen with Project Members
                     </Button>    
                 </div>
+                <video controls playsInline autoPlay id="screen"></video>
             </div>
         )
     }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import axios from 'axios';
 import { useSelector } from "react-redux";
 import NotFound from '../../../components/NotFound/NotFound'
@@ -7,9 +7,6 @@ import Footer from "../../../components/Footer/Footer";
 import NavBar from "../../../components/Navbar/Navbar";
 import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/editor";
-
-
-
 import ViewPage from '../../../components/editor/DocumentView';
 
 function ViewDocument(props) {
@@ -19,7 +16,7 @@ function ViewDocument(props) {
     if (user.userData){
         user_id=user.userData._id
     }
-    const [collabs, setCollabs] = useState([])
+    const [collabs, setCollabs] = React.useState([])
     useEffect(() => {
         const variable = { 
             group: props.match.params.projectId,

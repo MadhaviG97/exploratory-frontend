@@ -8,7 +8,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-
+import Box from '@material-ui/core/Box';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
 import InputBase from '@material-ui/core/InputBase';
@@ -16,7 +16,7 @@ import Paper from '@material-ui/core/Paper';
 import history from '../../history'
 
 
-const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/fileAvatar.png'
+const fileImage=process.env.PUBLIC_URL + '/images/fileFolder/plus2.png'
 
 
 
@@ -75,9 +75,7 @@ export default function FolderMenu(props) {
         </ListItem>
         <Divider variant="fullWidth" />
         <ListItem alignItems="flex-start">
-            <ListItemAvatar >
-            <Avatar variant='square'alt="Cindy Baker" src={fileImage} />
-            </ListItemAvatar>
+        
             <ListItemText
                 primary={
                     <React.Fragment>
@@ -88,6 +86,9 @@ export default function FolderMenu(props) {
                             onClick={()=>history.push(`/document/${group}/create`)}
                             //onClick={props.history.push('/document/create')}
                             >
+                            <ListItemAvatar >
+                                <Avatar alt="add" src={fileImage} />
+                            </ListItemAvatar>
                             <Typography
                                 component="span"
                                 variant="body2"
@@ -96,6 +97,7 @@ export default function FolderMenu(props) {
                             >   
                             Create New
                             </Typography>
+                            <Box p={0.2}/>
                             
                         </Button>
                     </React.Fragment>

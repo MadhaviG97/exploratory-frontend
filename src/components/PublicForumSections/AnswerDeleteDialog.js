@@ -6,7 +6,15 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 
-import { deleteAnswer, getAnswers, getQuestions } from "../../_actions/forum_actions"
+import {
+  deleteAnswer,
+  getAnswers,
+  getQuestions,
+  getForumUsers,
+  getFreqUsers,
+  getPopularQuestions,
+  getPopularAnswers,
+} from "../../_actions/forum_actions";
 import { useDispatch } from "react-redux";
 
 export default function DeleteAnswer(props) {
@@ -27,15 +35,19 @@ export default function DeleteAnswer(props) {
 
   const handleDelete = () => {
     const answerData = {
-        answer_id:props.answer_id,
-        deleted_at:year + "-" + month + "-" + date,
-    }
+      answer_id: props.answer_id,
+      deleted_at: year + "-" + month + "-" + date,
+    };
     deleteAnswer(answerData);
     dispatch(getQuestions());
     dispatch(getAnswers());
+    dispatch(getForumUsers());
+    dispatch(getFreqUsers());
+    dispatch(getPopularQuestions());
+    dispatch(getPopularAnswers());
     console.log(answerData);
     setOpen(false);
-  }
+  };
 
   return (
     <div>
@@ -45,7 +57,7 @@ export default function DeleteAnswer(props) {
         color="primary"
         onClick={handleClickOpen}
       >
-        <DeleteIcon />
+        <DeleteIcon fontSize="small"/>
       </IconButton>
       <Dialog
         open={open}
@@ -60,7 +72,12 @@ export default function DeleteAnswer(props) {
           <Button onClick={handleClose} color="primary" variant="outlined">
             NO
           </Button>
-          <Button onClick={handleDelete} color="primary" variant="contained" autoFocus>
+          <Button
+            onClick={handleDelete}
+            color="primary"
+            variant="contained"
+            autoFocus
+          >
             YES
           </Button>
         </DialogActions>

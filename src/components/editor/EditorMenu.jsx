@@ -61,6 +61,18 @@ class EditorMenu extends React.Component {
     };
     render() {
         
+        const result = [];
+            const map = new Map();
+            for (const item of this.state.online) {
+                if(!map.has(item.user.email)){
+                    map.set(item.user.email, true);    // set any value to Map
+                    result.push({
+                        name: item.user.name,
+                        propic:item.user.propic
+                    });
+                }
+            }
+        console.log(result)
         const { classes } = this.props;
         return (
             <div>
@@ -131,15 +143,15 @@ class EditorMenu extends React.Component {
                   >
                       <List disablePadding>
                         
-                          {this.state.online.map(
+                          {result.map(
                               user => {
                                   return (
                                       <ListItem>
                                         <ListItemAvatar >
-                                          <Avatar alt="Cindy Baker" src={user.user.propic} />
+                                          <Avatar alt="user" src={user.propic} />
                                         </ListItemAvatar>
                                           <ListItemText
-                                            primary={user.user.name}
+                                            primary={user.name}
                                           />
                                       </ListItem>
                                   );

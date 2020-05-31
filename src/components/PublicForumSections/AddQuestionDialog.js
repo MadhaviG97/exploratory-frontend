@@ -11,7 +11,15 @@ import InputLabel from "@material-ui/core/InputLabel";
 import MenuItem from "@material-ui/core/MenuItem";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
-import { addQuestion,getQuestions,getAnswers } from "../../_actions/forum_actions";
+import {
+  addQuestion,
+  getQuestions,
+  getAnswers,
+  getForumUsers,
+  getFreqUsers,
+  getPopularQuestions,
+  getPopularAnswers,
+} from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -19,11 +27,13 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
       width: "25ch",
+      fullWidth: "true",
     },
   },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 500,
+    fullWidth: "true",
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -76,8 +86,7 @@ export default function QuestionDialog(props) {
       researcher_id: user.userData._id,
       first_name: user.userData.first_name,
       last_name: user.userData.last_name,
-      created_at:
-        year + "-" + month + "-" + date,
+      created_at: year + "-" + month + "-" + date,
       category_name: question.category.category_name,
       category_id: question.category.id,
       title: question.title,
@@ -94,6 +103,10 @@ export default function QuestionDialog(props) {
     });
     dispatch(getQuestions());
     dispatch(getAnswers());
+    dispatch(getForumUsers());
+    dispatch(getFreqUsers());
+    dispatch(getPopularQuestions());
+    dispatch(getPopularAnswers());
   };
 
   const handleChange = (prop) => (event) => {
@@ -102,7 +115,7 @@ export default function QuestionDialog(props) {
 
   return (
     <div>
-      { is_logged ? (
+      {is_logged ? (
         <Button variant="contained" color="primary" onClick={handleClickOpen}>
           Ask a Question
         </Button>
@@ -110,7 +123,7 @@ export default function QuestionDialog(props) {
         <div></div>
       )}
 
-      <Dialog open={open} onClose={handleClose}>
+      <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle>Raise your Question</DialogTitle>
         <DialogContent>
           <DialogContentText>
@@ -130,6 +143,7 @@ export default function QuestionDialog(props) {
             <br />
 
             <TextField
+              fullWidth
               id="Question title"
               label="Question Title"
               className={classes.formControl}
@@ -141,6 +155,7 @@ export default function QuestionDialog(props) {
             <br />
 
             <TextField
+              fullWidth
               id="Description"
               label="Description"
               className={classes.formControl}

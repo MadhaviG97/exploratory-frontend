@@ -11,6 +11,8 @@ import Receiver from "../../../components/ScreenShare/Receiver"
 import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 import { useSelector } from "react-redux";
 import NotFound from '../../../components/NotFound/NotFound'
+import Loader from "../../../components/Loader";
+
 export default function Receive(props) {
     
     const senderSet = (value) => {
@@ -21,7 +23,9 @@ export default function Receive(props) {
     const classes = useStyles();
     const user = useSelector(state => state.user);
     let user_id=0
+    let userProp={userData:{_id:''}}
     if (user.userData){
+        userProp=user
         user_id=user.userData._id
     }
     const [collabs, setCollabs] = React.useState([])
@@ -37,36 +41,42 @@ export default function Receive(props) {
                 }
             })
     }, [])
-    if (collabs.some(e => e.researcher_id == user_id)){
-        return(
-            <div className={classNames(classes.main2)}>
-                <NavBar/>
-                <div style={{ width: '70%', margin: '1rem auto' }}>
-                    <NavComponent projectId={props.match.params.projectId}/>
-                    <Divider  variant="fullWidth" />
-                    <Box p={1}/>
-                    <Box boxShadow={3} style={{  background: '#FFFFFF'}} >
-                        <Box p={3}>
-                            <div >
-                                {sender
-                                    ? <h1 align='center' >You are Viewing the Screen of {sender}</h1>
-                                    : <h1 align='center' >Noone has Shared Screens with You Yet! </h1>
-                                }
-                            </div>
+    if (user.userData){
+        if (collabs.some(e => e.researcher_id == user_id)){
+            return(
+                <div className={classNames(classes.main2)}>
+                    <NavBar/>
+                    <div style={{ width: '70%', margin: '1rem auto' }}>
+                        <NavComponent projectId={props.match.params.projectId}/>
+                        <Divider  variant="fullWidth" />
+                        <Box p={1}/>
+                        <Box boxShadow={1} style={{  background: '#FFFFFF'}} >
+                            <Box p={3}>
+                                <div >
+                                    {sender
+                                        ? <h1 align='center' >You are Viewing the Screen of {sender}</h1>
+                                        : <h1 align='center' >Noone has Shared Screens with You Yet </h1>
+                                    }
+                                </div>
+                            </Box>
                         </Box>
-                    </Box>
-                </div> 
-                
-                <div  > 
-                    <Receiver group={props.match.params.projectId} senderSet={senderSet}/>
+                    </div> 
+                    
+                    <div  > 
+                        <Receiver group={props.match.params.projectId} senderSet={senderSet} userProp={userProp}/>
+                    </div>
+                    <Box p={4}/>
+                    <Footer/>
                 </div>
-                <Box p={4}/>
-                <Footer/>
-            </div>
-        );
+            );
+        }else{
+            return(
+                <NotFound/>
+                );
+        }
     }else{
         return(
-            <NotFound/>
-            );
+            <Loader />
+        )
     }
 }
