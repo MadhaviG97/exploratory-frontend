@@ -16,6 +16,7 @@
     "@testing-library/user-event": "^7.2.1",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.19.2",
+    "base64-img": "^1.0.4",
     "classnames": "^2.2.6",
     "clsx": "^1.1.0",
     "date-fns": "^2.0.0",

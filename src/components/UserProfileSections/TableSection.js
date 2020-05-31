@@ -86,8 +86,6 @@ export default function CustomizedTables() {
             <StyledTableCell>Project Title</StyledTableCell>
             <StyledTableCell align="left">Description</StyledTableCell>
             <StyledTableCell align="left">Creator</StyledTableCell>
-            <StyledTableCell align="left">Collaborators</StyledTableCell>
-            <StyledTableCell align="left">Status</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -106,10 +104,6 @@ export default function CustomizedTables() {
               </StyledTableCell>
               <StyledTableCell align="left">{row.description}</StyledTableCell>
               <StyledTableCell align="left">{row.creator}</StyledTableCell>
-              <StyledTableCell align="left">
-                {row.collaborators}
-              </StyledTableCell>
-              <StyledTableCell align="left">{row.status}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
