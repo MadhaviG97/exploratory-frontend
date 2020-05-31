@@ -36,6 +36,7 @@ export default function AllUsers() {
 
   return (
     <List className={classes.root}>
+      <Divider variant="fullWidth" component="li" />
       {getLength(forumUsers) > 0 ? (
         forumUsers.map((user) => (
           <div>

@@ -4,21 +4,19 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
+import ThumbUpIcon from "@material-ui/icons/ThumbUp";
 
 import {
-  deleteQuestion,
-  getQuestions,
   getAnswers,
-  getForumUsers,
-  getFreqUsers,
-  getPopularQuestions,
+  likeAnswer,
   getPopularAnswers,
+  getPopularQuestions,
 } from "../../_actions/forum_actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
-export default function DeleteQuestion(props) {
+export default function LikeAnswer(props) {
   const [open, setOpen] = React.useState(false);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleClickOpen = () => {
@@ -29,20 +27,14 @@ export default function DeleteQuestion(props) {
     setOpen(false);
   };
 
-  var date = new Date().getDate();
-  var month = new Date().getMonth() + 1;
-  var year = new Date().getFullYear();
-
-  const handleDelete = () => {
-    const questionData = {
+  const handleLike = () => {
+    const answerData = {
+      answer_id: props.answer_id,
       question_id: props.question_id,
-      deleted_at: year + "-" + month + "-" + date,
+      researcher_id: user.userData._id,
     };
-    deleteQuestion(questionData);
-    dispatch(getQuestions());
+    likeAnswer(answerData);
     dispatch(getAnswers());
-    dispatch(getForumUsers());
-    dispatch(getFreqUsers());
     dispatch(getPopularQuestions());
     dispatch(getPopularAnswers());
     setOpen(false);
@@ -51,28 +43,29 @@ export default function DeleteQuestion(props) {
   return (
     <div>
       <IconButton
-        aria-label="delete"
+        aria-label="increase"
         variant="outlined"
         color="primary"
         onClick={handleClickOpen}
       >
-        <DeleteIcon fontSize="small" />
+        <ThumbUpIcon color="primary" fontSize="small" />
       </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+        fullWidth
       >
         <DialogTitle id="alert-dialog-title">
-          {"Are you sure that you want to delete the question...?"}
+          {"Do you think this answer helped you...?"}
         </DialogTitle>
         <DialogActions>
           <Button onClick={handleClose} color="primary" variant="outlined">
             NO
           </Button>
           <Button
-            onClick={handleDelete}
+            onClick={handleLike}
             color="primary"
             variant="contained"
             autoFocus

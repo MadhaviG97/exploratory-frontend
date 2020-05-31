@@ -1,15 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import Badge from "@material-ui/core/Badge";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
-import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/Delete";
-import ThumbUpIcon from "@material-ui/icons/ThumbUp";
-import EditIcon from "@material-ui/icons/Edit";
 
 import DeleteQuestion from "./QuestionDeleteDialog";
 import EditQuestion from "./EditQuestionDialog";
+import LikeQuestion from "./AddQLIke";
+
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -32,9 +28,8 @@ export default function QuestionLike(props) {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const is_logged = useSelector((state) => state.is_logged);
-  const [count, setCount] = React.useState(1);
   const [invisible, setInvisible] = React.useState(false);
-  
+
 
   const handleBadgeVisibility = () => {
     setInvisible(!invisible);
@@ -44,23 +39,26 @@ export default function QuestionLike(props) {
     <div className={classes.root}>
       {user.userData.isAuth ? (
         <div>
-          <Button
-            aria-label="increase"
-            onClick={() => {
-              setCount(count + 1);
-            }}
+          <ButtonGroup
+            color="primary"
+            aria-label="outlined primary button group"
           >
-            <Badge color="primary" badgeContent={count}>
-              <ThumbUpIcon fontSize="small" />
-            </Badge>
-          </Button>
+            <LikeQuestion
+              question_id={props.question_id}
+              researcher_id={user.userData._id}
+            />>
+          </ButtonGroup>
           {user.userData._id === props.Q_id ? (
             <ButtonGroup
               color="primary"
               aria-label="outlined primary button group"
             >
               <DeleteQuestion question_id={props.question_id} />
-              <EditQuestion question_id={props.question_id} title={props.title} description={props.description}/>
+              <EditQuestion
+                question_id={props.question_id}
+                title={props.title}
+                description={props.description}
+              />
             </ButtonGroup>
           ) : (
             <div></div>

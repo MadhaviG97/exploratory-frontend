@@ -16,6 +16,9 @@ import {
   getQuestions,
   getAnswers,
   getForumUsers,
+  getFreqUsers,
+  getPopularQuestions,
+  getPopularAnswers,
 } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -24,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
     "& .MuiTextField-root": {
       margin: theme.spacing(1),
       width: "25ch",
-      fullWidth:"true"
+      fullWidth: "true",
     },
   },
   formControl: {
     margin: theme.spacing(1),
     minWidth: 500,
-    fullWidth:"true"
+    fullWidth: "true",
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
@@ -101,6 +104,9 @@ export default function QuestionDialog(props) {
     dispatch(getQuestions());
     dispatch(getAnswers());
     dispatch(getForumUsers());
+    dispatch(getFreqUsers());
+    dispatch(getPopularQuestions());
+    dispatch(getPopularAnswers());
   };
 
   const handleChange = (prop) => (event) => {

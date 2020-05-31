@@ -11,6 +11,8 @@ import Box from '@material-ui/core/Box';
 import PopularQuestionsTab from "./PopularQuestionsTab";
 import PopularAnswersTab from "./PopularAnswersTab";
 
+import { useDispatch, useSelector } from "react-redux";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -52,6 +54,7 @@ export default function FullWidthTabs() {
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
+  const forum = useSelector((state) => state.forum);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);

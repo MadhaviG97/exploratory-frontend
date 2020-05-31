@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import ReactLoading from "react-loading";
 // nodejs library that concatenates classes
 
 // @material-ui/core components
@@ -21,7 +21,14 @@ import AddQuestionDialog from "../../components/PublicForumSections/AddQuestionD
 import PopularSectionTab from "../../components/PublicForumSections/PopularSectionTab";
 import UserSection from "../../components/PublicForumSections/UserSection";
 
-import { getQuestions, getAnswers,getForumUsers } from "../../_actions/forum_actions";
+import {
+  getQuestions,
+  getAnswers,
+  getForumUsers,
+  getFreqUsers,
+  getPopularQuestions,
+  getPopularAnswers,
+} from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
@@ -34,66 +41,91 @@ const useStyles = makeStyles((theme) => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
   },
+  loader: {
+    height: 550,
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+  },
 }));
 
 export default function Forum() {
   const classes = useStyles();
+  const [loading, setLoading] = useState(true);
   const user = useSelector((state) => state.user);
+  const forum = useSelector((state) => state.forum);
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
     dispatch(getAnswers());
     dispatch(getQuestions());
     dispatch(getForumUsers());
+    dispatch(getFreqUsers());
+    dispatch(getPopularQuestions());
+    dispatch(getPopularAnswers());
   }, []);
 
   const questions = useSelector((state) => state.questions);
-  const forum = useSelector((state) => state.forum);
- 
+
   return (
     <div>
       <ForumAppBar userDetails={user.userData} />
-      <div className={classes.root}>
-        <Grid container>
-          <Grid item xs>
-            <Paper>
-              <UserSection />
-            </Paper>
-          </Grid>
+      {loading ? (
+        <div className={classes.loader}>
+          <ReactLoading
+            type="spinningBubbles"
+            color="#5054CC"
+            height={550}
+            width={50}
+          />
+        </div>
+      ) : (
+        <div className={classes.root}>
+          <Grid container>
+            <Grid item xs>
+              <Paper>
+                <UserSection />
+              </Paper>
+            </Grid>
 
-          <Divider orientation="vertical" variant="fullWidth" />
+            <Divider orientation="vertical" variant="fullWidth" />
 
-          <Grid item xs={6}>
-            <Container style={{ backgroundColor: "white", padding: "5px" }}>
-              {Object.keys(questions).length > 0 ? (
-                questions.questions.map((question) => (
-                  <ForumPost postDetails={question} />
-                ))
-              ) : (
-                <div className={classes.paper}>No Questions</div>
-              )}
+            <Grid item xs={6}>
+              <Container style={{ backgroundColor: "white", padding: "5px" }}>
+                {Object.keys(questions).length > 0 ? (
+                  questions.questions.map((question) => (
+                    <ForumPost postDetails={question} />
+                  ))
+                ) : (
+                  <div className={classes.paper}>No Questions</div>
+                )}
 
+                <Divider />
+              </Container>
+            </Grid>
+
+            <Divider orientation="vertical" variant="fullWidth" />
+
+            <Grid item xs>
+              <Paper className={classes.paper}>
+                <AddQuestionDialog />
+              </Paper>
               <Divider />
-            </Container>
+              <Paper>
+                <CountGrid />
+              </Paper>
+              <Divider />
+              <Paper>
+                <PopularSectionTab />
+              </Paper>
+            </Grid>
           </Grid>
-
-          <Divider orientation="vertical" variant="fullWidth" />
-
-          <Grid item xs>
-            <Paper className={classes.paper}>
-              <AddQuestionDialog />
-            </Paper>
-            <Divider />
-            <Paper>
-              <CountGrid />
-            </Paper>
-            <Divider />
-            <Paper>
-              <PopularSectionTab />
-            </Paper>
-          </Grid>
-        </Grid>
-      </div>
+        </div>
+      )}
       <Footer />
     </div>
   );
