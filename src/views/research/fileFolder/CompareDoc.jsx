@@ -9,6 +9,7 @@ import { useStyles } from "../../../assets/css/projectFolderGrid";
 import CompareDialog from "../../../components/drive/CompareDialog"
 import { useSelector } from "react-redux";
 import NotFound from '../../../components/NotFound/NotFound'
+import Loader from "../../../components/Loader";
 
 export default function CompareDoc(props) {
     const group=props.match.params.projectId
@@ -17,7 +18,7 @@ export default function CompareDoc(props) {
     if (user.userData){
         user_id=user.userData._id
     }
-    const [collabs, setCollabs] = useState([])
+    const [collabs, setCollabs] = React.useState([])
     useEffect(() => {
         const variable = { 
             group: group,
@@ -32,20 +33,27 @@ export default function CompareDoc(props) {
     }, [])
     
     const classes = useStyles();
-    if (collabs.some(e => e.researcher_id == user_id)){
-        return(
-            <div >
-                <NavBar/>
-                <div className={classNames(classes.main, classes.mainRaised2)} > 
-                    <CompareDialog group={group}/>
+    if (user.userData){
+        if (collabs.some(e => e.researcher_id == user_id)){
+            return(
+                <div >
+                    <NavBar/>
+                    <div className={classNames(classes.main, classes.mainRaised2)} > 
+                        <CompareDialog group={group}/>
+                    </div>
+                    <Footer/>
                 </div>
-                <Footer/>
-            </div>
-        );
+            );
+        }else{
+            return(
+                <NotFound/>
+                );
+        }
     }else{
         return(
-            <NotFound/>
-            );
+            <Loader />
+        )
     }
+    
 
 }

@@ -377,7 +377,7 @@ exports[`feed renders correctly 1`] = `
                         <img
                           alt="profile"
                           className="makeStyles-img-225"
-                          src="data:image/jpeg;base64,undefined"
+                          src="undefined"
                         />
                         <div
                           className="makeStyles-imageLink-215"

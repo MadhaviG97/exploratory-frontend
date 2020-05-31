@@ -12,9 +12,11 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { withStyles } from "@material-ui/core/styles";
 import axios from 'axios';
+import CardActionArea from '@material-ui/core/CardActionArea';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
 const socket = openSocket('http://localhost:8000');
+
 var caller;
 //var group="GeeFour"
 var callername="caller"
@@ -226,7 +228,8 @@ class Sender extends React.Component {
                     </Button>
                   </DialogActions>
                 </Dialog>
-                <video controls playsInline autoPlay id="screen"></video>
+                
+                
                 
                 <div style={{ textAlign: 'center', margin: '2rem', }}>
                     <Button
@@ -241,9 +244,10 @@ class Sender extends React.Component {
                         onClick={this.handleClickOpen}
                         //onSubmit={onSubmit}
                         >
-                            Share the Screen
+                            Share the Screen with Project Members
                     </Button>    
                 </div>
+                <video controls playsInline autoPlay id="screen"></video>
             </div>
         )
     }
