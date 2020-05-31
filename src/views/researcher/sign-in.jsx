@@ -48,45 +48,73 @@ export default function SignInSide() {
   const handleSubmit = async (e, cb) => {
     e.preventDefault();
 
-    const formData = {
-      email: values.email,
-      password: values.password,
-    };
-
-    dispatch(loginUser(formData))
-      .then((result) => {
-        console.log(result);
-        var status = result.payload.status;
-        var data = result.payload.data;
-        if (status === 200) {
-          cb();
-          // alert("logged");
-        } else if (status === 406) {
-          setValues({
-            ...values,
-            error: true,
-            helperTextPassword: data.error,
-            helperTextEmail: data.error,
-          });
-        } else if (status === 401) {
-          setValues({
-            ...values,
-            error: true,
-            helperTextPassword: data.error,
-            helperTextEmail: "",
-          });
-        } else if (status === 404) {
-          setValues({
-            ...values,
-            error: true,
-            helperTextEmail: data.error,
-            helperTextPassword: "",
-          });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
+    if (values.email.length === 0) {
+      setValues({
+        ...values,
+        error: true,
+        helperTextPassword: "",
+        helperTextEmail: "Required!",
       });
+    } else if (values.password.length === 0) {
+      setValues({
+        ...values,
+        error: true,
+        helperTextPassword: "Required!",
+        helperTextEmail: "",
+      });
+    } else if (values.password.length < 6) {
+      setValues({
+        ...values,
+        error: true,
+        helperTextPassword: "Password length too short!",
+        helperTextEmail: "",
+      });
+    } else {
+      const formData = {
+        email: values.email,
+        password: values.password,
+      };
+
+      dispatch(loginUser(formData))
+        .then((result) => {
+          var status = result.payload.status;
+          var data = result.payload.data;
+          if (status === 200) {
+            cb();
+          } else if (status === 406) {
+            setValues({
+              ...values,
+              error: true,
+              helperTextPassword: data.error,
+              helperTextEmail: data.error,
+            });
+          } else if (status === 401) {
+            setValues({
+              ...values,
+              error: true,
+              helperTextPassword: data.error,
+              helperTextEmail: "",
+            });
+          } else if (status === 404) {
+            setValues({
+              ...values,
+              error: true,
+              helperTextEmail: data.error,
+              helperTextPassword: "",
+            });
+          } else if (status === 400) {
+            setValues({
+              ...values,
+              error: true,
+              helperTextEmail: "",
+              helperTextPassword: data.error,
+            });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   };
 
   let history = useHistory();

@@ -18,7 +18,7 @@ export default function (state = {}, action) {
     case SEARCH:
       return { ...state, searchData: action.payload };
     case LOGOUT_USER:
-      return { ...state };
+      return { ...state, userData: {} };
     default:
       return state;
   }

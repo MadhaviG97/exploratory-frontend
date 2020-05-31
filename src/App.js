@@ -6,7 +6,7 @@ import ConfirmEmail from "./views/guest-user/ConfirmEmail.jsx";
 import TemporaryRegister from "./views/guest-user/TemporaryRegister.jsx";
 
 import fillProfile from "./views/researcher/fill-profile";
-import UserProfile from "./views/researcher/user-profile.jsx";
+import UserProfile from "./views/researcher/user-profile";
 import AboutUs from "./views/shared/about-us.jsx";
 import Forum from "./views/shared/public-forum";
 import signIn from "./views/researcher/sign-in";
@@ -41,8 +41,6 @@ import Project from "./views/research/index/ViewResearchPublic";
 import Receive from "./views/research/screenShare/Receive";
 import Send from "./views/research/screenShare/Send";
 
-import Demo from "./views/whiteboard/Demo";
-import CreateRoom from "./views/whiteboard/CreateRoom";
 import JoinRoom from "./views/whiteboard/JoinRoom";
 
 import TaskTracker from "./components/Project/TaskTracker";
@@ -145,7 +143,7 @@ function App() {
             <Route exact path="/forum" component={Auth(Forum, true)} />
             <Route
               exact
-              path="/userProfile"
+              path="/userprofile/:uId"
               component={Auth(UserProfile, null)}
             />
             {/* <Route exact path="/modal" component={Modal} /> */}
@@ -154,7 +152,6 @@ function App() {
               path="/project/settings/:id"
               component={Auth(ProjectSettings, true)}
             />
-            <Route exact path="/whiteboard" component={Demo} />
 
             <Route
               exact

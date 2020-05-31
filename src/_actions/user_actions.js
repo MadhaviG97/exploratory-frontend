@@ -52,8 +52,11 @@ export function auth() {
   };
 }
 
-export function logoutUser() {
-  const request = axios.get(`/logout`).then((response) => response.data);
+export function logoutUser(config) {
+  const request = axios
+    .post(`/logout`, {}, config)
+    .then((response) => response)
+    .catch((err) => err.response);
 
   return {
     type: LOGOUT_USER,

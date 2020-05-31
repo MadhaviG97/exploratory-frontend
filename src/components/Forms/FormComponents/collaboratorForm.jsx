@@ -128,6 +128,8 @@ export default function Asynchronous(props) {
       )}
       renderInput={(params) => (
         <TextField
+          helperText={props.helperTextCollaborators}
+          error={props.errorCollaborators}
           {...params}
           label="Collaborators"
           variant="outlined"

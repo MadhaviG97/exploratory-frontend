@@ -8,7 +8,13 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
-import { editQuestion, getQuestions, getAnswers} from "../../_actions/forum_actions"
+import {
+  editQuestion,
+  getQuestions,
+  getAnswers,
+  getPopularQuestions,
+  getPopularAnswers,
+} from "../../_actions/forum_actions";
 import { useDispatch } from "react-redux";
 
 export default function EditAnswer(props) {
@@ -45,6 +51,8 @@ export default function EditAnswer(props) {
     editQuestion(questionData);
     dispatch(getQuestions());
     dispatch(getAnswers());
+    dispatch(getPopularQuestions());
+    dispatch(getPopularAnswers());
     setOpen(false);
   };
 
@@ -56,7 +64,7 @@ export default function EditAnswer(props) {
         color="primary"
         onClick={handleClickOpen}
       >
-        <EditIcon />
+        <EditIcon fontSize="small" />
       </IconButton>
       <Dialog
         open={open}
@@ -87,7 +95,6 @@ export default function EditAnswer(props) {
             multiline
             defaultValue={props.description}
             onChange={handleChange("description")}
-            
           />
         </DialogContent>
         <DialogActions>

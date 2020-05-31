@@ -14,58 +14,65 @@ import LinkTo from "@material-ui/core/Link";
 import { useSelector, useDispatch } from "react-redux";
 import getMuiTheme from "material-ui/styles/getMuiTheme";
 import MuiThemeProvider from "material-ui/styles/MuiThemeProvider";
+
+/// notification ///
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import DoneOutlineIcon from "@material-ui/icons/DoneOutline";
-import { useHistory, useLocation } from "react-router-dom";
-import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
-import moment from "moment";
 import ReactMaterialUiNotifications from "../../../views/shared/ReactMaterialUiNotifications";
+import NotificationsActiveIcon from "@material-ui/icons/NotificationsActive";
+import FlatButton from "material-ui/FlatButton";
+/// notification ///
+import { useHistory, useLocation } from "react-router-dom";
+import moment from "moment";
 import Paper from "@material-ui/core/Paper";
 import Notifications from "../../Notification/NotificationList";
 import SearchIcon from "@material-ui/icons/Search";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { search } from "../../../_actions/project_actions";
-import FlatButton from "material-ui/FlatButton";
+import { logoutUser } from "../../../_actions/user_actions";
 
 const useStyles = makeStyles(styles);
 
 function LoggedRightMenu(props) {
+  // demo purpose
   React.useEffect(() => {
     const timer = setTimeout(() => {
-      console.log("This will run after 5 second!");
-
-      ReactMaterialUiNotifications.showNotification({
-        title: "Title",
-        additionalText: `You have a new chat from Janith`,
-        iconBadgeColor: "#014f82",
-        icon: <NotificationsActiveIcon />,
-        overflowContent: (
-          <div>
-            <FlatButton
-              label="mark as read"
-              icon={<DoneOutlineIcon color="primary" />}
-            />
-            <FlatButton
-              label="direct me"
-              icon={<ExitToAppIcon color="primary" />}
-              // onClick={(e) =>
-              //   handleSubmit(e, () => {
-              //     history.replace(from);
-              //   })
-              // }
-            />
-          </div>
-        ),
-        timestamp: moment().format("h:mm A"),
-        personalised: true,
-        avatar: "/images/notification/bell.png",
-        priority: true,
-        zDepth: 4,
-      });
+      onNewNotication();
     }, 1000);
     return () => clearTimeout(timer);
   }, []);
+
+  const onNewNotication = () => {
+    ReactMaterialUiNotifications.showNotification({
+      title: "Title",
+      additionalText: `You have new message from `,
+      iconBadgeColor: "#014f82",
+      icon: <NotificationsActiveIcon />,
+      overflowContent: (
+        <div>
+          <FlatButton
+            label="mark as read"
+            icon={<DoneOutlineIcon color="primary" />}
+          />
+          <FlatButton
+            label="direct me"
+            icon={<ExitToAppIcon color="primary" />}
+            // onClick={(e) =>
+            //   handleSubmit(e, () => {
+            //     history.replace(from);
+            //   })
+            // }
+          />
+        </div>
+      ),
+      timestamp: moment().format("h:mm A"),
+      personalised: true,
+      avatar: "/images/notification/bell.png",
+      priority: true,
+      zDepth: 4,
+    });
+  };
 
   const [state, setState] = React.useState({
     count: 0,
@@ -98,21 +105,6 @@ function LoggedRightMenu(props) {
         description: "You have new task assigned to you",
         time: "11:20:10",
       },
-      {
-        id: "4",
-        description: "You have new task assigned to you",
-        time: "11:20:10",
-      },
-      {
-        id: "5",
-        description: "You have new task assigned to you",
-        time: "11:20:10",
-      },
-      {
-        id: "6",
-        description: "You have new task assigned to you",
-        time: "11:20:10",
-      },
     ],
     show: false,
   });
@@ -129,12 +121,6 @@ function LoggedRightMenu(props) {
   const project = useSelector((state) => state.project);
   const dispatch = useDispatch();
 
-  let profileImage =
-    process.env.PUBLIC_URL + "/images/profile-pictures/profilePic.png";
-  if (user.userData.profile_picture) {
-    profileImage = user.userData.profile_picture;
-  }
-
   const name = user.userData.first_name;
   const logoutHandler = () => {
     const token = localStorage.token;
@@ -145,14 +131,17 @@ function LoggedRightMenu(props) {
       },
     };
 
-    localStorage.removeItem("token");
-    axios.post(`/logout`, {}, config).then((response) => {
-      if (response.status === 200) {
-        history.push("/signin");
-      } else {
-        alert("Log Out Failed");
-      }
-    });
+    dispatch(logoutUser(config))
+      .then((response) => {
+        console.log(response);
+        if (response.payload.status === 200) {
+          localStorage.removeItem("token");
+          history.push("/signin");
+        } else {
+          alert("Log Out Failed");
+        }
+      })
+      .catch((err) => console.log(err.message));
   };
 
   const muiTheme = getMuiTheme();
@@ -204,14 +193,14 @@ function LoggedRightMenu(props) {
       <ListItem className={classes.listItem}>
         <MuiThemeProvider muiTheme={muiTheme}>
           <React.Fragment>
-            <div style={{ position: "relative" }}>
+            {/* <div style={{ position: "relative" }}>
               <IconButton onClick={() => handleShowNotification()}>
                 <Badge badgeContent={4} color="primary">
                   <NotificationsIcon fontSize="large" />
                 </Badge>
               </IconButton>
-            </div>
-            {state.show && (
+            </div> */}
+            {/* {state.show && (
               <div
                 style={{
                   position: "absolute",
@@ -226,7 +215,11 @@ function LoggedRightMenu(props) {
                   <Notifications items={state.data} />
                 </Paper>
               </div>
-            )}
+            )} */}
+
+            {/* add this to the page on which you want to show notification */}
+
+            {/* start */}
             <ReactMaterialUiNotifications
               desktop={true}
               transitionName={{
@@ -238,6 +231,7 @@ function LoggedRightMenu(props) {
               transitionAppear={true}
               transitionLeave={true}
             />
+            {/* end */}
           </React.Fragment>
         </MuiThemeProvider>
       </ListItem>
@@ -264,7 +258,7 @@ function LoggedRightMenu(props) {
             color: "transparent",
           }}
           dropdownList={[
-            <Link to="/userProfile" style={{ color: "inherit" }}>
+            <Link to={`/userprofile/${user.userData._id}`} style={{ color: "inherit" }}>
               <LinkTo component="button">My Profile</LinkTo>
             </Link>,
             <Link to="/project/viewproject/1" style={{ color: "inherit" }}>
