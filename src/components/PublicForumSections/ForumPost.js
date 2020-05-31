@@ -13,6 +13,8 @@ import { red } from "@material-ui/core/colors";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import Container from "@material-ui/core/Container";
 import Divider from "@material-ui/core/Divider";
+import Badge from "@material-ui/core/Badge";
+import StarsIcon from "@material-ui/icons/Stars";
 
 import CommentSection from "./CommentSection";
 import QuestionLike from "./QuestionLikeSection";
@@ -38,6 +40,10 @@ const useStyles = makeStyles((theme) => ({
   },
   avatar: {
     backgroundColor: red[500],
+  },
+  star: {
+    paddingLeft: 10,
+    paddingRight: 15
   },
 }));
 
@@ -91,12 +97,28 @@ export default function Post(props) {
           <Divider />
         </CardContent>
         <CardActions disableSpacing>
+          {props.postDetails.like_count > 0 ? (
+            <div className={classes.star}>
+              <Badge
+                color="primary"
+                badgeContent={props.postDetails.like_count}
+              >
+                <StarsIcon fontSize="medium" color="primary" />
+              </Badge>
+            </div>
+          ) : (
+            <div className={classes.star}>
+              <StarsIcon fontSize="medium" color="primary" />
+            </div>
+          )}
+
           {is_logged ? (
             <QuestionLike
               Q_id={props.postDetails.researcher_id}
               question_id={props.postDetails.question_id}
               title={props.postDetails.title}
               description={props.postDetails.description}
+              like_count={props.postDetails.like_count}
             />
           ) : (
             <div></div>

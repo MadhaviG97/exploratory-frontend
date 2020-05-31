@@ -9,6 +9,7 @@ import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/editor";
 import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 import Grid from "@material-ui/core/Grid";
+import Loader from "../../../components/Loader";
 import '../../../assets/css/editor.css';
 
 //import '../../../assets/css/editor.css';
@@ -35,39 +36,44 @@ function Edit2Page(props) {
                 }
             })
     }, [])
-    
-    if (collabs.some(e => e.researcher_id == user_id)){
-        return (
-        <div className={classNames(classes.main2)}>
-            <NavBar/>
-                <div className={classNames(classes.main2, classes.mainRaised3)} > 
-                    <Grid container spacing={5} direction="row" >
-                        <Grid item xs={3} align='right'>
-                            <Box >
-                                <NavComponent projectId={props.match.params.projectId}/>
-                            </Box>
-                        </Grid>
-                        
-                        <Grid item xs={8} >
-                            <Box boxShadow={2} flexDirection="row">
-                                <Box p={1} style={{  background: '#FFFFFF'}}>
-                                    <h1 align='center' className={classes.topic4}>Editor</h1>
+    if (user.userData){
+        if (collabs.some(e => e.researcher_id == user_id)){
+            return (
+            <div className={classNames(classes.main2)}>
+                <NavBar/>
+                    <div className={classNames(classes.main2, classes.mainRaised3)} > 
+                        <Grid container spacing={5} direction="row" >
+                            <Grid item xs={3} align='right'>
+                                <Box >
+                                    <NavComponent projectId={props.match.params.projectId}/>
                                 </Box>
-                            </Box>
+                            </Grid>
+                            
+                            <Grid item xs={8} >
+                                <Box boxShadow={2} flexDirection="row">
+                                    <Box p={1} style={{  background: '#FFFFFF'}}>
+                                        <h1 align='center' className={classes.topic4}>Editor</h1>
+                                    </Box>
+                                </Box>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                    <Box p={1.5} />
-                    <YJSQuill user={user} variable={props.match.params.postId} group={props.match.params.projectId}/>
-                    <Box p={3}  /> 
-                </div>
-            
-            <Footer/>
-        </div>
-        );
+                        <Box p={1.5} />
+                        <YJSQuill user={user} variable={props.match.params.postId} group={props.match.params.projectId}/>
+                        <Box p={3}  /> 
+                    </div>
+                
+                <Footer/>
+            </div>
+            );
+        }else{
+            return(
+                <NotFound/>
+                );
+        }
     }else{
         return(
-            <NotFound/>
-            );
+            <Loader />
+        )
     }
 }
 

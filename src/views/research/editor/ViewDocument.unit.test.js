@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import  ViewDocument  from './ViewDocument';
 import {shallow,mount} from 'enzyme'
-import DocumentView from "../../../components/editor/DocumentView"
+import ViewPage from "../../../components/editor/DocumentView"
 import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk';
 import {Provider} from 'react-redux'
 import renderer from 'react-test-renderer';
-
+const realUseState = React.useState
+const stubInitialState = [{researcher:{researcher_id:'10002'}}]
 jest.mock('react-router-dom', () => ({
   useHistory: () => ({
     push: jest.fn(),
@@ -19,14 +20,17 @@ jest.mock('react-router-dom', () => ({
 const match = { params: { projectId: '10012' } }
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({
-    user: { userData: {isAuth:true,first_name:'yogya'} }
+    user: { userData: {isAuth:true,first_name:'yogya',id:'10002'} }
   });
 describe('View Document', () => {
     it('renders Document View Component', () => {
+      jest
+      .spyOn(React, 'useState')
+      .mockImplementationOnce(() => realUseState(stubInitialState))
       const wrapper = mount(<Provider store={store}>
         <ViewDocument match={match}/>
     </Provider>);
-      expect(wrapper.find(DocumentView).exists()).toBeTruthy();
+      expect(wrapper.find(ViewPage).exists()).toBeTruthy();
     });
     it('renders without crashing', () => {
       const div = document.createElement('div');
