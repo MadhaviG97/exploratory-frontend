@@ -4,16 +4,13 @@ import "../../assets/css/canvas.css";
 import PdfLoader from "../Loader/PdfLoader";
 
 export default function PDFViewerComponent(props) {
-  console.log(
-    `${process.env.REACT_APP_BACK_END_URL}/final_paper/${props.project_id}.pdf`
-  );
   return (
     <PDFViewer
       document={{
         url: `${process.env.REACT_APP_BACK_END_URL}/final_paper/${props.project_id}.pdf`,
       }}
-      scale={1.25}
-      scaleStep={0.5}
+      scale={1}
+      scaleStep={0.1}
       watermark={{
         text: "Exploratory", //Watermark text
         diagonal: true, // Watermark placement true for Diagonal, false for Horizontal

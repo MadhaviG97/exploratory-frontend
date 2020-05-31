@@ -103,6 +103,8 @@ export default function TagForm(props) {
           {...params}
           label="Tags"
           variant="outlined"
+          helperText={props.helperTextTags}
+          error={props.errorTags}
           InputProps={{
             ...params.InputProps,
             endAdornment: (

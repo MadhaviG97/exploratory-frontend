@@ -91,15 +91,17 @@ function CommentHeads(props) {
     });
   };
 
-  const handleEdit = (reply_id, message) => {
+  const handleEdit = (reply_id, message, cb) => {
     const formData = {
       id: reply_id,
       message: message,
     };
+    console.log(formData);
 
     axios
       .post("/project/comments/edit-reply", formData)
       .then((response) => {
+        cb();
         rerenderReplies(() => console.log(response));
       })
       .catch((err) => console.log(err));
@@ -129,6 +131,8 @@ function CommentHeads(props) {
       comment_id: props.chat.comment_id,
       message: reply,
       no_of_likes: 0,
+      no_of_dislikes: 0,
+
       initial_comment: 0,
     };
     console.log(formData);

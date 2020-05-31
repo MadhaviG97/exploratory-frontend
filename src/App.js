@@ -41,8 +41,6 @@ import Project from "./views/research/index/ViewResearchPublic";
 import Receive from "./views/research/screenShare/Receive";
 import Send from "./views/research/screenShare/Send";
 
-import Demo from "./views/whiteboard/Demo";
-import CreateRoom from "./views/whiteboard/CreateRoom";
 import JoinRoom from "./views/whiteboard/JoinRoom";
 
 import TaskTracker from "./components/Project/TaskTracker";
@@ -154,7 +152,6 @@ function App() {
               path="/project/settings/:id"
               component={Auth(ProjectSettings, true)}
             />
-            <Route exact path="/whiteboard" component={Demo} />
 
             <Route
               exact

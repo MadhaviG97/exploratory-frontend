@@ -1,12 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Grid,
-  Typography,
-  TextField,
-  Paper,
-  Button,
-  Box,
-} from "@material-ui/core";
+import { Grid, Typography, TextField, Paper, Box } from "@material-ui/core";
 import Navbar from "../../../components/Navbar/Navbar";
 import { useStyles } from "../../../assets/css/createResearch";
 import Footer from "../../../components/Footer/Footer";
@@ -15,23 +8,17 @@ import Chip from "@material-ui/core/Chip";
 import IconButton from "@material-ui/core/IconButton";
 import BorderColorOutlinedIcon from "@material-ui/icons/BorderColorOutlined";
 import Alert from "../../../components/Project/AlertBox";
-import FileUploader from "../../../components/Project/FileUploader";
-import ImageUploader from "../../../components/Project/ImageUploader";
 
 import Avatar from "@material-ui/core/Avatar";
 import Loader from "../../../components/Loader";
 
 import CollaboratorForm from "../../../components/Forms/FormComponents/collaboratorForm";
 import TagForm from "../../../components/Forms/FormComponents/TagForm";
+import ButtonLoader from "../../../components/Loader/ButtonLoader";
 
 //redux
 import { useSelector, useDispatch } from "react-redux";
-import {
-  render,
-  getRelatedImages,
-  getFinalPaper,
-  getPublicFiles,
-} from "../../../_actions/project_actions";
+import { render } from "../../../_actions/project_actions";
 //routing
 import { useHistory, useLocation, useParams } from "react-router-dom";
 //API call
@@ -45,9 +32,6 @@ export default function Form() {
   const admins = useSelector((state) => state.project).admins;
   const collaborators = useSelector((state) => state.project).collaborators;
   const tags = useSelector((state) => state.project).tags;
-  const related_images = useSelector((state) => state.project).related_images;
-  const final_paper = useSelector((state) => state.project).final_paper;
-  const public_files = useSelector((state) => state.project).public_files;
 
   const dispatch = useDispatch();
   let { id } = useParams();
@@ -56,6 +40,9 @@ export default function Form() {
   let { from } = location.state || {
     from: { pathname: `/project/viewproject/${id}` },
   };
+
+  const [loading, setLoading] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
 
   const [state, setState] = React.useState({
     title: "",
@@ -69,8 +56,12 @@ export default function Form() {
     alertOpen: false,
     initialCollaborators: [],
     spinner: true,
-    related_images: [],
-    final_paper: [],
+    helperTextTitle: "",
+    helperTextDescription: "",
+    helperTextTags: "",
+    errorTitle: false,
+    errorDescription: false,
+    errorTags: false,
   });
 
   const handleCollaboratorUpdate = (new_list) => {
@@ -82,8 +73,6 @@ export default function Form() {
   };
 
   useEffect(() => {
-    console.log(project);
-
     let mounted = true;
     if (mounted) {
       if (project === undefined) {
@@ -102,7 +91,6 @@ export default function Form() {
 
         dispatch(render(request)).then((response) => {
           var project = response.payload.project_details.project;
-          var related_images = response.payload.project_details.related_images;
           var collaborators = response.payload.project_details.collaborators;
           var tags = response.payload.project_details.tags;
           setState({
@@ -113,8 +101,6 @@ export default function Form() {
             author: project.creator,
             collaborators: collaborators,
             visibility_public: project.visibility_public,
-            final_paper: project.final_paper,
-            related_images: related_images,
             tags: tags,
             initialCollaborators: collaborators,
             spinner: false,
@@ -125,7 +111,6 @@ export default function Form() {
     return () => (mounted = false);
   }, []);
 
-  // const AddressForm = () => {
   const handleChange = (e) => {
     console.log(e.target.name);
     console.log(e.target.value);
@@ -140,15 +125,32 @@ export default function Form() {
     setState({ ...state, alertOpen: false });
   };
 
-  const handleImageSave = (new_image) => {
-    setState({
-      ...state,
-      related_images: [...state.related_images, new_image],
-    });
+  const validateForm = (formData) => {
+    if (formData.title.length === 0) {
+      setState({ ...state, helperTextTitle: "Required!", errorTitle: true });
+      return false;
+    } else if (formData.description.length === 0) {
+      setState({
+        ...state,
+        helperTextDescription: "Required!",
+        errorDescription: true,
+      });
+      return false;
+    } else if (formData.tags.length === 0) {
+      setState({
+        ...state,
+        helperTextTags: "Required!",
+        errorTags: true,
+      });
+      return false;
+    } else {
+      return true;
+    }
   };
 
   const handleAlertSubmit = async () => {
-    setState({ ...state, spinner: true });
+    setState({ ...state, alertOpen: false });
+    setLoading(true);
     const newCollaborators = getNewCollaborators(
       state.initialCollaborators,
       state.collaborators
@@ -163,7 +165,6 @@ export default function Form() {
       visibility_public: state.visibility_public,
       tags: state.tags,
     };
-
     axios
       .post(`/project/update-project`, formData)
       .then((response) => {
@@ -174,7 +175,8 @@ export default function Form() {
             receivers: newCollaborators,
           })
           .then((result) => {
-            console.log(result);
+            setLoading(false);
+            setSuccess(true);
             let { from } = location.state || {
               from: { pathname: `/project/viewproject/${id}` },
             };
@@ -205,7 +207,16 @@ export default function Form() {
   };
 
   const handleSubmit = (e) => {
-    setState({ ...state, alertOpen: true });
+    const formData = {
+      title: state.title,
+      description: state.description,
+      tags: state.tags,
+    };
+
+    var validated = validateForm(formData);
+    if (validated) {
+      setState({ ...state, alertOpen: true });
+    }
   };
 
   const handleEdit = (action) => {
@@ -214,28 +225,6 @@ export default function Form() {
 
   const handleToggle = (visibility_public) => {
     setState({ ...state, visibility_public: visibility_public });
-  };
-
-  const onTagsChange = (values) => {
-    const newList = [];
-    values.forEach((value) => {
-      newList.push(value.id);
-    });
-    setState({
-      ...state,
-      tags: newList,
-    });
-  };
-
-  const onCollaboratorChange = (values) => {
-    const newList = [];
-    values.forEach((value) => {
-      newList.push(value._id);
-    });
-    setState({
-      ...state,
-      collaborators: newList,
-    });
   };
 
   return (
@@ -269,6 +258,8 @@ export default function Form() {
                     <TextField
                       required
                       disabled={state.disabled}
+                      error={state.errorTitle}
+                      helperText={state.helperTextTitle}
                       id="title"
                       name="title"
                       label="Project Title"
@@ -283,6 +274,8 @@ export default function Form() {
                   <Grid item xs={12}>
                     <TextField
                       required
+                      error={state.errorDescription}
+                      helperText={state.helperTextDescription}
                       disabled={state.disabled}
                       value={state.description}
                       rows={4}
@@ -290,7 +283,7 @@ export default function Form() {
                       name="description"
                       label="Project Description"
                       fullWidth
-                      autoComplete="project description"
+                      autoComplete="description"
                       variant="outlined"
                       onChange={handleChange}
                     />
@@ -298,7 +291,6 @@ export default function Form() {
 
                   <Grid item xs={12}>
                     <TextField
-                      required
                       id="abstract"
                       name="abstract"
                       label="Abstract"
@@ -306,7 +298,7 @@ export default function Form() {
                       fullWidth
                       disabled={state.disabled}
                       value={state.abstract}
-                      autoComplete="project abstract"
+                      autoComplete="description"
                       variant="outlined"
                       onChange={handleChange}
                     />
@@ -370,6 +362,8 @@ export default function Form() {
                     <TagForm
                       disabled={state.disabled}
                       onChange={handleTagUpdate}
+                      errorTags={state.errorTags}
+                      helperTextTags={state.helperTextTags}
                       tags={tags.map((tag) => {
                         return {
                           tag_id: tag.tag_id,
@@ -377,36 +371,6 @@ export default function Form() {
                         };
                       })}
                     />
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <Typography variant="button">Related Images</Typography>
-                    <Paper className={classes.fileUploader} elevation={3}>
-                      <ImageUploader
-                        maxFiles={30}
-                        multiple={true}
-                        accept={"image/*"}
-                        type="related_images"
-                        project_id={id}
-                        default={
-                          state.related_images ? state.related_images : []
-                        }
-                      />
-                    </Paper>
-                  </Grid>
-
-                  <Grid item xs={12}>
-                    <Typography variant="button">Final Paper</Typography>
-                    <Paper className={classes.fileUploader} elevation={3}>
-                      <FileUploader
-                        maxFiles={1}
-                        multiple={false}
-                        accept={"application/pdf"}
-                        type="final_paper"
-                        project_id={id}
-                        default={state.final_paper ? state.final_paper : []}
-                      />
-                    </Paper>
                   </Grid>
 
                   <Grid item xs={12} container>
@@ -425,13 +389,12 @@ export default function Form() {
                   </Grid>
 
                   <Grid item xs={12} align="end">
-                    <Button
-                      variant="contained"
-                      color="primary"
+                    <ButtonLoader
+                      name="Save Project"
+                      success={success}
+                      loading={loading}
                       onClick={handleSubmit}
-                    >
-                      Submit Changes
-                    </Button>
+                    />
                   </Grid>
                   {state.alertOpen && (
                     <Alert
@@ -451,42 +414,4 @@ export default function Form() {
       </Box>
     </React.Fragment>
   );
-  // };
-
-  // return (
-  //   <React.Fragment>
-  //     <Box display="flex" flexDirection="column">
-  //       <Box>
-  //         <Navbar />
-  //       </Box>
-
-  //       <Box flexGrow="1" bgcolor="#eceff1">
-  //         <main className={classes.layout}>
-  //           {project === undefined ? (
-  //             <Loader />
-  //           ) : (
-  //             <Paper className={classes.paper} elevation={5}>
-  //               <AddressForm />
-  //             </Paper>
-  //           )}
-  //         </main>
-  //       </Box>
-  //       <Box>
-  //         <Footer />
-  //       </Box>
-  //     </Box>
-  //   </React.Fragment>
-  // );
 }
-
-const top100Films = [
-  { title: "The Shawshank Redemption", year: 1994 },
-  { title: "The Godfather", year: 1972 },
-  { title: "The Godfather: Part II", year: 1974 },
-  { title: "The Dark Knight", year: 2008 },
-  { title: "Psycho", year: 1960 },
-  { title: "The Green Mile", year: 1999 },
-  { title: "The Intouchables", year: 2011 },
-  { title: "Modern Times", year: 1936 },
-  { title: "Raiders of the Lost Ark", year: 1981 },
-];
