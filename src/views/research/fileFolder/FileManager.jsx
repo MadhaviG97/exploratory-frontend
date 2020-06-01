@@ -53,6 +53,7 @@ function FileManager(props) {
   const [filedeleted, setFileDeleted] = useState(false);
   const [fileshared, setFileShared] = useState(false);
   const [filenotshared, setFileNotShared] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const group = props.match.params.projectId;
   const handleClick = (param) => (event) => {
     setAnchorEl(event.currentTarget);
@@ -233,12 +234,13 @@ function FileManager(props) {
       }
     });
     axios.post("/project/get-collaborators", variable).then((response) => {
+      setMounted(true);
       if (response.data) {
         setCollabs(response.data);
       }
     });
   }, []);
-  if (user.userData) {
+  if (user.userData && mounted) {
     if (collabs.some((e) => e.researcher_id == user_id)) {
       return (
         <div>
@@ -399,7 +401,6 @@ function FileManager(props) {
                                 />
                               </div>
                             </CardContent>
-                            <Divider variant="middle" />
                             <CardActions justify="center">
                               <IconButton
                                 aria-label="get files"
@@ -434,7 +435,6 @@ function FileManager(props) {
                                 />
                               </div>
                             </CardContent>
-                            <Divider variant="middle" />
                             <CardActions disableSpacing>
                               <IconButton
                                 aria-label={`info `}

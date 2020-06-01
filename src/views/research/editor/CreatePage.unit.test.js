@@ -52,6 +52,7 @@ const store = mockStore({
     jest
     .spyOn(React, 'useState')
     .mockImplementationOnce(() => realUseState(stubInitialState))
+    .mockImplementationOnce(() => realUseState(true))
     const onChangeMock = jest.fn();
     const component = mount(
         <Provider store={store}>

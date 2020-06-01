@@ -27,6 +27,7 @@ describe('View Document', () => {
       jest
       .spyOn(React, 'useState')
       .mockImplementationOnce(() => realUseState(stubInitialState))
+      .mockImplementationOnce(() => realUseState(true))
       const wrapper = mount(<Provider store={store}>
         <ViewDocument match={match}/>
     </Provider>);

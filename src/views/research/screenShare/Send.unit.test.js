@@ -29,6 +29,7 @@ describe('Share Screens', () => {
       jest
       .spyOn(React, 'useState')
       .mockImplementationOnce(() => realUseState(stubInitialState))
+      .mockImplementationOnce(() => realUseState(true))
       const wrapper = mount(
       <Provider store={store}>
         <Send  match={match}/>
