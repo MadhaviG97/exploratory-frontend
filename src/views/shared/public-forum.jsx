@@ -12,8 +12,6 @@ import Container from "@material-ui/core/Container";
 // @material-ui/icons
 
 // core components
-import Footer from "../../components/Footer/Footer";
-import Navbar from "../../components/Navbar/Navbar";
 import ForumPost from "../../components/PublicForumSections/ForumPost";
 import ForumAppBar from "../../components/PublicForumSections/ForumAppBar";
 import CountGrid from "../../components/PublicForumSections/CountGrid";
@@ -126,7 +124,6 @@ export default function Forum() {
           </Grid>
         </div>
       )}
-      <Footer />
     </div>
   );
 }

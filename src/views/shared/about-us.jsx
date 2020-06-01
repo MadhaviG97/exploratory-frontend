@@ -13,8 +13,6 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 
 // core components
-import NavBar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
 import GridContainer from "../../components/Grid/GridContainer.js";
 import GridItem from "../../components/Grid/GridItem.js";
 import Parallax from "../../components/Parallax/Parallax.js";
@@ -36,7 +34,6 @@ export default function LandingPage(props) {
   const { ...rest } = props;
   return (
     <div>
-      <NavBar />
       <Parallax
         filter
         image={require("../../assets/images/About-us/about-us-bg3.jpg")}
@@ -82,7 +79,6 @@ export default function LandingPage(props) {
           <ContactSection />
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

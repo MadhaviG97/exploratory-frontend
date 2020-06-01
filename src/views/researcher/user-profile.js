@@ -27,8 +27,6 @@ import TwitterIcon from "@material-ui/icons/Twitter";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import DescriptionIcon from "@material-ui/icons/Description";
 
-import NavBar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer.jsx";
 import TabPanel from "../../components/UserProfileSections/TabBarSection";
 import EditProfile from "../../components/UserProfileSections/EditProfileDialog";
 import profile from "../../assets/images/user-profile/faces/user_profile_default.jpg";
@@ -58,7 +56,7 @@ const useStyles = makeStyles((theme) => ({
   paperDetails: {
     padding: theme.spacing(3),
     textAlign: "center",
-    color:theme.palette.text.secondary,
+    color: theme.palette.text.secondary,
     backgroundColor: "#E6E6E6",
   },
   profileImage: {
@@ -156,7 +154,6 @@ export default function UserProfile() {
 
   return (
     <div className={classes.root}>
-      <NavBar />
       <Grid className={classes.userSection} container spacing={0}>
         <Grid item xs={4}>
           <Container style={{ backgroundColor: "#222297", padding: "2px" }}>
@@ -292,7 +289,6 @@ export default function UserProfile() {
           </Paper>
         </Grid>
       </Grid>
-      <Footer />
     </div>
   );
 }

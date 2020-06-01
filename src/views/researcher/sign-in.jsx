@@ -9,8 +9,6 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "../../assets/css/sign-in";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
 import { InputAdornment } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
@@ -123,7 +121,6 @@ export default function SignInSide() {
 
   return (
     <div>
-      <Navbar />
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
 
@@ -225,7 +222,6 @@ export default function SignInSide() {
           </div>
         </Grid>
       </Grid>
-      <Footer />
     </div>
   );
 }

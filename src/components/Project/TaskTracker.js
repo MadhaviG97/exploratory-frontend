@@ -8,8 +8,6 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
-import Navbar from "../Navbar/Navbar";
-import Footer from "../Footer/Footer.jsx";
 import Button from "@material-ui/core/Button";
 
 import ActionButtonGroup from "../TaskTracker/ActionButtons";
@@ -70,7 +68,6 @@ const StyledTableRow = withStyles((theme) => ({
   },
 }))(TableRow);
 
-
 export default function SimpleTable() {
   const classes = useStyles();
   const pId = 1;
@@ -94,15 +91,12 @@ export default function SimpleTable() {
 
   return (
     <div className={classes.root}>
-      <Navbar />
       <div className={classes.root}>
         <Paper className={classes.title}>
-          <Typography variant="h6" >
-            Task Tracker
-          </Typography>
+          <Typography variant="h6">Task Tracker</Typography>
         </Paper>
 
-          <Progress />
+        <Progress />
 
         <div className={classes.paper}>
           <TableContainer component={Paper}>
@@ -126,7 +120,7 @@ export default function SimpleTable() {
               </TableHead>
               <TableBody>
                 {getLength(tasktracker.tasks) > 0 ? (
-                  (tasktracker.tasks).map((task) => (
+                  tasktracker.tasks.map((task) => (
                     <StyledTableRow key={task.id}>
                       <StyledTableCell component="th" scope="row">
                         {task.title}
@@ -135,7 +129,7 @@ export default function SimpleTable() {
                         {task.description}
                       </StyledTableCell>
                       <StyledTableCell align="left">
-                        {task.first_name+" "+task.last_name}
+                        {task.first_name + " " + task.last_name}
                       </StyledTableCell>
                       <StyledTableCell align="left">
                         {new Date(task.start_date).toDateString()}
@@ -153,7 +147,7 @@ export default function SimpleTable() {
                         {new Date(task.created_at).toDateString()}
                       </StyledTableCell>
                       <StyledTableCell align="left">
-                        <ActionButtonGroup task={task} project_id={pId}/>
+                        <ActionButtonGroup task={task} project_id={pId} />
                       </StyledTableCell>
                     </StyledTableRow>
                   ))
@@ -170,15 +164,13 @@ export default function SimpleTable() {
             </Table>
           </TableContainer>
         </div>
-        <div className={classes.paper}  >
-          <AddTask project_id={pId} collaborators={collaborators}/>
+        <div className={classes.paper}>
+          <AddTask project_id={pId} collaborators={collaborators} />
         </div>
       </div>
       <Paper className={classes.commentSection}>
-      <CommentSection project_id={pId} />
+        <CommentSection project_id={pId} />
       </Paper>
-      
-      <Footer />
     </div>
   );
 }

@@ -1,7 +1,5 @@
 import React from "react";
 import ProjectList from "../../components/Feed/ProjectList";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
 import Box from "@material-ui/core/Box";
 const dummyData2 = [
   {
@@ -52,14 +50,8 @@ const dummyData2 = [
 export default function Feed() {
   return (
     <Box display="flex" flexDirection="column">
-      <Box>
-        <Navbar />
-      </Box>
       <Box flexGrow="1">
         <ProjectList projects={dummyData2} />
-      </Box>
-      <Box>
-        <Footer />
       </Box>
     </Box>
   );

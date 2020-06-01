@@ -13,8 +13,6 @@ import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { useStyles } from "../../assets/css/sign-in";
-import Navbar from "../../components/Navbar/Navbar";
-import Footer from "../../components/Footer/Footer";
 import Paper from "@material-ui/core/Paper";
 //redux
 import axios from "axios";
@@ -226,7 +224,6 @@ export default function SignUp(props) {
 
   return (
     <React.Fragment>
-      <Navbar />
       <Grid container component="main" className={classes.root}>
         <CssBaseline />
 
@@ -379,7 +376,6 @@ export default function SignUp(props) {
         </Grid>
         <Grid item xs={false} sm={4} md={4} className={classes.image} />
       </Grid>
-      <Footer />
     </React.Fragment>
   );
 }

@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { Grid, Typography, TextField, Paper, Box } from "@material-ui/core";
-import Navbar from "../../../components/Navbar/Navbar";
 import { useStyles } from "../../../assets/css/createResearch";
-import Footer from "../../../components/Footer/Footer";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Chip from "@material-ui/core/Chip";
 import IconButton from "@material-ui/core/IconButton";
@@ -25,9 +23,9 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import ToggleButton from "../../../components/Forms/FormComponents/ToggleButton";
 
-export default function Form() {
+export default function Form(props) {
   const classes = useStyles();
-  const user = useSelector((state) => state.user);
+  let user = useSelector((state) => state.user);
   const project = useSelector((state) => state.project).project;
   const admins = useSelector((state) => state.project).admins;
   const collaborators = useSelector((state) => state.project).collaborators;
@@ -84,7 +82,8 @@ export default function Form() {
 
         var request = axios
           .post("/project/view-project", { id: id })
-          .then((response) => {
+          .then(async (response) => {
+            // await isvaliduser(user.userData._id);
             return response.data;
           })
           .catch((err) => console.log(err.message));
@@ -227,13 +226,30 @@ export default function Form() {
     setState({ ...state, visibility_public: visibility_public });
   };
 
+  const isCollaborator = (collaborators, userId) => {
+    let isUser = false;
+
+    collaborators.map((collaborator) => {
+      if (collaborator.researcher_id === userId) {
+        isUser = true;
+      }
+    });
+    return isUser;
+  };
+
+  const isvaliduser = (logged_user) => {
+    axios
+      .post("/project/get-collaborator-ids", { project_id: id })
+      .then((result) => {
+        if (!isCollaborator(result.data, logged_user)) {
+          history.push("/");
+        }
+      });
+  };
+
   return (
     <React.Fragment>
       <Box display="flex" flexDirection="column">
-        <Box>
-          <Navbar />
-        </Box>
-
         <Box flexGrow="1" bgcolor="#eceff1">
           <main className={classes.layout}>
             {state.spinner ? (
@@ -407,9 +423,6 @@ export default function Form() {
               </Paper>
             )}
           </main>
-        </Box>
-        <Box>
-          <Footer />
         </Box>
       </Box>
     </React.Fragment>

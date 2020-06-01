@@ -7,9 +7,7 @@ import {
   Button,
   Box,
 } from "@material-ui/core";
-import Navbar from "../../../components/Navbar/Navbar";
 import { useStyles } from "../../../assets/css/createResearch";
-import Footer from "../../../components/Footer/Footer";
 import CollaboratorForm from "../../../components/Forms/FormComponents/collaboratorForm";
 import TagForm from "../../../components/Forms/FormComponents/TagForm";
 import Loader from "../../../components/Loader";
@@ -229,9 +227,6 @@ export default function Form() {
   return (
     <React.Fragment>
       <Box display="flex" flexDirection="column">
-        <Box>
-          <Navbar />
-        </Box>
         <Box flexGrow="1" bgcolor="#eceff1">
           {user.userData === undefined ? (
             <Loader />
@@ -242,9 +237,6 @@ export default function Form() {
               </Paper>
             </main>
           )}
-        </Box>
-        <Box>
-          <Footer />
         </Box>
       </Box>
     </React.Fragment>
