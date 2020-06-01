@@ -1,8 +1,6 @@
 import React from "react";
-import Navbar from "../../../components/Navbar/Navbar";
 import ProjectNavbar from "../../../components/Project/ProjectNavbar";
 import Tab from "../../../components/Project/TabPublicMode";
-import Footer from "../../../components/Footer/Footer";
 import Box from "@material-ui/core/Box";
 import { useEffect } from "react";
 import {
@@ -125,13 +123,7 @@ function Home() {
   return (
     <React.Fragment>
       <Box display="flex" flexDirection="column" style={{ height: "100vh" }}>
-        <Box>
-          <Navbar />
-        </Box>
         <Box flexGrow="1">{!state.loaded ? <Loader /> : <Page />}</Box>
-        <Box>
-          <Footer />
-        </Box>
       </Box>
     </React.Fragment>
   );

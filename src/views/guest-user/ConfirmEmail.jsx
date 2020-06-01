@@ -3,8 +3,6 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import Box from "@material-ui/core/Box";
 import { useStyles } from "../../assets/css/JoinRoom";
 import Container from "@material-ui/core/Container";
-import Footer from "../../components/Footer/Footer";
-import NavBar from "../../components/Navbar/Navbar";
 import JoinRoomButtonBase from "../../components/Whiteboard/JoinRoomButtonBase";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -39,10 +37,6 @@ export default function SignIn() {
 
   return (
     <React.Fragment>
-      <Box>
-        <NavBar />
-      </Box>
-
       <Container
         component="main"
         maxWidth={false}
@@ -54,9 +48,6 @@ export default function SignIn() {
           <JoinRoomButtonBase title="CONFIRM EMAIL" onClick={handleClickOpen} />
         </div>
       </Container>
-      <Box>
-        <Footer />
-      </Box>
     </React.Fragment>
   );
 }

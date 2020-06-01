@@ -1,8 +1,6 @@
 import React from "react";
 import SearchList from "../../components/search/SearchList";
 import Box from "@material-ui/core/Box";
-import Footer from "../../components/Footer/Footer";
-import Navbar from "../../components/Navbar/Navbar";
 import { useSelector } from "react-redux";
 import { useParams, useHistory } from "react-router-dom";
 import axios from "axios";
@@ -65,31 +63,28 @@ const dummyInstitutions = [
 
 export default function Search(props) {
   let { string } = useParams();
-  const [searchResult,setSearchResult] = React.useState({
-    projects:[],
-    researchers:[],
-    institutions:[]
-  })
-  console.log(string)
+  const [searchResult, setSearchResult] = React.useState({
+    projects: [],
+    researchers: [],
+    institutions: [],
+  });
+  console.log(string);
 
-  React.useEffect(()=>{
+  React.useEffect(() => {
     var request = axios
-        .post("/search", { searchString: string })
-        .then((response) => {
-          console.log(response)
-          setSearchResult(response.data)
-          // return response.data;
-        });
-  },[string])
+      .post("/search", { searchString: string })
+      .then((response) => {
+        console.log(response);
+        setSearchResult(response.data);
+        // return response.data;
+      });
+  }, [string]);
 
   // console.log("props",props)
   // const searchResult = useSelector((state) => state.project).searchData;
 
   return (
     <Box display="flex" flexDirection="column">
-      <Box>
-        <Navbar />
-      </Box>
       <Box flexGrow="1">
         <main>
           {/* {!searchResult && (
@@ -118,9 +113,6 @@ export default function Search(props) {
           />
         </main>
       </Box>
-      {/* <Box>
-        <Footer />
-      </Box> */}
     </Box>
   );
 }

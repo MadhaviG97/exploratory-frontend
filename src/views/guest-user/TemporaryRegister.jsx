@@ -19,9 +19,6 @@ export default function SignIn() {
   const classes = useStyles();
   return (
     <React.Fragment>
-      <Box>
-        <NavBar />
-      </Box>
       <Parallax
         filter
         image={require("../../assets/images/About-us/about-us-bg3.jpg")}
@@ -49,9 +46,6 @@ export default function SignIn() {
           </GridContainer>
         </div>
       </Parallax>
-      <Box>
-        <Footer />
-      </Box>
     </React.Fragment>
   );
 }

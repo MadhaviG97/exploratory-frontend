@@ -17,6 +17,8 @@ import Chat from "./views/researcher/chat";
 
 //hoc
 import Auth from "./hoc/auth";
+import ValidateProject from "./hoc/validateProject";
+import ValidUser from "./hoc/validUser";
 import { compose } from "redux";
 
 import Navbar from "./components/Navbar/Navbar";
@@ -33,11 +35,9 @@ import FileManager from "./views/research/fileFolder/FileManager";
 
 //project
 import ProjectPublic from "./views/research/index/ViewResearchPublic";
-import ProjectPrivate from "./views/research/index/ViewResearchPrivate";
 import CreateProject from "./views/research/index/CreateResearch";
 import CompareDoc from "./views/research/fileFolder/CompareDoc";
 import ProjectSettings from "./views/research/index/ProjectSettings";
-import Project from "./views/research/index/ViewResearchPublic";
 import Receive from "./views/research/screenShare/Receive";
 import Send from "./views/research/screenShare/Send";
 
@@ -45,10 +45,13 @@ import JoinRoom from "./views/whiteboard/JoinRoom";
 
 import TaskTracker from "./components/Project/TaskTracker";
 
+import NotFound from "./components/NotFound/NotFound";
+
 function App() {
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <ThemeProvider theme={Theme}>
+        <Navbar />
         <div>
           <Switch>
             <Route exact path="/" component={Auth(Feed, true)} />
@@ -106,18 +109,14 @@ function App() {
             <Route
               exact
               path="/project/viewproject/:id"
-              component={Auth(ProjectPublic, null)}
+              component={Auth(ProjectPublic, true)}
             />
             <Route
               exact
               path="/project/createproject"
               component={Auth(CreateProject, true)}
             />
-            <Route
-              exact
-              path="/project/MyProject/:id"
-              component={Auth(ProjectPrivate, null)}
-            />
+
             <Route
               exact
               path="/document/:projectId/edit/:postId"
@@ -139,14 +138,12 @@ function App() {
               component={Auth(Send, true)}
             />
 
-            <Route exact path="/project" component={Auth(Project, true)} />
             <Route exact path="/forum" component={Auth(Forum, true)} />
             <Route
               exact
               path="/userprofile/:uId"
               component={Auth(UserProfile, null)}
             />
-            {/* <Route exact path="/modal" component={Modal} /> */}
             <Route
               exact
               path="/project/settings/:id"
@@ -166,8 +163,15 @@ function App() {
               path="/tasktracker"
               component={Auth(TaskTracker, true)}
             />
+
+            <Route
+              exact
+              path="/404-not-found"
+              component={Auth(NotFound, null)}
+            />
           </Switch>
         </div>
+        <Footer />
       </ThemeProvider>
     </Suspense>
   );
