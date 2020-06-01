@@ -24,13 +24,11 @@ export default function SignIn() {
       name: `${user.userData.first_name} ${user.userData.last_name}`,
       email: user.userData.email,
     };
-    console.log(formData);
     await axios
       .post(`${process.env.REACT_APP_WHITE_BOARD_URL}/join`, formData, {
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
       })
       .then((result) => {
-        console.log(result);
         window.open(
           `${process.env.REACT_APP_WHITE_BOARD_URL}/${project_id}&${localStorage.token}&${user.userData._id}`
         );

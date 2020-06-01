@@ -73,10 +73,10 @@
     "yjs": "^13.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=3000 && react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
-    "test": "jest --detectOpenHandles --silent",
+    "test": "jest",
     "dev": "(cd.. && cd SEP-Exploratory/back-end && npm start) & npm start"
   },
   "eslintConfig": {

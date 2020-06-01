@@ -39,27 +39,46 @@ import Loader from "../../../components/Loader";
 import FileSaver from 'file-saver';
 
 
-
-function FileManager(props) {
-    const classes = useStyles();
-    const user = useSelector(state => state.user);
-    let folder=props.match.params.folderId
-    
-    const [files, setFiles] = useState([])
-    const [collabs, setCollabs] = useState([])
-    const [name,setName]=useState('');
-    const [deleteopen, setDeleteOpen] = React.useState(false);
-    const [fileDetail, setFileDetail] = useState('')
-    const [folders, setFolders] = useState([])
-    const [anchorEl, setAnchorEl] =useState(null);
-    const [filedeleted,setFileDeleted]=useState(false);
-    const [fileshared,setFileShared]=useState(false);
-    const [filenotshared,setFileNotShared]=useState(false);
-    const [mounted, setMounted] = useState(false)
-    const group=props.match.params.projectId
-    const handleClick = param => event  => {
-        setAnchorEl(event.currentTarget);
-        setFileDetail(param)
+  const [files, setFiles] = useState([]);
+  const [collabs, setCollabs] = useState([]);
+  const [name, setName] = useState("");
+  const [deleteopen, setDeleteOpen] = React.useState(false);
+  const [fileDetail, setFileDetail] = useState("");
+  const [folders, setFolders] = useState([]);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [filedeleted, setFileDeleted] = useState(false);
+  const [fileshared, setFileShared] = useState(false);
+  const [filenotshared, setFileNotShared] = useState(false);
+  const group = props.match.params.projectId;
+  const handleClick = (param) => (event) => {
+    setAnchorEl(event.currentTarget);
+    setFileDetail(param);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  console.log(user.userData);
+  let user_id = 0;
+  if (user.userData) {
+    user_id = user.userData._id;
+  }
+  const onSearchChange = (value) => {
+    setName(value);
+  };
+  const handleSearch = (event) => {
+    //console.log('yep')
+    event.preventDefault();
+    const token = localStorage.token;
+    if (folder) {
+      console.log(folder);
+      //folder=props.match.params.folderId
+    } else {
+      folder = "root";
+    }
+    const variables = {
+      folder: folder,
+      name: name,
+      group: group,
     };
     const handleClose = () => {
         setAnchorEl(null);

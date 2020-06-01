@@ -33,112 +33,62 @@ import EmptyDrive from '../../../components/editor/ProjectFolderGrid'
 import Loader from "../../../components/Loader";
 import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 export default function CreatePage(props) {
- 
-    const [blogs, setBlogs] = useState([])
-    const classes = useStyles();
-    const [name,setName]=useState('');
-    const [open,setOpen]=useState(false);
-    const [id,setId]=useState('');
-    const [documentdeleted,setDocumentDeleted]=useState(false);
-    const group=props.match.params.projectId
-    const user = useSelector(state => state.user);
-    let user_id=0
-    if (user.userData){
-        user_id=user.userData._id
-    }
-    const [collabs, setCollabs] = useState([])
-    const [mounted, setMounted] = useState(false)
-    const handleClickOpen = (id) => {
-        setId(id)
-        setOpen(true);
-      };
-    
-    const handleClose = () => {
-        setOpen(false);
+  const [blogs, setBlogs] = useState([]);
+  const classes = useStyles();
+  const [name, setName] = useState("");
+  const [open, setOpen] = useState(false);
+  const [id, setId] = useState("");
+  const [documentdeleted, setDocumentDeleted] = useState(false);
+  const group = props.match.params.projectId;
+  const user = useSelector((state) => state.user);
+  let user_id = 0;
+  if (user.userData) {
+    user_id = user.userData._id;
+  }
+  const [collabs, setCollabs] = useState([]);
+  const handleClickOpen = (id) => {
+    setId(id);
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  useEffect(() => {
+    const token = localStorage.token;
+    const variable = { group: group };
+    let config = {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     };
-    useEffect(() => {
-        const token = localStorage.token;
-        const variable={group:group}
-        let config = {
-          headers: {
-          'Authorization': `Bearer ${token}`
-          }
-        }
-        axios.post('/editor/getBlogs',variable,config)
-            .then(response => {
-                if (response.data.success) {
-                    console.log(response.data.blogs)
-                    setBlogs(response.data.blogs)
-                } else {
-                    alert('Could not get blog`s lists')
-                }
-            })
-            
-        axios.post('/project/get-collaborators', variable)
-            .then(response => {
-                setMounted(true)
-                if (response.data) {
-                    setCollabs(response.data)
-                    
-                }
-            })
-    }, [])
-    const onSearchChange = (value) => {
-        setName(value)
-        console.log(value)
-    }
-    const handleSearch = (event) => {
-        //console.log('yep')
-        event.preventDefault();
-        const token = localStorage.token;
-        
-        const variables = {
-            group: group,
-            name: name
-        }
-        let config = {
-          headers: {
-          'Authorization': `Bearer ${token}`
-          }
-        }
-        console.log(variables)
-        axios.post('/editor/searchblog', variables,config)
-           .then(response => {
-            if (response.data.success) {
-                console.log(response.data.blogs)
-                setBlogs(response.data.blogs)
-            } else {
-                alert('Could not get blog`s lists')
-            }
-            })
-        
-    }
-    const handleDelete = () => {
-        setOpen(false);
-        const variable = { 
-            postId:id
-        }
-        console.log(variable)
-        const token = localStorage.token;
-        let config = {
-            headers: {
-            'Authorization': `Bearer ${token}`
-            }
-          }
-        
-        axios.post('/editor/softdeletepost', variable,config)
-            .then(response => {
-                if (response.data.success) {
-                    setDocumentDeleted(true)
-                    setTimeout(() => {
-                        window.location.reload();
-                        }, 1000);
-                    
-                } else {
-                    alert('Could not Delete Document ')
-                }
-            })
-        
+    axios.post("/editor/getBlogs", variable, config).then((response) => {
+      if (response.data.success) {
+        console.log(response.data.blogs);
+        setBlogs(response.data.blogs);
+      } else {
+        alert("Could not get blog`s lists");
+      }
+    });
+
+    axios.post("/project/get-collaborators", variable).then((response) => {
+      if (response.data) {
+        setCollabs(response.data);
+      }
+    });
+  }, []);
+  const onSearchChange = (value) => {
+    setName(value);
+    console.log(value);
+  };
+  const handleSearch = (event) => {
+    //console.log('yep')
+    event.preventDefault();
+    const token = localStorage.token;
+
+    const variables = {
+      group: group,
+      name: name,
     };
     if (mounted && user.userData){
         if (collabs.some(e => e.researcher_id == user_id)){
