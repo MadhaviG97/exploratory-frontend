@@ -12,41 +12,34 @@ import NotFound from "../../../components/NotFound/NotFound";
 import Loader from "../../../components/Loader";
 
 export default function Receive(props) {
-    
-    const user=useSelector((state) => state.user);
-    console.log(user)
-    const classes = useStyles();
-    let user_id=0
-    if (user.userData){
-        user_id=user.userData._id
-    }
-    const [collabs, setCollabs] = React.useState([])
-    const [mounted, setMounted] = React.useState(false)
-    useEffect(() => {
-        const variable = { 
-            group: props.match.params.projectId,
-        }
-        axios.post('/project/get-collaborators', variable)
-            .then(response => {
-                setMounted(true)
-                if (response.data) {
-                    setCollabs(response.data)
-                }
-            })
-    }, [])
-    if (user.userData && mounted){
-        if (collabs.some(e => e.researcher_id == user_id)){
-            return(
-                <div className={classNames(classes.main2)} >
-                    <NavBar/>
-                    
-                    <div style={{ width: '70%', margin: '1rem auto' }}>
-                        
-                            <NavComponent projectId={props.match.params.projectId}/>
-                        
-                        <Divider  variant="fullWidth" />
-                        <Box p={0.5}/>
-                        {/*
+  const user = useSelector((state) => state.user);
+  console.log(user);
+  const classes = useStyles();
+  let user_id = 0;
+  if (user.userData) {
+    user_id = user.userData._id;
+  }
+  const [collabs, setCollabs] = React.useState([]);
+  useEffect(() => {
+    const variable = {
+      group: props.match.params.projectId,
+    };
+    axios.post("/project/get-collaborators", variable).then((response) => {
+      if (response.data) {
+        setCollabs(response.data);
+      }
+    });
+  }, []);
+  if (user.userData) {
+    if (collabs.some((e) => e.researcher_id == user_id)) {
+      return (
+        <div className={classNames(classes.main2)}>
+          <div style={{ width: "70%", margin: "1rem auto" }}>
+            <NavComponent projectId={props.match.params.projectId} />
+
+            <Divider variant="fullWidth" />
+            <Box p={0.5} />
+            {/*
                             <Box boxShadow={3} style={{  background: '#FFFFFF'}} >
                                 <Box p={0.5}>
                                     <div >
