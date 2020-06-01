@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 import classNames from "classnames";
 import Divider from "@material-ui/core/Divider";
-import Box from "@material-ui/core/Box";
+import Box from '@material-ui/core/Box';
 import { useEffect } from "react";
-import axios from "axios";
+import axios from 'axios';
 import { useStyles } from "../../../assets/css/projectFolderGrid";
-import Receiver from "../../../components/ScreenShare/Receiver";
-import NavComponent from "../../../components/AppNavigation/NavigationComponent";
+import Receiver from "../../../components/ScreenShare/Receiver"
+import NavComponent from '../../../components/AppNavigation/NavigationComponent';
 import { useSelector } from "react-redux";
-import NotFound from "../../../components/NotFound/NotFound";
+import NotFound from '../../../components/NotFound/NotFound'
 import Loader from "../../../components/Loader";
 
 export default function Receive(props) {
@@ -45,8 +45,8 @@ export default function Receive(props) {
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
                 <div className={classNames(classes.main2)}>
-                    <NavBar/>
-                    <div style={{ width: '70%', margin: '1rem auto' }}>
+                    <div style={{ width: '70%', margin: '0.1rem auto' }}>
+                        <Box p={1.5}/>
                         <NavComponent projectId={props.match.params.projectId}/>
                         <Divider  variant="fullWidth" />
                         <Box p={1}/>
@@ -66,26 +66,16 @@ export default function Receive(props) {
                         <Receiver group={props.match.params.projectId} senderSet={senderSet} userProp={userProp}/>
                     </div>
                     <Box p={4}/>
-                    <Footer/>
                 </div>
-              </Box>
-            </Box>
-          </div>
-
-          <div>
-            <Receiver
-              group={props.match.params.projectId}
-              senderSet={senderSet}
-              userProp={userProp}
-            />
-          </div>
-          <Box p={4} />
-        </div>
-      );
-    } else {
-      return <NotFound />;
+            );
+        }else{
+            return(
+                <NotFound/>
+                );
+        }
+    }else{
+        return(
+            <Loader />
+        )
     }
-  } else {
-    return <Loader />;
-  }
 }

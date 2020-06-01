@@ -1,0 +1,63 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`view research public renders correctly 1`] = `
+<div
+  className="MuiBox-root MuiBox-root-109"
+  style={
+    Object {
+      "height": "100vh",
+    }
+  }
+>
+  <div
+    className="MuiBox-root MuiBox-root-110"
+  >
+    <div>
+      <main
+        className="MuiGrid-root makeStyles-root-4 MuiGrid-container"
+      >
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-5 MuiGrid-grid-md-5"
+        />
+        <paper
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12 MuiGrid-grid-sm-2 MuiGrid-grid-md-2"
+          elevation={6}
+          square={true}
+        >
+          <div
+            className="MuiGrid-root MuiGrid-container"
+          >
+            <div
+              className="MuiGrid-root MuiGrid-item"
+            >
+              <circle
+                color="#014F82"
+                size={150}
+              />
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-item"
+            >
+              <circle
+                color="#014F82"
+                size={150}
+              />
+            </div>
+            <div
+              className="MuiGrid-root MuiGrid-item"
+            >
+              <circle
+                color="#014F82"
+                size={150}
+              />
+            </div>
+          </div>
+        </paper>
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-5 MuiGrid-grid-md-5"
+        />
+      </main>
+    </div>
+  </div>
+</div>
+`;
