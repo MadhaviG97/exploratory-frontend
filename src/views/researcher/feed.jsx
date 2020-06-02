@@ -1,31 +1,47 @@
 import React from "react";
 import ProjectList from "../../components/Feed/ProjectList";
 import Box from "@material-ui/core/Box";
-import { useSelector } from "react-redux"
-import Button from '@material-ui/core/Button'
+import { useSelector } from "react-redux";
 
 const axios = require('axios')
 
 export default function Feed() {
-
-  const user= useSelector((state) => state.user.userData)
+  var user =null
+  try{
+      const userLogged= useSelector((state) => state.user.userData)
+      user=userLogged
+  }
+  catch (err){}
+ 
   const [feedContent, setFeedContent] = React.useState([]);
   const [index, setIndex] = React.useState(0)
 
   React.useEffect(() => {
+
+    var paramters={index:index}
+    if(user){
+      paramters=Object.assign({email:user.email},paramters)
+    }
+
     var request = axios
-      .post("/feed",{email:(user?user.email:""),index:0})
+      .post("/feed",paramters)
       .then((response) => {
         setFeedContent(response.data)
         setIndex(index+response.data.length)
       })
-      .catch(err=>{});
+      .catch(err=>{
+        console.log(err)
+      });
 
-  }, [user]);
+  }, []);
 
   const loadMore = ()=>{
+    var paramters={index:index}
+    if(user){
+      paramters=Object.assign({email:user.email},paramters)
+    }
     var request = axios
-    .post("/feed",{email:(user?user.email:""),index:index})
+    .post("/feed",paramters)
     .then((response) => {
       console.log(response.data)
       setFeedContent(feedContent.concat(response.data))
@@ -48,11 +64,6 @@ export default function Feed() {
       window.removeEventListener('scroll', trackScrolling);
     };
   });
-
-
-  if(user==undefined){
-    return(<div/>)
-  }
 
   return (
     <Box display="flex" flexDirection="column">
