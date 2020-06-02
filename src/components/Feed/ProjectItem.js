@@ -58,7 +58,7 @@ export default function ProjectItem({ ResearchItem }) {
 
       <CardContent>
         <Box fontWeight="fontWeightBold" color="secondary" component="h3">
-          <Link href={"#"}>{ResearchItem.title}</Link>
+          <Link href={"/project/viewproject/"+ResearchItem.id}>{ResearchItem.title}</Link>
         </Box>
         <Typography variant="body2" color="textSecondary" component="p">
           {ResearchItem.description.length > 500

@@ -2,52 +2,53 @@ import React from "react";
 import ProjectList from "../../components/Feed/ProjectList";
 import Box from "@material-ui/core/Box";
 import { useSelector } from "react-redux";
+import axios from 'axios'
 
-const axios = require('axios')
 
 export default function Feed() {
-  var user =null
-  try{
-      const userLogged= useSelector((state) => state.user.userData)
-      user=userLogged
+
+  var user = null
+  try {
+    const userLogged = useSelector((state) => state.user.userData)
+    user = userLogged
   }
-  catch (err){}
- 
+  catch (err) { }
+
   const [feedContent, setFeedContent] = React.useState([]);
   const [index, setIndex] = React.useState(0)
 
   React.useEffect(() => {
 
-    var paramters={index:index}
-    if(user){
-      paramters=Object.assign({email:user.email},paramters)
+    var paramters = { index: index }
+    if (user) {
+      paramters = Object.assign({ email: user.email }, paramters)
     }
 
     var request = axios
-      .post("/feed",paramters)
+      .post("/feed", paramters)
       .then((response) => {
         setFeedContent(response.data)
-        setIndex(index+response.data.length)
+        setIndex(index + response.data.length)
       })
-      .catch(err=>{
+      .catch(err => {
         console.log(err)
       });
 
   }, []);
 
-  const loadMore = ()=>{
-    var paramters={index:index}
-    if(user){
-      paramters=Object.assign({email:user.email},paramters)
+  const loadMore = () => {
+    var paramters = { index: index }
+    if (user) {
+      paramters = Object.assign({ email: user.email }, paramters)
     }
     var request = axios
-    .post("/feed",paramters)
-    .then((response) => {
-      console.log(response.data)
-      setFeedContent(feedContent.concat(response.data))
-      setIndex(index+response.data.length)
-    })
-    .catch(err=>{});
+      .post("/feed", paramters)
+      .then((response) => {
+        console.log(response.data)
+        setFeedContent(feedContent.concat(response.data))
+        setIndex(index + response.data.length)
+      })
+      .catch(err => { });
   }
   const trackScrolling = () => {
     const wrappedElement = document.getElementById('root');
@@ -55,7 +56,7 @@ export default function Feed() {
       loadMore()
     }
   };
-  
+
   React.useEffect(() => {
     window.addEventListener('scroll', trackScrolling);
 
@@ -66,10 +67,16 @@ export default function Feed() {
   });
 
   return (
-    <Box display="flex" flexDirection="column">
-      <Box flexGrow="1">
-        <ProjectList projects={feedContent} />
+
+    <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)" }}>
+
+      <Box display="flex" flexDirection="column">
+        <Box flexGrow="1">
+          <ProjectList projects={feedContent} />
+        </Box>
       </Box>
-    </Box>
+
+    </div>
+
   );
 }
