@@ -2,23 +2,53 @@ import React from "react";
 import ProjectList from "../../components/Feed/ProjectList";
 import Box from "@material-ui/core/Box";
 import { useSelector } from "react-redux"
+import Button from '@material-ui/core/Button'
+
 const axios = require('axios')
 
 export default function Feed() {
 
   const user= useSelector((state) => state.user.userData)
   const [feedContent, setFeedContent] = React.useState([]);
-
+  const [index, setIndex] = React.useState(0)
 
   React.useEffect(() => {
     var request = axios
-      .post("/feed",{email:user?user.email:""})
+      .post("/feed",{email:(user?user.email:""),index:0})
       .then((response) => {
         setFeedContent(response.data)
+        setIndex(index+response.data.length)
       })
       .catch(err=>{});
 
   }, [user]);
+
+  const loadMore = ()=>{
+    var request = axios
+    .post("/feed",{email:(user?user.email:""),index:index})
+    .then((response) => {
+      console.log(response.data)
+      setFeedContent(feedContent.concat(response.data))
+      setIndex(index+response.data.length)
+    })
+    .catch(err=>{});
+  }
+  const trackScrolling = () => {
+    const wrappedElement = document.getElementById('root');
+    if (wrappedElement.scrollHeight - wrappedElement.scrollTop === wrappedElement.clientHeight) {
+      loadMore()
+    }
+  };
+  
+  React.useEffect(() => {
+    window.addEventListener('scroll', trackScrolling);
+
+    // Specify how to clean up after this effect:
+    return () => {
+      window.removeEventListener('scroll', trackScrolling);
+    };
+  });
+
 
   if(user==undefined){
     return(<div/>)
