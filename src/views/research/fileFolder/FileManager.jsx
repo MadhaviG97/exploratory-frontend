@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from 'react'
-
 import axios from 'axios';
 import { useSelector } from "react-redux";
-
 import classNames from "classnames";
 import Box from '@material-ui/core/Box';
 import { useStyles } from "../../../assets/css/editor";
-
 import Divider from "@material-ui/core/Divider";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
-
 import '../../../assets/css/editor.css';
 import InfoIcon from '@material-ui/icons/Info';
 import FolderMenu from '../../../components/drive/FolderMenu'
@@ -31,14 +27,11 @@ import NavComponent from '../../../components/AppNavigation/NavigationComponent'
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { Typography } from '@material-ui/core';
-
 import Alert from '@material-ui/lab/Alert';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import Loader from "../../../components/Loader";
 import FileSaver from 'file-saver';
-
-
 
 function FileManager(props) {
     const classes = useStyles();
@@ -56,6 +49,10 @@ function FileManager(props) {
     const [fileshared,setFileShared]=useState(false);
     const [filenotshared,setFileNotShared]=useState(false);
     const [mounted, setMounted] = useState(false)
+    const [loadingfiles, setLoadingFiles] = useState(true);
+    const [loadingfolders, setLoadingFolders] = useState(true);
+    const [loadingvalidation, setLoadingValidation] = useState(true);
+    const [foldervalid, setFolderValid] = useState(false);
     const group=props.match.params.projectId
     const handleClick = param => event  => {
         setAnchorEl(event.currentTarget);
@@ -213,9 +210,18 @@ function FileManager(props) {
         if (folder){
             console.log(folder)
             folder=props.match.params.folderId
+            axios.post('/drive/findfolder', {folder:folder,group: group})
+                .then(response => {
+                    setLoadingValidation(false)
+                    if (response.data.success) {
+                        setFolderValid(true)
+                    }
+            })
           }
           else{
             folder="root"
+            setLoadingValidation(false)
+            setFolderValid(true)
           }
         const variable = { 
             folder:folder,
@@ -233,6 +239,7 @@ function FileManager(props) {
         axios.post('/drive/getfolders', variable,config)
             .then(response => {
                 if (response.data.success) {
+                    setLoadingFolders(false)
                     console.log(response.data.folders)
                     setFolders(response.data.folders)
                 } else {
@@ -243,6 +250,7 @@ function FileManager(props) {
         axios.post('/drive/getfiles', variable,config)
             .then(response => {
                 if (response.data.success) {
+                    setLoadingFiles(false)
                     console.log(response.data.files)
                     setFiles(response.data.files)
                 } else {
@@ -258,18 +266,18 @@ function FileManager(props) {
             }
         })
     }, [])
-    if (user.userData && mounted){
-        if (collabs.some(e => e.researcher_id == user_id)){
+    if (user.userData && mounted && !loadingfiles && !loadingfolders && !loadingvalidation){
+        if (collabs.some(e => e.researcher_id == user_id) && foldervalid){
         return (
         <div >
             <Dialog open={deleteopen} onClose={handleDeleteClose} aria-labelledby="form-dialog-title">
-                <DialogContent>
+                <DialogContent className={classes.formControl}>
                     <DialogContentText>
                         Delete File?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleDeleteClose} color="primary">
+                <Button onClick={handleDeleteClose} variant="contained" color="primary" >
                     Cancel
                 </Button>
                 <Button onClick={handleDelete} color="primary">
@@ -352,7 +360,6 @@ function FileManager(props) {
                     <MenuItem style={{ color: '#d60009',fontSize: 14 }} onClick={handleDeleteOpen}>Delete</MenuItem>
                 </Menu>
                 
-                
                 <div className={classNames(classes.main2)} >
                     <Grid container spacing={5} >
                         <Grid item xs={3} >
@@ -431,7 +438,6 @@ function FileManager(props) {
                                     </CardActionArea>
                                 </Grid>
                                 ))}
-                                
                             </Grid>
                             }
                         </Grid>
@@ -451,7 +457,5 @@ function FileManager(props) {
             <Loader />
         )
     }
-
 }
-
 export default FileManager

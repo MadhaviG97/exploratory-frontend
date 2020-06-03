@@ -82,6 +82,11 @@ export const useStyles = makeStyles((theme) => ({
     position: "relative",
     zIndex: "3"
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+    maxWidth: 250,
+},
   main2: {
     background: "#eceff1",
     position: "relative",

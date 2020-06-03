@@ -40,6 +40,7 @@ export default function CreatePage(props) {
     const [open,setOpen]=useState(false);
     const [id,setId]=useState('');
     const [documentdeleted,setDocumentDeleted]=useState(false);
+    const [loading,setLoading]=useState(true);
     const group=props.match.params.projectId
     const user = useSelector(state => state.user);
     let user_id=0
@@ -67,6 +68,7 @@ export default function CreatePage(props) {
         axios.post('/editor/getBlogs',variable,config)
             .then(response => {
                 if (response.data.success) {
+                    setLoading(false)
                     console.log(response.data.blogs)
                     setBlogs(response.data.blogs)
                 } else {
@@ -140,18 +142,18 @@ export default function CreatePage(props) {
             })
         
     };
-    if (mounted && user.userData){
+    if (mounted && user.userData && !loading){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
                 <div className={classNames(classes.main2)}>
-                    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                        <DialogContent>
+                    <Dialog open={open} onClose={handleClose}  aria-labelledby="form-dialog-title">
+                        <DialogContent className={classes.formControl}>
                             <DialogContentText>
                                 Delete Document?
                             </DialogContentText>
                         </DialogContent>
-                        <DialogActions>
-                        <Button onClick={handleClose} color="primary">
+                        <DialogActions >
+                        <Button onClick={handleClose} variant="contained" color="primary">
                             Cancel
                         </Button>
                         <Button onClick={handleDelete} color="primary">

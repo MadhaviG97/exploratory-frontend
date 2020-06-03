@@ -14,6 +14,11 @@ export const useStyles = makeStyles((theme) => ({
     //width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 200,
+    maxWidth: 250,
+  },
   roota: {
     width: '100%',
     '& > * + *': {
