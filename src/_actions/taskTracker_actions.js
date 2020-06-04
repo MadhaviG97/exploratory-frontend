@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   GET_TASKS,
   ADD_TASK,
@@ -7,6 +8,7 @@ import {
   ADD_TASK_COMMENT,
   DELETE_TASK_COMMENT,
   EDIT_TASK_COMMENT,
+  GET_PROJECT_COLLABORATORS
 } from "./types";
 
 export const getTasks = async (pId) => {
@@ -120,3 +122,14 @@ export const editComment = async (commentData) => {
     payload: res,
   };
 };
+
+export const getCollaborators = (pId) => {
+  const request = axios
+    .get(`/project/tasktracker/collaborators/${pId}`)
+    .then((response) => response.data.data);
+  return {
+    type: GET_PROJECT_COLLABORATORS,
+    payload: request,
+  };
+};
+

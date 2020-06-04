@@ -9,6 +9,7 @@ import fillProfile from "./views/researcher/fill-profile";
 import UserProfile from "./views/researcher/user-profile";
 import AboutUs from "./views/shared/about-us.jsx";
 import Forum from "./views/shared/public-forum";
+import ForumSearch from "./views/shared/public-forum-search";
 import signIn from "./views/researcher/sign-in";
 
 import Feed from "./views/researcher/feed";
@@ -163,8 +164,14 @@ function App() {
 
             <Route
               exact
-              path="/tasktracker"
+              path="/project/tasktracker/:pId"
               component={Auth(TaskTracker, true)}
+            />
+
+            <Route
+              exact
+              path="/forum/search/:string"
+              component={Auth(ForumSearch, true)}
             />
           </Switch>
         </div>

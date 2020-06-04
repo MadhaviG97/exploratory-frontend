@@ -29,7 +29,29 @@ export default function QuestionLike(props) {
   const user = useSelector((state) => state.user);
   const is_logged = useSelector((state) => state.is_logged);
   const [invisible, setInvisible] = React.useState(false);
+  const [available, setAvailable] = React.useState(false);
+  const questionLikes = useSelector((state) => state.forum.questionLikes);
 
+  var question = {
+    id: props.question_id,
+    researcher_id: user.userData._id,
+  };
+
+  function containsObject(obj, list) {
+    var i;
+    for (i = 0; i < list.length; i++) {
+      if (
+        list[i].question_id == question.id &&
+        list[i].researcher_id == question.researcher_id
+      ) {
+        setAvailable(true);
+      }
+    }
+  }
+
+  useEffect(() => {
+    var contains = containsObject(question, questionLikes);
+  }, []);
 
   const handleBadgeVisibility = () => {
     setInvisible(!invisible);
@@ -39,15 +61,20 @@ export default function QuestionLike(props) {
     <div className={classes.root}>
       {user.userData.isAuth ? (
         <div>
-          <ButtonGroup
-            color="primary"
-            aria-label="outlined primary button group"
-          >
-            <LikeQuestion
-              question_id={props.question_id}
-              researcher_id={user.userData._id}
-            />>
-          </ButtonGroup>
+          {!available ? (
+            <ButtonGroup
+              color="primary"
+              aria-label="outlined primary button group"
+            >
+              <LikeQuestion
+                question_id={props.question_id}
+                researcher_id={user.userData._id}
+              />
+              >
+            </ButtonGroup>
+          ) : (
+            <div></div>
+          )}
           {user.userData._id === props.Q_id ? (
             <ButtonGroup
               color="primary"

@@ -18,6 +18,7 @@ import {
   getPopularQuestions,
 } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -54,7 +55,12 @@ export default function AddComment(props) {
   const user = useSelector((state) => state.user);
   const [open, setOpen] = React.useState(false);
   const [answer, setAnswer] = React.useState("");
+  const { register, handleSubmit, errors, reset, control } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+  });
   const dispatch = useDispatch();
+
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -68,20 +74,22 @@ export default function AddComment(props) {
     setAnswer(event.target.value);
   };
 
-  const handleSubmit = () => {
-    const answerData = {
-      answer: answer,
-      question_id: props.question_id,
-      researcher_id: user.userData._id,
-    };
-    setOpen(false);
-    dispatch(addAnswer(answerData));
-    dispatch(getAnswers());
-    dispatch(getForumUsers());
-    dispatch(getFreqUsers());
-    dispatch(getPopularQuestions());
-    dispatch(getPopularAnswers());
-    setAnswer("");
+  const onSubmit = () => {
+    if (answer) {
+      const answerData = {
+        answer: answer,
+        question_id: props.question_id,
+        researcher_id: user.userData._id,
+      };
+      setOpen(false);
+      dispatch(addAnswer(answerData));
+      dispatch(getAnswers());
+      dispatch(getForumUsers());
+      dispatch(getFreqUsers());
+      dispatch(getPopularQuestions());
+      dispatch(getPopularAnswers());
+      setAnswer("");
+    }
   };
 
   return (
@@ -100,28 +108,41 @@ export default function AddComment(props) {
         aria-labelledby="form-dialog-title"
         fullWidth
       >
-        <DialogTitle id="form-dialog-title">Add Answer</DialogTitle>
-        <DialogContent>
-          <DialogContentText>{props.question_title}</DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Your Answer"
-            type="text"
-            fullWidth
-            multiline
-            onChange={handleChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" variant="outlined">
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} color="primary" variant="contained">
-            Post
-          </Button>
-        </DialogActions>
+        <form onSubmit={handleSubmit(onSubmit)} >
+          <DialogTitle id="form-dialog-title">Add Answer</DialogTitle>
+          <DialogContent>
+            <DialogContentText>{props.question_title}</DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              name="answer"
+              label="Your Answer"
+              type="text"
+              variant="outlined"
+              fullWidth
+              multiline
+              required
+              onChange={handleChange}
+              rowsMax={10}
+              inputRef={register({ required: true })}
+              error={!!errors.answer}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary" variant="outlined">
+              Cancel
+            </Button>
+            <Button
+              onClick={onSubmit}
+              type="submit"
+              color="primary"
+              variant="contained"
+            >
+              Post
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

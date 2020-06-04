@@ -21,6 +21,7 @@ import {
   getPopularAnswers,
 } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,9 +49,13 @@ export default function QuestionDialog(props) {
   const [categories, setCategories] = React.useState([]);
   const [open, setOpen] = React.useState(false);
   const [question, setQuestion] = useState({
-    category: {},
+    category_id: "",
     title: "",
     description: "",
+  });
+  const { register, handleSubmit, errors, reset, control } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
   });
 
   useEffect(() => {
@@ -71,7 +76,7 @@ export default function QuestionDialog(props) {
   const handleClose = () => {
     setOpen(false);
     setQuestion({
-      category: {},
+      category_id: "",
       title: "",
       description: "",
     });
@@ -81,32 +86,34 @@ export default function QuestionDialog(props) {
   var month = new Date().getMonth() + 1;
   var year = new Date().getFullYear();
 
-  const handleSubmit = () => {
-    const questionData = {
-      researcher_id: user.userData._id,
-      first_name: user.userData.first_name,
-      last_name: user.userData.last_name,
-      created_at: year + "-" + month + "-" + date,
-      category_name: question.category.category_name,
-      category_id: question.category.id,
-      title: question.title,
-      description: question.description,
-      profile_picture: user.userData.profile_picture,
-      isAuth: user.userData.isAuth,
-    };
-    setOpen(false);
-    dispatch(addQuestion(questionData));
-    setQuestion({
-      category: {},
-      title: "",
-      description: "",
-    });
-    dispatch(getQuestions());
-    dispatch(getAnswers());
-    dispatch(getForumUsers());
-    dispatch(getFreqUsers());
-    dispatch(getPopularQuestions());
-    dispatch(getPopularAnswers());
+  const onSubmit = (data) => {
+    console.log(question);
+    if (question.category_id && question.title) {
+      const questionData = {
+        researcher_id: user.userData._id,
+        first_name: user.userData.first_name,
+        last_name: user.userData.last_name,
+        created_at: year + "-" + month + "-" + date,
+        category_id: question.category_id,
+        title: question.title,
+        description: question.description,
+        profile_picture: user.userData.profile_picture,
+        isAuth: user.userData.isAuth,
+      };
+      setOpen(false);
+      dispatch(addQuestion(questionData));
+      setQuestion({
+        category_id: "",
+        title: "",
+        description: "",
+      });
+      dispatch(getQuestions());
+      dispatch(getAnswers());
+      dispatch(getForumUsers());
+      dispatch(getFreqUsers());
+      dispatch(getPopularQuestions());
+      dispatch(getPopularAnswers());
+    }
   };
 
   const handleChange = (prop) => (event) => {
@@ -124,55 +131,97 @@ export default function QuestionDialog(props) {
       )}
 
       <Dialog open={open} onClose={handleClose} fullWidth>
-        <DialogTitle>Raise your Question</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Please fill out the details below.Try to provide appropriate details
-            for the question so it can be answered easier.
-          </DialogContentText>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogTitle>Raise your Question</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Please fill out the details below.Try to provide appropriate
+              details for the question so it can be answered easier.
+            </DialogContentText>
 
-          <form className={classes.root} noValidate autoComplete="off">
-            <FormControl className={classes.formControl} required>
-              <InputLabel>Category</InputLabel>
-              <Select onChange={handleChange("category")}>
-                {categories.map((category) => (
-                  <MenuItem value={category}>{category.category_name}</MenuItem>
-                ))}
-              </Select>
-            </FormControl>
-            <br />
+            <form className={classes.root} noValidate autoComplete="off">
+              <FormControl className={classes.formControl} required error={Boolean(errors.category)}>
+                <InputLabel>Category</InputLabel>
+                <Controller
+                  as={
+                    <Select
+                      onChange={handleChange("category_id")}
+                      name="category"
+                    >
+                      {categories.map((category) => (
+                        <MenuItem value={category.id}>
+                          {category.category_name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  }
+                  name="category"
+                  rules={{ required: "true" }}
+                  error={!!errors.category}
+                  control={control}
+                  defaultValue=""
+                  onChange={([selected]) => {
+                    setQuestion({...question,category_id:selected.target.value})
+                    return selected;
+                  }}
+                />
+              </FormControl>
+              <br />
 
-            <TextField
-              fullWidth
-              id="Question title"
-              label="Question Title"
-              className={classes.formControl}
-              required
-              multiline
-              rowsMax={2}
-              onChange={handleChange("title")}
-            />
-            <br />
+              <TextField
+                margin="dense"
+                name="title"
+                type="text"
+                variant="outlined"
+                inputRef={register({ required: true })}
+                error={!!errors.title}
+                fullWidth
+                id="Question title"
+                label="Question Title"
+                className={classes.formControl}
+                required
+                multiline
+                rowsMax={4}
+                onChange={handleChange("title")}
+              />
+              <br />
 
-            <TextField
-              fullWidth
-              id="Description"
-              label="Description"
-              className={classes.formControl}
-              multiline
-              rowsMax={4}
-              onChange={handleChange("description")}
-            />
-          </form>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary" variant="outlined">
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} color="primary" variant="contained">
-            Post
-          </Button>
-        </DialogActions>
+              <TextField
+                fullWidth
+                margin="dense"
+                name="description"
+                type="text"
+                variant="outlined"
+                inputRef={register({ max: 5000 })}
+                error={!!errors.title}
+                id="Description"
+                label="Description"
+                className={classes.formControl}
+                multiline
+                rowsMax={10}
+                onChange={handleChange("description")}
+              />
+            </form>
+          </DialogContent>
+          <DialogActions>
+            <Button
+              onClick={handleClose}
+              color="primary"
+              variant="outlined"
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={onSubmit}
+              type="submit"
+              color="primary"
+              variant="contained"
+              disabled={!!errors.title || !!errors.description || !!errors.category}
+            >
+              Post
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

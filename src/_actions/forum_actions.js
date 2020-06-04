@@ -1,3 +1,4 @@
+import axios from "axios";
 import {
   GET_QUESTIONS,
   ADD_QUESTION,
@@ -13,6 +14,9 @@ import {
   GET_FREQ_USERS,
   GET_POPULAR_QUESTIONS,
   GET_POPULAR_ANSWERS,
+  FORUM_SEARCH,
+  GET_QUESTION_LIKES,
+  GET_ANSWER_LIKES
 } from "./types";
 
 export const getQuestions = async () => {
@@ -196,3 +200,37 @@ export const likeAnswer = async (answerData) => {
     payload: res,
   };
 };
+
+
+export function forumSearch(dataToSubmit) {
+  const request = axios
+    .post(`/forum/search/questions`, dataToSubmit)
+    .then((response) => response.data.data);
+
+  return {
+    type: FORUM_SEARCH,
+    payload: request,
+  };
+}
+
+export function getQuestionLikes() {
+  const request = axios
+    .get(`/forum/questionlikes`)
+    .then((response) => response.data.data);
+
+  return {
+    type: GET_QUESTION_LIKES,
+    payload: request,
+  };
+}
+
+export function getAnswerLikes() {
+  const request = axios
+    .get(`/forum/answerlikes`)
+    .then((response) => response.data.data);
+
+  return {
+    type: GET_ANSWER_LIKES,
+    payload: request,
+  };
+}

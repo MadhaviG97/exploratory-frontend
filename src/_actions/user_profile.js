@@ -1,8 +1,15 @@
 import axios from "axios";
-import { GET_PROFILE, UPDATE_PROFILE, GET_PROJECTS_BY_USER_ID } from "./types";
+import {
+  GET_PROFILE,
+  UPDATE_PROFILE,
+  GET_PROJECTS_BY_USER_ID,
+  GET_INSTITUTIONS,
+} from "./types";
 
 export const getProfile = (id) => {
-  const request = axios.get(`/userprofile/${id}`).then((response) => response.data.data);
+  const request = axios
+    .get(`/userprofile/${id}`)
+    .then((response) => response.data.data);
   return {
     type: GET_PROFILE,
     payload: request,
@@ -24,10 +31,22 @@ export const editProfile = async (profileData) => {
   };
 };
 
-export const getProjectsByUserId = (id) => {
-  const request = axios.get(`/userprofile/getprojects/${id}`).then((response) => response.data.data);
+export const getProjectsByUserId = async (uId) => {
+  const response = await fetch(`/userprofile/projects/${uId}`);
+  const data = await response.json();
+  const projects = data.data;
   return {
     type: GET_PROJECTS_BY_USER_ID,
-    payload: request,
+    payload: projects,
+  };
+};
+
+export const getInstitutions = async () => {
+  const response = await fetch(`/userprofile/edit/institutions`);
+  const data = await response.json();
+  const institutions = data.data;
+  return {
+    type: GET_INSTITUTIONS,
+    payload: institutions,
   };
 };

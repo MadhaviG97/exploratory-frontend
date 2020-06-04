@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: "auto",
+    minHeight: 700
   },
 }));
 

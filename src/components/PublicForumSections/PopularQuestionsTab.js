@@ -61,7 +61,7 @@ export default function PopularQuestionsTab() {
                     className={classes.inline}
                     color="textPrimary"
                   >
-                    :- {question.title}
+                    {question.title}
                   </Typography>
                 </React.Fragment>
               }

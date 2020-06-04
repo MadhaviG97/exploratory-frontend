@@ -37,6 +37,7 @@ import { getProfile, getProjectsByUserId } from "../../_actions/user_profile";
 
 import { useDispatch, useSelector } from "react-redux";
 import { id } from "date-fns/locale";
+import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -58,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   paperDetails: {
     padding: theme.spacing(3),
     textAlign: "center",
-    color:theme.palette.text.secondary,
+    color: theme.palette.text.secondary,
     backgroundColor: "#E6E6E6",
   },
   profileImage: {
@@ -80,6 +81,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function UserProfile() {
   const classes = useStyles();
+  const history = useHistory();
   const [value, setValue] = React.useState(0);
   const [linkedInVal, setLinkedInVal] = React.useState(false);
   const [twitterVal, setTwitterVal] = React.useState(false);
@@ -208,20 +210,28 @@ export default function UserProfile() {
                     {profession}
                   </Typography>
                   <div className={classes.paper}>
-                    <IconButton
-                      aria-label="LinkedIn"
-                      href={linkedIn}
-                      color="primary"
-                    >
-                      <LinkedInIcon />
-                    </IconButton>
-                    <IconButton
-                      aria-label="Twitter"
-                      href={twitter}
-                      color="primary"
-                    >
-                      <TwitterIcon color="primary" />
-                    </IconButton>
+                    {linkedIn ? (
+                      <IconButton
+                        aria-label="LinkedIn"
+                        href={linkedIn}
+                        color="primary"
+                      >
+                        <LinkedInIcon />
+                      </IconButton>
+                    ) : (
+                      <div></div>
+                    )}
+                    {twitter ? (
+                      <IconButton
+                        aria-label="Twitter"
+                        href={twitter}
+                        color="primary"
+                      >
+                        <TwitterIcon color="primary" />
+                      </IconButton>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
                 </div>
               </Paper>

@@ -15,7 +15,7 @@ import Container from "@material-ui/core/Container";
 import Footer from "../../components/Footer/Footer";
 import Navbar from "../../components/Navbar/Navbar";
 import ForumPost from "../../components/PublicForumSections/ForumPost";
-import ForumAppBar from "../../components/PublicForumSections/ForumAppBar";
+import SearchAppBar from "../../components/PublicForumSections/SearchAppBar";
 import CountGrid from "../../components/PublicForumSections/CountGrid";
 import AddQuestionDialog from "../../components/PublicForumSections/AddQuestionDialog";
 import PopularSectionTab from "../../components/PublicForumSections/PopularSectionTab";
@@ -29,9 +29,12 @@ import {
   getPopularQuestions,
   getPopularAnswers,
   getQuestionLikes,
-  getAnswerLikes
+  getAnswerLikes,
 } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
+import { Typography } from "@material-ui/core";
+import { useParams, useHistory } from "react-router-dom";
+import axios from "axios";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -41,6 +44,11 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
+  paperHeading: {
+    padding: theme.spacing(2),
+    textAlign: "left",
     color: theme.palette.text.secondary,
   },
   loader: {
@@ -58,13 +66,26 @@ export default function Forum() {
   const user = useSelector((state) => state.user);
   const forum = useSelector((state) => state.forum);
   const dispatch = useDispatch();
+  let { string } = useParams();
+  const [searchResult, setSearchResult] = React.useState({});
+  console.log(string);
+
+  React.useEffect(() => {
+    var request = axios
+      .post("/forum/search/questions", { searchString: string })
+      .then((response) => {
+        setSearchResult(response.data.data);
+        // return response.data;
+      });
+  }, [string]);
+
+  console.log(searchResult);
 
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
     }, 1000);
     dispatch(getAnswers());
-    dispatch(getQuestions());
     dispatch(getForumUsers());
     dispatch(getFreqUsers());
     dispatch(getPopularQuestions());
@@ -77,7 +98,7 @@ export default function Forum() {
 
   return (
     <div>
-      <ForumAppBar userDetails={user.userData} />
+      <SearchAppBar userDetails={user.userData} />
       {loading ? (
         <div className={classes.loader}>
           <ReactLoading
@@ -99,13 +120,23 @@ export default function Forum() {
             <Divider orientation="vertical" variant="fullWidth" />
 
             <Grid item xs={6}>
+              <Paper className={classes.paperHeading}>
+                <Typography variant="h6" gutterBottom color="primary">
+                  Search Results for "{string}"
+                </Typography>
+              </Paper>
+
               <Container style={{ backgroundColor: "white", padding: "5px" }}>
-                {Object.keys(questions).length > 0 ? (
-                  questions.questions.map((question) => (
-                    <ForumPost postDetails={question} valid={1}/>
+                {Object.keys(searchResult).length > 0 ? (
+                  searchResult.map((question) => (
+                    <ForumPost postDetails={question} valid={0} />
                   ))
                 ) : (
-                  <div className={classes.paper}>No Questions</div>
+                  <Paper className={classes.paper}>
+                    <Typography variant="h6" gutterBottom color="primary">
+                      No results for your search...
+                    </Typography>
+                  </Paper>
                 )}
 
                 <Divider />
@@ -115,14 +146,6 @@ export default function Forum() {
             <Divider orientation="vertical" variant="fullWidth" />
 
             <Grid item xs>
-              <Paper className={classes.paper}>
-                <AddQuestionDialog />
-              </Paper>
-              <Divider />
-              <Paper>
-                <CountGrid />
-              </Paper>
-              <Divider />
               <Paper>
                 <PopularSectionTab />
               </Paper>
