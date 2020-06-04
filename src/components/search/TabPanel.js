@@ -6,9 +6,16 @@ import SentimentVeryDissatisfiedIcon from '@material-ui/icons/SentimentVeryDissa
 import ProjectItem from "./ProjectItem";
 import ResearchItem from "./Researchertem";
 import InstitutionsItem from "./InstitutionItem";
+import Pagination from '@material-ui/lab/Pagination';
+import Grid from '@material-ui/core/Grid';
 
-const TabPanel = (props)=>{
-    const { value, index, ...other } = props;
+const TabPanel = (props) => {
+
+  const { value, index, ...other } = props;
+
+  const handleChangePage = (event, newPage) => {
+    props.setPage(newPage)
+  };
 
   return (
     <div hidden={value !== index}>
@@ -75,6 +82,14 @@ const TabPanel = (props)=>{
             )
         ) : null}
       </List>
+
+      <Grid container justify="center">
+        <Pagination
+          count={props.count}
+          page={props.page}
+          onChange={handleChangePage}
+          color="primary" />
+      </Grid>
     </div>
 
   );

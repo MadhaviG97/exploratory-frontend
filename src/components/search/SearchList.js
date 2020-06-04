@@ -5,6 +5,7 @@ import Container from "@material-ui/core/Container";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import TabPanel from './TabPanel'
+import axios from 'axios'
 
 const useStyles = makeStyles({
   root: {
@@ -14,23 +15,95 @@ const useStyles = makeStyles({
 });
 
 const SearchList = (props) => {
+
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+
+  const [projects, setProjects] = React.useState([])
+  const [researchers, setResearchers] = React.useState([])
+  const [institutions, setInstitutions] = React.useState([])
+
+  const [projectPage, setProjectPage] = React.useState(1)
+  const [researcherPage, setResearcherPage] = React.useState(1)
+  const [institutionPage, setInstitutionPage] = React.useState(1)
+
+  const [projectsLength, setProjectsLength] = React.useState(0)
+  const [researchersLength, setResearchersLength] = React.useState(0)
+  const [institutionsLength, setInstitutionsLength] = React.useState(0)
 
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-  const hasProjects = props.projects && props.projects.length > 0;
-  const hasResearchers = props.researchers && props.researchers.length > 0;
-  const hasInstitutions = props.institutions && props.institutions.length > 0;
+  const pageAmount = 6
 
   React.useEffect(() => {
-    if (hasProjects) { setValue(0) }
-    else if (hasResearchers) { setValue(1) }
-    else if (hasInstitutions) { setValue(2) }
+    if (projectsLength) { setValue(0) }
+    else if (researchersLength) { setValue(1) }
+    else if (institutionsLength) { setValue(2) }
     else { setValue(0) }
-  }, [props])
+
+  }, [projectsLength, researchersLength, institutionsLength])
+
+  React.useEffect(() => {
+
+    var parameters = {
+      searchString: props.searchString,
+      index: (projectPage - 1) * pageAmount,
+      type: "projects"
+    }
+
+    const fetchData = () => {
+      var request = axios
+        .post("/search", parameters)
+        .then((response) => {
+          setProjects(response.data.res)
+          setProjectsLength(response.data.resLength)
+        })
+        .catch(err => { });
+    }
+    fetchData()
+  }, [projectPage, props.searchString])
+
+  React.useEffect(() => {
+
+    var parameters = {
+      searchString: props.searchString,
+      index: (researcherPage - 1) * pageAmount,
+      type: "researchers"
+    }
+
+    const fetchData = () => {
+      var request = axios
+        .post("/search", parameters)
+        .then((response) => {
+          setResearchers(response.data.res)
+          setResearchersLength(response.data.resLength)
+        })
+        .catch(err => { });
+    }
+    fetchData()
+  }, [researcherPage, props.searchString])
+
+  React.useEffect(() => {
+
+    var parameters = {
+      searchString: props.searchString,
+      index: (institutionPage - 1) * pageAmount,
+      type: "institutions"
+    }
+
+    const fetchData = () => {
+      var request = axios
+        .post("/search", parameters)
+        .then((response) => {
+          setInstitutions(response.data.res)
+          setInstitutionsLength(response.data.resLength)
+        })
+        .catch(err => { });
+    }
+    fetchData()
+  }, [institutionPage, props.searchString])
 
   return (
     <Container maxWidth="sm">
@@ -47,17 +120,33 @@ const SearchList = (props) => {
           <Tab label="Institutions" />
         </Tabs>
 
-        <TabPanel value={value} index={0} projects={props.projects}></TabPanel>
+        <TabPanel
+          value={value}
+          index={0}
+          projects={projects}
+          count={Math.ceil(projectsLength / pageAmount)}
+          page={projectPage}
+          setPage={setProjectPage}
+        />
+
         <TabPanel
           value={value}
           index={1}
-          researchers={props.researchers}
-        ></TabPanel>
+          researchers={researchers}
+          count={Math.ceil(researchersLength / pageAmount)}
+          page={researcherPage}
+          setPage={setResearcherPage}
+        />
+
         <TabPanel
           value={value}
           index={2}
-          institutions={props.institutions}
-        ></TabPanel>
+          institutions={institutions}
+          count={Math.ceil(institutionsLength / pageAmount)}
+          page={institutionPage}
+          setPage={setInstitutionPage}
+        />
+
       </Paper>
     </Container>
   );
