@@ -44,7 +44,7 @@ export default function Feed() {
     var request = axios
       .post("/feed", paramters)
       .then((response) => {
-        console.log(response.data)
+        // console.log(response.data)
         setFeedContent(feedContent.concat(response.data))
         setIndex(index + response.data.length)
       })
