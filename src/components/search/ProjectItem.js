@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       maxWidth: 600,
-      margin: "10px",
+      // margin: "10px",
     },
     media: {
       height: 0,
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function ProjectItem({ ResearchItem }) {
   const classes = useStyles();
-  console.log(ResearchItem);
+  // console.log(ResearchItem);
   return (
     <Card className={classes.root}>
       <CardHeader
