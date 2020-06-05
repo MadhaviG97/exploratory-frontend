@@ -2,7 +2,7 @@
 
 exports[`view research public renders correctly 1`] = `
 <div
-  className="MuiBox-root MuiBox-root-109"
+  className="MuiBox-root MuiBox-root-110"
   style={
     Object {
       "height": "100vh",
@@ -10,7 +10,7 @@ exports[`view research public renders correctly 1`] = `
   }
 >
   <div
-    className="MuiBox-root MuiBox-root-110"
+    className="MuiBox-root MuiBox-root-111"
   >
     <div>
       <main
@@ -57,6 +57,9 @@ exports[`view research public renders correctly 1`] = `
           className="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-5 MuiGrid-grid-md-5"
         />
       </main>
+      <div
+        className="MuiBox-root MuiBox-root-112"
+      />
     </div>
   </div>
 </div>

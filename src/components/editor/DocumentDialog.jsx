@@ -96,31 +96,32 @@ export default function DocumentDialog(props) {
             Create
         </Button>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        
+          <form onSubmit={handleSubmit}>
             <DialogContent>
-            <DialogContentText>
-                Document Name
-            </DialogContentText>
-            <TextField
-                autoFocus
-                margin="dense"
-                id="name"
-                label=""
-                type="text"
-                fullWidth
-                required
-                onChange={handleChange}
-            />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} color="primary">
-            Create
-          </Button>
-        </DialogActions>
-      </Dialog>
+              <DialogContentText>
+                  Document Name
+              </DialogContentText>
+              <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label=""
+                  type="text"
+                  fullWidth
+                  required
+                  onChange={handleChange}
+              />
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
+              <Button type="submit" color="primary">
+                Create
+              </Button>
+            </DialogActions>
+          </form>
+        </Dialog>
     </div>
   );
 }

@@ -23,6 +23,8 @@ function Edit2Page(props) {
     }
     const [collabs, setCollabs] = useState([])
     const [mounted, setMounted] = useState(false)
+    const [loadingValidation, setLoadingValidation] = useState(true)
+    const [validpost, setValidPost] = useState(false)
     useEffect(() => {
         const variable = { 
             group: props.match.params.projectId,
@@ -35,9 +37,23 @@ function Edit2Page(props) {
                     
                 }
             })
+        const post = { 
+            postId: props.match.params.postId,
+            group:props.match.params.projectId
+        }
+        axios.post('/editor/findpost', post)
+            .then(response => {
+                setLoadingValidation(false)
+                if (response.data.success) {
+                    setValidPost(true)
+                }
+            })
+            .catch(error => {
+                setLoadingValidation(false)
+            })
     }, [])
-    if (user.userData && mounted){
-        if (collabs.some(e => e.researcher_id == user_id)){
+    if (user.userData && mounted && !loadingValidation){
+        if (collabs.some(e => e.researcher_id == user_id) && validpost){
             return (
             <div className={classNames(classes.main2)}>
                     <div className={classNames(classes.main2, classes.mainRaised3)} > 
