@@ -15,11 +15,19 @@ import {
   getPopularQuestions,
 } from "../../_actions/forum_actions";
 import { useDispatch } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
 
 export default function EditAnswer(props) {
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = React.useState({
     answer: props.answer,
+  });
+  const { register, handleSubmit, errors, reset, control } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    defaultValues: {
+      name: props.answer,
+    },
   });
   const dispatch = useDispatch();
 
@@ -39,17 +47,19 @@ export default function EditAnswer(props) {
   var month = new Date().getMonth() + 1;
   var year = new Date().getFullYear();
 
-  const handleSubmit = () => {
-    const answerData = {
-      answer_id: props.answer_id,
-      answer: edit.answer,
-      updated_at: year + "-" + month + "-" + date,
-    };
-    editAnswer(answerData);
-    dispatch(getAnswers());
-    dispatch(getPopularQuestions());
-    dispatch(getPopularAnswers());
-    setOpen(false);
+  const onSubmit = () => {
+    if (edit.answer) {
+      const answerData = {
+        answer_id: props.answer_id,
+        answer: edit.answer,
+        updated_at: year + "-" + month + "-" + date,
+      };
+      editAnswer(answerData);
+      dispatch(getAnswers());
+      dispatch(getPopularQuestions());
+      dispatch(getPopularAnswers());
+      setOpen(false);
+    }
   };
 
   return (
@@ -60,37 +70,48 @@ export default function EditAnswer(props) {
         color="primary"
         onClick={handleClickOpen}
       >
-        <EditIcon fontSize="small"/>
+        <EditIcon fontSize="small" />
       </IconButton>
       <Dialog
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        fullWidth
       >
-        <DialogTitle id="form-dialog-title">Edit your Answer!</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Fill the appropriate fields and submit...!
-          </DialogContentText>
-          <TextField
-            margin="dense"
-            id="answer"
-            label="Answer"
-            type="text"
-            fullWidth
-            multiline
-            defaultValue={props.answer}
-            onChange={handleChange("answer")}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} color="primary" variant="contained">
-            Update
-          </Button>
-        </DialogActions>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogTitle id="form-dialog-title">Edit your Answer!</DialogTitle>
+          <DialogContent>
+            <DialogContentText>
+              Fill the appropriate fields and submit...!
+            </DialogContentText>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="answer"
+              label="Answer"
+              type="text"
+              name="name"
+              variant="outlined"
+              fullWidth
+              multiline
+              rowsMax={10}
+              defaultValue={props.answer}
+              required
+              rowsMax={10}
+              inputRef={register({ required: true })}
+              error={!!errors.name}
+              onChange={handleChange("answer")}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button onClick={onSubmit} color="primary" variant="contained">
+              Update
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

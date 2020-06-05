@@ -6,14 +6,21 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import {} from "../../_actions/forum_actions";
 import { useDispatch } from "react-redux";
 import {editComment, getComments} from "../../_actions/taskTracker_actions";
+import { useForm, Controller } from "react-hook-form";
 
 export default function EditComment(props) {
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = React.useState({
     comment: props.comment
+  });
+  const { register, handleSubmit, errors, reset, control } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange",
+    defaultValues: {
+      name: props.comment,
+    },
   });
   const dispatch = useDispatch();
 
@@ -33,7 +40,8 @@ export default function EditComment(props) {
   var month = new Date().getMonth() + 1;
   var year = new Date().getFullYear();
 
-  const handleSubmit = () => {
+  const onSubmit = () => {
+    if (edit.comment){
     const commentData = {
       comment_id: props.comment_id,
       comment: edit.comment,
@@ -43,6 +51,7 @@ export default function EditComment(props) {
     editComment(commentData);
     dispatch(getComments(props.project_id));
     setOpen(false);
+  }
   };
 
   return (
@@ -61,30 +70,35 @@ export default function EditComment(props) {
         aria-labelledby="form-dialog-title"
         fullWidth="true"
       >
+        <form onSubmit={handleSubmit(onSubmit)}>
         <DialogTitle id="form-dialog-title">Edit your Comment!</DialogTitle>
         <DialogContent>
-          <DialogContentText>
-            Edit comment and submit...!
-          </DialogContentText>
           <TextField
+          autoFocus
             margin="dense"
             id="comment"
             label="My Commment"
             type="text"
+            name="name"
+            variant="outlined"
             fullWidth
             multiline
+            rowsMax={10}
             defaultValue={props.comment}
+            inputRef={register({ required: true })}
             onChange={handleChange("comment")}
+            error={!!errors.name}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={handleSubmit} color="primary" variant="contained">
+          <Button onClick={onSubmit} type="submit" color="primary" variant="contained">
             Update
           </Button>
         </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

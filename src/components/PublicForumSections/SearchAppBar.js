@@ -93,9 +93,6 @@ export default function PrimarySearchAppBar() {
   const [state, setState] = React.useState({
     searchString:"",
   });
-  let { from } = location.state || {
-    from: { pathname: `/forum/search/${state.searchString}` },
-  };
   const dispatch = useDispatch();
 
   const isMenuOpen = Boolean(anchorEl);
@@ -121,23 +118,6 @@ export default function PrimarySearchAppBar() {
   const handleChange = (e) => {
     setState({ ...state, [e.target.name]: e.target.value });
   };
-
-  const handleSearch = (e) => {
-    if (state.searchString!=""){
-    const formData = {
-      searchString: state.searchString,
-    };
-    console.log(formData);
-    dispatch(forumSearch(formData))
-      .then((result) => {
-        console.log("sent");
-        console.log(result);
-      })
-      .catch((e) => console.log(e));
-    history.replace(from);
-  }
-  };
-
   const menuId = "primary-search-account-menu";
   const renderMenu = (
     <Menu
@@ -186,46 +166,10 @@ export default function PrimarySearchAppBar() {
           </Typography>
 
           <div className={classes.grow} />
-          <IconButton aria-label="home" color="inherit" href="/">
+          <IconButton aria-label="home" color="inherit" href="/forum">
             <HomeIcon />
           </IconButton>
-          {/* <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ "aria-label": "search" }}
-            />
-          </div> */}
-          <div className={classes.search}>
-            <InputBase
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              id="outlined-adornment-password"
-              // value={state.searchString}
-              name="searchString"
-              onChange={handleChange}
-              endAdornment={
-                <InputAdornment position="end" >
-                  <IconButton
-                    aria-label="search"
-                    onClick={handleSearch}
-                    
-                  >
-                    <SearchIcon className={classes.searchIcon}/>
-                  </IconButton>
-                </InputAdornment>
-              }
-              labelWidth={70}
-            />
-          </div>
+          <div className={classes.search}></div>
 
           {userlogged ? (
             <div className={classes.sectionDesktop}>

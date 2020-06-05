@@ -24,7 +24,7 @@ export default function ActionButtonGroup(props) {
   return (
     <div className={classes.root}>
       <ButtonGroup variant="contained" color="primary" aria-label="contained primary button group">
-        <EditTask task={props.task} project_id={props.project_id} />
+        <EditTask task={props.task} project_id={props.project_id} collaborators={props.collaborators}/>
         <DeleteTask task={props.task} project_id={props.project_id} />
       </ButtonGroup>
     </div>

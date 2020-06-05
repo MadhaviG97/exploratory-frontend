@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import MuiAlert from "@material-ui/lab/Alert";
+import { useForm } from "react-hook-form";
 
 // @material-ui/icons
 import Icon from "@material-ui/core/Icon";
@@ -34,6 +35,7 @@ const useNewStyles = makeStyles((theme) => ({
 
 export default function WorkSection() {
   const classes = useStyles();
+  const { register, handleSubmit, errors, reset } = useForm();
   const newClasses = useNewStyles();
   const [open, setOpen] = useState(false);
   const [contact, setContact] = useState({
@@ -41,8 +43,7 @@ export default function WorkSection() {
     email: "",
     message: "",
   });
-  const [response, setResponse] = useState("");
-
+  const [response, setResponse] = useState(false);
   const handleClose = (event, reason) => {
     if (reason === "clickaway") {
       return;
@@ -55,15 +56,17 @@ export default function WorkSection() {
     setContact({ ...contact, [prop]: event.target.value });
   };
 
-  const submitMessage = () => {
-    const res = addMessage(contact);
-    Promise.resolve(res).then((val) => setResponse(val) );
-    setContact({
-      name: "",
-      email: "",
-      message: "",
-    });
-    setOpen(true);
+  const onSubmit = (contact) => {
+    if (contact.name || contact.email || contact.message) {
+      addMessage(contact);
+      setResponse(true);
+      setOpen(true);
+      setContact({
+        name: "",
+        email: "",
+        message: "",
+      })
+    }
   };
 
   return (
@@ -76,41 +79,56 @@ export default function WorkSection() {
             couple of hours.
           </h4>
 
-          <form>
+          <form onSubmit={handleSubmit(onSubmit)}>
             <GridContainer justify="center">
               <TextField
                 className={newClasses.textField}
+                variant="outlined"
+                name="name"
                 id="name"
                 label="Your Name"
+                type="text"
                 required
                 multiline
                 rowsMax={2}
                 onChange={handleChange("name")}
                 fullWidth="true"
                 value={contact.name}
+                inputRef={register({ required: true })}
+                error={!!errors.name}
               />
 
               <TextField
                 className={newClasses.textField}
+                variant="outlined"
                 id="email"
+                name="email"
                 label="Your Email"
+                type="email"
                 required
                 multiline
                 rowsMax={2}
                 onChange={handleChange("email")}
                 fullWidth="true"
                 value={contact.email}
+                inputRef={register({ required: true })}
+                error={!!errors.email}
               />
               <TextField
                 className={newClasses.textField}
+                variant="outlined"
                 id="message"
+                name="message"
                 label="Your Message"
+                type="text"
                 required
                 multiline
                 rowsMax={5}
                 onChange={handleChange("message")}
                 fullWidth="true"
                 value={contact.message}
+                inputRef={register({ required: true })}
+                error={!!errors.message}
               />
 
               <Button
@@ -118,12 +136,13 @@ export default function WorkSection() {
                 color="primary"
                 className={newClasses.button}
                 endIcon={<Icon>send</Icon>}
-                onClick={submitMessage}
+                onClick={onSubmit}
                 justify="center"
+                type="submit"
               >
                 Send Message
               </Button>
-              {response == "1" ? (
+              {response ? (
                 <Snackbar
                   open={open}
                   autoHideDuration={6000}
@@ -134,15 +153,7 @@ export default function WorkSection() {
                   </Alert>
                 </Snackbar>
               ) : (
-                <Snackbar
-                  open={open}
-                  autoHideDuration={6000}
-                  onClose={handleClose}
-                >
-                  <Alert onClose={handleClose} severity="error">
-                    Message send failed...!
-                  </Alert>
-                </Snackbar>
+                <div></div>
               )}
             </GridContainer>
           </form>

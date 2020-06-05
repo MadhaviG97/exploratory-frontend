@@ -11,7 +11,8 @@ import {
   getAnswers,
   likeQuestion,
   getPopularQuestions,
-  getPopularAnswers
+  getPopularAnswers,
+  getQuestionLikes,
 } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -38,6 +39,7 @@ export default function LikeQuestion(props) {
     dispatch(getAnswers());
     dispatch(getPopularQuestions());
     dispatch(getPopularAnswers());
+    dispatch(getQuestionLikes());
     setOpen(false);
   };
 
