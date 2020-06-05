@@ -13,6 +13,7 @@ import FolderMenu from '../../../components/drive/FolderMenu'
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardContent from '@material-ui/core/CardContent';
+import EmptyFolder from '../../../components/drive/EmptyFolder'
 import EmptyDrive from '../../../components/editor/ProjectFolderGrid'
 import CardActions from '@material-ui/core/CardActions';
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos';
@@ -384,7 +385,7 @@ function FileManager(props) {
                             </Box>
                             <Box p={1.5}/>
                             {files.length===0 && folders.length ===0
-                            ? <EmptyDrive word='files'/>
+                            ?<div> {folder ? <EmptyFolder folder={folder}/>:<EmptyDrive word='files'/>}</div>
                             :<Grid container spacing={4} direction="row"  >
                                 {folders.map((folder,index) => (
                                     <Grid item lg={3} md={4} xs={8}>

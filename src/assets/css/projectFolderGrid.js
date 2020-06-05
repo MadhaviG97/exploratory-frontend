@@ -88,6 +88,7 @@ export const useStyles = makeStyles((theme) => ({
     maxWidth: 250,
 },
   main2: {
+    margin: "2px 0px 0px 0px",
     background: "#eceff1",
     position: "relative",
     zIndex: "3"

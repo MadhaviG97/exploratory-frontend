@@ -328,6 +328,9 @@ export default function DialogSelect(props) {
             <Typography variant="h6" >
                   Or Enter Your Text Below
             </Typography>
+            <Typography  >
+                  (limit : 500 words per search)
+            </Typography>
           </Grid>
         </Grid>
         <Box p={3}/> 
@@ -342,6 +345,7 @@ export default function DialogSelect(props) {
               defaultValue=""
               variant="outlined"
               style = {{width: 450}}
+              inputProps={{ maxLength: 3000 }}
               onChange={handleTextChange1}
             />
           </Grid>
@@ -350,6 +354,7 @@ export default function DialogSelect(props) {
               id="outlined-multiline-static"
               label="New Text"
               multiline
+              inputProps={{ maxLength: 3000 }}
               rows={6}
               defaultValue=""
               style = {{width: 450}}

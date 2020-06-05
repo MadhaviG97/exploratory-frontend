@@ -149,6 +149,11 @@ exports[`Compare Doc renders correctly 1`] = `
       >
         Or Enter Your Text Below
       </h6>
+      <p
+        className="MuiTypography-root MuiTypography-body1"
+      >
+        (limit : 500 words per search)
+      </p>
     </div>
   </div>
   <div
@@ -192,6 +197,7 @@ exports[`Compare Doc renders correctly 1`] = `
             defaultValue=""
             disabled={false}
             id="outlined-multiline-static"
+            maxLength={3000}
             onAnimationStart={[Function]}
             onBlur={[Function]}
             onChange={[Function]}
@@ -249,6 +255,7 @@ exports[`Compare Doc renders correctly 1`] = `
             defaultValue=""
             disabled={false}
             id="outlined-multiline-static"
+            maxLength={3000}
             onAnimationStart={[Function]}
             onBlur={[Function]}
             onChange={[Function]}
