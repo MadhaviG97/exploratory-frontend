@@ -4,6 +4,7 @@ import ReactLoading from "react-loading";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -37,11 +38,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     minWidth: 250,
+    minHeight: 550
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
+  },
+  paperQuestion: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    minHeight:550
   },
   loader: {
     height: 550,
@@ -105,7 +113,11 @@ export default function Forum() {
                     <ForumPost postDetails={question} valid={1}/>
                   ))
                 ) : (
-                  <div className={classes.paper}>No Questions</div>
+                  <Paper className={classes.paperQuestion}>
+                  <Typography variant="h6" gutterBottom color="primary">
+                    No questions yet...
+                  </Typography>
+                </Paper>
                 )}
 
                 <Divider />

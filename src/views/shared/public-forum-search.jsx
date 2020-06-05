@@ -40,11 +40,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     minWidth: 250,
+    minHeight: 550
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
+  },
+  paperQuestion: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    minHeight:550
   },
   paperHeading: {
     padding: theme.spacing(2),
@@ -132,7 +139,7 @@ export default function Forum() {
                     <ForumPost postDetails={question} valid={0} />
                   ))
                 ) : (
-                  <Paper className={classes.paper}>
+                  <Paper className={classes.paperQuestion}>
                     <Typography variant="h6" gutterBottom color="primary">
                       No results for your search...
                     </Typography>

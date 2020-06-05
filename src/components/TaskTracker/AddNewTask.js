@@ -43,7 +43,7 @@ export default function AddTask(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const collaborators = props.collaborators;
+  const collaborators = useSelector((state) => state.task_tracker.collaborators);
   const [startDate, setStartDate] = React.useState(
     new Date("2020-05-28T21:11:54")
   );

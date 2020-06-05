@@ -101,6 +101,10 @@ export default function SimpleTable() {
     return length;
   }
 
+  // if (getLength(collaborators)==0){
+  //   collaborators={};
+  // }
+
   return (
     <div className={classes.root}>
       <Navbar />
@@ -180,7 +184,7 @@ export default function SimpleTable() {
           </TableContainer>
         </div>
         <div className={classes.paper}  >
-          <AddTask project_id={pId} collaborators={collaborators}/>
+          <AddTask project_id={pId}/>
         </div>
       </div>
       <Paper className={classes.commentSection}>

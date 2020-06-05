@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
   inline: {
     display: "inline",
   },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    minHeight: 280
+  },
 }));
 
 export default function PopularQuestionsTab() {
@@ -86,7 +92,7 @@ export default function PopularQuestionsTab() {
             <ListItem>
               <div className={classes.paper} align="center">
                 <Typography variant="h6" align="right" color="primary">
-                  No rated answers yet..!
+                  No answers yet...
                 </Typography>
               </div>
             </ListItem>

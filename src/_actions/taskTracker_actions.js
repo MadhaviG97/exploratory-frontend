@@ -123,13 +123,23 @@ export const editComment = async (commentData) => {
   };
 };
 
-export const getCollaborators = (pId) => {
-  const request = axios
-    .get(`/project/tasktracker/collaborators/${pId}`)
-    .then((response) => response.data.data);
+// export const getCollaborators = (pId) => {
+//   const request = axios
+//     .get(`/project/tasktracker/collaborators/${pId}`)
+//     .then((response) => response.data.data);
+//   return {
+//     type: GET_PROJECT_COLLABORATORS,
+//     payload: request,
+//   };
+// };
+
+export const getCollaborators = async (pId) => {
+  const response = await fetch(`/project/tasktracker/collaborators/${pId}`);
+  const data = await response.json();
+  const collaborators = data.data;
   return {
     type: GET_PROJECT_COLLABORATORS,
-    payload: request,
+    payload: collaborators,
   };
 };
 
