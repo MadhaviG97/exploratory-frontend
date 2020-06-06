@@ -69,7 +69,7 @@ export default function Post(props) {
               alt={
                 props.postDetails.first_name + " " + props.postDetails.last_name
               }
-              src={`data:image/jpeg;base64,${props.postDetails.profile_picture}`}
+              src={props.postDetails.profile_picture}
             />
           }
           title={
