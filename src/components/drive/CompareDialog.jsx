@@ -216,13 +216,12 @@ export default function DialogSelect(props) {
   }
 
   return (
-    <div className={classes.main2}>
-        <Box p={1}/>
+    <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}}>
+        <Box p={1.5}/>
         <div className={classes.icon}>
           <Box  style={{ display: "flex" }} flexDirection="row" >
-              <NavComponent projectId={group}/>
+              <NavComponent color={'#FFFFFF'} projectId={group}/>
           </Box>
-          <Divider  variant="fullWidth" />
           <Box p={2} />
         </div>         
         <Grid container spacing={4} direction="row" justify="center"  alignItems="center">
@@ -230,7 +229,7 @@ export default function DialogSelect(props) {
         
           <Grid item xs={8} md={4} item align="center" >
             <CardActionArea component="a" onClick={handleClickOpen}>
-              <Card className={classes.card} style={{  background: '#FFFFFF'}}>
+              <Card className={classes.card} style={{  background: '#014f82'}}>
                 <div className={classes.cardDetails}>
                   <CardContent>
                     <div className={classes.name} >
@@ -325,10 +324,10 @@ export default function DialogSelect(props) {
         <Box p={3}/> 
         <Grid container spacing={4} direction="row" justify="center"  alignItems="center">
           <Grid item >
-            <Typography variant="h6" >
+            <Typography variant="h6" style={{color:"#d5e0d8"}}>
                   Or Enter Your Text Below
             </Typography>
-            <Typography  >
+            <Typography  style={{color:"#d5e0d8"}}>
                   (limit : 500 words per search)
             </Typography>
           </Grid>
@@ -336,12 +335,12 @@ export default function DialogSelect(props) {
         <Box p={3}/> 
         <Grid container spacing={4} direction="row" justify="center"  alignItems="center" >
           
-          <Grid item style={{  background: '#FFFFFF'}}>
+          <Grid item style={{  background: '#e9f0ea'}}>
             <TextField
               id="outlined-multiline-static"
               label="Old Text"
               multiline
-              rows={6}
+              rows={10}
               defaultValue=""
               variant="outlined"
               style = {{width: 450}}
@@ -349,13 +348,13 @@ export default function DialogSelect(props) {
               onChange={handleTextChange1}
             />
           </Grid>
-          <Grid item style={{  background: '#FFFFFF'}}>
+          <Grid item style={{  background: '#e9f0ea'}}>
             <TextField
               id="outlined-multiline-static"
               label="New Text"
               multiline
               inputProps={{ maxLength: 3000 }}
-              rows={6}
+              rows={10}
               defaultValue=""
               style = {{width: 450}}
               variant="outlined"
@@ -388,7 +387,7 @@ export default function DialogSelect(props) {
             
         
           <Grid item >
-            <Card variant="outlined" className={classes.card2} style={{  background: '#FFFFFF'}}>
+            <Card variant="outlined" className={classes.card2} style={{  background: '#e9f0ea'}}>
               <CardHeader
                   title="Comparison Results"
                   style={{ textAlign: 'center' }}  

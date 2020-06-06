@@ -44,7 +44,7 @@ export const useStyles = makeStyles((theme) => ({
     
   },
   topic: {
-    color: "#3C4858",
+    color: "#FFFFFF",
     margin: "1.75rem 0 0.875rem",
     textDecoration: "none",
     fontWeight: "480",

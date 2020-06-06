@@ -145,7 +145,7 @@ export default function CreatePage(props) {
     if (mounted && user.userData && !loading){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
-                <div className={classNames(classes.main2)}>
+                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}}>
                     <Dialog open={open} onClose={handleClose}  aria-labelledby="form-dialog-title">
                         <DialogContent className={classes.formControl}>
                             <DialogContentText>
@@ -194,7 +194,7 @@ export default function CreatePage(props) {
                             <Grid item xs={8}>
                                 <Box  style={{ display: "flex" }} flexDirection="row" > 
                                     <Box alignSelf="flex-end">
-                                        <NavComponent projectId={group}/>
+                                        <NavComponent color={'#FFFFFF'} projectId={group}/>
                                     </Box>
                                 </Box>
                                 <Divider  variant="fullWidth" />

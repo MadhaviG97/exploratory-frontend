@@ -40,6 +40,18 @@ export const useStyles = makeStyles((theme) => ({
     minHeight: "50px",
     
   },
+  topic3: {
+    color: "#FFFFFF",
+    textDecoration: "none",
+    fontWeight: "400",
+    //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    fontSize:22,
+    //display: "inline-block",
+    //position: "relative",
+    //marginTop: "30px",
+    minHeight: "50px",
+    
+  },
   avatar: {
     backgroundColor: "#014f82",
   },

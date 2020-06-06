@@ -36,8 +36,8 @@ export default function CompareDoc(props) {
     if (user.userData && mounted){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
-                <div >
-                    <div className={classNames(classes.main, classes.mainRaised2)} > 
+                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}}>
+                    <div  > 
                         <CompareDialog group={group}/>
                     </div>
                 </div>
