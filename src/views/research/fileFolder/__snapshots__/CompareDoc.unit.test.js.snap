@@ -2,16 +2,21 @@
 
 exports[`Compare Doc renders correctly 1`] = `
 <div
-  className="makeStyles-main2-32"
+  style={
+    Object {
+      "backgroundImage": "url(/images/feed/feedBackground.jpg)",
+      "height": "100%",
+    }
+  }
 >
   <div
-    className="MuiBox-root MuiBox-root-375"
+    className="MuiBox-root MuiBox-root-377"
   />
   <div
-    className="makeStyles-icon-31"
+    className="makeStyles-icon-32"
   >
     <div
-      className="MuiBox-root MuiBox-root-376"
+      className="MuiBox-root MuiBox-root-378"
       style={
         Object {
           "display": "flex",
@@ -47,6 +52,11 @@ exports[`Compare Doc renders correctly 1`] = `
               aria-hidden="true"
               className="MuiSvgIcon-root"
               focusable="false"
+              style={
+                Object {
+                  "color": "#FFFFFF",
+                }
+              }
               viewBox="0 0 24 24"
             >
               <path
@@ -60,11 +70,8 @@ exports[`Compare Doc renders correctly 1`] = `
         </button>
       </div>
     </div>
-    <hr
-      className="MuiDivider-root"
-    />
     <div
-      className="MuiBox-root MuiBox-root-377"
+      className="MuiBox-root MuiBox-root-379"
     />
   </div>
   <div
@@ -93,24 +100,24 @@ exports[`Compare Doc renders correctly 1`] = `
         tabIndex={0}
       >
         <div
-          className="MuiCardMedia-root makeStyles-card-26"
+          className="MuiCardMedia-root makeStyles-card-27"
           style={
             Object {
-              "background": "#FFFFFF",
+              "background": "#014f82",
             }
           }
         >
           <div
-            className="makeStyles-cardDetails-27"
+            className="makeStyles-cardDetails-28"
           >
             <div
               className="MuiCardContent-root"
             >
               <div
-                className="makeStyles-name-30"
+                className="makeStyles-name-31"
               >
                 <h2
-                  className="makeStyles-topic-24"
+                  className="makeStyles-topic-25"
                 >
                   Select Two Documents to Compare
                 </h2>
@@ -118,7 +125,7 @@ exports[`Compare Doc renders correctly 1`] = `
             </div>
           </div>
           <div
-            className="MuiCardMedia-root makeStyles-cardMedia-28"
+            className="MuiCardMedia-root makeStyles-cardMedia-29"
             style={
               Object {
                 "backgroundImage": "url(\\"undefined/images/fileFolder/images.jpg\\")",
@@ -136,7 +143,7 @@ exports[`Compare Doc renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-378"
+    className="MuiBox-root MuiBox-root-380"
   />
   <div
     className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -146,18 +153,28 @@ exports[`Compare Doc renders correctly 1`] = `
     >
       <h6
         className="MuiTypography-root MuiTypography-h6"
+        style={
+          Object {
+            "color": "#d5e0d8",
+          }
+        }
       >
         Or Enter Your Text Below
       </h6>
       <p
         className="MuiTypography-root MuiTypography-body1"
+        style={
+          Object {
+            "color": "#d5e0d8",
+          }
+        }
       >
         (limit : 500 words per search)
       </p>
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-379"
+    className="MuiBox-root MuiBox-root-381"
   />
   <div
     className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -166,7 +183,7 @@ exports[`Compare Doc renders correctly 1`] = `
       className="MuiGrid-root MuiGrid-item"
       style={
         Object {
-          "background": "#FFFFFF",
+          "background": "#e9f0ea",
         }
       }
     >
@@ -203,14 +220,14 @@ exports[`Compare Doc renders correctly 1`] = `
             onChange={[Function]}
             onFocus={[Function]}
             required={false}
-            rows={6}
+            rows={10}
           />
           <fieldset
             aria-hidden={true}
-            className="PrivateNotchedOutline-root-315 MuiOutlinedInput-notchedOutline"
+            className="PrivateNotchedOutline-root-310 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              className="PrivateNotchedOutline-legendLabelled-317"
+              className="PrivateNotchedOutline-legendLabelled-312"
             >
               <span>
                 Old Text
@@ -224,7 +241,7 @@ exports[`Compare Doc renders correctly 1`] = `
       className="MuiGrid-root MuiGrid-item"
       style={
         Object {
-          "background": "#FFFFFF",
+          "background": "#e9f0ea",
         }
       }
     >
@@ -261,14 +278,14 @@ exports[`Compare Doc renders correctly 1`] = `
             onChange={[Function]}
             onFocus={[Function]}
             required={false}
-            rows={6}
+            rows={10}
           />
           <fieldset
             aria-hidden={true}
-            className="PrivateNotchedOutline-root-315 MuiOutlinedInput-notchedOutline"
+            className="PrivateNotchedOutline-root-310 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              className="PrivateNotchedOutline-legendLabelled-317"
+              className="PrivateNotchedOutline-legendLabelled-312"
             >
               <span>
                 New Text
@@ -280,7 +297,7 @@ exports[`Compare Doc renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-380"
+    className="MuiBox-root MuiBox-root-382"
   />
   <div
     className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -329,7 +346,7 @@ exports[`Compare Doc renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-381"
+    className="MuiBox-root MuiBox-root-383"
   />
   <div
     className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -338,10 +355,10 @@ exports[`Compare Doc renders correctly 1`] = `
       className="MuiGrid-root MuiGrid-item"
     >
       <div
-        className="MuiCardMedia-root makeStyles-card2-34"
+        className="MuiCardMedia-root makeStyles-card2-35"
         style={
           Object {
-            "background": "#FFFFFF",
+            "background": "#e9f0ea",
           }
         }
         variant="outlined"
@@ -382,7 +399,7 @@ exports[`Compare Doc renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-382"
+    className="MuiBox-root MuiBox-root-384"
   />
 </div>
 `;
