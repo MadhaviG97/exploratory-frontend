@@ -112,7 +112,7 @@ export default function Post(props) {
             </div>
           )}
 
-          {is_logged ? (
+          {is_logged && props.valid==1 ? (
             <QuestionLike
               Q_id={props.postDetails.researcher_id}
               question_id={props.postDetails.question_id}

@@ -11,6 +11,7 @@ import { red } from "@material-ui/core/colors";
 
 import { Box, Link, Divider, Button } from "@material-ui/core";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import {getDateTime} from '../Chat/Utility/DTUtility';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -30,34 +31,34 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function ProjectItem({ ResearchItem }) {
   const classes = useStyles();
-  console.log(ResearchItem);
+
   return (
     <Card className={classes.root}>
       <CardHeader
         avatar={
           <Avatar
             className={classes.avatar}
-            src={ResearchItem.researcher.profile_picture}
+            src={ResearchItem.profile_picture}
           />
         }
         title={
-          ResearchItem.researcher.first_name +
+          ResearchItem.first_name +
           " " +
-          ResearchItem.researcher.last_name +
+          ResearchItem.last_name +
           " - " +
           ResearchItem.institution
         }
-        subheader={"Published on: " + ResearchItem.published_on}
+        subheader={ResearchItem.published_at? ("Published on: " + getDateTime(ResearchItem.published_at)):""}
       />
-      {ResearchItem.image ? (
-        <CardMedia className={classes.media} image={ResearchItem.image} />
+      {ResearchItem.poster_image ? (
+        <CardMedia className={classes.media} image={ResearchItem.poster_image} />
       ) : (
         <div></div>
       )}
 
       <CardContent>
         <Box fontWeight="fontWeightBold" color="secondary" component="h3">
-          <Link href={ResearchItem.link}>{ResearchItem.title}</Link>
+          <Link href={"/project/viewproject/"+ResearchItem.id}>{ResearchItem.title}</Link>
         </Box>
         <Typography variant="body2" color="textSecondary" component="p">
           {ResearchItem.description.length > 500

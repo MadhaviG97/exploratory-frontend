@@ -34,8 +34,47 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Progress() {
+export default function Progress(props) {
   const classes = useStyles();
+
+  function getLength(obj) {
+    var length = 0;
+    for (var p in obj) {
+      if (obj.hasOwnProperty(p)) {
+        length++;
+      }
+    }
+    return length;
+  }
+  var not_started = 0;
+  var in_progress = 0;
+  var completed = 0;
+  var total = getLength(props.tasks);
+
+  if (getLength(props.tasks) > 0) {
+    props.tasks.map((task) => {
+      if (task.progress === "Not Started") {
+        not_started = not_started + 1;
+      }
+      if (task.progress === "In Progress") {
+        in_progress = in_progress + 1;
+      }
+      if (task.progress === "Completed") {
+        completed = completed + 1;
+      }
+    });
+  }
+
+  if (total != 0) {
+    var not_started_perc = Math.round((not_started / total) * 100);
+    var in_progress_perc = Math.round((in_progress / total) * 100);
+    var completed_perc = 100 - (not_started_perc + in_progress_perc);
+  } else {
+    var not_started_perc = 0;
+    var in_progress_perc = 0;
+    var completed_perc = 0;
+  }
+  console.log(not_started_perc, in_progress_perc, completed_perc);
 
   return (
     <div className={classes.root}>
@@ -50,10 +89,10 @@ export default function Progress() {
               size={70}
               thickness={22}
               variant="static"
-              value={17}
+              value={not_started_perc}
             />
             <Typography variant="h6" color="textPrimary">
-              17%
+              {not_started_perc + "%"}
             </Typography>
           </Paper>
         </Grid>
@@ -67,10 +106,10 @@ export default function Progress() {
               size={70}
               thickness={22}
               variant="static"
-              value={21}
+              value={in_progress_perc}
             />
             <Typography variant="h6" color="textPrimary">
-              21%
+              {in_progress_perc + "%"}
             </Typography>
           </Paper>
         </Grid>
@@ -84,10 +123,10 @@ export default function Progress() {
               size={70}
               thickness={22}
               variant="static"
-              value={62}
+              value={completed_perc}
             />
             <Typography variant="h6" color="textPrimary">
-              62%
+              {completed_perc + "%"}
             </Typography>
           </Paper>
         </Grid>

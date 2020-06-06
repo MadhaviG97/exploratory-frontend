@@ -31,8 +31,43 @@ import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { search } from "../../../_actions/project_actions";
 import { logoutUser } from "../../../_actions/user_actions";
+import MailIcon from '@material-ui/icons/Mail';
+import Button from '@material-ui/core/Button';
+
+
+import { withStyles } from '@material-ui/core/styles';
+
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import DraftsIcon from '@material-ui/icons/Drafts';
+import SendIcon from '@material-ui/icons/Send';
+
+import Chat from '../../Chat/Chat'
 
 const useStyles = makeStyles(styles);
+const StyledMenu = withStyles({
+  paper: {
+    // border: '1px solid #d3d4d5',
+  },
+})((props) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
+
 
 function LoggedRightMenu(props) {
   // demo purpose
@@ -58,11 +93,11 @@ function LoggedRightMenu(props) {
           <FlatButton
             label="direct me"
             icon={<ExitToAppIcon color="primary" />}
-            // onClick={(e) =>
-            //   handleSubmit(e, () => {
-            //     history.replace(from);
-            //   })
-            // }
+          // onClick={(e) =>
+          //   handleSubmit(e, () => {
+          //     history.replace(from);
+          //   })
+          // }
           />
         </div>
       ),
@@ -172,6 +207,22 @@ function LoggedRightMenu(props) {
     history.replace(from);
   };
 
+  const messageButtonClick = () => {
+    console.log("msg button clicked")
+  }
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const token = localStorage.token
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
@@ -234,6 +285,40 @@ function LoggedRightMenu(props) {
             {/* end */}
           </React.Fragment>
         </MuiThemeProvider>
+      </ListItem>
+
+      <ListItem className={classes.listItem}>
+        <div className={classes.badge}>
+          <Button
+            aria-controls="customized-menu"
+            aria-haspopup="true"
+            onClick={handleClick}
+          >
+            <Badge badgeContent={0} {...{
+              color: 'secondary',
+              children: <MailIcon />
+            }} />
+          </Button>
+
+        </div>
+        <div>
+
+          <StyledMenu
+            id="customized-menu"
+            anchorEl={anchorEl}
+            keepMounted
+            open={Boolean(anchorEl)}
+            onClose={handleClose}
+          >
+
+
+            <Chat
+              user={user.userData}
+              token={token}
+            />
+
+          </StyledMenu>
+        </div>
       </ListItem>
 
       <ListItem className={classes.listItem}>

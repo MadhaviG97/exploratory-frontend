@@ -24,7 +24,7 @@ const ProjectList = (props) => {
     <div className={classes.root}>
       <React.Fragment>
 
-      <Container maxWidth="sm" style={{backgroundColor: '#cfe8fc', padding:'10px'}}>
+      <Container maxWidth="sm" >
 
         { props.projects && props.projects.length >0 ? (
             props.projects.map(currentProject => (

@@ -20,6 +20,12 @@ const useStyles = makeStyles((theme) => ({
   inline: {
     display: "block",
   },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    minHeight: 280
+  },
 }));
 
 export default function PopularQuestionsTab() {
@@ -61,7 +67,7 @@ export default function PopularQuestionsTab() {
                     className={classes.inline}
                     color="textPrimary"
                   >
-                    :- {question.title}
+                    {question.title}
                   </Typography>
                 </React.Fragment>
               }
@@ -75,7 +81,7 @@ export default function PopularQuestionsTab() {
             <ListItem>
               <div className={classes.paper} align="center">
                 <Typography variant="h6" align="right" color="primary">
-                  No popular questions yet..!
+                  No questions yet...
                 </Typography>
               </div>
             </ListItem>

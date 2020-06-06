@@ -1,101 +1,113 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import ProjectItem from "./ProjectItem";
 import Container from "@material-ui/core/Container";
-import ResearchItem from "./Researchertem";
-import InstitutionsItem from "./InstitutionItem";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
+import TabPanel from './TabPanel'
+import axios from 'axios'
 
 const useStyles = makeStyles({
   root: {
     flexGrow: 1,
-    marginTop: "80px",
+    marginTop: "8px",
   },
 });
 
-function TabPanel(props: TabPanelProps) {
-  const { value, index, ...other } = props;
-
-  return (
-    <div hidden={value !== index}>
-      {props.projects ? (
-        props.projects && props.projects.length > 0 ? (
-          props.projects.map((currentProject) => (
-            <ProjectItem ResearchItem={currentProject} />
-          ))
-        ) : (
-          <div
-            alignItems="center"
-            style={{
-              textAlign: "center",
-              backgroundColor: "#b2beb5",
-              marginBottom: "10px",
-            }}
-          >
-            No Projects
-          </div>
-        )
-      ) : null}
-
-      {props.researchers ? (
-        props.researchers && props.researchers.length > 0 ? (
-          props.researchers.map((currentResearcher) => (
-            <ResearchItem ResearcherItem={currentResearcher} />
-          ))
-        ) : (
-          <div
-            alignItems="center"
-            style={{
-              textAlign: "center",
-              backgroundColor: "#b2beb5",
-              marginBottom: "10px",
-            }}
-          >
-            No Researchers
-          </div>
-        )
-      ) : null}
-
-      {props.institutions ? (
-        props.institutions && props.institutions.length > 0 ? (
-          props.institutions.map((institution) => (
-            <InstitutionsItem InstitutionItem={institution} />
-          ))
-        ) : (
-          <div
-            alignItems="center"
-            style={{
-              textAlign: "center",
-              backgroundColor: "#b2beb5",
-              marginBottom: "10px",
-            }}
-          >
-            No Institutions
-          </div>
-        )
-      ) : null}
-    </div>
-  );
-}
-
 const SearchList = (props) => {
+
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-  console.log("initial");
-  console.log(value);
+
+  const [projects, setProjects] = React.useState([])
+  const [researchers, setResearchers] = React.useState([])
+  const [institutions, setInstitutions] = React.useState([])
+
+  const [projectPage, setProjectPage] = React.useState(1)
+  const [researcherPage, setResearcherPage] = React.useState(1)
+  const [institutionPage, setInstitutionPage] = React.useState(1)
+
+  const [projectsLength, setProjectsLength] = React.useState(0)
+  const [researchersLength, setResearchersLength] = React.useState(0)
+  const [institutionsLength, setInstitutionsLength] = React.useState(0)
+
   const handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-  const hasProjects = props.projects && props.projects.length > 0;
-  const hasResearchers = props.researchers && props.researchers.length > 0;
-  const hasInstitutions = props.institutions && props.institutions.length > 0;
+  const pageAmount = 6
+
+  React.useEffect(() => {
+    if (projectsLength) { setValue(0) }
+    else if (researchersLength) { setValue(1) }
+    else if (institutionsLength) { setValue(2) }
+    else { setValue(0) }
+
+  }, [projectsLength, researchersLength, institutionsLength])
+
+  React.useEffect(() => {
+
+    var parameters = {
+      searchString: props.searchString,
+      index: (projectPage - 1) * pageAmount,
+      type: "projects"
+    }
+
+    const fetchData = () => {
+      var request = axios
+        .post("/search", parameters)
+        .then((response) => {
+          setProjects(response.data.res)
+          setProjectsLength(response.data.resLength)
+        })
+        .catch(err => { });
+    }
+    fetchData()
+  }, [projectPage, props.searchString])
+
+  React.useEffect(() => {
+
+    var parameters = {
+      searchString: props.searchString,
+      index: (researcherPage - 1) * pageAmount,
+      type: "researchers"
+    }
+
+    const fetchData = () => {
+      var request = axios
+        .post("/search", parameters)
+        .then((response) => {
+          setResearchers(response.data.res)
+          setResearchersLength(response.data.resLength)
+        })
+        .catch(err => { });
+    }
+    fetchData()
+  }, [researcherPage, props.searchString])
+
+  React.useEffect(() => {
+
+    var parameters = {
+      searchString: props.searchString,
+      index: (institutionPage - 1) * pageAmount,
+      type: "institutions"
+    }
+
+    const fetchData = () => {
+      var request = axios
+        .post("/search", parameters)
+        .then((response) => {
+          setInstitutions(response.data.res)
+          setInstitutionsLength(response.data.resLength)
+        })
+        .catch(err => { });
+    }
+    fetchData()
+  }, [institutionPage, props.searchString])
 
   return (
     <Container maxWidth="sm">
-      <Paper className={classes.root}>
+      <Paper className={classes.root} style={{ backgroundColor: '#ccebff' }}>
         <Tabs
           value={value}
           onChange={handleChange}
@@ -108,42 +120,36 @@ const SearchList = (props) => {
           <Tab label="Institutions" />
         </Tabs>
 
-        <TabPanel value={value} index={0} projects={props.projects}></TabPanel>
+        <TabPanel
+          value={value}
+          index={0}
+          projects={projects}
+          count={Math.ceil(projectsLength / pageAmount)}
+          page={projectPage}
+          setPage={setProjectPage}
+        />
+
         <TabPanel
           value={value}
           index={1}
-          researchers={props.researchers}
-        ></TabPanel>
+          researchers={researchers}
+          count={Math.ceil(researchersLength / pageAmount)}
+          page={researcherPage}
+          setPage={setResearcherPage}
+        />
+
         <TabPanel
           value={value}
           index={2}
-          institutions={props.institutions}
-        ></TabPanel>
+          institutions={institutions}
+          count={Math.ceil(institutionsLength / pageAmount)}
+          page={institutionPage}
+          setPage={setInstitutionPage}
+        />
+
       </Paper>
     </Container>
   );
 };
-// const ProjectList = (props) => {
-
-//   const classes = useStyles();
-
-//   return (
-//     <div className={classes.root}>
-//       <React.Fragment>
-
-//       <Container maxWidth="sm" style={{backgroundColor: '#cfe8fc', padding:'10px'}}>
-
-//         { props.projects && props.projects.length >0 ? (
-//             props.projects.map(currentProject => (
-//               <ProjectItem ResearchItem={currentProject} />
-//             ))
-//           ):<div style={{paddingTop:"100px", margin:"auto"}}>No Projects</div>
-//         }
-
-//       </Container>
-//       </React.Fragment>
-//   </div>
-//   );
-// }
 
 export default SearchList;
