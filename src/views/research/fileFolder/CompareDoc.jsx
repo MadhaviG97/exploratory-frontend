@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import classNames from "classnames";
 
-
 import { useStyles } from "../../../assets/css/projectFolderGrid";
 import CompareDialog from "../../../components/drive/CompareDialog"
 import { useSelector } from "react-redux";
@@ -36,8 +35,8 @@ export default function CompareDoc(props) {
     if (user.userData && mounted){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
-                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}}>
-                    <div  > 
+                <div >
+                    <div className={classNames(classes.main, classes.mainRaised2)} > 
                         <CompareDialog group={group}/>
                     </div>
                 </div>

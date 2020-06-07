@@ -11,7 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import NotFound from '../../../components/NotFound/NotFound'
 import Loader from "../../../components/Loader";
 
-export default function Receive(props) {
+export default function Send(props) {
     
     const user=useSelector((state) => state.user);
     console.log(user)
@@ -37,12 +37,13 @@ export default function Receive(props) {
     if (user.userData && mounted){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
-                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}} >
+                <div className={classNames(classes.main2)} >
                     
                     <div style={{ width: '70%', margin: '0.1rem auto' }}>
                             <Box p={1.5}/>
-                            <NavComponent color={'#FFFFFF'} projectId={props.match.params.projectId}/>
+                            <NavComponent projectId={props.match.params.projectId}/>
                         
+                        <Divider  variant="fullWidth" />
                         <Box p={0.5}/>
                     </div> 
                     <div > 

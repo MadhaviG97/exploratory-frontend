@@ -364,7 +364,7 @@ function FileManager(props) {
                 <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}} >
                     <Grid container spacing={5} >
                         <Grid item xs={3} >
-                            <Box p={2}/>
+                            <Box p={4}/>
                             <Paper classname={classes.papermenu}>
                             <Box p={1.5}>
                                 <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params} group={group}/>

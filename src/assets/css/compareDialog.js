@@ -43,8 +43,19 @@ export const useStyles = makeStyles((theme) => ({
     textDecoration: "none"
     
   },
+  shape: {
+    width: 30,
+    height: 30,
+  },
+  shapeCircle: {
+    borderRadius: '50%',
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
   topic: {
-    color: "#FFFFFF",
+    color: "#3C4858",
     margin: "1.75rem 0 0.875rem",
     textDecoration: "none",
     fontWeight: "480",

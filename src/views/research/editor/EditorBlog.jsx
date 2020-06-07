@@ -183,7 +183,7 @@ export default function CreatePage(props) {
                         <Box p={1}/>
                         <Grid container spacing={5} >
                             <Grid item xs={3}>
-                            <Box p={2}/>
+                            <Box p={4}/>
                                 <Paper >
                                     <Box p={1.5}>
                                         <EditorBlogMenu handleSearch={handleSearch} onSearchChange={onSearchChange} group={group}/>

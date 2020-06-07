@@ -24,6 +24,7 @@ import CardHeader from '@material-ui/core/CardHeader';
 import Box from '@material-ui/core/Box';
 import NavComponent from '../../components/AppNavigation/NavigationComponent';
 import classNames from "classnames";
+import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 var jsdiff = require('diff');
 var htmlToText = require('html-to-text');
@@ -55,6 +56,7 @@ export default function DialogSelect(props) {
   const [textt, setTextT] = React.useState('');
   const [blogs, setBlogs] = React.useState([])
   const [files, setFiles] = React.useState([]);
+  const [type, setType] = React.useState('word');
   let fileTextO=''
   let fileTextT=''
   const wait=ms=>new Promise(resolve => setTimeout(resolve, ms));
@@ -195,7 +197,10 @@ export default function DialogSelect(props) {
     var other = other
     var color = ''
     var span = null
-    var diff = jsdiff.diffChars(one, other)
+    if (type==='word'){var diff = jsdiff.diffWords(one, other)}
+    else if (type==='line'){var diff = jsdiff.diffLines(one, other)}
+    else if (type==='sentence'){var diff = jsdiff.diffSentences(one, other)}
+    else {var diff = jsdiff.diffChars(one, other)}
     var display = document.getElementById('display')
     var fragment = document.createDocumentFragment();
 
@@ -214,14 +219,38 @@ export default function DialogSelect(props) {
     display.appendChild(fragment);
     setOpen(false);
   }
+  const handleType = (event) => {
+    setType(event.target.value);
+  };
+  const CompareType=()=>{
+    return(
+      <FormControl variant="outlined" className={classes.formControl}>
+          <InputLabel id="select-label">Compare</InputLabel>
+          <Select
+            labelId="select-label"
+            label="Compare"
+            id="demo-simple-select"
+            value={type}
+            onChange={handleType}
+            default='word'
+          >
+            <MenuItem value='word'>Word by Word</MenuItem>
+            <MenuItem value='sentence'>Sentence by Sentence</MenuItem>
+            <MenuItem value='line'>Line by Line</MenuItem>
+            <MenuItem value='char'>Character by Character</MenuItem>
+          </Select>
+        </FormControl>
+    )
+  }
 
   return (
-    <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}}>
-        <Box p={1.5}/>
+    <div className={classes.main2}>
+        <Box p={1}/>
         <div className={classes.icon}>
           <Box  style={{ display: "flex" }} flexDirection="row" >
-              <NavComponent color={'#FFFFFF'} projectId={group}/>
+              <NavComponent projectId={group}/>
           </Box>
+          <Divider  variant="fullWidth" />
           <Box p={2} />
         </div>         
         <Grid container spacing={4} direction="row" justify="center"  alignItems="center">
@@ -229,7 +258,7 @@ export default function DialogSelect(props) {
         
           <Grid item xs={8} md={4} item align="center" >
             <CardActionArea component="a" onClick={handleClickOpen}>
-              <Card className={classes.card} style={{  background: '#014f82'}}>
+              <Card className={classes.card} style={{  background: '#FFFFFF'}}>
                 <div className={classes.cardDetails}>
                   <CardContent>
                     <div className={classes.name} >
@@ -321,13 +350,19 @@ export default function DialogSelect(props) {
             </Button>
           </DialogActions>
         </Dialog>
-        <Box p={3}/> 
+        <Box p={1.5}/> 
         <Grid container spacing={4} direction="row" justify="center"  alignItems="center">
           <Grid item >
-            <Typography variant="h6" style={{color:"#d5e0d8"}}>
+            <CompareType/>
+          </Grid>
+        </Grid>
+        <Box p={1.5}/>
+        <Grid container spacing={4} direction="row" justify="center"  alignItems="center">
+          <Grid item >
+            <Typography variant="h6" >
                   Or Enter Your Text Below
             </Typography>
-            <Typography  style={{color:"#d5e0d8"}}>
+            <Typography  >
                   (limit : 500 words per search)
             </Typography>
           </Grid>
@@ -335,12 +370,12 @@ export default function DialogSelect(props) {
         <Box p={3}/> 
         <Grid container spacing={4} direction="row" justify="center"  alignItems="center" >
           
-          <Grid item style={{  background: '#e9f0ea'}}>
+          <Grid item style={{  background: '#FFFFFF'}}>
             <TextField
               id="outlined-multiline-static"
               label="Old Text"
               multiline
-              rows={10}
+              rows={8}
               defaultValue=""
               variant="outlined"
               style = {{width: 450}}
@@ -348,13 +383,13 @@ export default function DialogSelect(props) {
               onChange={handleTextChange1}
             />
           </Grid>
-          <Grid item style={{  background: '#e9f0ea'}}>
+          <Grid item style={{  background: '#FFFFFF'}}>
             <TextField
               id="outlined-multiline-static"
               label="New Text"
               multiline
               inputProps={{ maxLength: 3000 }}
-              rows={10}
+              rows={8}
               defaultValue=""
               style = {{width: 450}}
               variant="outlined"
@@ -384,10 +419,43 @@ export default function DialogSelect(props) {
         </Grid>
         <Box p={2}/> 
         <Grid container spacing={4} direction="row" justify="center"  alignItems="center" >
+          
+            <Grid item >
+              <Box p={2} style={{ display: "flex" }} flexDirection="row">
+              <div className={clsx(classes.shape, classes.shapeCircle)} style={{backgroundColor:'#000000'}} />
+              <Box p={1}/>
+              <Typography  >
+                    Not Changed
+              </Typography>
+              </Box>
+            </Grid>
+            <Grid item >
+              <Box p={2} style={{ display: "flex" }} flexDirection="row">
+              <div className={clsx(classes.shape, classes.shapeCircle)} style={{backgroundColor:'#008000'}} />
+              <Box p={1}/>
+              <Typography  >
+                    Added
+              </Typography>
+              </Box>
+            </Grid>
+            <Grid item >
+              <Box p={2} style={{ display: "flex" }} flexDirection="row">
+              <div className={clsx(classes.shape, classes.shapeCircle)} style={{backgroundColor:'#FF0000'}} />
+              <Box p={1}/>
+              <Typography  >
+                    Removed
+              </Typography>
+              </Box>
+            </Grid>
+          
+          
+          
+        </Grid>
+        <Grid container spacing={4} direction="row" justify="center"  alignItems="center" >
             
         
           <Grid item >
-            <Card variant="outlined" className={classes.card2} style={{  background: '#e9f0ea'}}>
+            <Card variant="outlined" className={classes.card2} style={{  background: '#FFFFFF'}}>
               <CardHeader
                   title="Comparison Results"
                   style={{ textAlign: 'center' }}  

@@ -44,12 +44,13 @@ export default function Receive(props) {
     if (user.userData && mounted){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
-                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}}>
+                <div className={classNames(classes.main2)}>
                     <div style={{ width: '70%', margin: '0.1rem auto' }}>
                         <Box p={1.5}/>
-                        <NavComponent color={'#FFFFFF'} projectId={props.match.params.projectId}/>
-                        <Box p={0.7}/>
-                        <Box boxShadow={1} style={{  background: '#FFFFFF'}} >
+                        <NavComponent projectId={props.match.params.projectId}/>
+                        <Divider  variant="fullWidth" />
+                        <Box p={1}/>
+                        <Box  style={{  background: '#FFFFFF'}} >
                             <Box p={3}>
                                 <div >
                                     {sender
