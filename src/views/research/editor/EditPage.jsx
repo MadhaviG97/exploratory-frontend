@@ -55,19 +55,21 @@ function Edit2Page(props) {
     if (user.userData && mounted && !loadingValidation){
         if (collabs.some(e => e.researcher_id == user_id) && validpost){
             return (
-            <div className={classNames(classes.main2)}>
-                    <div className={classNames(classes.main2, classes.mainRaised3)} > 
+            <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}}>
+                    <Box p={2}/> 
+                    <div  className={classNames( classes.mainRaised3)} >
+                        
                         <Grid container spacing={5} direction="row" >
                             <Grid item xs={3} align='right'>
                                 <Box >
-                                    <NavComponent projectId={props.match.params.projectId}/>
+                                    <NavComponent color={'#FFFFFF'} projectId={props.match.params.projectId}/>
                                 </Box>
                             </Grid>
                             
                             <Grid item xs={8} >
                                 <Box boxShadow={2} flexDirection="row">
-                                    <Box p={1} style={{  background: '#FFFFFF'}}>
-                                        <h1 align='center' className={classes.topic4}>Editor</h1>
+                                    <Box p={1} style={{  background: '#014f82'}}>
+                                        <h1 align='center' className={classes.topic5}>Editor</h1>
                                     </Box>
                                 </Box>
                             </Grid>

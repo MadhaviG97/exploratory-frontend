@@ -15,7 +15,7 @@ import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import IconButton from '@material-ui/core/IconButton';
 import Box from '@material-ui/core/Box';
-import NavComponent from '../../components/AppNavigation/NavigationComponent';
+
 Quill.register('modules/cursors', QuillCursors)
 const styles = theme => ({
   roota: {
@@ -197,6 +197,7 @@ render() {
                 >
                 File Saved!
                 </Alert>
+                <Box p={2}/>
             </Collapse>
         </div>
         <Grid container spacing={5} >

@@ -8,7 +8,8 @@ import renderer from 'react-test-renderer';
 
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({
-    user: { userData: {isAuth:true,first_name:'janith'} }
+    user: { userData: {isAuth:true,first_name:'janith'} },
+    researcher: { researcherData: {isAuth:true,first_name:'janith'} }
   });
 jest.mock('react-router-dom', () => ({
     useHistory: () => ({
@@ -17,6 +18,9 @@ jest.mock('react-router-dom', () => ({
     useLocation: () => ({
         push: jest.fn(),
       }),
+    useParams: () => ({
+        push: jest.fn(),
+      })
   }));
 describe('userprofile', () => {
     it('renders without crashing', () => {

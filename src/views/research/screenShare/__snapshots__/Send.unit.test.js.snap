@@ -3,7 +3,7 @@
 exports[`Share Screens renders correctly 1`] = `
 <div>
   <main
-    className="MuiGrid-root makeStyles-root-138 MuiGrid-container"
+    className="MuiGrid-root makeStyles-root-133 MuiGrid-container"
   >
     <div
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-5 MuiGrid-grid-md-5"
@@ -47,7 +47,7 @@ exports[`Share Screens renders correctly 1`] = `
     />
   </main>
   <div
-    className="MuiBox-root MuiBox-root-244"
+    className="MuiBox-root MuiBox-root-239"
   />
 </div>
 `;
