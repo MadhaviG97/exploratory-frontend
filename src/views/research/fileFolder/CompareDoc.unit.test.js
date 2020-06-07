@@ -26,8 +26,9 @@ describe('Compare Doc', () => {
     it('renders Compare Doc Dialog', () => {
         jest
         .spyOn(React, 'useState')
-        .mockImplementationOnce(() => realUseState(true))
         .mockImplementationOnce(() => realUseState(stubInitialState))
+        .mockImplementationOnce(() => realUseState(true))
+        
       const wrapper = mount(
         <Provider store={store}>
           <CompareDoc match={match}/>

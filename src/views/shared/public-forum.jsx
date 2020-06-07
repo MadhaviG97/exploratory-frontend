@@ -4,6 +4,7 @@ import ReactLoading from "react-loading";
 
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import { Typography } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
@@ -26,6 +27,8 @@ import {
   getFreqUsers,
   getPopularQuestions,
   getPopularAnswers,
+  getQuestionLikes,
+  getAnswerLikes
 } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -33,11 +36,18 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     minWidth: 250,
+    minHeight: 550
   },
   paper: {
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
+  },
+  paperQuestion: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    minHeight:550
   },
   loader: {
     height: 550,
@@ -65,6 +75,8 @@ export default function Forum() {
     dispatch(getFreqUsers());
     dispatch(getPopularQuestions());
     dispatch(getPopularAnswers());
+    dispatch(getQuestionLikes());
+    dispatch(getAnswerLikes());
   }, []);
 
   const questions = useSelector((state) => state.questions);
@@ -96,10 +108,14 @@ export default function Forum() {
               <Container style={{ backgroundColor: "white", padding: "5px" }}>
                 {Object.keys(questions).length > 0 ? (
                   questions.questions.map((question) => (
-                    <ForumPost postDetails={question} />
+                    <ForumPost postDetails={question} valid={1}/>
                   ))
                 ) : (
-                  <div className={classes.paper}>No Questions</div>
+                  <Paper className={classes.paperQuestion}>
+                  <Typography variant="h6" gutterBottom color="primary">
+                    No questions yet...
+                  </Typography>
+                </Paper>
                 )}
 
                 <Divider />

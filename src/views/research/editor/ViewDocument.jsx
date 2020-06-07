@@ -17,6 +17,8 @@ function ViewDocument(props) {
     }
     const [collabs, setCollabs] = React.useState([])
     const [mounted, setMounted] = React.useState(false)
+    const [loadingValidation, setLoadingValidation] = React.useState(true)
+    const [validpost, setValidPost] = React.useState(false)
     useEffect(() => {
         const variable = { 
             group: props.match.params.projectId,
@@ -29,9 +31,23 @@ function ViewDocument(props) {
                     
                 }
             })
+        const post = { 
+            postId: props.match.params.postId,
+            group: props.match.params.projectId
+        }
+        axios.post('/editor/findpost', post)
+            .then(response => {
+                setLoadingValidation(false)
+                if (response.data.success) {
+                    setValidPost(true)
+                }
+            })
+            .catch(error => {
+                setLoadingValidation(false)
+            })
     }, [])
-    if (user.userData && mounted){
-        if (collabs.some(e => e.researcher_id == user_id)){
+    if (user.userData && mounted && !loadingValidation){
+        if (collabs.some(e => e.researcher_id == user_id) && validpost){
             return (
             <div className={classNames(classes.main2)}>
             

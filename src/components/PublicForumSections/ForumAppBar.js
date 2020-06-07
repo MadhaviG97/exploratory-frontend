@@ -8,13 +8,19 @@ import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import HomeIcon from "@material-ui/icons/Home";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import SearchIcon from "@material-ui/icons/Search";
+import OutlinedInput from "@material-ui/core/OutlinedInput";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+import { forumSearch } from "../../_actions/forum_actions";
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -45,13 +51,7 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   searchIcon: {
-    padding: theme.spacing(0, 2),
-    height: "100%",
-    position: "absolute",
-    pointerEvents: "none",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
+    color:theme.palette.common.white,
   },
   inputRoot: {
     color: "inherit",
@@ -59,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
   inputInput: {
     padding: theme.spacing(1, 1, 1, 0),
     // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
+    paddingLeft: `calc(1em + ${theme.spacing(2)}px)`,
     transition: theme.transitions.create("width"),
     width: "100%",
     [theme.breakpoints.up("md")]: {
@@ -82,10 +82,20 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
+  const history = useHistory();
+  let location = useLocation();
+
+
   const user = useSelector((state) => state.user);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const [userlogged, setUserlogged] = React.useState(true);
+  const [state, setState] = React.useState({
+    searchString:"",
+  });
+  let { from } = location.state || {
+    from: { pathname: `/forum/search/${state.searchString}` },
+  };
   const dispatch = useDispatch();
 
   const isMenuOpen = Boolean(anchorEl);
@@ -106,6 +116,26 @@ export default function PrimarySearchAppBar() {
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
+  };
+
+  const handleChange = (e) => {
+    setState({ ...state, [e.target.name]: e.target.value });
+  };
+
+  const handleSearch = (e) => {
+    if (state.searchString!=""){
+    const formData = {
+      searchString: state.searchString,
+    };
+    console.log(formData);
+    dispatch(forumSearch(formData))
+      .then((result) => {
+        console.log("sent");
+        console.log(result);
+      })
+      .catch((e) => console.log(e));
+    history.replace(from);
+  }
   };
 
   const menuId = "primary-search-account-menu";
@@ -159,7 +189,7 @@ export default function PrimarySearchAppBar() {
           <IconButton aria-label="home" color="inherit" href="/">
             <HomeIcon />
           </IconButton>
-          <div className={classes.search}>
+          {/* <div className={classes.search}>
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
@@ -171,7 +201,32 @@ export default function PrimarySearchAppBar() {
               }}
               inputProps={{ "aria-label": "search" }}
             />
+          </div> */}
+          <div className={classes.search}>
+            <InputBase
+              classes={{
+                root: classes.inputRoot,
+                input: classes.inputInput,
+              }}
+              id="outlined-adornment-password"
+              // value={state.searchString}
+              name="searchString"
+              onChange={handleChange}
+              endAdornment={
+                <InputAdornment position="end" >
+                  <IconButton
+                    aria-label="search"
+                    onClick={handleSearch}
+                    
+                  >
+                    <SearchIcon className={classes.searchIcon}/>
+                  </IconButton>
+                </InputAdornment>
+              }
+              labelWidth={70}
+            />
           </div>
+
           {userlogged ? (
             <div className={classes.sectionDesktop}>
               <IconButton

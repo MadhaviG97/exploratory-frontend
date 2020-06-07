@@ -14,6 +14,8 @@ import ChatThread from "./chatThread";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import AddNewComment from "./AddNewComment";
+import Alert from "@material-ui/lab/Alert";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     width: "100%",
@@ -43,6 +45,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Comments(props) {
   const classes = useStyles();
+  const [success, setSuccess] = React.useState(false);
   const [comments, setComments] = React.useState(props.comments);
   const project = useSelector((state) => state.project).renderData.project;
   const [alertMessage, setAlertMessage] = React.useState(false);
@@ -53,6 +56,7 @@ export default function Comments(props) {
         console.log(response.data);
         if (response.data) {
           setComments(response.data);
+          setSuccess(true);
           setAlertMessage(true);
         } else {
           setComments([]);
@@ -63,15 +67,34 @@ export default function Comments(props) {
 
   return (
     <React.Fragment>
-      <Grid md="12" align="right" className={classes.newComment}>
-        <AddNewComment onNewComment={handleRefreshComment} />
+      {success && (
+        <Box>
+          <Alert
+            variant="filled"
+            onClose={() => {
+              setSuccess(false);
+            }}
+          >
+            Successfully added the comment !
+          </Alert>
+        </Box>
+      )}
+      <Grid container>
+        <Grid item lg={2} md="2" xs={3} className={classes.newComment}>
+          <AddNewComment onNewComment={handleRefreshComment} />
+        </Grid>
+        <Grid item lg={8} md="8" xs={9}>
+          {comments.map((chat) => {
+            return (
+              <CommentHeads
+                chat={chat}
+                onCommentDelete={handleRefreshComment}
+              />
+            );
+          })}
+        </Grid>
+        <Grid item lg={2} md="2" xs={0} />
       </Grid>
-
-      {comments.map((chat) => {
-        return (
-          <CommentHeads chat={chat} onCommentDelete={handleRefreshComment} />
-        );
-      })}
     </React.Fragment>
   );
 }

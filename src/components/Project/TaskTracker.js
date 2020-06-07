@@ -16,8 +16,9 @@ import CommentSection from "../TaskTracker/TaskComments";
 import AddTask from "../TaskTracker/AddNewTask";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getTasks } from "../../_actions/taskTracker_actions";
+import { getTasks, getCollaborators } from "../../_actions/taskTracker_actions";
 import { propTypes } from "pdf-viewer-reactjs";
+import { useParams, useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -29,19 +30,26 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 700,
   },
   paper: {
-    padding: theme.spacing(1),
+    paddingLeft:theme.spacing(5),
+    paddingRight:theme.spacing(5),
+    paddingBottom:theme.spacing(1),
+    paddingTop:theme.spacing(1),
     textAlign: "center",
     color: theme.palette.text.secondary,
+    border:10
   },
   commentSection: {
-    padding: theme.spacing(2),
+    paddingLeft:theme.spacing(20),
+    paddingRight:theme.spacing(20),
+    paddingBottom:theme.spacing(1),
+    paddingTop:theme.spacing(1),
     textAlign: "left",
     color: theme.palette.text.secondary,
   },
   title: {
     padding: theme.spacing(1),
     textAlign: "center",
-    backgroundColor: "#0d47a1",
+    backgroundColor: "#0088cc",
     color: "#f9fbe7",
   },
   head: {
@@ -52,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
 
 const StyledTableCell = withStyles((theme) => ({
   head: {
-    backgroundColor: "#0d47a1",
+    backgroundColor: "#0088cc",
     color: theme.palette.common.white,
   },
   body: {
@@ -70,14 +78,15 @@ const StyledTableRow = withStyles((theme) => ({
 
 export default function SimpleTable() {
   const classes = useStyles();
-  const pId = 1;
-  const collaborators = {};
+  const {pId} = useParams();
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTasks(pId));
+    dispatch(getCollaborators(pId));
   }, []);
   const tasktracker = useSelector((state) => state.task_tracker);
+  const collaborators = useSelector((state) => state.task_tracker.collaborators);
 
   function getLength(obj) {
     var length = 0;
@@ -89,6 +98,10 @@ export default function SimpleTable() {
     return length;
   }
 
+  // if (getLength(collaborators)==0){
+  //   collaborators={};
+  // }
+
   return (
     <div className={classes.root}>
       <div className={classes.root}>
@@ -96,7 +109,7 @@ export default function SimpleTable() {
           <Typography variant="h6">Task Tracker</Typography>
         </Paper>
 
-        <Progress />
+          <Progress tasks={tasktracker.tasks} />
 
         <div className={classes.paper}>
           <TableContainer component={Paper}>
@@ -147,7 +160,7 @@ export default function SimpleTable() {
                         {new Date(task.created_at).toDateString()}
                       </StyledTableCell>
                       <StyledTableCell align="left">
-                        <ActionButtonGroup task={task} project_id={pId} />
+                        <ActionButtonGroup task={task} project_id={pId} collaborators={collaborators}/>
                       </StyledTableCell>
                     </StyledTableRow>
                   ))
@@ -164,8 +177,8 @@ export default function SimpleTable() {
             </Table>
           </TableContainer>
         </div>
-        <div className={classes.paper}>
-          <AddTask project_id={pId} collaborators={collaborators} />
+        <div className={classes.paper}  >
+          <AddTask project_id={pId}/>
         </div>
       </div>
       <Paper className={classes.commentSection}>

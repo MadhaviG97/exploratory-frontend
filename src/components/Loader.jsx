@@ -3,7 +3,7 @@ import React from "react";
 import { Circle } from "react-spinners-css";
 import Grid from "@material-ui/core/Grid";
 import { makeStyles } from "@material-ui/core/styles";
-
+import Box from '@material-ui/core/Box';
 const useStyles = makeStyles((theme) => ({
   root: {
     height: "80vh",
@@ -35,6 +35,7 @@ export default function Loader() {
         </Grid>
         <Grid item xs={false} sm={5} md={5} />
       </Grid>
+      <Box p={5}/>
     </div>
   );
 }

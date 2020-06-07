@@ -16,12 +16,17 @@ import {
   getPopularAnswers,
 } from "../../_actions/forum_actions";
 import { useDispatch } from "react-redux";
+import { useForm, Controller } from "react-hook-form";
 
 export default function EditAnswer(props) {
   const [open, setOpen] = React.useState(false);
   const [edit, setEdit] = React.useState({
     title: props.title,
     description: props.description,
+  });
+  const { register, handleSubmit, errors, reset, control } = useForm({
+    mode: "onChange",
+    reValidateMode: "onChange"
   });
   const dispatch = useDispatch();
 
@@ -41,19 +46,25 @@ export default function EditAnswer(props) {
   var month = new Date().getMonth() + 1;
   var year = new Date().getFullYear();
 
-  const handleSubmit = () => {
-    const questionData = {
-      question_id: props.question_id,
-      title: edit.title,
-      description: edit.description,
-      updated_at: year + "-" + month + "-" + date,
-    };
-    editQuestion(questionData);
-    dispatch(getQuestions());
-    dispatch(getAnswers());
-    dispatch(getPopularQuestions());
-    dispatch(getPopularAnswers());
-    setOpen(false);
+  const onSubmit = () => {
+    if (edit.title) {
+      const questionData = {
+        question_id: props.question_id,
+        title: edit.title,
+        description: edit.description,
+        updated_at: year + "-" + month + "-" + date,
+      };
+      editQuestion(questionData);
+      dispatch(getQuestions());
+      dispatch(getAnswers());
+      dispatch(getPopularQuestions());
+      dispatch(getPopularAnswers());
+      setOpen(false);
+      setEdit({
+        title: "",
+        description: "",
+      })
+    }
   };
 
   return (
@@ -70,41 +81,58 @@ export default function EditAnswer(props) {
         open={open}
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
+        fullWidth
       >
-        <DialogTitle id="form-dialog-title">Edit your Question!</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Fill the appropriate fields and submit...!
-          </DialogContentText>
-          <TextField
-            margin="dense"
-            id="title"
-            label="Title"
-            type="text"
-            fullWidth
-            multiline
-            defaultValue={props.title}
-            onChange={handleChange("title")}
-          />
-          <TextField
-            margin="dense"
-            id="description"
-            label="Description"
-            type="text"
-            fullWidth
-            multiline
-            defaultValue={props.description}
-            onChange={handleChange("description")}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={handleSubmit} color="primary" variant="contained">
-            Update
-          </Button>
-        </DialogActions>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogTitle id="form-dialog-title">Edit your Question!</DialogTitle>
+          <DialogContent>
+            <TextField
+              margin="dense"
+              id="title"
+              label="Title"
+              name="title"
+              type="text"
+              variant="outlined"
+              fullWidth
+              required
+              multiline
+              rowsMax={4}
+              defaultValue={props.title}
+              inputRef={register({ required: true })}
+              onChange={handleChange("title")}
+              error={!!errors.title}
+            />
+            <TextField
+              margin="dense"
+              id="description"
+              label="Description"
+              type="text"
+              name="description"
+              variant="outlined"
+              fullWidth
+              multiline
+              rowsMax={10}
+              defaultValue={props.description}
+              inputRef={register({ max: 5000 })}
+              onChange={handleChange("description")}
+              error={!!errors.description}
+            />
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              Cancel
+            </Button>
+            <Button
+              onClick={onSubmit}
+              type="submit"
+              color="primary"
+              variant="contained"
+              disabled={!!errors.title || !!errors.description}
+            >
+              Update
+            </Button>
+          </DialogActions>
+        </form>
       </Dialog>
     </div>
   );

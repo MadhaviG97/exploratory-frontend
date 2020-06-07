@@ -16,7 +16,7 @@ import OverView from "../../../components/Overview/OverViewPublic";
 import Team from "../../../components/Team/team";
 import Comments from "../../../components/ProjectComments/chathead";
 import FilesList from "../../../components/ProjectPublicFiles/DisplayList";
-
+import Drawer from "../../../components/Project/Drawer";
 function Home() {
   let { id } = useParams();
   var dispatch = useDispatch();
@@ -88,6 +88,7 @@ function Home() {
           authour_image={project.admins[0].profile_picture}
           description={project.project.description}
         />
+        {/* <Drawer /> */}
         <Tab
           OverView={getOverView}
           Team={getTeam}

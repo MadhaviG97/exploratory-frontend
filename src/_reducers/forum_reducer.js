@@ -4,6 +4,9 @@ import {
   GET_FREQ_USERS,
   GET_POPULAR_QUESTIONS,
   GET_POPULAR_ANSWERS,
+  FORUM_SEARCH,
+  GET_QUESTION_LIKES,
+  GET_ANSWER_LIKES,
 } from "../_actions/types";
 
 const forumReducer = (state = {}, action) => {
@@ -18,6 +21,12 @@ const forumReducer = (state = {}, action) => {
       return { ...state, popularQuestions: action.payload };
     case GET_POPULAR_ANSWERS:
       return { ...state, popularAnswers: action.payload };
+    case FORUM_SEARCH:
+      return { ...state, searchData: action.payload };
+    case GET_QUESTION_LIKES:
+      return { ...state, questionLikes: action.payload };
+    case GET_ANSWER_LIKES:
+      return { ...state, answerLikes: action.payload };
     default:
       return state;
   }

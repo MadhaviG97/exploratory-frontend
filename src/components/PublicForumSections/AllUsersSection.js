@@ -18,6 +18,12 @@ const useStyles = makeStyles((theme) => ({
   inline: {
     display: "inline",
   },
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    minHeight: 450
+  },
 }));
 
 export default function AllUsers() {
@@ -71,7 +77,7 @@ export default function AllUsers() {
           <ListItem>
             <div className={classes.paper} align="center">
               <Typography variant="h6" align="right" color="primary">
-                No Users Yet
+                No users yet...
               </Typography>
             </div>
           </ListItem>

@@ -33,13 +33,13 @@ export default class Chat extends React.Component {
 
   onMessageReceived(msg) {
 
-    this.setState((state)=>{
-      state.chatRooms.forEach(chat=>{
+    this.setState((state) => {
+      state.chatRooms.forEach(chat => {
         if (chat.chat_id == msg.chat_id) {
           chat.chatMesseges.push(msg)
         }
       })
-      return({chatRooms:state.chatRooms})
+      return ({ chatRooms: state.chatRooms })
     })
 
     var MsgInfo = {
@@ -63,14 +63,14 @@ export default class Chat extends React.Component {
     })
   }
 
-  
+
   render() {
     if (!this.state.chatRooms) {
       return <div />
     }
 
     return (
-      <div className="App" style={{ height: '100vh' }}>
+      <div className="App" style={{ height: '80vh' }}>
         <Grid container style={{ height: '100%' }}>
           <Paper style={{ height: '100%' }}>
 

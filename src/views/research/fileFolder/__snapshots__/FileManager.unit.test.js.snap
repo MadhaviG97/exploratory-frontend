@@ -3,7 +3,7 @@
 exports[`FileManager renders correctly 1`] = `
 <div>
   <main
-    className="MuiGrid-root makeStyles-root-22 MuiGrid-container"
+    className="MuiGrid-root makeStyles-root-23 MuiGrid-container"
   >
     <div
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-5 MuiGrid-grid-md-5"
@@ -46,5 +46,8 @@ exports[`FileManager renders correctly 1`] = `
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-5 MuiGrid-grid-md-5"
     />
   </main>
+  <div
+    className="MuiBox-root MuiBox-root-131"
+  />
 </div>
 `;

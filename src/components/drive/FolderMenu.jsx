@@ -267,28 +267,32 @@ export default function FolderMenu(props) {
           onClose={handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogContent>
-            <DialogContentText>Enter Folder Name</DialogContentText>
-            <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label=""
-              type="text"
-              fullWidth
-              required
-              onChange={handleChange}
-            />
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose} color="primary">
-              Cancel
-            </Button>
+          <form onSubmit={handleSubmit}>
+            <DialogContent>
+              <DialogContentText>Enter Folder Name</DialogContentText>
+              
+                <TextField
+                  autoFocus
+                  margin="dense"
+                  id="name"
+                  label=""
+                  type="text"
+                  fullWidth
+                  required={true}
+                  onChange={handleChange}
+                />
+            
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose} color="primary">
+                Cancel
+              </Button>
 
-            <Button onClick={handleSubmit} color="primary">
-              Create
-            </Button>
-          </DialogActions>
+              <Button type="submit" color="primary">
+                Create
+              </Button>
+            </DialogActions>
+          </form>
         </Dialog>
         <Divider variant="fullWidth" />
         <ListItem alignItems="flex-start">

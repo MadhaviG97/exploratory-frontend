@@ -58,6 +58,11 @@ const navbarsStyle = (theme) => ({
     borderRadius: "50%",
     marginLeft: "5px",
   },
+  badge: {
+    '& > *': {
+      margin: theme.spacing(2),
+    },
+  },
 });
 
 export default navbarsStyle;
