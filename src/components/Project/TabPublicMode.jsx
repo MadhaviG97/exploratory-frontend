@@ -2,10 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Tabs, Paper } from "@material-ui/core";
-import Tab from "@material-ui/core/Tab";
-import Typography from "@material-ui/core/Typography";
-import Box from "@material-ui/core/Box";
+import { Tabs, Tab, Paper, Typography, Box } from "@material-ui/core";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -45,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#eceff1",
     square: false,
-    padding: theme.spacing(0, 23),
+    padding: theme.spacing(0, 5),
   },
 }));
 
@@ -72,6 +69,7 @@ export default function FullWidthTabs(props) {
           indicatorColor="primary"
           textColor="primary"
           variant="fullWidth"
+          scrollButtons="auto"
           aria-label="full width tabs example"
         >
           <Tab label="Overview" {...a11yProps(0)} />
@@ -85,19 +83,32 @@ export default function FullWidthTabs(props) {
         index={value}
         onChangeIndex={handleChangeIndex}
       >
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          {OverView()}
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          {Team()}
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          {/* <Comments /> */}
-          {Comments()}
-        </TabPanel>
-        <TabPanel value={value} index={3} dir={theme.direction}>
-          {Files()}
-        </TabPanel>
+        <TabPanel
+          value={value}
+          index={0}
+          dir={theme.direction}
+          children={OverView()}
+        />
+        <TabPanel
+          value={value}
+          index={1}
+          dir={theme.direction}
+          children={Team()}
+        />
+
+        <TabPanel
+          value={value}
+          index={2}
+          dir={theme.direction}
+          children={Comments()}
+        />
+
+        <TabPanel
+          value={value}
+          index={3}
+          dir={theme.direction}
+          children={Files()}
+        />
       </SwipeableViews>
     </div>
   );

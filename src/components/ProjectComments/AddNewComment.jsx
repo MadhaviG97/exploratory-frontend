@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Dialog from "@material-ui/core/Dialog";
@@ -10,41 +9,9 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Box from "@material-ui/core/Box";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import Alert from "@material-ui/lab/Alert";
 import ButtonLoader from "../Loader/ButtonLoader";
 
-const useStyles = makeStyles((theme) => ({
-  text: {
-    padding: theme.spacing(2, 2, 0),
-  },
-  paper: {
-    paddingBottom: 50,
-  },
-  list: {
-    marginBottom: theme.spacing(2),
-  },
-  subheader: {
-    backgroundColor: theme.palette.background.paper,
-  },
-  appBar: {
-    top: "auto",
-    bottom: 0,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  fabButton: {
-    position: "absolute",
-    zIndex: 1,
-    top: -30,
-    left: 0,
-    right: 0,
-    margin: "0 auto",
-  },
-}));
-
 export default function AddComment(props) {
-  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [comment, setComment] = React.useState("");
   const [sucess, setSuccess] = React.useState(false);
@@ -96,19 +63,6 @@ export default function AddComment(props) {
           New Comment
         </Button>
       </Box>
-      <br />
-      {sucess && (
-        <Box>
-          <Alert
-            variant="filled"
-            onClose={() => {
-              setSuccess(false);
-            }}
-          >
-            Successfully added the comment !
-          </Alert>
-        </Box>
-      )}
       <Dialog
         open={open}
         onClose={handleClose}

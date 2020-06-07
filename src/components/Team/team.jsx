@@ -11,9 +11,10 @@ export default function Team(props) {
       <Box className={classes.box}>
         <Paper className={classes.abstract} elevation={3}>
           <Grid container xs={12} md={12} spacing={3}>
+            {/* <Box display="flex" flexWrap="wrap"> */}
             {props.collaborators.map((member) => {
               return (
-                <Grid item xs={4}>
+                <Grid item xs={12} lg={4} md={6} spacing={3}>
                   <Member
                     username={member.first_name
                       .concat(" ")
@@ -25,6 +26,7 @@ export default function Team(props) {
                 </Grid>
               );
             })}
+            {/* </Box> */}
           </Grid>
         </Paper>
       </Box>
