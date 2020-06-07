@@ -5,9 +5,10 @@ function NotFound(props) {
   const classes = useStyles();
   return (
     <div className={classes.main2}>
+      <Box p={5}/>
       <div
         className="Document View"
-        style={{ width: "60%", margin: "3rem auto" }}
+        style={{ width: "60%", margin: "0.1rem auto" }}
       >
         <Box boxShadow={2} style={{ background: "#FFFFFF" }}>
           <img
@@ -16,6 +17,7 @@ function NotFound(props) {
           />
         </Box>
       </div>
+      <Box p={5}/>
     </div>
   );
 }

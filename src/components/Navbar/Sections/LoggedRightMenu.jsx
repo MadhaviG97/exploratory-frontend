@@ -292,6 +292,7 @@ function LoggedRightMenu(props) {
           <Button
             aria-controls="customized-menu"
             aria-haspopup="true"
+            id="chatButton"
             onClick={handleClick}
           >
             <Badge badgeContent={0} {...{
