@@ -4,6 +4,7 @@ import {
   AUTH_USER,
   LOGOUT_USER,
   SEARCH,
+  EDIT_PROFILE_PICTURE,
 } from "../_actions/types";
 //import { connect } from 'react-redux'
 
@@ -19,6 +20,8 @@ export default function (state = {}, action) {
       return { ...state, searchData: action.payload };
     case LOGOUT_USER:
       return { ...state, userData: {} };
+    // case EDIT_PROFILE_PICTURE:
+    //   return { ...state.userData, profile_picture:action.payload};
     default:
       return state;
   }

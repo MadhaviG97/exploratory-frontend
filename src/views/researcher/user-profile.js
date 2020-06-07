@@ -31,11 +31,14 @@ import TabPanel from "../../components/UserProfileSections/TabBarSection";
 import EditProfile from "../../components/UserProfileSections/EditProfileDialog";
 import profile from "../../assets/images/user-profile/faces/user_profile_default.jpg";
 
-import { getProfile, getProjectsByUserId } from "../../_actions/user_profile";
+import { getProfile, getProjectsByUserId, editProfilePicture } from "../../_actions/user_profile";
+import {auth} from "../../_actions/user_actions";
 
 import { useDispatch, useSelector } from "react-redux";
 import { id } from "date-fns/locale";
 import { useHistory, useLocation } from "react-router-dom";
+import { CloudinaryContext } from "cloudinary-react";
+import { fetchPhotos, openUploadWidget } from "../../CloudinaryService";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -84,6 +87,7 @@ export default function UserProfile() {
   const [linkedInVal, setLinkedInVal] = React.useState(false);
   const [twitterVal, setTwitterVal] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState(null);
+  const [images, setImages] = useState([])
   const userData = useSelector((state) => state.user.userData);
   const { uId } = useParams();
   const dispatch = useDispatch();
@@ -122,7 +126,7 @@ export default function UserProfile() {
     contact_no = researcher.contact_no;
   }
   if (researcher.profile_picture) {
-    profile_picture = `data:image/jpeg;base64,${researcher.profile_picture}`;
+    profile_picture = researcher.profile_picture;
   }
   if (researcher.institution) {
     institution = researcher.institution;
@@ -149,12 +153,36 @@ export default function UserProfile() {
   };
   console.log(selectedFile);
 
-  // const fileUploadHandler = () => {
-  //   var data = base64Img.base64Sync(selectedFile.name);
-  //   console.log(data);
-  // }
+  const beginUpload = tag => {
+    const uploadOptions = {
+      cloudName: process.env.REACT_APP_CLAUDINARY_CLOUD_NAME,
+      tags: [tag, 'anImage'],
+      uploadPreset: process.env.REACT_APP_CLAUDINARY_UPLOAD_PRESET
+    };
+    openUploadWidget(uploadOptions, (error, photos) => {
+      if (!error) {
+        //console.log(photos);
+        if(photos.event === 'success'){
+          //console.log(photos.info.url);
+          const profileData = {
+            researcher_id:uId,
+            url:photos.info.url
+          };
+          console.log(profileData);
+          editProfilePicture(profileData);
+          dispatch(auth());
+          dispatch(getProfile(uId));
+          dispatch(getProjectsByUserId(uId));
+          //setImages([...images, photos.info.public_id])
+        }
+      } else {
+        console.log(error);
+      }
+    })
+  }
 
   return (
+    <CloudinaryContext cloudName={process.env.REACT_APP_CLAUDINARY_CLOUD_NAME}>
     <div className={classes.root}>
       <Grid className={classes.userSection} container spacing={0}>
         <Grid item xs={4}>
@@ -179,19 +207,12 @@ export default function UserProfile() {
                 <div className={classes.paper}>
                   {researcher.id == user._id ? (
                     <div>
-                      <input
-                        accept="image/*"
-                        className={classes.input}
-                        id="icon-button-file"
-                        type="file"
-                        onChange={fileSelectedHandler}
-                      />
                       <label htmlFor="icon-button-file">
                         <IconButton
                           color="primary"
                           aria-label="upload picture"
                           component="span"
-                          //onClick={fileUploadHandler}
+                          onClick={() => beginUpload()}
                         >
                           <PhotoCamera />
                         </IconButton>
@@ -300,5 +321,6 @@ export default function UserProfile() {
         </Grid>
       </Grid>
     </div>
+    </CloudinaryContext>
   );
 }

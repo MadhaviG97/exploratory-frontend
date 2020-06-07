@@ -4,6 +4,7 @@ import {
   UPDATE_PROFILE,
   GET_PROJECTS_BY_USER_ID,
   GET_INSTITUTIONS,
+  EDIT_PROFILE_PICTURE,
 } from "./types";
 
 export const getProfile = (id) => {
@@ -28,6 +29,21 @@ export const editProfile = async (profileData) => {
   return {
     type: UPDATE_PROFILE,
     payload: res,
+  };
+};
+
+export const editProfilePicture = async (profileData) => {
+  const response = await fetch(`/userprofile/edit/profilepicture`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ ...profileData }),
+  });
+  const res = await response.json();
+  return {
+    type: EDIT_PROFILE_PICTURE,
+    payload: profileData.url,
   };
 };
 
