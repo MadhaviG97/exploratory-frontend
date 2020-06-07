@@ -54,9 +54,9 @@ const navbarsStyle = (theme) => ({
   },
   imageDropdownButton: {
     padding: "0px",
-    top: "4px",
+    top: "13px",
     borderRadius: "50%",
-    marginLeft: "5px",
+    marginLeft: "0px",
   },
   badge: {
     '& > *': {

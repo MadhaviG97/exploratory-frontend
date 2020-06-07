@@ -231,6 +231,7 @@ function LoggedRightMenu(props) {
           // value={state.searchString}
           name="searchString"
           onChange={handleChange}
+          style={{ top: 6 }}
           endAdornment={
             <InputAdornment position="end">
               <IconButton aria-label="search" onClick={handleSearch} edge="end">
@@ -238,7 +239,7 @@ function LoggedRightMenu(props) {
               </IconButton>
             </InputAdornment>
           }
-          labelWidth={70}
+          labelWidth={0}
         />
       </ListItem>
       <ListItem className={classes.listItem}>
