@@ -78,6 +78,10 @@ const ChatListTopAppBar = (props) => {
   };
 
   const handleDialogClose = () => {
+    setInputName("")
+    setInputDescription("")
+    setNameError(true)
+    setDescriptionError(true)
     setOpen(false);
   };
   
@@ -162,7 +166,7 @@ const ChatListTopAppBar = (props) => {
         <Typography>Exploratory Chat</Typography>
         <div className={classes.grow} />
 
-        <IconButton edge="end" color="inherit">
+        <IconButton id="moreButton" edge="end" color="inherit">
           <MoreIcon aria-controls="chatList-menu" aria-haspopup="true" onClick={handleMenuClick} />
         </IconButton>
 
@@ -206,6 +210,8 @@ const ChatListTopAppBar = (props) => {
             id="description"
             label="Description"
             type="text"
+            multiline={true}
+            rows={4}
             fullWidth
             onChange={(event) => {
               validateDescription(event.target.value)
