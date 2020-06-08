@@ -57,19 +57,11 @@ describe("Chat", () => {
     cy.get("button").contains("OK").click();
   });
 
-  it("Create new group check for name,description error messages", () => {
-    const newGroupName = "Test Group 1";
-    const newDescription = "new Test Description";
-    cy.get("button[id=moreButton]").scrollIntoView().click();
-    cy.get("li").contains("Create a New Group").click();
-
-    cy.get("input[id=name]")
-      .type(newGroupName)
-      .should("have.value", newGroupName);
-    cy.get("[id=description]")
-      .type(newDescription)
-      .should("have.value", newDescription);
-    cy.get("button").contains("Create").should("be.visible");
+        cy.get('input[name=participants').click()
+        // cy.wait(1000)
+        // cy.get('[type="checkbox"]').first().check()  
+        cy.get('li').get('[id=participantItem]').first().click({waitForAnimations: false})
+        cy.get('button').contains('Create').click()
 
     cy.get("input[id=name]").clear();
     cy.get("button").contains("Create").should("not.be.visible");

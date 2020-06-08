@@ -48,7 +48,7 @@ const ChatItem = (props) => {
 
     return (
 
-        <div>
+        <div id ='chatItem'>
             <ListItem alignItems="flex-start"
                 button onClick={() => {
                     props.setStateFromChild({ currentChatID: props.chatDetails.chat_id })

@@ -234,7 +234,7 @@ const ChatWindow = (props) => {
 
   return (
 
-    <div className={classes.upperRoot} hidden={props.state.hiddenState}>
+    <div id='chatWindow' className={classes.upperRoot} hidden={props.state.hiddenState}>
       <div className={classes.root}>
 
         <ChatWindowTopAppBar
@@ -283,6 +283,7 @@ const ChatWindow = (props) => {
 
             <div className={classes.search}>
               <InputBase
+                id="msgBox"
                 placeholder="Send..."
                 onChange={onInput}
                 value={input}
@@ -297,6 +298,7 @@ const ChatWindow = (props) => {
               />
             </div>
             <Button
+              id="sendButton"
               variant="contained"
               color="primary"
               className={classes.button}

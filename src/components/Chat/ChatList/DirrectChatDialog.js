@@ -70,7 +70,7 @@ const DirrectChatDialog = (props) => {
             if (res) {
                 await props.state.chatRooms.forEach((chatRoom, ind) => {
                     if (chatRoom.chat_id == res.chat_id) {
-                        console.log("chat", chatRoom)
+                        // console.log("chat", chatRoom)
                         props.setStateFromChild({
                             hiddenState: false,
                             currentChatID: chatRoom.chat_id,

@@ -9,7 +9,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 const ResponseDialog = (props) => {
 
   return (
-    <div>
+    <div id='responseDialog'>
       <Dialog
         open={props.open}
         onClose={props.handleCloseResponseDialog}

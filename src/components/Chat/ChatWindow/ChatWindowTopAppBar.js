@@ -151,9 +151,9 @@ const ChatWindowTopAppBar = (props) => {
   // validateDescription(inputDescription)
 
   return (
-    <AppBar position="relative" color="primary" className={classes.appBar}>
+    <AppBar position="relative" color="primary" className={classes.appBar} id="chatWindowTopAppBar">
       <Toolbar>
-        <IconButton edge="start" color="inherit" onClick={() => { props.setStateFromChild({hiddenState:true}) }} >
+        <IconButton id="chatWindowBackButton" edge="start" color="inherit" onClick={() => { props.setStateFromChild({hiddenState:true}) }} >
           <ArrowBackIcon />
         </IconButton>
 
@@ -162,7 +162,7 @@ const ChatWindowTopAppBar = (props) => {
         <Typography>{props.state.chatRooms[props.state.currentChatListID].name}</Typography>
         <div className={classes.grow} />
 
-        <IconButton disabled={props.state.chatRooms[props.state.currentChatListID].isDirrect}
+        <IconButton id="chatWindowMoreButton" disabled={props.state.chatRooms[props.state.currentChatListID].isDirrect}
          edge="end" color="inherit">
           <MoreIcon aria-controls="chatList-menu" aria-haspopup="true" onClick={handleMenuClick} />
         </IconButton>
@@ -180,7 +180,7 @@ const ChatWindowTopAppBar = (props) => {
 
       </Toolbar>
 
-      <Dialog open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
+      <Dialog id="chatWindowSettingsDialog" open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Group Information</DialogTitle>
         <DialogContent>
 
@@ -236,7 +236,7 @@ const ChatWindowTopAppBar = (props) => {
             setStateFromChild={props.setStateFromChild}
           />
 
-          <Fab alignItems="center" color="primary" size="small" aria-label="add"
+          <Fab id="addMoreParticipantsButton" alignItems="center" color="primary" size="small" aria-label="add"
           // disabled={true}
           className={classes.fabButton}
           >
@@ -251,7 +251,7 @@ const ChatWindowTopAppBar = (props) => {
         </DialogActions>
       </Dialog>
 
-      <ResponseDialog
+      <ResponseDialog 
         open={openResponseDialog}
         handleCloseResponseDialog={handleCloseResponseDialog}
         title={responseDialogMsg}

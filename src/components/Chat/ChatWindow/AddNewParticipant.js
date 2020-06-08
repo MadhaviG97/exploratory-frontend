@@ -196,7 +196,7 @@ const AddNewParticipant = (props) => {
                     />
                     <List >
                       {/* className={classes.root} */}
-                      <ListItem>
+                      <ListItem id="participantItem">
                         <ListItemAvatar>
                           <Avatar
                             src={
