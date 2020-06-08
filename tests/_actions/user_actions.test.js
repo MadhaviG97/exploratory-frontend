@@ -18,3 +18,5 @@ test("1.0 register user", (done) => {
   );
   expect(response.payload.register).not.toBe(false);
 });
+
+
