@@ -47,8 +47,9 @@ describe('Chat', () => {
         cy.get('button').contains('Create').should('be.visible')
 
         cy.get('input[name=participants').click()
-        cy.get('[type="checkbox"]').first().check()  
-
+        // cy.wait(1000)
+        // cy.get('[type="checkbox"]').first().check()  
+        cy.get('li').get('[id=participantItem]').first().click({waitForAnimations: false})
         cy.get('button').contains('Create').click()
 
         cy.get('div[id=alert-dialog-title').get('h2').should('contain','Successfully Created the Group')

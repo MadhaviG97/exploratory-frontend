@@ -95,12 +95,12 @@ const Message = ({ msg, client }) => {
                 />
 
                 <ListItemSecondaryAction>
-                    <IconButton edge="end">
+                    <IconButton edge="end" id="messageInfoButton">
                         <InfoIcon aria-haspopup="true" onClick={handleClickDialogOpen} />
                     </IconButton>
                 </ListItemSecondaryAction>
 
-                <Dialog open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
+                <Dialog id="messageStatusDialog" open={open} onClose={handleDialogClose} aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Message Status</DialogTitle>
                     <DialogContent>
 
