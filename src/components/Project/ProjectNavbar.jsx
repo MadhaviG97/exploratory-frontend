@@ -9,6 +9,8 @@ import {
   Grid,
   Typography,
   Paper,
+  Badge,
+  IconButton,
 } from "@material-ui/core";
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
@@ -16,7 +18,8 @@ import CommentIcon from "@material-ui/icons/Comment";
 import Avatar from "@material-ui/core/Avatar";
 import NavComponent from "../../components/AppNavigation/NavigationComponent";
 import { useStyles } from "../../assets/css/projectNavbar";
-
+import SettingsIcon from "@material-ui/icons/Settings";
+import SettingMenu from "./SettingMenu";
 export default function ProjectNavbar(props) {
   const classes = useStyles();
   return (
@@ -77,67 +80,42 @@ export default function ProjectNavbar(props) {
                 <List component="nav" aria-label="main mailbox folders">
                   <ListItem className={classes.listItem}>
                     <ListItemIcon>
-                      <CommentIcon color="primary" />
+                      <Badge
+                        badgeContent={99}
+                        color="secondary"
+                        children={<CommentIcon color="primary" />}
+                      />
                     </ListItemIcon>
                     <ListItemText
-                      primary="Comments"
+                      primary="COMMENTS"
                       primaryTypographyProps={{ variant: "button" }}
                     />
                   </ListItem>
                   <ListItem>
                     <ListItemIcon>
-                      <CheckCircleOutlineIcon color="primary" />
+                      <Badge
+                        badgeContent={99}
+                        color="secondary"
+                        children={<CheckCircleOutlineIcon color="primary" />}
+                      />
                     </ListItemIcon>
 
                     <ListItemText
-                      primary="Followers"
+                      primary="FOLLOWER"
                       primaryTypographyProps={{ variant: "button" }}
                     />
                   </ListItem>
-                  <ListItem className={classes.listItem}>
+                  <ListItem>
                     <ListItemIcon>
-                      <BorderColorIcon color="primary" />
+                      {/* <IconButton aria-label="settings" size="small">
+                        <SettingsIcon color="primary" />
+                      </IconButton> */}
+                      <SettingMenu project_id={props.projectId} />
                     </ListItemIcon>
+
                     <ListItemText
-                      primary="Updates"
+                      primary="SETTINGS"
                       primaryTypographyProps={{ variant: "button" }}
-                    />
-                  </ListItem>
-                </List>
-              </Box>
-              <Box flexGrow="1" alignSelf="flex-end">
-                <List component="nav" aria-label="main mailbox folders">
-                  <ListItem button className={classes.listItem}>
-                    <ListItemText
-                      primary={
-                        <Chip
-                          size="small"
-                          label={props.comments}
-                          color="primary"
-                        />
-                      }
-                    />
-                  </ListItem>
-                  <ListItem button className={classes.listItem}>
-                    <ListItemText
-                      primary={
-                        <Chip
-                          size="small"
-                          label={props.followers}
-                          color="primary"
-                        />
-                      }
-                    />
-                  </ListItem>
-                  <ListItem button className={classes.listItem}>
-                    <ListItemText
-                      primary={
-                        <Chip
-                          size="small"
-                          label={props.updates}
-                          color="primary"
-                        />
-                      }
                     />
                   </ListItem>
                 </List>

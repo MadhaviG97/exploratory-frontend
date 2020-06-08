@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import ItemHeader from "./ItemHeader";
 import EditRelatedImages from "../Project/EditRelatedImages";
 import EditFinalPaper from "../Project/EditFinalPaper";
+import EditAbstract from "../Project/EditAbstract";
 
 export default function Overview() {
   const classes = useStyles();
@@ -17,6 +18,7 @@ export default function Overview() {
   var user = useSelector((state) => state.user);
   let user_id = user.userData !== undefined ? user.userData._id : 0;
 
+  const [editAbstract, setEditAbstract] = React.useState(false);
   const [editImages, setEditImages] = React.useState(false);
   const [editPaper, setEditPaper] = React.useState(false);
 
@@ -44,8 +46,22 @@ export default function Overview() {
   const Abstract = (TextProps) => {
     return (
       <React.Fragment>
-        <ItemHeader handleEditState={handleEditState} title="Abstract" />
-
+        <ItemHeader
+          handleEditState={() => setEditAbstract(true)}
+          title="Abstract"
+        />
+        <EditAbstract
+          onClose={() => {
+            setEditAbstract(false);
+          }}
+          onSubmit={() => {
+            setEditAbstract(false);
+            history.go(0);
+          }}
+          open={editAbstract}
+          project_id={project.project.id}
+          default={project.project.abstract}
+        />
         <Divider />
         <Typography variant="caption">
           {TextProps.text ? TextProps.text : "To be Added..."}
@@ -145,13 +161,13 @@ export default function Overview() {
         <Box className={classes.box}>
           <Paper className={classes.abstract}>
             <ExamplePDFViewer
-              view={visibility_public}
+              view={project.project.visibility_public}
               url={project.project.final_paper}
             />
           </Paper>
         </Box>
 
-        {!visibility_public && (
+        {!project.project.visibility_public && (
           <Box className={classes.box}>
             <Button
               variant="contained"
