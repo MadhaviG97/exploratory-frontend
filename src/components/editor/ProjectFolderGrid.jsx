@@ -20,7 +20,7 @@ export default function ProjectFolderGrid(props) {
           <Box  alignItems="center">
               <div >
               <img  src={process.env.PUBLIC_URL + '/images/appnav/empty.png'} alt={"no files yet?"} />
-              <h1  className={classes.topic2}>It seems that you don't have any {props.word} here yet.</h1>
+              <h1  className={classes.topic3}>It seems that you don't have any {props.word} here yet.</h1>
               </div>
               
               

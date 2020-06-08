@@ -11,7 +11,7 @@ import Divider from "@material-ui/core/Divider";
 import NotFound from '../../../components/NotFound/NotFound'
 import Loader from "../../../components/Loader";
 
-export default function Receive(props) {
+export default function Send(props) {
     
     const user=useSelector((state) => state.user);
     console.log(user)

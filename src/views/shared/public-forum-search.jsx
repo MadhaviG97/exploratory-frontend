@@ -160,7 +160,6 @@ export default function Forum() {
           </Grid>
         </div>
       )}
-      <Footer />
     </div>
   );
 }

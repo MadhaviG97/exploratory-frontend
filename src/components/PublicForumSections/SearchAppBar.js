@@ -171,7 +171,7 @@ export default function PrimarySearchAppBar() {
           </IconButton>
           <div className={classes.search}></div>
 
-          {userlogged ? (
+          {/* {userlogged ? (
             <div className={classes.sectionDesktop}>
               <IconButton
                 edge="end"
@@ -197,7 +197,7 @@ export default function PrimarySearchAppBar() {
             >
               <MoreIcon />
             </IconButton>
-          </div>
+          </div> */}
         </Toolbar>
       </AppBar>
       {renderMobileMenu}

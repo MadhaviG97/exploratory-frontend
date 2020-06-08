@@ -53,7 +53,7 @@ export default function PopularQuestionsTab() {
             <ListItemAvatar>
               <Avatar
                 alt="Profile Picture"
-                src={`data:image/jpeg;base64,${answer.profile_picture}`}
+                src={answer.profile_picture}
               />
             </ListItemAvatar>
             <ListItemText

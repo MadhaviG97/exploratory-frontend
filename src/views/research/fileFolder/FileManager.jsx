@@ -361,10 +361,10 @@ function FileManager(props) {
                     <MenuItem style={{ color: '#d60009',fontSize: 14 }} onClick={handleDeleteOpen}>Delete</MenuItem>
                 </Menu>
                 
-                <div className={classNames(classes.main2)} >
+                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}} >
                     <Grid container spacing={5} >
                         <Grid item xs={3} >
-                            <Box p={2}/>
+                            <Box p={4}/>
                             <Paper classname={classes.papermenu}>
                             <Box p={1.5}>
                                 <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params} group={group}/>
@@ -374,7 +374,7 @@ function FileManager(props) {
                         <Divider orientation="vertical" variant="fullWidth" />
                         <Grid item xs={8}>
                             <Box  style={{ display: "flex" }} flexDirection="row" >
-                                    <NavComponent projectId={group}/>
+                                    <NavComponent color={'#FFFFFF'} projectId={group}/>
                             </Box>
                             <Divider  variant="fullWidth" />
                             <Box p={1} />
