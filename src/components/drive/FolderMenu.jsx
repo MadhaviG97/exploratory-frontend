@@ -155,7 +155,7 @@ export default function FolderMenu(props) {
     <div>
      <div className={classes.roota}>
       <Collapse in={foldercreated}>
-        <Alert
+        <Alert data-cy='folder-created-alert'
           action={
             <IconButton
               aria-label="close"
@@ -248,6 +248,7 @@ export default function FolderMenu(props) {
                   backgroundColor="#b2beb5"
                   component="label"
                   onClick={handleClickOpen}
+                  data-cy='folder-dialog'
                 >
                   <Typography
                     component="span"
@@ -288,7 +289,7 @@ export default function FolderMenu(props) {
                 Cancel
               </Button>
 
-              <Button type="submit" color="primary">
+              <Button type="submit" color="primary" >
                 Create
               </Button>
             </DialogActions>

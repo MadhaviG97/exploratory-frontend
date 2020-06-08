@@ -156,13 +156,13 @@ export default function CreatePage(props) {
                         <Button onClick={handleClose} variant="contained" color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleDelete} color="primary">
+                        <Button onClick={handleDelete} color="primary" data-cy="delete-confirm-document-button">
                             Delete
                         </Button>
                         </DialogActions>
                     </Dialog>
                     <Collapse in={documentdeleted}>
-                            <Alert
+                            <Alert data-cy="delete-success-alert"
                             action={
                                 <IconButton
                                 aria-label="close"
@@ -205,7 +205,7 @@ export default function CreatePage(props) {
                                     {blogs.map((blog,index) => (
                                         <Grid item lg={4} md={6} xs={12}>
                                             <CardActionArea component="a" >
-                                            <Card >
+                                            <Card data-cy="document-card">
                                                 <CardHeader
                                                     avatar={
                                                         <Avatar aria-label="recipe" className={classes.avatar}>
@@ -225,7 +225,7 @@ export default function CreatePage(props) {
                                                 <Divider variant="middle" />
                                                 <CardActions disableSpacing>
                                                 <Tooltip title="Edit Document">
-                                                    <IconButton aria-label="delete document" href={`/document/${group}/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                    <IconButton aria-label="delete document" data-cy="delete-document-icon" href={`/document/${group}/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
                                                         <EditIcon/>
                                                     </IconButton>
                                                 </Tooltip>

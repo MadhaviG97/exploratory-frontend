@@ -288,7 +288,7 @@ function FileManager(props) {
             </Dialog>
             <div >
                 <Collapse in={fileshared}>
-                    <Alert
+                    <Alert data-cy='share-alert'
                     action={
                         <IconButton
                         aria-label="close"
@@ -324,7 +324,7 @@ function FileManager(props) {
                     </Alert>
                 </Collapse>
                 <Collapse in={filenotshared}>
-                    <Alert
+                    <Alert data-cy='share-alert'
                     action={
                         <IconButton
                         aria-label="close"
@@ -354,11 +354,11 @@ function FileManager(props) {
                     MenuListProps={{ onMouseLeave: handleClose }}
                 >   
                     {fileDetail.metadata && fileDetail.metadata.sensitivity=='private'
-                        ? <MenuItem style={{ fontSize: 14 }} onClick={handleShare}>Share With Public</MenuItem>
-                        : <MenuItem style={{ fontSize: 14 }} onClick={handleShare}>Stop Sharing</MenuItem>
+                        ? <MenuItem style={{ fontSize: 14 }} data-cy='share' onClick={handleShare}>Share With Public</MenuItem>
+                        : <MenuItem style={{ fontSize: 14 }} data-cy='share' onClick={handleShare}>Stop Sharing</MenuItem>
                     }
-                    <MenuItem style={{fontSize: 14 }} onClick={fileDownload}>Download</MenuItem>
-                    <MenuItem style={{ color: '#d60009',fontSize: 14 }} onClick={handleDeleteOpen}>Delete</MenuItem>
+                    <MenuItem style={{fontSize: 14 }} data-cy='download' onClick={fileDownload}>Download</MenuItem>
+                    <MenuItem style={{ color: '#d60009',fontSize: 14 }} data-cy='delete' onClick={handleDeleteOpen}>Delete</MenuItem>
                 </Menu>
                 
                 <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}} >
@@ -390,7 +390,7 @@ function FileManager(props) {
                                 {folders.map((folder,index) => (
                                     <Grid item lg={3} md={4} xs={8}>
                                         <CardActionArea component="a" href={`/document/${group}/filemanager/${folder._id}`}>
-                                            <Card >
+                                            <Card data-cy="folder-card">
                                                 <CardContent>
                                                     <div style={{ height: 140, marginBottom: 2 }}>
                                                     <img src={process.env.PUBLIC_URL + '/images/fileFolder/folderImage.png'} alt={folder.name} />
@@ -416,13 +416,13 @@ function FileManager(props) {
                                 <Grid item lg={3} md={4} xs={8}>
                                     <CardActionArea component="a"  >
                                         <Card >
-                                            <CardContent>
+                                            <CardContent data-cy="card">
                                                 <div style={{ height: 140, marginBottom: 2 }}>
                                                 <img src={process.env.PUBLIC_URL + '/images/fileFolder/fileImage3.png'} alt={file.metadata.originalname} />
                                                 </div>
                                             </CardContent>
                                             <CardActions disableSpacing>
-                                                <IconButton aria-label={`info `} 
+                                                <IconButton aria-label={`info `} data-cy="icon-button"
                                                     onClick={
                                                         handleClick(file)
                                                         } >
