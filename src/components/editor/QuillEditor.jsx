@@ -62,7 +62,7 @@ class QuillEditor extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{  background: '#FFFFFF'}}>
                 
                 <ReactQuill
                     ref={(el) => { this.reactQuillRef = el }}

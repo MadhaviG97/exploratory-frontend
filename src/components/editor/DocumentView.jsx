@@ -82,14 +82,23 @@ function DocumentView(props) {
                 </div> 
                 <div className="Document View" style={{ width: '80%', margin: '2rem auto' }}>
                     <Box >
-                        <NavComponent projectId={props.group}/>
+                        <NavComponent color={'#FFFFFF'} projectId={props.group}/>
                     </Box>
-                    <Divider  variant="fullWidth" />
                     <Box p={2} />
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
-                        
-                        <Button variant="outlined" color="primary" onClick={handleTurn}>
-                                    Turn to PDF Format
+                        <Button
+                            size="large"
+                            htmlType="submit"
+                            style={{  background: '#014f82',//can change the sign-in button color from here
+                            color: '#FFFFFF',
+                            height: 40,
+                            boxShadow: ['none']}}
+                            variant="contained"
+                            component="label"
+                            onClick={handleTurn}
+                            //onSubmit={onSubmit}
+                            >
+                            Turn to PDF Format
                         </Button>
                     </div>
                     <Box p={1}/>

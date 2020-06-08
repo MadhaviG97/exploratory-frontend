@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import classNames from "classnames";
 
-
 import { useStyles } from "../../../assets/css/projectFolderGrid";
 import CompareDialog from "../../../components/drive/CompareDialog"
 import { useSelector } from "react-redux";

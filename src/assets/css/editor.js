@@ -29,7 +29,7 @@ export const useStyles = makeStyles((theme) => ({
     color: "#FFFFFF",
     margin: "1.75rem 0 0.875rem",
     textDecoration: "none",
-    fontWeight: "550",
+    fontWeight: "480",
     //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
     //display: "inline-block",
     //position: "relative",
@@ -80,6 +80,19 @@ export const useStyles = makeStyles((theme) => ({
   topic4: {
     color: "#3C4858",
     //margin: "1.75rem 0 0.875rem",
+    textDecoration: "none",
+    fontWeight: "450",
+    //fontFamily: `"Roboto Slab", "Times New Roman", serif`,
+    fontSize:27,
+    //display: "inline-block",
+    //position: "relative",
+    //marginTop: "30px",
+    minHeight: "50px",
+    
+  },
+  topic5: {
+    color: "#FFFFFF",
+    margin: "0.35rem 0 0.375rem",
     textDecoration: "none",
     fontWeight: "450",
     //fontFamily: `"Roboto Slab", "Times New Roman", serif`,

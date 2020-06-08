@@ -294,6 +294,7 @@ export default function Form(props) {
                       helperText={state.helperTextDescription}
                       disabled={state.disabled}
                       value={state.description}
+                      multiline
                       rows={4}
                       id="description"
                       name="description"
@@ -310,6 +311,7 @@ export default function Form(props) {
                       id="abstract"
                       name="abstract"
                       label="Abstract"
+                      multiline
                       rows={4}
                       fullWidth
                       disabled={state.disabled}

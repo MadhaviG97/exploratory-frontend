@@ -1,4 +1,4 @@
-/*import React from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import  Receive  from './Receive';
 import {mount,shallow} from 'enzyme'
@@ -17,34 +17,28 @@ jest.mock('react-router-dom', () => ({
     push: jest.fn(),
   }),
 }));
-const match = { params: { projectId: '10012' } }
+const match = { params: { projectId: '100233' } }
 const mockStore = configureMockStore([thunk]);
 const store = mockStore({
     user: { userData: {isAuth:true,first_name:'yogya',id:'10002'} }
   });
-  const props = {
-    this:{group:'10002'},
-    group: '10012',
-    userProp:{userData:{_id:'10002'}},
-  }
+  
 describe('Receive Screen Sharing', () => {
   afterEach(() => {
     jest.restoreAllMocks();
     jest.resetAllMocks();
   });
-    it('renders Receiver Component', () => {
+    it('does not render Receiver Component without correct group', () => {
       jest
       .spyOn(React, 'useState')
       .mockImplementation(() => realUseState(stubInitialState))
-      const wrapper = mount(
+      const wrapper = shallow(
       <Provider store={store}>
         <Receive match={match}/>
       </Provider>);
-      expect(wrapper.containsMatchingElement(<Receiver {...props}/>)).toEqual(true);
+      expect(wrapper.containsMatchingElement(<Receiver />)).toEqual(false);
     });
     
     });
-    */
-   test('adds 1 + 2 to equal 3', () => {
-    expect(1+2).toBe(3);
-  });
+    
+   

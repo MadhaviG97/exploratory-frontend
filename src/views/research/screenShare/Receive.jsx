@@ -50,7 +50,7 @@ export default function Receive(props) {
                         <NavComponent projectId={props.match.params.projectId}/>
                         <Divider  variant="fullWidth" />
                         <Box p={1}/>
-                        <Box boxShadow={1} style={{  background: '#FFFFFF'}} >
+                        <Box  style={{  background: '#FFFFFF'}} >
                             <Box p={3}>
                                 <div >
                                     {sender
