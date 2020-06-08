@@ -14,15 +14,15 @@ import { useStyles } from "../../assets/css/projectFolderGrid";
 export default function EmptyFolder(props) {
   const classes = useStyles();
   const [open,setOpen]=React.useState(false);
-const [id,setId]=React.useState('');
+  const [id,setId]=React.useState('');
   const handleClickOpen = (id) => {
     setId(id)
     setOpen(true);
   };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+  const handleClose = () => {
+      setOpen(false);
+  };
   const handleDelete = () => {
     setOpen(false);
     const variable = { 
@@ -62,7 +62,7 @@ const [id,setId]=React.useState('');
         <Button onClick={handleClose} variant="contained" color="primary">
             Cancel
         </Button>
-        <Button onClick={handleDelete} color="primary">
+        <Button onClick={handleDelete} color="primary" data-cy="confirm-delete">
             Delete
         </Button>
         </DialogActions>
@@ -85,6 +85,7 @@ const [id,setId]=React.useState('');
               boxShadow: ['none']}}
               variant="contained"
               component="label"
+              data-cy="delete-folder-button"
               onClick={handleClickOpen}
               //onSubmit={onSubmit}
             >

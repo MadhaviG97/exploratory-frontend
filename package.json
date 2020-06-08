@@ -79,7 +79,10 @@
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "test": "jest",
-    "dev": "(cd.. && cd SEP-Exploratory/back-end && npm start) & npm start",
+    "back-end": "(cd.. && cd SEP-Exploratory/back-end && npm start)",
+    "screen-socket-server": "cd src && node socket.js",
+    "y-server": "npx y-websocket-server",
+    "dev": "concurrently --kill-others \"npm run screen-socket-server\" \"npm run back-end\" \"npm start\"",
     "cypress:open": "cypress open"
   },
   "eslintConfig": {
@@ -101,7 +104,9 @@
     "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react-app": "^7.0.0",
+    "concurrently": "^5.2.0",
     "cypress": "^4.7.0",
+    "cypress-localstorage-commands": "^1.2.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
     "fetch-mock": "^9.9.0",

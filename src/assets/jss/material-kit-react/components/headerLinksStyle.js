@@ -40,7 +40,7 @@ const headerLinksStyle = theme => ({
     color: "#000000",
     position: "relative",
     padding: "0.9375rem",
-    fontWeight: "450",
+    fontWeight: "400",
     fontSize: "17px",
     textTransform: "none",
     borderRadius: "3px",
@@ -67,7 +67,7 @@ const headerLinksStyle = theme => ({
     color: "#000000",
     position: "relative",
     padding: "0.9375rem",
-    fontWeight: "450",
+    fontWeight: "400",
     fontSize: "17px",
     textTransform: "none",
     borderRadius: "3px",
@@ -80,7 +80,7 @@ const headerLinksStyle = theme => ({
     },
     [theme.breakpoints.down("sm")]: {
       width: "calc(100% - 30px)",
-      marginLeft: "15px",
+      marginLeft: "17px",
       marginBottom: "8px",
       marginTop: "8px",
       textAlign: "left",
@@ -93,8 +93,8 @@ const headerLinksStyle = theme => ({
     color: "#000000",
     position: "relative",
     
-    fontWeight: "450",
-    fontSize: "15px",
+    fontWeight: "400",
+    fontSize: "17px",
     textTransform: "none",
     
     textDecoration: "none",
@@ -115,7 +115,7 @@ const headerLinksStyle = theme => ({
   notificationNavLink: {
     color: "#FFF",
     padding: "0.9375rem",
-    fontWeight: "450",
+    fontWeight: "400",
     fontSize: "17px",
     textTransform: "none",
     lineHeight: "20px",
@@ -127,7 +127,7 @@ const headerLinksStyle = theme => ({
   registerNavLink: {
     top: "3px",
     position: "relative",
-    fontWeight: "450",
+    fontWeight: "400",
     fontSize: "17px",
     textTransform: "none",
     lineHeight: "20px",
