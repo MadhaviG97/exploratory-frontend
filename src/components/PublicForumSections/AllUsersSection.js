@@ -50,7 +50,7 @@ export default function AllUsers() {
               <ListItemAvatar>
                 <Avatar
                   alt={user.first_name + " " + user.last_name}
-                  src={`data:image/jpeg;base64,${user.profile_picture}`}
+                  src={user.profile_picture}
                 />
               </ListItemAvatar>
               <ListItemText

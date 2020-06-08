@@ -40,7 +40,7 @@ function LeftMenu(props) {
             className={classes.navLink}
             color="transparent"
           >
-            create project
+            Create Project
           </Button>
         </ListItem>
       </List>

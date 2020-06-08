@@ -53,18 +53,18 @@ function CreatePage(props) {
     if (mounted  && user.userData){
         if (collabs.some(e => e.researcher_id == user_id)){
             return (
-                <div>
-                    <div className={classNames(classes.main, classes.mainRaised)} >
-                        <Box p={1.7}  style={{  background: '#014f82'}}>
+                
+                    <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}} >
+                        <Box p={1.3}  style={{  background: '#014f82'}}>
                             <div className={classes.name} >
                                 <h1 align='center' className={classes.title}>Editor</h1>
                             </div>
                         </Box>
-                        <div style={{ maxWidth: '1000px', margin: '1.5rem auto'}}>
+                        <div style={{ maxWidth: '1000px', margin: '0.01rem auto'}}>
                             {/*marginTop={7}*/}
-                            
-                                <Box p={1} style={{ display: "flex" }} flexDirection="row" > 
-                                    <NavComponent projectId={group}/>
+                                <Box p={1}/>
+                                <Box p={2} style={{ display: "flex" }} flexDirection="row" > 
+                                    <NavComponent color={'#FFFFFF'} projectId={group}/>
                                 </Box>
                                 <QuillEditor
                                     placeholder={""}
@@ -83,7 +83,7 @@ function CreatePage(props) {
                                 <Box p={4} />
                         </div>
                     </div>
-                </div>
+                
             )
         }else{
             return(

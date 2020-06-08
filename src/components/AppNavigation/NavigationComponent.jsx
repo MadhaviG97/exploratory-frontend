@@ -92,12 +92,14 @@ export default function NavigationComponent(props) {
   const handleChange = (event) => {
     setName(event.target.value);
   };
-  const handleSubmit = (event) => {};
+  let color;
+  if (props.color){color=props.color}else{color="#616161"}
+  
   return (
     <div>
       <Tooltip title="Apps">
         <IconButton onClick={handleClickOpen}>
-          <AppsIcon />
+          <AppsIcon style={{ color: color }}/>
         </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>

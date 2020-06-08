@@ -43,3 +43,4 @@ export const GET_INSTITUTIONS = "get_institutions";
 export const FORUM_SEARCH = "forum_search";
 export const GET_QUESTION_LIKES = "get_question_likes";
 export const GET_ANSWER_LIKES = "get_answer_likes";
+export const EDIT_PROFILE_PICTURE = "edit_profile_picture";

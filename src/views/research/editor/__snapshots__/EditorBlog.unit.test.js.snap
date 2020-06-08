@@ -3,7 +3,7 @@
 exports[`editor blog renders correctly 1`] = `
 <div>
   <main
-    className="MuiGrid-root makeStyles-root-17 MuiGrid-container"
+    className="MuiGrid-root makeStyles-root-18 MuiGrid-container"
   >
     <div
       className="MuiGrid-root MuiGrid-item MuiGrid-grid-sm-5 MuiGrid-grid-md-5"
@@ -47,7 +47,7 @@ exports[`editor blog renders correctly 1`] = `
     />
   </main>
   <div
-    className="MuiBox-root MuiBox-root-125"
+    className="MuiBox-root MuiBox-root-126"
   />
 </div>
 `;

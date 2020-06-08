@@ -165,14 +165,15 @@ function LoggedRightMenu(props) {
           // value={state.searchString}
           name="searchString"
           onChange={handleChange}
+          style={{ top: 14,height:42 }}
           endAdornment={
             <InputAdornment position="end">
               <IconButton aria-label="search" onClick={handleSearch} edge="end">
-                <SearchIcon />
+                <SearchIcon style={{ fontSize:20 }}/>
               </IconButton>
             </InputAdornment>
           }
-          labelWidth={70}
+          labelWidth={0}
         />
       </ListItem>
 
