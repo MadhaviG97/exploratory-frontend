@@ -78,7 +78,7 @@ class EditorMenu extends React.Component {
             <div>
                 <Grid item xs>
                     <Paper className={classes.paper}>
-                        <Button variant="contained" color="primary" onClick={this.props.handleSave}>
+                        <Button variant="contained" data-cy="save-edited" color="primary" onClick={this.props.handleSave}>
                             Save Document
                         </Button>
                     </Paper>
@@ -88,6 +88,7 @@ class EditorMenu extends React.Component {
                  
                   <ListItem
                       key={1}
+                      data-cy="last-saved-version"
                       button
                       onClick={this.props.savedVersion}
                     >
@@ -98,6 +99,7 @@ class EditorMenu extends React.Component {
                   <Divider variant="fullWidth"  />
                   <ListItem
                       key={2}
+                      data-cy="goto-blog"
                       button
                       onClick={()=>history.push(`/document/${this.group}/editorBlog`)}
                       //onClick={this.props.history.push('/document/editorBlog')}

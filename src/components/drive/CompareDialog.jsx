@@ -229,15 +229,16 @@ export default function DialogSelect(props) {
           <Select
             labelId="select-label"
             label="Compare"
+            data-cy="select-type"
             id="demo-simple-select"
             value={type}
             onChange={handleType}
             default='word'
           >
-            <MenuItem value='word'>Word by Word</MenuItem>
-            <MenuItem value='sentence'>Sentence by Sentence</MenuItem>
-            <MenuItem value='line'>Line by Line</MenuItem>
-            <MenuItem value='char'>Character by Character</MenuItem>
+            <MenuItem value='word' data-cy="word-word" >Word by Word</MenuItem>
+            <MenuItem value='sentence'data-cy="sent-sent" >Sentence by Sentence</MenuItem>
+            <MenuItem value='line'data-cy="line-line">Line by Line</MenuItem>
+            <MenuItem value='char'data-cy="char-char">Character by Character</MenuItem>
           </Select>
         </FormControl>
     )
@@ -257,7 +258,7 @@ export default function DialogSelect(props) {
         
         
           <Grid item xs={8} md={4} item align="center" >
-            <CardActionArea component="a" onClick={handleClickOpen}>
+            <CardActionArea component="a" onClick={handleClickOpen} data-cy="select-doc">
               <Card className={classes.card} style={{  background: '#FFFFFF'}}>
                 <div className={classes.cardDetails}>
                   <CardContent>
@@ -282,6 +283,7 @@ export default function DialogSelect(props) {
                   labelId="demo-dialog-select-label"
                   id="demo-dialog-select"
                   value={doco}
+                  data-cy="select-button1"
                   onChange={handleChange1}
                   input={<Input />}
                   MenuProps={MenuProps}
@@ -293,7 +295,7 @@ export default function DialogSelect(props) {
                 <ListSubheader disableSticky>Select from Blog</ListSubheader>
                 <Divider  variant="fullWidth" />
                 {blogs.map((blog) => (
-                  <MenuItem key={blog._id} value={blog} >
+                  <MenuItem key={blog._id} value={blog} data-cy="compare-doc1-select">
                     {blog.name}
                   </MenuItem>
                 ))}
@@ -301,7 +303,7 @@ export default function DialogSelect(props) {
                 <ListSubheader disableSticky>Select from Drive</ListSubheader>
                 <Divider  variant="fullWidth" />
                 {files.map((file) => (
-                  <MenuItem key={file._id} value={file} >
+                  <MenuItem key={file._id} value={file} data-cy="compare-file1-select">
                     {file.metadata.originalname}
                   </MenuItem>
                 ))}
@@ -314,6 +316,7 @@ export default function DialogSelect(props) {
                   labelId="demo-dialog-select-label"
                   id="demo-dialog-select"
                   value={doct}
+                  data-cy="select-button2"
                   onChange={handleChange2}
                   input={<Input />}
                   MenuProps={MenuProps}
@@ -325,7 +328,7 @@ export default function DialogSelect(props) {
                 <ListSubheader disableSticky>Select from Blog</ListSubheader>
                 <Divider variant="fullWidth" />
                 {blogs.map((blog) => (
-                  <MenuItem key={blog._id} value={blog} >
+                  <MenuItem key={blog._id} value={blog} data-cy="compare-doc2-select">
                     {blog.name}
                   </MenuItem>
                 ))}
@@ -333,7 +336,7 @@ export default function DialogSelect(props) {
                 <ListSubheader disableSticky>Select from Drive</ListSubheader>
                 <Divider variant="fullWidth" />
                 {files.map((file) => (
-                  <MenuItem key={file._id} value={file} >
+                  <MenuItem key={file._id} value={file} data-cy="compare-file2-select">
                     {file.metadata.originalname}
                   </MenuItem>
                 ))}
@@ -345,7 +348,7 @@ export default function DialogSelect(props) {
             <Button onClick={handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={handleDocCompare} color="primary">
+            <Button onClick={handleDocCompare} data-cy="compare-confirm-button" color="primary">
               Compare
             </Button>
           </DialogActions>
@@ -374,6 +377,7 @@ export default function DialogSelect(props) {
             <TextField
               id="outlined-multiline-static"
               label="Old Text"
+              data-cy="text1"
               multiline
               rows={8}
               defaultValue=""
@@ -387,6 +391,7 @@ export default function DialogSelect(props) {
             <TextField
               id="outlined-multiline-static"
               label="New Text"
+              data-cy="text2"
               multiline
               inputProps={{ maxLength: 3000 }}
               rows={8}
@@ -410,6 +415,7 @@ export default function DialogSelect(props) {
               boxShadow: ['none']}}
               variant="contained"
               component="label"
+              data-cy="text-compare"
               onClick={handleTextCompare}
               //onSubmit={onSubmit}
             >
@@ -466,7 +472,7 @@ export default function DialogSelect(props) {
               <CardContent >
                 
                 <Typography variant="body2" component="p">
-                  <div id='display'>
+                  <div id='display' data-cy="display-compare">
                       
                   </div>
                 </Typography>

@@ -87,7 +87,7 @@ class Receiver extends React.Component {
 
           <div>
               
-              <div >
+              <div  data-cy="screen-video">
                   <video controls playsInline autoPlay id="screen"></video>
               </div>
           </div>

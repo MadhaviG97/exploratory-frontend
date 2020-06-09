@@ -87,6 +87,7 @@ function DocumentView(props) {
                     <Box p={2} />
                     <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
                         <Button
+                            data-cy="turn-pdf-icon"
                             size="large"
                             htmlType="submit"
                             style={{  background: '#014f82',//can change the sign-in button color from here

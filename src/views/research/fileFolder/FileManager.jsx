@@ -361,7 +361,7 @@ function FileManager(props) {
                     <MenuItem style={{ color: '#d60009',fontSize: 14 }} data-cy='delete' onClick={handleDeleteOpen}>Delete</MenuItem>
                 </Menu>
                 
-                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}} >
+                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)", minHeight: '84vh'}} >
                     <Grid container spacing={5} >
                         <Grid item xs={3} >
                             <Box p={4}/>
@@ -378,15 +378,10 @@ function FileManager(props) {
                             </Box>
                             <Divider  variant="fullWidth" />
                             <Box p={1} />
-                            <Box boxShadow={2} >
-                                <Box p={1}  style={{  background: '#FFFFFF'}}>
-                                        <h1 align='center' className={classes.topic4}>Drive</h1>
-                                </Box>
-                            </Box>
-                            <Box p={1.5}/>
+                            
                             {files.length===0 && folders.length ===0
                             ?<div> {folder ? <EmptyFolder folder={folder}/>:<EmptyDrive word='files'/>}</div>
-                            :<Grid container spacing={4} direction="row"  >
+                            :<Grid container spacing={3} direction="row"  >
                                 {folders.map((folder,index) => (
                                     <Grid item lg={3} md={4} xs={8}>
                                         <CardActionArea component="a" href={`/document/${group}/filemanager/${folder._id}`}>
@@ -443,7 +438,7 @@ function FileManager(props) {
                             }
                         </Grid>
                     </Grid>
-                    <Box p={13.3}  /> 
+                    <Box p={4}  /> 
                 </div>
             </div>
             );

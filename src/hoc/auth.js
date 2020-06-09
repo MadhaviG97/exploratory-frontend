@@ -18,7 +18,11 @@ export default function (ComposedClass, reload) {
             props.history.push("/");
           }
         }
-      });
+      }).catch((err) => {
+        if (reload) {
+          props.history.push("/signup");
+        }
+      })
     }, [dispatch, props.history, user.googleAuth]);
 
     return <ComposedClass {...props} user={user} />;

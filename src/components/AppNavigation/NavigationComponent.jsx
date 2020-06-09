@@ -28,10 +28,10 @@ export default function NavigationComponent(props) {
   const grid = [
     [
       {
-        refr: "/chat",
-        name: "Chat",
-        tooltip: "Chat",
-        image: process.env.PUBLIC_URL + "/images/appnav/speech-bubble.png",
+        refr: `/tasktracker`,
+        name: "Task...",
+        tooltip: "Task Tracker",
+        image: process.env.PUBLIC_URL + "/images/appnav/document.png",
       },
       {
         refr: `/document/${projectId}/filemanager`,
@@ -40,10 +40,10 @@ export default function NavigationComponent(props) {
         image: process.env.PUBLIC_URL + "/images/appnav/file.png",
       },
       {
-        refr: `/tasktracker`,
-        name: "Task...",
-        tooltip: "Task Tracker",
-        image: process.env.PUBLIC_URL + "/images/appnav/document.png",
+        refr: `/project/whiteboard/join-room/${projectId}`,
+        name: "Whiteb...",
+        tooltip: "Share Whiteboards",
+        image: process.env.PUBLIC_URL + "/images/appnav/business.png",
       },
     ],
     [
@@ -53,20 +53,6 @@ export default function NavigationComponent(props) {
         tooltip: "Editor",
         image: process.env.PUBLIC_URL + "/images/appnav/communication.png",
       },
-      {
-        refr: `/project/whiteboard/join-room/${projectId}`,
-        name: "Whiteb...",
-        tooltip: "Share Whiteboards",
-        image: process.env.PUBLIC_URL + "/images/appnav/business.png",
-      },
-      {
-        refr: `/document/${projectId}/compare`,
-        name: "Compare...",
-        tooltip: "Compare Documents",
-        image: process.env.PUBLIC_URL + "/images/appnav/squares.png",
-      },
-    ],
-    [
       {
         refr: `/screenshare/${projectId}/send`,
         name: "Share...",
@@ -78,6 +64,16 @@ export default function NavigationComponent(props) {
         name: "Access...",
         tooltip: "Access Remote Screen",
         image: process.env.PUBLIC_URL + "/images/appnav/computer.png",
+      },
+      
+    ],
+    [
+      
+      {
+        refr: `/document/${projectId}/compare`,
+        name: "Compare...",
+        tooltip: "Compare Documents",
+        image: process.env.PUBLIC_URL + "/images/appnav/squares.png",
       },
     ],
   ];
