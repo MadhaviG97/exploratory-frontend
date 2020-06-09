@@ -33,18 +33,5 @@ describe('Drive', () => {
         
     })
 
-    it('Deletes the created document ', () => {
-
-        cy.wait(2500)
-        cy.get('[data-cy="delete-folder-button"]').should('be.visible')
-        cy.get('[data-cy="delete-folder-button"]').click()
-        cy.get('[data-cy="confirm-delete"]').should('be.visible')
-        cy.get('[data-cy="confirm-delete"]').click()
-        cy.wait(2500)
-
-    })
-
-    
-
 })
 //

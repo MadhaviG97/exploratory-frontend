@@ -198,15 +198,16 @@ class Sender extends React.Component {
                     <FormControl className={classes.formControl}>
                       <InputLabel id="demo-dialog-select-label">Select a Receiver</InputLabel>
                       <Select
-                        labelId="demo-dialog-select-label"
-                        id="demo-dialog-select"
+                        labelId="dialog-select-label"
+                        id="dialog-select"
+                        data-cy="receipient-select"
                         value={this.state.researcher}
                         onChange={this.handleChange}
                         input={<Input />}
                         MenuProps={this.MenuProps}
                       >
                       {this.state.collaborators.filter(researcher => researcher.researcher_id !== user.userData._id).map((researcher) => (
-                        <MenuItem key={researcher.researcher_id} value={researcher} >
+                        <MenuItem key={researcher.researcher_id} value={researcher} data-cy="receipients-menu">
                           <Avatar alt="user" src={researcher.pofile_picture} />
                           <Box p={1}/>
                           {researcher.researcher_email}
@@ -217,7 +218,7 @@ class Sender extends React.Component {
                   </form>
                   </DialogContent>
                   <DialogActions>
-                    <Button onClick={this.handleClose} color="primary">
+                    <Button onClick={this.handleClose} data-cy="button-click-dialog" color="primary">
                       Cancel
                     </Button>
                     <Button onClick={() => {
@@ -234,6 +235,7 @@ class Sender extends React.Component {
                 <div style={{ textAlign: 'center', margin: '2rem', }}>
                     <Button
                         size="large"
+                        data-cy="connect-button"
                         htmlType="submit"
                         style={{  background: '#014f82',//can change the sign-in button color from here
                         color: '#FFFFFF',

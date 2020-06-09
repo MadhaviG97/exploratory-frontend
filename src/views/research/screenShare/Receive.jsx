@@ -54,8 +54,8 @@ export default function Receive(props) {
                             <Box p={3}>
                                 <div >
                                     {sender
-                                        ? <h1 align='center' >You are Viewing the Screen of {sender}</h1>
-                                        : <h1 align='center' >Noone has Shared Screens with You Yet </h1>
+                                        ? <h1 align='center' data-cy="share-message">You are Viewing the Screen of {sender}</h1>
+                                        : <h1 align='center' data-cy="not-yet-message">Noone has Shared Screens with You Yet </h1>
                                     }
                                 </div>
                             </Box>

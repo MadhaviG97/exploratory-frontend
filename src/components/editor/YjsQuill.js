@@ -181,10 +181,11 @@ render() {
       <div >
         <div className={classes.roota}>
             <Collapse in={this.state.fileSaved}>
-                <Alert
+                <Alert data-cy="file-saved-alert"
                 action={
                     <IconButton
                     aria-label="close"
+                    data-cy="alert-close-icon"
                     color="inherit"
                     size="small"
                     onClick={() => {
@@ -215,7 +216,7 @@ render() {
             
             <Grid item xs={8} >
               <Paper id='parent'>
-                <div id="QuillEditor-container" style={{backgroundColor: '#FFFFFF'}}>
+                <div id="QuillEditor-container" data-cy="editor-container" style={{backgroundColor: '#FFFFFF'}}>
                 {/* <!-- Create the editor container --> */}
                 </div>
               </Paper>

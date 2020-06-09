@@ -39,17 +39,23 @@ export function auth() {
       Authorization: `Bearer ${token}`,
     },
   };
-  const request = axios.get(`/auth`, config).then((response) => response.data);
-  //if needed handle when token is invalid and add this code
-  // if (data.message) {
-  // An error will occur if the token is invalid.
-  // If this happens, you may want to remove the invalid token.
-  //localStorage.removeItem("token")
-  //}
-  return {
-    type: AUTH_USER,
-    payload: request,
-  };
+  const request = axios.get(`/auth`, config)
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return { data: err.response.data, status: err.response.status };
+    });
+    //if needed handle when token is invalid and add this code
+    // if (data.message) {
+    // An error will occur if the token is invalid.
+    // If this happens, you may want to remove the invalid token.
+    //localStorage.removeItem("token")
+    //}
+    return {
+      type: AUTH_USER,
+      payload: request,
+    };
 }
 
 export function logoutUser(config) {

@@ -15,6 +15,12 @@ export const useStyles = makeStyles((theme) => ({
     textDecoration: "none"
     
   },
+  background:{
+   height: '100%',
+   backgroundSize: 'cover',
+   backgroundImage: "url(/images/fileFolder/bg3.jpg)", 
+   minHeight: '84vh'
+  },
   topic: {
     color: "#3C4858",
     margin: "1.75rem 0 0.875rem",

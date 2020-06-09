@@ -55,11 +55,11 @@ function App() {
         <Navbar />
         <div>
           <Switch>
-            <Route exact path="/" component={Auth(Feed, true)} />
+            <Route exact path="/" component={Auth(Feed, null)} />
             <Route
               exact
               path="/search/:string"
-              component={Auth(Search, true)}
+              component={Auth(Search, null)}
             />
             <Route exact path="/signin" component={Auth(signIn, false)} />
             <Route exact path="/signup" component={Auth(signUp, false)} />
@@ -110,7 +110,7 @@ function App() {
             <Route
               exact
               path="/project/viewproject/:id"
-              component={Auth(ProjectPublic, true)}
+              component={Auth(ProjectPublic, null)}
             />
             <Route
               exact
@@ -139,7 +139,7 @@ function App() {
               component={Auth(Send, true)}
             />
 
-            <Route exact path="/forum" component={Auth(Forum, true)} />
+            <Route exact path="/forum" component={Auth(Forum, null)} />
             <Route
               exact
               path="/userprofile/:uId"
@@ -157,7 +157,7 @@ function App() {
               component={Auth(JoinRoom, true)}
             />
 
-            <Route exact path="/chat" component={Auth(Chat, null)} />
+            <Route exact path="/chat" component={Auth(Chat, true)} />
 
             <Route
               exact
@@ -170,7 +170,7 @@ function App() {
               path="/404-not-found"
               component={Auth(NotFound, null)}
               path="/forum/search/:string"
-              component={Auth(ForumSearch, true)}
+              component={Auth(ForumSearch, null)}
             />
           </Switch>
         </div>
