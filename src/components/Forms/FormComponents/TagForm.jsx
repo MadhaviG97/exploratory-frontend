@@ -66,7 +66,7 @@ export default function TagForm(props) {
 
   return (
     <Autocomplete
-      id="asynchronous-demo"
+      id="tags"
       fullWidth
       multiple
       disableClearable
