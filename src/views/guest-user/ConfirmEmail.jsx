@@ -1,6 +1,5 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Box from "@material-ui/core/Box";
 import { useStyles } from "../../assets/css/JoinRoom";
 import Container from "@material-ui/core/Container";
 import JoinRoomButtonBase from "../../components/Whiteboard/JoinRoomButtonBase";

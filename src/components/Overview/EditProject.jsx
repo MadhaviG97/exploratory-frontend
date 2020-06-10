@@ -6,6 +6,7 @@ export default function EditProject(props) {
   return (
     <Box display="flex" alignContent="center" alignSelf="flex-end" py={1}>
       <Button
+        id={props.id}
         variant="outlined"
         color="primary"
         onClick={() => props.handleEditState()}

@@ -9,8 +9,6 @@ import { useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 
 import Header from "../Header/Header.js";
-import Button from "../CustomButtons/Button.js";
-import Tab from "../Project/TabPrivateMode";
 
 const useStyles = makeStyles(styles);
 //the styles are from NavbarStyle

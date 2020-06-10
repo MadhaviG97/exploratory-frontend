@@ -23,6 +23,7 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+<<<<<<< HEAD
 import "cypress-localstorage-commands"
 Cypress.Commands.add('login', () => { 
     cy.request({
@@ -40,3 +41,23 @@ Cypress.Commands.add('login', () => {
     })
   
   })
+=======
+
+Cypress.Commands.add(
+  "uploadFile",
+  { prevSubject: true },
+  (subject, fileName, fileType = "") => {
+    cy.fixture(fileName, "binary").then((content) => {
+      return Cypress.Blob.binaryStringToBlob(content, fileType).then((blob) => {
+        const el = subject[0];
+        const testFile = new File([blob], fileName, { type: fileType });
+        const dataTransfer = new DataTransfer();
+
+        dataTransfer.items.add(testFile);
+        el.files = dataTransfer.files;
+        cy.wrap(subject).trigger("change", { force: true });
+      });
+    });
+  }
+);
+>>>>>>> madhavi2

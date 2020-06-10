@@ -16,6 +16,7 @@ export default function Team(props) {
               return (
                 <Grid item xs={12} lg={4} md={6} spacing={3}>
                   <Member
+                    user_id={member.researcher_id}
                     username={member.first_name
                       .concat(" ")
                       .concat(member.last_name)}

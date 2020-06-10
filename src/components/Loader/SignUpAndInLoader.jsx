@@ -47,6 +47,7 @@ export default function CircularIntegration(props) {
     <div className={classes.wrapper}>
       <React.Fragment>
         <Button
+          fullWidth
           variant="contained"
           color="primary"
           className={buttonClassname}

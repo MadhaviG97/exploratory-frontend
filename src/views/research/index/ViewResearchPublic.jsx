@@ -117,7 +117,6 @@ function Home() {
     }
   };
   const getFiles = () => {
-    console.log(files);
     return <FilesList files={files} />;
   };
 

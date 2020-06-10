@@ -6,6 +6,7 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Box from "@material-ui/core/Box";
+import { useHistory, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,8 +36,20 @@ const useStyles = makeStyles((theme) => ({
 export default function Team(props) {
   const classes = useStyles();
   const theme = useTheme();
+  let history = useHistory();
+  let location = useLocation();
+
   return (
-    <CardActionArea>
+    <CardActionArea
+      id={props.user_id}
+      onClick={() => {
+        alert("here");
+        var { from } = location.state || {
+          from: { pathname: `/userprofile/${props.user_id}` },
+        };
+        history.replace(from);
+      }}
+    >
       <Card className={classes.root}>
         <CardMedia
           className={classes.cover}
