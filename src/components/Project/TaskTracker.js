@@ -16,7 +16,7 @@ import CommentSection from "../TaskTracker/TaskComments";
 import AddTask from "../TaskTracker/AddNewTask";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getTasks, getCollaborators } from "../../_actions/taskTracker_actions";
+import { getTasks, getCollaborators, getComments } from "../../_actions/taskTracker_actions";
 import { propTypes } from "pdf-viewer-reactjs";
 import { useParams, useHistory } from "react-router-dom";
 
@@ -79,12 +79,14 @@ const StyledTableRow = withStyles((theme) => ({
 export default function SimpleTable() {
   const classes = useStyles();
   const {pId} = useParams();
-  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTasks(pId));
     dispatch(getCollaborators(pId));
+    dispatch(getComments(pId));
   }, []);
+  const user = useSelector((state) => state.user);
+  console.log(user.userData)
   const tasktracker = useSelector((state) => state.task_tracker);
   const collaborators = useSelector((state) => state.task_tracker.collaborators);
 
@@ -160,7 +162,7 @@ export default function SimpleTable() {
                         {new Date(task.created_at).toDateString()}
                       </StyledTableCell>
                       <StyledTableCell align="left">
-                        <ActionButtonGroup task={task} project_id={pId} collaborators={collaborators}/>
+                        <ActionButtonGroup task={task} project_id={pId} collaborators={collaborators} />
                       </StyledTableCell>
                     </StyledTableRow>
                   ))
@@ -182,7 +184,7 @@ export default function SimpleTable() {
         </div>
       </div>
       <Paper className={classes.commentSection}>
-        <CommentSection project_id={pId} />
+        <CommentSection project_id={pId} userData={user.userData}/>
       </Paper>
     </div>
   );
