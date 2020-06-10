@@ -33,7 +33,7 @@ export default function ItemHeader(props) {
         </Typography>
       </Box>
       {user_id !== 0 && isCollaborator(user_id) && (
-        <EditProject handleEditState={props.handleEditState} />
+        <EditProject id={props.id} handleEditState={props.handleEditState} />
       )}
     </Box>
   );

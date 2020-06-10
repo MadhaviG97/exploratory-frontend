@@ -53,14 +53,15 @@ export default function CommentSection(props) {
   const classes = useStyles();
   const user = useSelector((state) => state.user);
   const project = useSelector((state) => state.project);
+  const [loggedInUser, setLoggedInUser] = React.useState(0);
 
   const isDeletable = (authur_id) => {
-    if (authur_id === user.userData._id) {
+    if (authur_id === loggedInUser) {
       return true;
     }
     var collaborator;
     for (collaborator of project.collaborators) {
-      if (user.userData._id === collaborator.researcher_id) {
+      if (loggedInUser === collaborator.researcher_id) {
         return true;
       }
     }
@@ -68,9 +69,15 @@ export default function CommentSection(props) {
   };
 
   const isEditable = (authur_id) => {
-    return authur_id === user.userData._id ? true : false;
+    return authur_id === loggedInUser ? true : false;
   };
   console.log(props.replies);
+
+  React.useState(() => {
+    if (user === {} || user.userData !== undefined) {
+      setLoggedInUser(user.userData._id);
+    }
+  }, []);
 
   return (
     <React.Fragment>

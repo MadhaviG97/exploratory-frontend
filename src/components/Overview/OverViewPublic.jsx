@@ -22,9 +22,6 @@ export default function Overview() {
   const [editImages, setEditImages] = React.useState(false);
   const [editPaper, setEditPaper] = React.useState(false);
 
-  //props.project.visibility_public
-  const visibility_public = 1 ? true : false;
-
   const [state, setState] = React.useState({
     requested: false,
   });
@@ -47,6 +44,7 @@ export default function Overview() {
     return (
       <React.Fragment>
         <ItemHeader
+          id="abstract-edit"
           handleEditState={() => setEditAbstract(true)}
           title="Abstract"
         />
@@ -74,6 +72,7 @@ export default function Overview() {
     return (
       <React.Fragment>
         <ItemHeader
+          id="related-images-edit"
           handleEditState={() => setEditImages(true)}
           title="Related Images"
         />
@@ -100,7 +99,11 @@ export default function Overview() {
     if (!(PDFprops.url === "NULL" || PDFprops.url === null)) {
       return (
         <React.Fragment>
-          <ItemHeader handleEditState={() => setEditPaper(true)} title="" />
+          <ItemHeader
+            id="final-paper-edit"
+            handleEditState={() => setEditPaper(true)}
+            title=""
+          />
           <EditFinalPaper
             onClose={() => {
               setEditPaper(false);

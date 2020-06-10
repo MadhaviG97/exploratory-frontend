@@ -4,12 +4,14 @@ import styles from "../../../assets/jss/material-kit-react/views/componentsSecti
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
-import Header from "../../Header/Header.js";
+import { useSelector } from "react-redux";
+
 import Button from "../../CustomButtons/Button.js";
 const useStyles = makeStyles(styles);
+
 function LeftMenu(props) {
   //these ara the links in the left side of the nav bar
-
+  const user = useSelector((state) => state.user);
   const classes = useStyles();
 
   return (
@@ -36,7 +38,11 @@ function LeftMenu(props) {
         </ListItem>
         <ListItem className={classes.listItem}>
           <Button
-            href="/project/createproject"
+            href={
+              user.userData && user.userData.isAuth
+                ? "/project/createproject"
+                : "/signin"
+            }
             className={classes.navLink}
             color="transparent"
           >

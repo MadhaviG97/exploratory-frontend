@@ -1,19 +1,11 @@
 import React from "react";
 import ImgsViewer from "react-images-viewer";
-import { makeStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import Button from "@material-ui/core/Button";
-import Typography from "@material-ui/core/Typography";
-
-const images = [
-  { id: 10001, url: "default-0.jpg", caption: "Image-1" },
-  { id: 10002, url: "default-1.jpg", caption: "Image-2" },
-  { id: 10003, url: "default-2.jpg", caption: "Image-3" },
-];
 
 const classes = {
   root: {
@@ -50,6 +42,7 @@ export default class ImageViwerClass extends React.Component {
         var object = {
           src: `${process.env.REACT_APP_BACK_END_URL}/related_images/${image.url}`,
           caption: image.caption,
+          id: image.id,
         };
         dataSet.push(object);
       });
@@ -72,8 +65,7 @@ export default class ImageViwerClass extends React.Component {
     this.setState({ viewerIsOpen: false });
   };
 
-  handleViewImage = (e) => {
-    const index = e.target.id;
+  handleViewImage = (index) => {
     this.setState({ currImg: index, viewerIsOpen: true });
   };
 
@@ -82,9 +74,12 @@ export default class ImageViwerClass extends React.Component {
       <div style={classes.root}>
         <GridList style={classes.gridList} cols={2.5}>
           {this.state.dataSet.map((tile) => (
-            <GridListTile key={tile.src}>
-              <Button onClick={this.handleViewImage}>
-                <img src={tile.src} id={this.state.dataSet.indexOf(tile)} />
+            <GridListTile key={tile.id}>
+              <Button
+                onClick={(e) => this.handleViewImage(tile.id)}
+                id={`image-${tile.id}`}
+              >
+                <img src={tile.src} id={tile.id} />
               </Button>
 
               <GridListTileBar

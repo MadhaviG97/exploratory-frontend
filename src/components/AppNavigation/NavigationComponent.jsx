@@ -22,65 +22,113 @@ export default function NavigationComponent(props) {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const projectId = props.projectId;
-  console.log(props.projectId);
   const [filecreated, setFileCreated] = React.useState(false);
   const user = useSelector((state) => state.user);
-  const grid = [
-    [
-      {
-        refr: "/chat",
-        name: "Chat",
-        tooltip: "Chat",
-        image: process.env.PUBLIC_URL + "/images/appnav/speech-bubble.png",
-      },
-      {
-        refr: `/document/${projectId}/filemanager`,
-        name: "Drive",
-        tooltip: "Drive",
-        image: process.env.PUBLIC_URL + "/images/appnav/file.png",
-      },
-      {
-        refr: `/tasktracker`,
-        name: "Task...",
-        tooltip: "Task Tracker",
-        image: process.env.PUBLIC_URL + "/images/appnav/document.png",
-      },
-    ],
-    [
-      {
-        refr: `/document/${projectId}/editorblog`,
-        name: "Editor",
-        tooltip: "Editor",
-        image: process.env.PUBLIC_URL + "/images/appnav/communication.png",
-      },
-      {
-        refr: `/project/whiteboard/join-room/${projectId}`,
-        name: "Whiteb...",
-        tooltip: "Share Whiteboards",
-        image: process.env.PUBLIC_URL + "/images/appnav/business.png",
-      },
-      {
-        refr: `/document/${projectId}/compare`,
-        name: "Compare...",
-        tooltip: "Compare Documents",
-        image: process.env.PUBLIC_URL + "/images/appnav/squares.png",
-      },
-    ],
-    [
-      {
-        refr: `/screenshare/${projectId}/send`,
-        name: "Share...",
-        tooltip: "Share Screen",
-        image: process.env.PUBLIC_URL + "/images/appnav/buildings.png",
-      },
-      {
-        refr: `/screenshare/${projectId}/receive`,
-        name: "Access...",
-        tooltip: "Access Remote Screen",
-        image: process.env.PUBLIC_URL + "/images/appnav/computer.png",
-      },
-    ],
-  ];
+  const project = useSelector((state) => state.project);
+  const [isCollaborator, setIsCollaborator] = React.useState(false);
+
+  const checkIsCollaborator = (logged_in_user) => {
+    var collaborators = project.collaborators.concat(project.admins);
+    var i;
+    for (i = 0; i < collaborators.length; i++) {
+      if (collaborators[i].researcher_id === logged_in_user) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  React.useEffect(() => {
+    var user_id = user.userData ? user.userData._id : null;
+    if (user_id) {
+      setIsCollaborator(checkIsCollaborator(user_id));
+    } else {
+      setIsCollaborator(false);
+    }
+  }, []);
+
+  const grid = isCollaborator
+    ? [
+        [
+          {
+            refr: `/document/${projectId}/filemanager`,
+            name: "Drive",
+            tooltip: "Drive",
+            image: process.env.PUBLIC_URL + "/images/appnav/file.png",
+          },
+          {
+            refr: `/tasktracker`,
+            name: "Task...",
+            tooltip: "Task Tracker",
+            image: process.env.PUBLIC_URL + "/images/appnav/document.png",
+          },
+        ],
+        [
+          {
+            refr: `/document/${projectId}/editorblog`,
+            name: "Editor",
+            tooltip: "Editor",
+            image: process.env.PUBLIC_URL + "/images/appnav/communication.png",
+          },
+          {
+            refr: `/project/whiteboard/join-room/${projectId}`,
+            name: "Whiteb...",
+            tooltip: "Share Whiteboards",
+            image: process.env.PUBLIC_URL + "/images/appnav/business.png",
+          },
+          {
+            refr: `/document/${projectId}/compare`,
+            name: "Compare...",
+            tooltip: "Compare Documents",
+            image: process.env.PUBLIC_URL + "/images/appnav/squares.png",
+          },
+        ],
+        [
+          {
+            refr: `/screenshare/${projectId}/send`,
+            name: "Share...",
+            tooltip: "Share Screen",
+            image: process.env.PUBLIC_URL + "/images/appnav/buildings.png",
+          },
+          {
+            refr: `/screenshare/${projectId}/receive`,
+            name: "Access...",
+            tooltip: "Access Remote Screen",
+            image: process.env.PUBLIC_URL + "/images/appnav/computer.png",
+          },
+        ],
+      ]
+    : [
+        [
+          {
+            refr: `/document/${projectId}/filemanager`,
+            name: "Drive",
+            tooltip: "Drive",
+            image: process.env.PUBLIC_URL + "/images/appnav/file.png",
+          },
+          {
+            refr: `/tasktracker`,
+            name: "Task...",
+            tooltip: "Task Tracker",
+            image: process.env.PUBLIC_URL + "/images/appnav/document.png",
+          },
+        ],
+        [
+          {
+            refr: `/document/${projectId}/editorblog`,
+            name: "Editor",
+            tooltip: "Editor",
+            image: process.env.PUBLIC_URL + "/images/appnav/communication.png",
+          },
+
+          {
+            refr: `/document/${projectId}/compare`,
+            name: "Compare...",
+            tooltip: "Compare Documents",
+            image: process.env.PUBLIC_URL + "/images/appnav/squares.png",
+          },
+        ],
+      ];
   //attributes should go to flaticon.com for the icons used
   const handleClickOpen = () => {
     setOpen(true);
@@ -92,14 +140,12 @@ export default function NavigationComponent(props) {
   const handleChange = (event) => {
     setName(event.target.value);
   };
-  let color;
-  if (props.color){color=props.color}else{color="#616161"}
-  
+
   return (
-    <div>
+    <React.Fragment>
       <Tooltip title="Apps">
-        <IconButton onClick={handleClickOpen}>
-          <AppsIcon style={{ color: color }}/>
+        <IconButton aria-label="apps" size="small" onClick={handleClickOpen}>
+          <AppsIcon color="primary" />
         </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
@@ -154,6 +200,6 @@ export default function NavigationComponent(props) {
           <Box p={4} />
         </DialogContent>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 }

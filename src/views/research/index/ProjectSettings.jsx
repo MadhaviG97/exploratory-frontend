@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { Grid, Typography, TextField, Paper, Box } from "@material-ui/core";
+import {
+  Grid,
+  Typography,
+  TextField,
+  Paper,
+  Box,
+  Button,
+} from "@material-ui/core";
 import { useStyles } from "../../../assets/css/createResearch";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Chip from "@material-ui/core/Chip";
@@ -38,7 +45,6 @@ export default function Form(props) {
   let { from } = location.state || {
     from: { pathname: `/project/viewproject/${id}` },
   };
-
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
 
@@ -71,44 +77,48 @@ export default function Form(props) {
   };
 
   useEffect(() => {
-    let mounted = true;
-    if (mounted) {
-      if (project === undefined) {
-        let config = {
-          headers: {
-            Authorization: `Bearer ${localStorage.token}`,
-          },
-        };
-
-        var request = axios
-          .post("/project/view-project", { id: id })
-          .then(async (response) => {
-            // await isvaliduser(user.userData._id);
-            return response.data;
-          })
-          .catch((err) => console.log(err.message));
-
-        dispatch(render(request)).then((response) => {
-          var project = response.payload.project_details.project;
-          var collaborators = response.payload.project_details.collaborators;
-          var tags = response.payload.project_details.tags;
-          setState({
-            ...state,
-            title: project.title,
-            description: project.description,
-            abstract: project.abstract,
-            author: project.creator,
-            collaborators: collaborators,
-            visibility_public: project.visibility_public,
-            tags: tags,
-            initialCollaborators: collaborators,
-            spinner: false,
-          });
+    if (state.spinner) {
+      if (project == undefined) {
+        handleUndefinedProject();
+      } else {
+        setState({
+          ...state,
+          title: project.title,
+          description: project.description,
+          abstract: project.abstract,
+          author: project.creator,
+          collaborators: collaborators,
+          visibility_public: project.visibility_public,
+          tags: tags,
+          initialCollaborators: collaborators,
+          spinner: false,
         });
       }
     }
-    return () => (mounted = false);
   }, []);
+
+  function isCollaborator(collaborators, userId) {
+    let isUser = false;
+
+    collaborators.map((collaborator) => {
+      if (collaborator.researcher_id === userId) {
+        isUser = true;
+      }
+    });
+    return isUser;
+  }
+
+  // const checkUser = () => {
+  //   axios
+  //     .post("/project/get-collaborator-ids", { project_id: id })
+  //     .then((result) => {
+  //       console.log(response.payload);
+  //       var user_id = response.payload._id;
+  //       if (!isCollaborator(result.data, user_id)) {
+  //         props.history.push("/signin");
+  //       }
+  //     });
+  // };
 
   const handleChange = (e) => {
     console.log(e.target.name);
@@ -118,6 +128,41 @@ export default function Form(props) {
       [e.target.name]: e.target.value,
     });
     console.log(e.target);
+  };
+
+  const handleUndefinedProject = () => {
+    let config = {
+      headers: {
+        Authorization: `Bearer ${localStorage.token}`,
+      },
+    };
+
+    var request = axios
+      .post("/project/view-project", { id: id })
+      .then(async (response) => {
+        // await isvaliduser(user.userData._id);
+        return response.data;
+      })
+      .catch((err) => console.log(err.message));
+
+    dispatch(render(request)).then((response) => {
+      var project = response.payload.project_details.project;
+      var collaborators = response.payload.project_details.collaborators;
+      var tags = response.payload.project_details.tags;
+
+      setState({
+        ...state,
+        title: project.title,
+        description: project.description,
+        abstract: project.abstract,
+        author: project.creator,
+        collaborators: collaborators,
+        visibility_public: project.visibility_public,
+        tags: tags,
+        initialCollaborators: collaborators,
+        spinner: false,
+      });
+    });
   };
 
   const handleAlertClose = () => {
@@ -176,9 +221,7 @@ export default function Form(props) {
           .then((result) => {
             setLoading(false);
             setSuccess(true);
-            let { from } = location.state || {
-              from: { pathname: `/project/viewproject/${id}` },
-            };
+
             history.replace(from);
           })
           .catch((e) => console.log(e));
@@ -226,26 +269,26 @@ export default function Form(props) {
     setState({ ...state, visibility_public: visibility_public });
   };
 
-  const isCollaborator = (collaborators, userId) => {
-    let isUser = false;
+  // const isCollaborator = (collaborators, userId) => {
+  //   let isUser = false;
 
-    collaborators.map((collaborator) => {
-      if (collaborator.researcher_id === userId) {
-        isUser = true;
-      }
-    });
-    return isUser;
-  };
+  //   collaborators.map((collaborator) => {
+  //     if (collaborator.researcher_id === userId) {
+  //       isUser = true;
+  //     }
+  //   });
+  //   return isUser;
+  // };
 
-  const isvaliduser = (logged_user) => {
-    axios
-      .post("/project/get-collaborator-ids", { project_id: id })
-      .then((result) => {
-        if (!isCollaborator(result.data, logged_user)) {
-          history.push("/");
-        }
-      });
-  };
+  // const isvaliduser = (logged_user) => {
+  //   axios
+  //     .post("/project/get-collaborator-ids", { project_id: id })
+  //     .then((result) => {
+  //       if (!isCollaborator(result.data, logged_user)) {
+  //         history.push("/");
+  //       }
+  //     });
+  // };
 
   return (
     <React.Fragment>
@@ -405,15 +448,29 @@ export default function Form(props) {
                       />
                     </Grid>
                   </Grid>
-
-                  <Grid item xs={12} align="end">
+                  <Grid item xs={1} md={1} lg={1}></Grid>
+                  <Grid item xs={5} md={5} lg={5}>
+                    <Button
+                      onClick={() => {
+                        setState({ ...state, spinner: true });
+                        history.replace(from);
+                      }}
+                      variant="outlined"
+                      color="primary"
+                    >
+                      CANCEL CHANGES
+                    </Button>
+                  </Grid>
+                  <Grid item xs={1} md={1} lg={1}></Grid>
+                  <Grid item xs={5} md={5} lg={5}>
                     <ButtonLoader
-                      name="Save Project"
+                      name="SAVE CHANGES"
                       success={success}
                       loading={loading}
                       onClick={handleSubmit}
                     />
                   </Grid>
+
                   {state.alertOpen && (
                     <Alert
                       open={state.alertOpen}
