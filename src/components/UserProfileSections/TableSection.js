@@ -7,7 +7,9 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import Link from "@material-ui/core/Link";
+import { Link } from "react-router-dom";
+import LinkTo from "@material-ui/core/Link";
+import { useHistory, useLocation } from "react-router-dom";
 import Typography from "@material-ui/core/Typography";
 
 import { useDispatch, useSelector } from "react-redux";
@@ -70,7 +72,7 @@ export default function CustomizedTables() {
             researcher.projects.map((project) => (
               <StyledTableRow key={project.project_id}>
                 <StyledTableCell component="th" scope="row" width={0}>
-                  <Link
+                  {/* <Link
                     component="button"
                     variant="body2"
                     onClick={() => {
@@ -78,19 +80,32 @@ export default function CustomizedTables() {
                     }}
                   >
                     {project.title}
+                  </Link> */}
+                  <Link
+                    to={`/project/viewproject/${project.project_id}`}
+                    style={{ color: "primary" }}
+                    variant="body2"
+                  >
+                    <LinkTo component="button"> {project.title}</LinkTo>
                   </Link>
                 </StyledTableCell>
                 <StyledTableCell align="left">
                   {project.description}
                 </StyledTableCell>
-                <StyledTableCell align="left">{project.first_name+" "+project.last_name}</StyledTableCell>
+                <StyledTableCell align="left">
+                  {project.first_name + " " + project.last_name}
+                </StyledTableCell>
               </StyledTableRow>
             ))
           ) : (
             <StyledTableRow>
               <div align="left">
-                <Typography variant="h6" align="left" color="textPrimary" className={classes.paper}>
-                  No Projects Yet
+                <Typography
+                  variant="h6"
+                  color="primary"
+                  className={classes.paper}
+                >
+                  No projects yet...
                 </Typography>
               </div>
             </StyledTableRow>

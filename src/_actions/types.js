@@ -39,6 +39,7 @@ export const GET_FREQ_USERS = "get_freq_users";
 export const GET_POPULAR_QUESTIONS = "get_popular_questions";
 export const GET_POPULAR_ANSWERS = "get_popular_answers";
 export const GET_PROJECTS_BY_USER_ID = "get_projects_by_user_id";
+export const GET_PROJECT_POSTS_BY_USER_ID = "get_project_posts_by_user_id";
 export const GET_INSTITUTIONS = "get_institutions";
 export const FORUM_SEARCH = "forum_search";
 export const GET_QUESTION_LIKES = "get_question_likes";

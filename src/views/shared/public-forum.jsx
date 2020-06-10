@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import ReactLoading from "react-loading";
+import InfiniteScroll from "react-infinite-scroll-component";
 // nodejs library that concatenates classes
 
 // @material-ui/core components
@@ -28,7 +29,7 @@ import {
   getPopularQuestions,
   getPopularAnswers,
   getQuestionLikes,
-  getAnswerLikes
+  getAnswerLikes,
 } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -36,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     minWidth: 250,
-    minHeight: 550
+    minHeight: 550,
   },
   paper: {
     padding: theme.spacing(2),
@@ -47,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
-    minHeight:550
+    minHeight: 550,
   },
   loader: {
     height: 550,
@@ -97,29 +98,49 @@ export default function Forum() {
         <div className={classes.root}>
           <Grid container>
             <Grid item xs>
-              <Paper>
-                <UserSection />
-              </Paper>
+              <InfiniteScroll
+                dataLength={1000} //This is important field to render the next data
+                height={800}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>********</b>
+                  </p>
+                }
+              >
+                <Paper>
+                  <UserSection />
+                </Paper>
+              </InfiniteScroll>
             </Grid>
 
             <Divider orientation="vertical" variant="fullWidth" />
 
             <Grid item xs={6}>
-              <Container style={{ backgroundColor: "white", padding: "5px" }}>
-                {Object.keys(questions).length > 0 ? (
-                  questions.questions.map((question) => (
-                    <ForumPost postDetails={question} valid={1}/>
-                  ))
-                ) : (
-                  <Paper className={classes.paperQuestion}>
-                  <Typography variant="h6" gutterBottom color="primary">
-                    No questions yet...
-                  </Typography>
-                </Paper>
-                )}
+              <InfiniteScroll
+                dataLength={1000} //This is important field to render the next data
+                height={800}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>You have seen it all</b>
+                  </p>
+                }
+              >
+                <Container style={{ backgroundColor: "white", padding: "5px" }}>
+                  {Object.keys(questions).length > 0 ? (
+                    questions.questions.map((question) => (
+                      <ForumPost postDetails={question} valid={1} />
+                    ))
+                  ) : (
+                    <Paper className={classes.paperQuestion}>
+                      <Typography variant="h6" gutterBottom color="primary">
+                        No questions yet...
+                      </Typography>
+                    </Paper>
+                  )}
 
-                <Divider />
-              </Container>
+                  <Divider />
+                </Container>
+              </InfiniteScroll>
             </Grid>
 
             <Divider orientation="vertical" variant="fullWidth" />
@@ -133,9 +154,19 @@ export default function Forum() {
                 <CountGrid />
               </Paper>
               <Divider />
-              <Paper>
-                <PopularSectionTab />
-              </Paper>
+              <InfiniteScroll
+                dataLength={1000} //This is important field to render the next data
+                height={600}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>********</b>
+                  </p>
+                }
+              >
+                <Paper>
+                  <PopularSectionTab />
+                </Paper>
+              </InfiniteScroll>
             </Grid>
           </Grid>
         </div>
