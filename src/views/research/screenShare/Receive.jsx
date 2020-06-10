@@ -44,28 +44,30 @@ export default function Receive(props) {
     if (user.userData && mounted){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
-                <div className={classNames(classes.main2)}>
-                    <div style={{ width: '70%', margin: '0.1rem auto' }}>
-                        <Box p={1.5}/>
-                        <NavComponent projectId={props.match.params.projectId}/>
-                        <Divider  variant="fullWidth" />
-                        <Box p={1}/>
-                        <Box  style={{  background: '#FFFFFF'}} >
-                            <Box p={3}>
-                                <div >
-                                    {sender
-                                        ? <h1 align='center' data-cy="share-message">You are Viewing the Screen of {sender}</h1>
-                                        : <h1 align='center' data-cy="not-yet-message">Noone has Shared Screens with You Yet </h1>
-                                    }
-                                </div>
+                <div style={{background: "#eceff1"}}>
+                    <div  className={classes.background}>
+                        <div style={{ width: '70%', margin: '0.1rem auto' }}>
+                            <Box p={1.5}/>
+                            <NavComponent projectId={props.match.params.projectId} color={'#FFFFFF'}/>
+                            <Divider  variant="fullWidth" />
+                            <Box p={1}/>
+                            <Box  style={{  background: '#FFFFFF'}} >
+                                <Box p={3}>
+                                    <div >
+                                        {sender
+                                            ? <h1 align='center' data-cy="share-message">You are Viewing the Screen of {sender}</h1>
+                                            : <h1 align='center' data-cy="not-yet-message">Noone has Shared Screens with You Yet </h1>
+                                        }
+                                    </div>
+                                </Box>
                             </Box>
-                        </Box>
-                    </div> 
-                    
-                    <div  > 
-                        <Receiver group={props.match.params.projectId} senderSet={senderSet} userProp={userProp}/>
+                        </div> 
+                        
+                        <div  > 
+                            <Receiver group={props.match.params.projectId} senderSet={senderSet} userProp={userProp}/>
+                        </div>
+                        <Box p={4}/>
                     </div>
-                    <Box p={4}/>
                 </div>
             );
         }else{

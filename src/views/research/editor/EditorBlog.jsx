@@ -146,7 +146,8 @@ export default function CreatePage(props) {
     if (mounted && user.userData && !loading){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
-                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)", minHeight: '84vh'}}>
+                <div style={{background: "#eceff1"}}>
+                <div className={classes.background}>
                     <Dialog open={open} onClose={handleClose}  aria-labelledby="form-dialog-title">
                         <DialogContent className={classes.formControl}>
                             <DialogContentText>
@@ -255,6 +256,7 @@ export default function CreatePage(props) {
                     </div>
                     
                     <Box p={4}  /> 
+                </div>
                 </div>
             );
         }else{

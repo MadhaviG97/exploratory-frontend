@@ -245,7 +245,7 @@ export default function DialogSelect(props) {
   }
 
   return (
-    <div className={classes.main2}>
+    <div className={classes.background}>
         <Box p={1}/>
         <div className={classes.icon}>
           <Box  style={{ display: "flex" }} flexDirection="row" >
@@ -259,14 +259,16 @@ export default function DialogSelect(props) {
         
           <Grid item xs={8} md={4} item align="center" >
             <CardActionArea component="a" onClick={handleClickOpen} data-cy="select-doc">
-              <Card className={classes.card} style={{  background: '#FFFFFF'}}>
+              <Card className={classes.card} >
                 <div className={classes.cardDetails}>
+                  <Box borderColor="primary.main" border={2}>
                   <CardContent>
                     <div className={classes.name} >
                         <h2 className={classes.topic}>Select Two Documents to Compare</h2>
                     </div>
                     
                   </CardContent>
+                  </Box>
                 </div>
                 <CardMedia className={classes.cardMedia} image={imagex}  />
               </Card>
