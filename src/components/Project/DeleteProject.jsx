@@ -109,7 +109,7 @@ export default function CustomizedDialogs() {
         open={open}
       >
         <DialogTitle id="customized-dialog-title" onClose={handleClose}>
-          Modal title
+          Delete Project
         </DialogTitle>
         <DialogContent dividers>
           <Typography gutterBottom>

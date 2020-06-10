@@ -53,7 +53,6 @@ export default function Comments(props) {
     axios
       .post("/project/comments/view-comments", { id: project.id })
       .then((response) => {
-        console.log(response.data);
         if (response.data) {
           setComments(response.data);
           setSuccess(true);
@@ -70,7 +69,7 @@ export default function Comments(props) {
       {success && (
         <Box>
           <Alert
-            variant="filled"
+            variant="outlined"
             onClose={() => {
               setSuccess(false);
             }}
@@ -84,14 +83,18 @@ export default function Comments(props) {
           <AddNewComment onNewComment={handleRefreshComment} />
         </Grid>
         <Grid item lg={8} md="8" xs={9}>
-          {comments.map((chat) => {
-            return (
-              <CommentHeads
-                chat={chat}
-                onCommentDelete={handleRefreshComment}
-              />
-            );
-          })}
+          {comments.length !== 0 ? (
+            comments.map((chat) => {
+              return (
+                <CommentHeads
+                  chat={chat}
+                  onCommentDelete={handleRefreshComment}
+                />
+              );
+            })
+          ) : (
+            <img src="/images/project/Empty.png" />
+          )}
         </Grid>
         <Grid item lg={2} md="2" xs={0} />
       </Grid>
