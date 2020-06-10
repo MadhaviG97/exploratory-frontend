@@ -166,6 +166,7 @@ const ParticipantPanel = (props) => {
                 arrow
               >
                 <IconButton
+                  id="removeParticipantButton"
                   edge="start"
                   color="inherit"
                   onClick={() => { handleRemoveParticipant(option.user_id) }}

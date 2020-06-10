@@ -43,6 +43,7 @@ export default function CreatePage(props) {
     const [loading,setLoading]=useState(true);
     const group=props.match.params.projectId
     const user = useSelector(state => state.user);
+    const label='Last Updated -: '
     let user_id=0
     if (user.userData){
         user_id=user.userData._id
@@ -145,7 +146,7 @@ export default function CreatePage(props) {
     if (mounted && user.userData && !loading){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
-                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}}>
+                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)", minHeight: '84vh'}}>
                     <Dialog open={open} onClose={handleClose}  aria-labelledby="form-dialog-title">
                         <DialogContent className={classes.formControl}>
                             <DialogContentText>
@@ -156,13 +157,13 @@ export default function CreatePage(props) {
                         <Button onClick={handleClose} variant="contained" color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={handleDelete} color="primary">
+                        <Button onClick={handleDelete} color="primary" data-cy="delete-confirm-document-button">
                             Delete
                         </Button>
                         </DialogActions>
                     </Dialog>
                     <Collapse in={documentdeleted}>
-                            <Alert
+                            <Alert data-cy="delete-success-alert"
                             action={
                                 <IconButton
                                 aria-label="close"
@@ -205,7 +206,7 @@ export default function CreatePage(props) {
                                     {blogs.map((blog,index) => (
                                         <Grid item lg={4} md={6} xs={12}>
                                             <CardActionArea component="a" >
-                                            <Card >
+                                            <Card data-cy="document-card">
                                                 <CardHeader
                                                     avatar={
                                                         <Avatar aria-label="recipe" className={classes.avatar}>
@@ -214,7 +215,7 @@ export default function CreatePage(props) {
                                                     }
                                                     
                                                     title={blog.name}
-                                                    subheader={blog.updatedAt}
+                                                    subheader={label.concat(blog.updatedAt.substr(0,10))}
                                                 />
                                                 <Divider variant="middle" />
                                                 <CardContent>
@@ -225,17 +226,17 @@ export default function CreatePage(props) {
                                                 <Divider variant="middle" />
                                                 <CardActions disableSpacing>
                                                 <Tooltip title="Edit Document">
-                                                    <IconButton aria-label="delete document" href={`/document/${group}/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                    <IconButton aria-label="edit document" data-cy="edit-document-icon" href={`/document/${group}/edit/${blog._id}`} >{/*href ={`/editor/delete/${blog._id}`} */}
                                                         <EditIcon/>
                                                     </IconButton>
                                                 </Tooltip>
                                                 <Tooltip title="Turn to PDF format">
-                                                        <IconButton aria-label="settings" href={`/document/${group}/view/${blog._id}`}>
+                                                        <IconButton aria-label="settings" data-cy="pdf-document-icon" href={`/document/${group}/view/${blog._id}`}>
                                                             <PictureAsPdfIcon />
                                                         </IconButton>
                                                     </Tooltip>
                                                 <Tooltip title="Delete Document">
-                                                    <IconButton aria-label="delete document" onClick={()=>handleClickOpen(blog._id)} >{/*href ={`/editor/delete/${blog._id}`} */}
+                                                    <IconButton aria-label="delete document" data-cy="delete-document-icon" onClick={()=>handleClickOpen(blog._id)} >{/*href ={`/editor/delete/${blog._id}`} */}
                                                         <DeleteIcon />
                                                     </IconButton>
                                                 </Tooltip>
@@ -253,7 +254,7 @@ export default function CreatePage(props) {
                     
                     </div>
                     
-                    <Box p={13.5}  /> 
+                    <Box p={4}  /> 
                 </div>
             );
         }else{

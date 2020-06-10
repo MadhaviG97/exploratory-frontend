@@ -1,6 +1,13 @@
 
 var express = require('express');
 const app = express();
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "X-Requested-With");
+    res.header("Access-Control-Allow-Headers", "Content-Type");
+    res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+    next();
+  });
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
@@ -9,7 +16,7 @@ let callee = [];
 let grouproom=''
 
 io.on('connection', (socket) => {
-console.log('Socket Connected', socket.id);
+
 
 socket.on('join', (room) => {
     
@@ -61,10 +68,10 @@ socket.on('sender', (sender) => {
     io.to(grouproom.concat('callee')).emit('sender', sender);
 });
 socket.on('disconnect', () => {
-    console.log('Socket Disconnected', socket.id);
+    
 });
 });
 
-http.listen(8000, function () {
+http.listen(8000,{log:false, origins:'*:*'}, function () {
     console.log('listening on *:8000');
 });

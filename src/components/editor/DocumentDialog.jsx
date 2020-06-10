@@ -63,7 +63,7 @@ export default function DocumentDialog(props) {
     <div>
        <div className={classes.roota}>
           <Collapse in={filecreated}>
-            <Alert
+            <Alert data-cy="create-success-alert"
               action={
                 <IconButton
                   aria-label="close"
@@ -91,13 +91,14 @@ export default function DocumentDialog(props) {
           variant="contained"
           component="label"
           onClick={handleClickOpen}
+          data-cy="create-button"
           //onSubmit={onSubmit}
         >
             Create
         </Button>
         <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
           <form onSubmit={handleSubmit}>
-            <DialogContent>
+            <DialogContent data-cy="document-dialog">
               <DialogContentText>
                   Document Name
               </DialogContentText>
@@ -116,7 +117,7 @@ export default function DocumentDialog(props) {
               <Button onClick={handleClose} color="primary">
                 Cancel
               </Button>
-              <Button type="submit" color="primary">
+              <Button type="submit" color="primary" data-cy="button-confirm-create">
                 Create
               </Button>
             </DialogActions>

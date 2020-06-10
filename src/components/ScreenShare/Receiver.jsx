@@ -2,7 +2,7 @@ import React from 'react';
 import '../../assets/css/screenshare.css';
 import Box from '@material-ui/core/Box';
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8000');
+const socket = openSocket('http://localhost:8000',{transports: ['websocket', 'polling', 'flashsocket']});
 const RTC_CONFIGURATION = {
     iceServers: [
       { urls: 'stun:stun.l.google.com:19302' },
@@ -87,7 +87,7 @@ class Receiver extends React.Component {
 
           <div>
               
-              <div >
+              <div  data-cy="screen-video">
                   <video controls playsInline autoPlay id="screen"></video>
               </div>
           </div>
