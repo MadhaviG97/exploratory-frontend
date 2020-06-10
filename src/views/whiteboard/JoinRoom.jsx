@@ -42,25 +42,28 @@ export default function SignIn() {
 
   return (
     <React.Fragment>
-      <Box>
-        <Appbar />
-      </Box>
+      <div style={{background: "#eceff1"}}>
+        <Box>
+          <Appbar />
+        </Box>
 
-      <Container
-        component="main"
-        maxWidth={false}
-        className={classes.image}
-        style={{ minHeight: "80vh" }}
-      >
-        <CssBaseline />
-        <div className={classes.paper}>
-          <JoinRoomButtonBase
-            title="JOIN WHITE-BOARD"
-            onClick={handleClickOpen}
-          />
-          <SelectUsers open={open} handleClose={handleClose} />
-        </div>
-      </Container>
+        <Container
+        
+          component="main"
+          maxWidth={false}
+          className={classes.image}
+          style={{ minHeight: "80vh" }}
+        >
+          <CssBaseline />
+          <div className={classes.paper}>
+            <JoinRoomButtonBase
+              title="JOIN WHITE-BOARD"
+              onClick={handleClickOpen}
+            />
+            <SelectUsers open={open} handleClose={handleClose} />
+          </div>
+        </Container>
+      </div>
     </React.Fragment>
   );
 }

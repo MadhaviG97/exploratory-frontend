@@ -270,7 +270,7 @@ function FileManager(props) {
     if (user.userData && mounted && !loadingfiles && !loadingfolders && !loadingvalidation){
         if (collabs.some(e => e.researcher_id == user_id) && foldervalid){
         return (
-        <div >
+        <div style={{background: "#eceff1"}}>
             <Dialog open={deleteopen} onClose={handleDeleteClose} aria-labelledby="form-dialog-title">
                 <DialogContent className={classes.formControl}>
                     <DialogContentText>
@@ -361,7 +361,7 @@ function FileManager(props) {
                     <MenuItem style={{ color: '#d60009',fontSize: 14 }} data-cy='delete' onClick={handleDeleteOpen}>Delete</MenuItem>
                 </Menu>
                 
-                <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)", minHeight: '84vh'}} >
+                <div style={{ height: '100%', backgroundImage: "url(/images/fileFolder/bg4.png)", minHeight: '84vh',backgroundSize: 'cover'}} >
                     <Grid container spacing={5} >
                         <Grid item xs={3} >
                             <Box p={4}/>

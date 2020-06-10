@@ -53,8 +53,8 @@ function CreatePage(props) {
     if (mounted  && user.userData){
         if (collabs.some(e => e.researcher_id == user_id)){
             return (
-                
-                    <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}} >
+                <div style={{background: "#eceff1"}}>
+                    <div  className={classes.background}>
                         <Box p={1.3}  style={{  background: '#014f82'}}>
                             <div className={classes.name} >
                                 <h1 align='center' className={classes.title}>Editor</h1>
@@ -83,6 +83,7 @@ function CreatePage(props) {
                                 <Box p={4} />
                         </div>
                     </div>
+                </div>
                 
             )
         }else{

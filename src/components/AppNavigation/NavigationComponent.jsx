@@ -28,7 +28,7 @@ export default function NavigationComponent(props) {
   const grid = [
     [
       {
-        refr: `/tasktracker`,
+        refr: `/project/tasktracker/${projectId}`,
         name: "Task...",
         tooltip: "Task Tracker",
         image: process.env.PUBLIC_URL + "/images/appnav/document.png",

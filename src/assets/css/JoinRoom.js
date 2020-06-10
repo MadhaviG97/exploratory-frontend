@@ -21,7 +21,7 @@ export const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(12, 0, 2),
   },
   image: {
-    backgroundImage: "url(/confirm-email.jpg)",
+    backgroundImage: "url(/images/fileFolder/bg4.png)",
     backgroundRepeat: "no-repeat",
     backgroundColor:
       theme.palette.type === "light"
