@@ -20,9 +20,9 @@ describe("Create project", () => {
   //     cy.get("button[id=app-close]").trigger("mouseover").wait(1000).click();
   //   });
 
-  it("2.0 follow project", () => {
-    cy.get("button[title=follow]").trigger("mouseover").click().wait(1000);
-  });
+  // it("2.0 follow project", () => {
+  //   cy.get("button[title=follow]").trigger("mouseover").click().wait(1000);
+  // });
 
   //   it("3.0 Unfollow project", () => {
   //     cy.get("button[aria-label=settings]")
@@ -30,4 +30,20 @@ describe("Create project", () => {
   //       .wait(1000)
   //       .click();
   //   });
+
+  // it("4.0 view Abstract", () => {
+  //   cy.get(".MuiBox-root-518")
+  //     .contains("span", "To be Added...")
+  //     .should("be.visible");
+  // });
+
+  // it("5.0 view related images", () => {
+  //   cy.get(".MuiBox-root-529")
+  //     .find('button[id="image-10168"]')
+  //     .should("be.visible");
+  // });
+
+  it("6.0 view final paper", () => {
+    cy.get(".MuiBox-root-550").find("canvas").should("be.visible");
+  });
 });
