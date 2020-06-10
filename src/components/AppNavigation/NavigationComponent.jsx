@@ -154,7 +154,7 @@ export default function NavigationComponent(props) {
           className={classes.dialogTitle}
           style={{ background: "#eceff1" }}
         >
-          <IconButton onClick={handleClose}>
+          <IconButton id="app-close" onClick={handleClose}>
             <CloseIcon />
           </IconButton>
         </DialogTitle>
