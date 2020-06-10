@@ -60,4 +60,3 @@ Cypress.Commands.add(
     });
   }
 );
->>>>>>> madhavi2
