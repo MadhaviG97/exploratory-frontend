@@ -68,26 +68,32 @@ export default function FormDialog(props) {
 
         <DialogContent>
           {sucess && (
-            <Alert
-              severity="success"
-              onClose={() => {
-                setSucess(false);
-                props.onClose();
-              }}
-            >
-              The file Upload is Success!
-            </Alert>
+            <React.Fragment>
+              <Alert
+                severity="success"
+                onClose={() => {
+                  setSucess(false);
+                  props.onClose();
+                }}
+              >
+                The file Upload is Success!
+              </Alert>
+              <br />
+            </React.Fragment>
           )}
           {fail && (
-            <Alert
-              severity="error"
-              onClose={() => {
-                setFail(false);
-                props.onClose();
-              }}
-            >
-              Try again!
-            </Alert>
+            <React.Fragment>
+              <Alert
+                severity="error"
+                onClose={() => {
+                  setFail(false);
+                  props.onClose();
+                }}
+              >
+                Try again!
+              </Alert>
+              <br />
+            </React.Fragment>
           )}
           <Paper className={classes.fileUploader} elevation={3}>
             <FileUploader
