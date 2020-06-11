@@ -15,7 +15,7 @@ import axios from 'axios';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-const socket = openSocket('http://localhost:8000',{transports: ['websocket', 'polling', 'flashsocket']});
+const socket = openSocket(process.env.REACT_APP_SCREEN_SHARE_URL,{transports: ['websocket', 'polling', 'flashsocket']});
 
 var caller;
 //var group="GeeFour"
