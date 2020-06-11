@@ -55,7 +55,7 @@ export default function ProjectNavbar(props) {
     <React.Fragment>
       <Paper className={classes.paperroot}>
         <Grid container>
-          <Grid item lg={2} md={1} xs={1}></Grid>
+          <Grid item lg={2} md={2} xs={2}></Grid>
           <Grid item lg={6} md={6} xs={6}>
             <List component="nav" aria-label="main mailbox folders">
               <ListItem className={classes.heading}>
@@ -128,7 +128,7 @@ export default function ProjectNavbar(props) {
               </Box>
             </Box>
           </Grid>
-          <Grid item lg={1} md={1} xs={1}></Grid>
+          <Grid item lg={1} md={0} xs={0}></Grid>
         </Grid>
       </Paper>
     </React.Fragment>

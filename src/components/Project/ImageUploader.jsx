@@ -91,7 +91,7 @@ export default function ImageUploader(props) {
       .then((result) => {
         console.log("Done!");
       })
-      .catch((err) => alert(err.message));
+      .catch((err) => props.onFail());
     return name;
   };
 
@@ -112,10 +112,10 @@ export default function ImageUploader(props) {
         images: fileList,
       })
       .then((res) => {
-        alert("Saved!");
+        props.onSucess();
       })
       .catch((err) => {
-        alert(err.message);
+        props.onFail();
       });
   };
 
