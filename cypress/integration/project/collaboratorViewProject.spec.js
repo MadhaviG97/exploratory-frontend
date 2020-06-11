@@ -15,12 +15,7 @@ describe("Create project", () => {
       .click()
       .wait(1500);
 
-    cy.visit("/project/viewproject/10001")
-      .wait(2000)
-      .scrollTo("bottom")
-      .wait(1000)
-      .scrollTo("top")
-      .wait(2000);
+    cy.visit("/project/viewproject/10001").wait(2000);
   });
 
   //   it("1.0 view apps", () => {
