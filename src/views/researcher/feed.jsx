@@ -14,23 +14,23 @@ export default function Feed() {
   const [feedContent, setFeedContent] = React.useState([]);
   const [index, setIndex] = React.useState(0);
 
-  // React.useEffect(() => {
-  //   var paramters = { index: index };
-  //   if (user) {
-  //     paramters = Object.assign({ email: user.email }, paramters);
-  //   }
+  React.useEffect(() => {
+    var paramters = { index: index };
+    if (user) {
+      paramters = Object.assign({ email: user.email }, paramters);
+    }
 
-  //   var request = axios
-  //     .post("/feed", paramters)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setFeedContent(response.data);
-  //       setIndex(index + response.data.length);
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, []);
+    var request = axios
+      .post("/feed", paramters)
+      .then((response) => {
+        console.log(response.data);
+        setFeedContent(response.data);
+        setIndex(index + response.data.length);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   const loadMore = () => {
     var paramters = { index: index };
@@ -56,14 +56,14 @@ export default function Feed() {
     }
   };
 
-  // React.useEffect(() => {
-  //   window.addEventListener("scroll", trackScrolling);
+  React.useEffect(() => {
+    window.addEventListener("scroll", trackScrolling);
 
-  //   // Specify how to clean up after this effect:
-  //   return () => {
-  //     window.removeEventListener("scroll", trackScrolling);
-  //   };
-  // });
+    // Specify how to clean up after this effect:
+    return () => {
+      window.removeEventListener("scroll", trackScrolling);
+    };
+  });
 
   return (
     <div

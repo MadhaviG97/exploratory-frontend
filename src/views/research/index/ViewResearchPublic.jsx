@@ -3,20 +3,15 @@ import ProjectNavbar from "../../../components/Project/ProjectNavbar";
 import Tab from "../../../components/Project/TabPublicMode";
 import Box from "@material-ui/core/Box";
 import { useEffect } from "react";
-import {
-  render,
-  getRelatedImages,
-  getFinalPaper,
-} from "../../../_actions/project_actions";
+import { render } from "../../../_actions/project_actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../../components/Loader";
 import OverView from "../../../components/Overview/OverViewPublic";
 import Team from "../../../components/Team/team";
 import Comments from "../../../components/ProjectComments/chathead";
 import FilesList from "../../../components/ProjectPublicFiles/DisplayList";
-import Drawer from "../../../components/Project/Drawer";
 function Home() {
   let { id } = useParams();
   var dispatch = useDispatch();
