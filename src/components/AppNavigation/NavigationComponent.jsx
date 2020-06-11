@@ -25,30 +25,12 @@ export default function NavigationComponent(props) {
   const [filecreated, setFileCreated] = React.useState(false);
   const user = useSelector((state) => state.user);
   const project = useSelector((state) => state.project);
-  const [isCollaborator, setIsCollaborator] = React.useState(false);
+  
 
-  const checkIsCollaborator = (logged_in_user) => {
-    var collaborators = project.collaborators.concat(project.admins);
-    var i;
-    for (i = 0; i < collaborators.length; i++) {
-      if (collaborators[i].researcher_id === logged_in_user) {
-        return true;
-      }
-    }
-    return false;
-  };
+  
 
-  React.useEffect(() => {
-    var user_id = user.userData ? user.userData._id : null;
-    if (user_id) {
-      setIsCollaborator(checkIsCollaborator(user_id));
-    } else {
-      setIsCollaborator(false);
-    }
-  }, []);
-
-  const grid = isCollaborator
-    ?[ [
+  const grid = [
+     [
       {
         refr: `/project/tasktracker/${projectId}`,
         name: "Task...",
@@ -99,37 +81,7 @@ export default function NavigationComponent(props) {
       },
     ],
   ]
-    : [
-        [
-          {
-            refr: `/document/${projectId}/filemanager`,
-            name: "Drive",
-            tooltip: "Drive",
-            image: process.env.PUBLIC_URL + "/images/appnav/file.png",
-          },
-          {
-            refr: `/tasktracker`,
-            name: "Task...",
-            tooltip: "Task Tracker",
-            image: process.env.PUBLIC_URL + "/images/appnav/document.png",
-          },
-        ],
-        [
-          {
-            refr: `/document/${projectId}/editorblog`,
-            name: "Editor",
-            tooltip: "Editor",
-            image: process.env.PUBLIC_URL + "/images/appnav/communication.png",
-          },
-
-          {
-            refr: `/document/${projectId}/compare`,
-            name: "Compare...",
-            tooltip: "Compare Documents",
-            image: process.env.PUBLIC_URL + "/images/appnav/squares.png",
-          },
-        ],
-      ];
+    
   
   //attributes should go to flaticon.com for the icons used
   const handleClickOpen = () => {
@@ -142,12 +94,14 @@ export default function NavigationComponent(props) {
   const handleChange = (event) => {
     setName(event.target.value);
   };
+  let color;
+  if (props.color){color=props.color}else{color="#014f82"}
 
   return (
     <React.Fragment>
       <Tooltip title="Apps">
         <IconButton aria-label="apps" size="small" onClick={handleClickOpen}>
-          <AppsIcon color="primary" />
+          <AppsIcon style={{ color: color }}/>
         </IconButton>
       </Tooltip>
       <Dialog open={open} onClose={handleClose}>
