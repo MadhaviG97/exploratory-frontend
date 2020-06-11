@@ -56,7 +56,7 @@ export default function Navbar(props) {
           logo="/logo1.png"
           brand="Exploratory"
           leftLinks={<LeftMenu />}
-          rightLinks={<RightMenu />}
+          
         />
       </div>
     );
