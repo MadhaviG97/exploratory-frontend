@@ -15,7 +15,7 @@ describe('Drive', () => {
     it('Selects a receipient and start sharing', () => {
         const stub = cy.stub()
         cy.on('window:confirm', stub)
-        cy.visit('/screenshare/10024/send')
+        cy.visit('/screenshare/10001/send')
         cy.wait(1500)
         cy.get('[data-cy="connect-button"]').should('be.visible')
         cy.get('[data-cy="connect-button"]').click()

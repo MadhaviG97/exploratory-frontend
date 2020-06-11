@@ -12,7 +12,7 @@ describe('Drive', () => {
     });
     
     it('opens created document in editor', () => {
-        cy.visit('/document/10024/editorblog')
+        cy.visit('/document/10003/editorblog')
         cy.wait(1500)
         cy.get('[data-cy="document-card"]').should('be.visible')
         cy.get('[data-cy="edit-document-icon"]').should('be.visible')
@@ -48,15 +48,15 @@ describe('Drive', () => {
         cy.get('[data-cy="goto-blog"]').click()
         cy.wait(1500)
         cy.get('[data-cy="document-card"]').should('be.visible')
-        cy.get('[data-cy="pdf-document-icon"]').eq(1).should('be.visible')
-        cy.get('[data-cy="pdf-document-icon"]').eq(1).click()
+        cy.get('[data-cy="pdf-document-icon"]').eq(0).should('be.visible')
+        cy.get('[data-cy="pdf-document-icon"]').eq(0).click()
         cy.wait(1500)
         cy.get('[data-cy="turn-pdf-icon"]').should('be.visible')
         cy.wait(2500)
     })
 
     it('Deletes the created document ', () => {
-        cy.visit('/document/10024/editorblog')
+        cy.visit('/document/10003/editorblog')
         cy.wait(1500)
         cy.get('[data-cy="document-card"]').should('be.visible')
         cy.get('[data-cy="delete-document-icon"]').should('be.visible')
