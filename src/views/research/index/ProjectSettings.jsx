@@ -165,6 +165,18 @@ export default function Form(props) {
     });
   };
 
+  const updateCollaboratorIdName = (collaborators_list) => {
+    collaborators_list.map((user) => {
+      if (user.id === undefined) {
+        user["id"] = user.researcher_id;
+        return user;
+      } else {
+        return user;
+      }
+    });
+    return collaborators_list;
+  };
+
   const handleAlertClose = () => {
     setState({ ...state, alertOpen: false });
   };
@@ -195,9 +207,14 @@ export default function Form(props) {
   const handleAlertSubmit = async () => {
     setState({ ...state, alertOpen: false });
     setLoading(true);
+
+    const collaborator_list = await updateCollaboratorIdName(
+      state.collaborators
+    );
+
     const newCollaborators = getNewCollaborators(
       state.initialCollaborators,
-      state.collaborators
+      collaborator_list
     );
 
     const formData = {
@@ -205,10 +222,11 @@ export default function Form(props) {
       title: state.title,
       description: state.description,
       abstract: state.abstract,
-      collaborators: state.collaborators,
+      collaborators: collaborator_list,
       visibility_public: state.visibility_public,
       tags: state.tags,
     };
+
     axios
       .post(`/project/update-project`, formData)
       .then((response) => {
