@@ -13,7 +13,7 @@ describe('Drive', () => {
 
     it('Share or not share file with public', () => {
 
-        cy.visit('/document/10024/filemanager')
+        cy.visit('/document/10001/filemanager')
         cy.wait(4500)
         cy.get('[data-cy="card"]').should('be.visible')
         cy.get('[data-cy="icon-button"]').eq(0).click()

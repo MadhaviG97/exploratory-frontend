@@ -13,8 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import photo1 from "../../assets/images/user-profile/faces/christian.jpg";
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    maxWidth: "36ch",
+    width: "auto",
     backgroundColor: theme.palette.background.paper,
   },
   inline: {

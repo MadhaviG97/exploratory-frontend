@@ -12,8 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    maxWidth: "36ch",
+    width: "auto",
     backgroundColor: theme.palette.background.paper,
   },
   inline: {

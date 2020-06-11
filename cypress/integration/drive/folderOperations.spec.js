@@ -13,7 +13,7 @@ describe('Drive', () => {
 
 
     it('Creates a folder in root directory', () => {
-        cy.visit('/document/10024/filemanager')
+        cy.visit('/document/10003/filemanager')
         cy.wait(2500)
         const newFolderName="Test Folder 1"
         cy.get('[data-cy="folder-dialog"]').should('be.visible')
@@ -35,7 +35,7 @@ describe('Drive', () => {
         const newFolderName="Test Folder 2"
         cy.wait(2500)
         cy.get('[data-cy="folder-card"]').should('be.visible')
-        cy.get('[data-cy="folder-card"]').eq(2).click()
+        cy.get('[data-cy="folder-card"]').eq(0).click()
         cy.wait(3500)
         
     })
@@ -53,8 +53,7 @@ describe('Drive', () => {
         cy.get('button').contains('Create').should('be.visible')
         cy.get('button').contains('Create').click()
         cy.wait(2500)
-        cy.get('[data-cy="folder-created-alert"]').should('be.visible')
-        cy.wait(2500)
+        
 
     })
 
@@ -73,7 +72,7 @@ describe('Drive', () => {
         cy.get('[data-cy="delete-folder-button"]').should('be.visible')
         cy.get('[data-cy="delete-folder-button"]').click()
         cy.get('[data-cy="confirm-delete"]').should('be.visible')
-        cy.get('[data-cy="confirm-delete"]').click()
+        cy.get('[data-cy="confirm-delete"]').scrollIntoView().click()
         cy.wait(2500)
 
     })

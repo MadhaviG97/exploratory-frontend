@@ -13,7 +13,7 @@ describe('Drive', () => {
 
 
     it('Compares two files word by word ', () => {
-        cy.visit('/document/10024/compare')
+        cy.visit('/document/10001/compare')
         cy.wait(2500)
         cy.get('[data-cy="select-doc"]').should('be.visible')
         cy.get('[data-cy="select-doc"]').click()

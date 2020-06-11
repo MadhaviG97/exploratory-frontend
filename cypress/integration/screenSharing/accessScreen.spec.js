@@ -14,7 +14,7 @@ describe('Drive', () => {
 
     it('checks receipient state', () => {
         
-        cy.visit('/screenshare/10024/receive')
+        cy.visit('/screenshare/10001/receive')
         cy.wait(1500)
         cy.get('[data-cy="screen-video"]').should('be.visible')
         cy.get('[data-cy="not-yet-message"]').should('be.visible')

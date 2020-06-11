@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     minWidth: 250,
-    minHeight: 550,
+    minHeight: 700,
   },
   paper: {
     padding: theme.spacing(2),
@@ -92,7 +92,7 @@ export default function Forum() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 3000);
     dispatch(getAnswers());
     dispatch(getForumUsers());
     dispatch(getFreqUsers());

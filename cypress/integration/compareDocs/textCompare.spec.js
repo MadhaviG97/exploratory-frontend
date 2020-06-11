@@ -15,7 +15,7 @@ describe('Drive', () => {
     it('Compares two texts word by word ', () => {
         const testText1="This is pretty. Pretty but heavy."
         const testText2="This is pretty. Pretty but hurry "
-        cy.visit('/document/10024/compare')
+        cy.visit('/document/10001/compare')
         cy.wait(2500)
         cy.get('[data-cy="text1"]').should('be.visible')
         cy.get('[data-cy="text1"]').type(testText1)
