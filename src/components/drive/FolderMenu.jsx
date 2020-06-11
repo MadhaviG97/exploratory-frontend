@@ -50,6 +50,14 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  listItem: {
+    
+    [theme.breakpoints.down("sm")]: {
+      
+        display: "none" 
+      
+    }
+  },
 }));
 
 export default function FolderMenu(props) {
@@ -152,7 +160,7 @@ export default function FolderMenu(props) {
   };
 
   return (
-    <div>
+    <div className={classes.listItem}>
      <div className={classes.roota}>
       <Collapse in={foldercreated}>
         <Alert data-cy='folder-created-alert'
