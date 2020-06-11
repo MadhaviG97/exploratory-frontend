@@ -79,12 +79,14 @@ export default function QuestionLike(props) {
 
             {user.userData._id === props.Q_id ? (
               <div>
-                <DeleteQuestion question_id={props.question_id} />
-                <EditQuestion
-                  question_id={props.question_id}
-                  title={props.title}
-                  description={props.description}
-                />
+                <ButtonGroup>
+                  <DeleteQuestion question_id={props.question_id} />
+                  <EditQuestion
+                    question_id={props.question_id}
+                    title={props.title}
+                    description={props.description}
+                  />
+                </ButtonGroup>
               </div>
             ) : (
               <div></div>

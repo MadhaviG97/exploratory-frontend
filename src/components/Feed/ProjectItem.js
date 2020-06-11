@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function ProjectItem({ ResearchItem }) {
   const classes = useStyles();
-  console.log(ResearchItem);
+  // console.log(ResearchItem);
   return (
     <Card className={classes.root}>
       <CardHeader
