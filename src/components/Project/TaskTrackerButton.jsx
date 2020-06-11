@@ -21,7 +21,7 @@ export default function SwitchLabels(props) {
             <IconButton
               aria-label="settings"
               size="small"
-              onClick={() => history.replace(from)}
+              onClick={() => history.push(from.pathname)}
             >
               <AssignmentIcon color="primary" />
             </IconButton>

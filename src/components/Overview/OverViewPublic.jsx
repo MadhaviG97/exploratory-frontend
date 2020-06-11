@@ -40,7 +40,6 @@ export default function Overview() {
     history.replace(from);
   };
 
-  
   const Abstract = (TextProps) => {
     return (
       <React.Fragment>
@@ -102,8 +101,8 @@ export default function Overview() {
         <React.Fragment>
           <ItemHeader
             id="final-paper-edit"
+            title="Final Paper"
             handleEditState={() => setEditPaper(true)}
-            title=""
           />
           <EditFinalPaper
             onClose={() => {
