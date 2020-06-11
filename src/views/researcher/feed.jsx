@@ -29,6 +29,7 @@ export default function Feed() {
   const [feedContent, setFeedContent] = React.useState([]);
   const [index, setIndex] = React.useState(0);
   const [loading, setLoading] = React.useState(true);
+  const [loadMoreBool, setLoadMoreBool] = React.useState(true);
 
   React.useEffect(() => {
     var paramters = { index: index };
@@ -39,7 +40,7 @@ export default function Feed() {
     var request = axios
       .post("/feed", paramters)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setLoading(false)
         setFeedContent(response.data);
         setIndex(index + response.data.length);
@@ -61,8 +62,17 @@ export default function Feed() {
         // console.log(response.data)
         setFeedContent(feedContent.concat(response.data));
         setIndex(index + response.data.length);
+        
+        if(response.data.length==0){
+          setLoadMoreBool(false)
+        }
+        else{
+          setLoadMoreBool(true)
+        }
       })
-      .catch((err) => { });
+      .catch((err) => {
+        setLoadMoreBool(true)
+       });
   };
   const trackScrolling = () => {
     const wrappedElement = document.getElementById("root");
@@ -70,7 +80,11 @@ export default function Feed() {
       wrappedElement.scrollHeight - wrappedElement.scrollTop ===
       wrappedElement.clientHeight
     ) {
-      loadMore();
+      if(loadMoreBool){
+        setLoadMoreBool(false)
+        loadMore();
+      }
+      
     }
   };
 
@@ -85,13 +99,18 @@ export default function Feed() {
 
   return (
 
-    <div>
+    <div
+      style={{
+        height: "100%",
+        backgroundColor: "#eceff1",
+      }}
+      >
 
       {loading ? (
         <div className={classes.loader}
           style={{
             height: "100%",
-            backgroundImage: "url(/images/feed/feedBackground.jpg)",
+            backgroundImage: "url(/images/fileFolder/bg4.png)",
           }}>
           <ReactLoading
             type="spinningBubbles"
@@ -104,7 +123,7 @@ export default function Feed() {
           <div
             style={{
               height: "100%",
-              backgroundImage: "url(/images/feed/feedBackground.jpg)",
+              backgroundImage: "url(/images/fileFolder/bg4.png)",
             }}
           >
             <Box display="flex" flexDirection="column">
