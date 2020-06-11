@@ -231,11 +231,17 @@ export default function Form() {
           {user.userData === undefined ? (
             <Loader />
           ) : (
-            <main className={classes.layout}>
-              <Paper className={classes.paper} elevation={5}>
-                <AddressForm />
-              </Paper>
-            </main>
+            <div className={classes.root}>
+              <main className={classes.layout}>
+                <br />
+                <br />
+                <Paper className={classes.paper} elevation={10}>
+                  <AddressForm />
+                </Paper>
+                <br />
+                <br />
+              </main>
+            </div>
           )}
         </Box>
       </Box>
