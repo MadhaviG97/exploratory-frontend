@@ -2,8 +2,9 @@ const io = require('socket.io-client')
 
 export default function (user_id, token, controls) {
   // const socket = io.connect('http://localhost:3006?id=' + user_id.toString() + '&token=' + token.toString())
-  const socket = io.connect('http://localhost:3006', {query:"id="+user_id.toString()+"&token="+ token.toString()})
-
+  // const socket = io.connect('http://localhost:3006', {query:"id="+user_id.toString()+"&token="+ token.toString()})
+  const socket = io.connect(process.env.REACT_APP_CHAT_URL, {query:"id="+user_id.toString()+"&token="+ token.toString()})
+// console.log(process.env)
   socket.on('error', function (err) {
     console.log('received socket error:')
     console.log(err)

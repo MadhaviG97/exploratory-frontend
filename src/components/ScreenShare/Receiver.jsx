@@ -2,7 +2,8 @@ import React from 'react';
 import '../../assets/css/screenshare.css';
 import Box from '@material-ui/core/Box';
 import openSocket from 'socket.io-client';
-const socket = openSocket('http://localhost:8000',{transports: ['websocket', 'polling', 'flashsocket']});
+console.log(process.env.REACT_APP_SCREEN_SHARE_URL)
+const socket = openSocket(process.env.REACT_APP_SCREEN_SHARE_URL,{transports: ['websocket', 'polling', 'flashsocket']});
 const RTC_CONFIGURATION = {
     iceServers: [
       { urls: 'stun:stun.l.google.com:19302' },
