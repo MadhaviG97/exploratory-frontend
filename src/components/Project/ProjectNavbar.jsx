@@ -21,6 +21,8 @@ import { useStyles } from "../../assets/css/projectNavbar";
 import SettingsIcon from "@material-ui/icons/Settings";
 import SettingMenu from "./SettingMenu";
 import FollowButton from "./FollowButton";
+import TaskTrackerButton from "./TaskTrackerButton";
+
 import { useSelector } from "react-redux";
 
 export default function ProjectNavbar(props) {
@@ -100,15 +102,19 @@ export default function ProjectNavbar(props) {
             <Box display="flex" flexDirection="row">
               <Box flexGrow="0" alignSelf="flex-end">
                 <List component="nav" aria-label="main mailbox folders">
-                  <ListItem className={classes.listItem}>
-                    <ListItemIcon>
-                      <NavComponent projectId={props.projectId} />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="APPS"
-                      primaryTypographyProps={{ variant: "button" }}
-                    />
-                  </ListItem>
+                  {isCollaborator ? (
+                    <ListItem className={classes.listItem}>
+                      <ListItemIcon>
+                        <NavComponent projectId={props.projectId} />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary="APPS"
+                        primaryTypographyProps={{ variant: "button" }}
+                      />
+                    </ListItem>
+                  ) : (
+                    <TaskTrackerButton />
+                  )}
 
                   <FollowButton />
 
