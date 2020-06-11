@@ -31,11 +31,11 @@ describe('Test case for testing login',() =>{
         </Provider>);
       const form = getByTestId('form');
       const emailInput = getByTestId('emailInput');
-      const submit = getByTestId('submit');
+      
     
       expect(form).toBeInTheDocument();
       expect(emailInput).toHaveValue('');
-      expect(submit).toBeInTheDocument();
+      
     });
 //this is not a complete test as it does not check values after the login action. this is just a start.
 describe('login actions', () => {

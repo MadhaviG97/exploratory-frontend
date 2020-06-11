@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ChatWindow = (props) => {
   const classes = useStyles();
-
+console.log(props)
   const [input, setInput] = useState("")
   const [loadMoreDisabled, setLoadMoreDisabled] = React.useState(false)
   const messagesEndRef = React.useRef(null)
@@ -227,8 +227,9 @@ const ChatWindow = (props) => {
   React.useEffect(() => {
     onFocus()
   }, [])
-
-  if (!props.state.currentChatListID) {
+  // console.log("aaaaaaaaaaaaaaa");
+  // console.log(props.state.currentChatListID)
+  if (props.state.currentChatListID==null) {
     return (<div />)
   }
 
@@ -258,7 +259,7 @@ const ChatWindow = (props) => {
                 </Grid>
 
                 {
-                  props.state.currentChatListID ? (
+                  props.state.currentChatListID!=null ? (
                     props.state.chatRooms[props.state.currentChatListID].chatMesseges.map((currentMsg, ind) => (
                       currentMsg ?
                         <Message

@@ -203,7 +203,7 @@ render() {
         </div>
         <Grid container spacing={5} >
             <Grid item xs={3}>
-                <Paper >
+                <Paper display={{ xs: 'none', sm: 'none', md: 'block' }}>
                 <EditorMenu 
                   group={this.group}
                   savedVersion={this.savedVersion} 

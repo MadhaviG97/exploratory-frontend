@@ -137,7 +137,7 @@ export default function Overview() {
             }}
             open={editPaper}
             id={project.project.id}
-            final_paper={[PDFprops.url]}
+            final_paper={[]}
           />
           <Divider />
           <Typography variant="caption">To be Published...</Typography>
@@ -163,14 +163,11 @@ export default function Overview() {
 
         <Box className={classes.box}>
           <Paper className={classes.abstract}>
-            <ExamplePDFViewer
-              view={project.project.visibility_public}
-              url={project.project.final_paper}
-            />
+            <ExamplePDFViewer view={true} url={project.project.final_paper} />
           </Paper>
         </Box>
 
-        {!project.project.visibility_public && (
+        {/* {!project.project.visibility_public && (
           <Box className={classes.box}>
             <Button
               variant="contained"
@@ -184,7 +181,7 @@ export default function Overview() {
               </Typography>
             </Button>
           </Box>
-        )}
+        )} */}
       </Box>
     </React.Fragment>
   );

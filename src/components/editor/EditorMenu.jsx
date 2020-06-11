@@ -33,6 +33,15 @@ const styles = theme => ({
         textAlign: "center",
         color: theme.palette.text.secondary,
       },
+      listItem: {
+    
+        [theme.breakpoints.down("sm")]: {
+          
+            display: "none"
+            
+          
+        }
+      },
 });
 
 
@@ -75,7 +84,7 @@ class EditorMenu extends React.Component {
         console.log(result)
         const { classes } = this.props;
         return (
-            <div>
+            <div className={classes.listItem}>
                 <Grid item xs>
                     <Paper className={classes.paper}>
                         <Button variant="contained" data-cy="save-edited" color="primary" onClick={this.props.handleSave}>

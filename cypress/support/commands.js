@@ -30,7 +30,7 @@ Cypress.Commands.add("login", () => {
     method: "POST",
     url: "http://localhost:8888/login",
     body: {
-      email: "madhavi@gmail.com",
+      email: "imalka@gmail.com",
       password: "123456@",
     },
   }).then((resp) => {

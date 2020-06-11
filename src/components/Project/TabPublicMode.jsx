@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Tabs, Tab, Paper, Typography, Box } from "@material-ui/core";
+import { Tabs, Tab, Paper, Typography, Box, Grid } from "@material-ui/core";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -18,9 +18,15 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box height="100%" alignItems="flex-start" p={3}>
-          {children}
-        </Box>
+        <Grid container>
+          <Grid item lg={1}></Grid>
+          <Grid item lg={10}>
+            <Box height="100%" alignItems="flex-start" py={3}>
+              {children}
+            </Box>
+          </Grid>
+          <Grid item lg={1}></Grid>
+        </Grid>
       )}
     </Typography>
   );
@@ -43,8 +49,9 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: "#eceff1",
     square: false,
-    padding: theme.spacing(0, 5),
+    padding: theme.spacing(0, 10),
   },
+  tab: {},
 }));
 
 export default function FullWidthTabs(props) {
@@ -73,10 +80,10 @@ export default function FullWidthTabs(props) {
           scrollButtons="auto"
           aria-label="full width tabs example"
         >
-          <Tab label="Overview" {...a11yProps(0)} />
-          <Tab label="Team" {...a11yProps(1)} />
-          <Tab label="Comments" {...a11yProps(2)} />
-          <Tab label="Files" {...a11yProps(3)} />
+          <Tab className={classes.tab} label="Overview" {...a11yProps(0)} />
+          <Tab className={classes.tab} label="Team" {...a11yProps(1)} />
+          <Tab className={classes.tab} label="Comments" {...a11yProps(2)} />
+          <Tab className={classes.tab} label="Files" {...a11yProps(3)} />
         </Tabs>
       </Paper>
       <SwipeableViews
