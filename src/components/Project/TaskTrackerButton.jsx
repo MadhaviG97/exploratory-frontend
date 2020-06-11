@@ -29,7 +29,7 @@ export default function SwitchLabels(props) {
         </ListItemIcon>
 
         <ListItemText
-          primary="Task-Tracker"
+          primary="TASK-TRACKER"
           primaryTypographyProps={{ variant: "button" }}
         />
       </ListItem>
