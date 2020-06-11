@@ -19,6 +19,7 @@ import LinkTo from "@material-ui/core/Link";
 
 import AnswerLike from "./AddALike";
 import AddComment from "./AddComment";
+import AnswerLikeSection from "./AnswerLikeSection";
 import DeleteAnswer from "./AnswerDeleteDialog";
 import EditAnswer from "./EditAnswerDialog";
 
@@ -61,6 +62,7 @@ export default function CommentSection(props) {
   const is_logged = useSelector((state) => state.is_logged);
   const forum = useSelector((state) => state.forum);
   const user = useSelector((state) => state.user);
+  const answerLikes = useSelector((state) => state.forum.answerLikes);
   const dispatch = useDispatch();
 
   return (
@@ -126,7 +128,8 @@ export default function CommentSection(props) {
                         <StarsIcon fontSize="medium" color="primary" />
                       </div>
                     )}
-                    <AnswerLike
+                    <AnswerLikeSection answer={answer} />
+                    {/* <AnswerLike
                       question_id={answer.question_id}
                       answer_id={answer.answer_id}
                     />
@@ -143,7 +146,7 @@ export default function CommentSection(props) {
                       </ButtonGroup>
                     ) : (
                       <div></div>
-                    )}
+                    )} */}
                   </ListItem>
                 </React.Fragment>
               ) : (
@@ -160,7 +163,7 @@ export default function CommentSection(props) {
                     <ListItemAvatar>
                       <Avatar
                         alt="Profile Picture"
-                        src={`data:image/jpeg;base64,${answer.profile_picture}`}
+                        src={answer.profile_picture}
                       />
                     </ListItemAvatar>
                     <ListItemText

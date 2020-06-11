@@ -79,7 +79,7 @@ export default function PostCard() {
             color="primary"
             className={classes.paper}
           >
-            No posts yet...
+            No created projects yet...
           </Typography>
         </div>
       )}
