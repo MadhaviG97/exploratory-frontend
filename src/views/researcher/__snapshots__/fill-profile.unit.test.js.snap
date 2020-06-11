@@ -52,8 +52,8 @@ exports[`fillprofile renders correctly 1`] = `
               >
                 <input
                   accept="image/jpeg,image/png"
-                  id="avatar_loader-7c9c-7289-c1ae"
-                  name="avatar_loader-7c9c-7289-c1ae"
+                  id="avatar_loader-a451-6aae-fe0f"
+                  name="avatar_loader-a451-6aae-fe0f"
                   onChange={[Function]}
                   style={
                     Object {
@@ -68,7 +68,7 @@ exports[`fillprofile renders correctly 1`] = `
                   type="file"
                 />
                 <label
-                  htmlFor="avatar_loader-7c9c-7289-c1ae"
+                  htmlFor="avatar_loader-a451-6aae-fe0f"
                   style={
                     Object {
                       "color": "black",

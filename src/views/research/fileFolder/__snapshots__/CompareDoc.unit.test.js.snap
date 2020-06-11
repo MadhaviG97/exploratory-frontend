@@ -2,76 +2,73 @@
 
 exports[`Compare Doc renders correctly 1`] = `
 <div
-  style={
-    Object {
-      "backgroundImage": "url(/images/feed/feedBackground.jpg)",
-      "height": "100%",
-    }
-  }
+  className="makeStyles-background-27"
 >
   <div
-    className="MuiBox-root MuiBox-root-377"
+    className="MuiBox-root MuiBox-root-413"
   />
   <div
-    className="makeStyles-icon-32"
+    className="makeStyles-icon-37"
   >
     <div
-      className="MuiBox-root MuiBox-root-378"
+      className="MuiBox-root MuiBox-root-414"
       style={
         Object {
           "display": "flex",
         }
       }
     >
-      <div>
-        <button
-          aria-describedby={null}
-          className="MuiButtonBase-root MuiIconButton-root"
-          disabled={false}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseOver={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
-          tabIndex={0}
-          title="Apps"
-          type="button"
+      <button
+        aria-describedby={null}
+        aria-label="apps"
+        className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall"
+        disabled={false}
+        onBlur={[Function]}
+        onClick={[Function]}
+        onDragLeave={[Function]}
+        onFocus={[Function]}
+        onKeyDown={[Function]}
+        onKeyUp={[Function]}
+        onMouseDown={[Function]}
+        onMouseLeave={[Function]}
+        onMouseOver={[Function]}
+        onMouseUp={[Function]}
+        onTouchEnd={[Function]}
+        onTouchMove={[Function]}
+        onTouchStart={[Function]}
+        tabIndex={0}
+        title="Apps"
+        type="button"
+      >
+        <span
+          className="MuiIconButton-label"
         >
-          <span
-            className="MuiIconButton-label"
-          >
-            <svg
-              aria-hidden="true"
-              className="MuiSvgIcon-root"
-              focusable="false"
-              style={
-                Object {
-                  "color": "#FFFFFF",
-                }
+          <svg
+            aria-hidden="true"
+            className="MuiSvgIcon-root"
+            focusable="false"
+            style={
+              Object {
+                "color": "#014f82",
               }
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"
-              />
-            </svg>
-          </span>
-          <span
-            className="MuiTouchRipple-root"
-          />
-        </button>
-      </div>
+            }
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"
+            />
+          </svg>
+        </span>
+        <span
+          className="MuiTouchRipple-root"
+        />
+      </button>
     </div>
+    <hr
+      className="MuiDivider-root"
+    />
     <div
-      className="MuiBox-root MuiBox-root-379"
+      className="MuiBox-root MuiBox-root-415"
     />
   </div>
   <div
@@ -84,6 +81,7 @@ exports[`Compare Doc renders correctly 1`] = `
       <a
         aria-disabled={false}
         className="MuiButtonBase-root MuiCardActionArea-root"
+        data-cy="select-doc"
         onBlur={[Function]}
         onClick={[Function]}
         onDragLeave={[Function]}
@@ -100,32 +98,31 @@ exports[`Compare Doc renders correctly 1`] = `
         tabIndex={0}
       >
         <div
-          className="MuiCardMedia-root makeStyles-card-27"
-          style={
-            Object {
-              "background": "#014f82",
-            }
-          }
+          className="MuiCardMedia-root makeStyles-card-32"
         >
           <div
-            className="makeStyles-cardDetails-28"
+            className="makeStyles-cardDetails-33"
           >
             <div
-              className="MuiCardContent-root"
+              className="MuiBox-root MuiBox-root-416"
             >
               <div
-                className="makeStyles-name-31"
+                className="MuiCardContent-root"
               >
-                <h2
-                  className="makeStyles-topic-25"
+                <div
+                  className="makeStyles-name-36"
                 >
-                  Select Two Documents to Compare
-                </h2>
+                  <h2
+                    className="makeStyles-topic-30"
+                  >
+                    Select Two Documents to Compare
+                  </h2>
+                </div>
               </div>
             </div>
           </div>
           <div
-            className="MuiCardMedia-root makeStyles-cardMedia-29"
+            className="MuiCardMedia-root makeStyles-cardMedia-34"
             style={
               Object {
                 "backgroundImage": "url(\\"undefined/images/fileFolder/images.jpg\\")",
@@ -143,7 +140,77 @@ exports[`Compare Doc renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-380"
+    className="MuiBox-root MuiBox-root-417"
+  />
+  <div
+    className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        className="MuiFormControl-root makeStyles-formControl-23"
+      >
+        <label
+          className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-shrink MuiInputLabel-outlined MuiFormLabel-filled"
+          data-shrink={true}
+          id="select-label"
+        >
+          Compare
+        </label>
+        <div
+          className="MuiInputBase-root MuiOutlinedInput-root MuiInputBase-formControl"
+          data-cy="select-type"
+          default="word"
+          onClick={[Function]}
+        >
+          <div
+            aria-haspopup="listbox"
+            aria-labelledby="select-label demo-simple-select"
+            className="MuiSelect-root MuiSelect-select MuiSelect-selectMenu MuiSelect-outlined MuiInputBase-input MuiOutlinedInput-input"
+            id="demo-simple-select"
+            onBlur={[Function]}
+            onFocus={[Function]}
+            onKeyDown={[Function]}
+            onMouseDown={[Function]}
+            role="button"
+            tabIndex={0}
+          >
+            Word by Word
+          </div>
+          <input
+            onAnimationStart={[Function]}
+            type="hidden"
+            value="word"
+          />
+          <svg
+            aria-hidden="true"
+            className="MuiSvgIcon-root MuiSelect-icon MuiSelect-iconOutlined"
+            focusable="false"
+            viewBox="0 0 24 24"
+          >
+            <path
+              d="M7 10l5 5 5-5z"
+            />
+          </svg>
+          <fieldset
+            aria-hidden={true}
+            className="PrivateNotchedOutline-root-306 MuiOutlinedInput-notchedOutline"
+          >
+            <legend
+              className="PrivateNotchedOutline-legendLabelled-308 PrivateNotchedOutline-legendNotched-309"
+            >
+              <span>
+                Compare
+              </span>
+            </legend>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiBox-root MuiBox-root-418"
   />
   <div
     className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -153,28 +220,18 @@ exports[`Compare Doc renders correctly 1`] = `
     >
       <h6
         className="MuiTypography-root MuiTypography-h6"
-        style={
-          Object {
-            "color": "#d5e0d8",
-          }
-        }
       >
         Or Enter Your Text Below
       </h6>
       <p
         className="MuiTypography-root MuiTypography-body1"
-        style={
-          Object {
-            "color": "#d5e0d8",
-          }
-        }
       >
         (limit : 500 words per search)
       </p>
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-381"
+    className="MuiBox-root MuiBox-root-419"
   />
   <div
     className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -183,12 +240,13 @@ exports[`Compare Doc renders correctly 1`] = `
       className="MuiGrid-root MuiGrid-item"
       style={
         Object {
-          "background": "#e9f0ea",
+          "background": "#FFFFFF",
         }
       }
     >
       <div
         className="MuiFormControl-root MuiTextField-root"
+        data-cy="text1"
         style={
           Object {
             "width": 450,
@@ -220,14 +278,14 @@ exports[`Compare Doc renders correctly 1`] = `
             onChange={[Function]}
             onFocus={[Function]}
             required={false}
-            rows={10}
+            rows={8}
           />
           <fieldset
             aria-hidden={true}
-            className="PrivateNotchedOutline-root-310 MuiOutlinedInput-notchedOutline"
+            className="PrivateNotchedOutline-root-306 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              className="PrivateNotchedOutline-legendLabelled-312"
+              className="PrivateNotchedOutline-legendLabelled-308"
             >
               <span>
                 Old Text
@@ -241,12 +299,13 @@ exports[`Compare Doc renders correctly 1`] = `
       className="MuiGrid-root MuiGrid-item"
       style={
         Object {
-          "background": "#e9f0ea",
+          "background": "#FFFFFF",
         }
       }
     >
       <div
         className="MuiFormControl-root MuiTextField-root"
+        data-cy="text2"
         style={
           Object {
             "width": 450,
@@ -278,14 +337,14 @@ exports[`Compare Doc renders correctly 1`] = `
             onChange={[Function]}
             onFocus={[Function]}
             required={false}
-            rows={10}
+            rows={8}
           />
           <fieldset
             aria-hidden={true}
-            className="PrivateNotchedOutline-root-310 MuiOutlinedInput-notchedOutline"
+            className="PrivateNotchedOutline-root-306 MuiOutlinedInput-notchedOutline"
           >
             <legend
-              className="PrivateNotchedOutline-legendLabelled-312"
+              className="PrivateNotchedOutline-legendLabelled-308"
             >
               <span>
                 New Text
@@ -297,7 +356,7 @@ exports[`Compare Doc renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-382"
+    className="MuiBox-root MuiBox-root-420"
   />
   <div
     className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -308,6 +367,7 @@ exports[`Compare Doc renders correctly 1`] = `
       <label
         aria-disabled={false}
         className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSizeLarge MuiButton-sizeLarge"
+        data-cy="text-compare"
         htmlType="submit"
         onBlur={[Function]}
         onClick={[Function]}
@@ -346,7 +406,7 @@ exports[`Compare Doc renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-383"
+    className="MuiBox-root MuiBox-root-421"
   />
   <div
     className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
@@ -355,10 +415,101 @@ exports[`Compare Doc renders correctly 1`] = `
       className="MuiGrid-root MuiGrid-item"
     >
       <div
-        className="MuiCardMedia-root makeStyles-card2-35"
+        className="MuiBox-root MuiBox-root-422"
         style={
           Object {
-            "background": "#e9f0ea",
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="makeStyles-shape-28 makeStyles-shapeCircle-29"
+          style={
+            Object {
+              "backgroundColor": "#000000",
+            }
+          }
+        />
+        <div
+          className="MuiBox-root MuiBox-root-423"
+        />
+        <p
+          className="MuiTypography-root MuiTypography-body1"
+        >
+          Not Changed
+        </p>
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-424"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="makeStyles-shape-28 makeStyles-shapeCircle-29"
+          style={
+            Object {
+              "backgroundColor": "#008000",
+            }
+          }
+        />
+        <div
+          className="MuiBox-root MuiBox-root-425"
+        />
+        <p
+          className="MuiTypography-root MuiTypography-body1"
+        >
+          Added
+        </p>
+      </div>
+    </div>
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        className="MuiBox-root MuiBox-root-426"
+        style={
+          Object {
+            "display": "flex",
+          }
+        }
+      >
+        <div
+          className="makeStyles-shape-28 makeStyles-shapeCircle-29"
+          style={
+            Object {
+              "backgroundColor": "#FF0000",
+            }
+          }
+        />
+        <div
+          className="MuiBox-root MuiBox-root-427"
+        />
+        <p
+          className="MuiTypography-root MuiTypography-body1"
+        >
+          Removed
+        </p>
+      </div>
+    </div>
+  </div>
+  <div
+    className="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-4 MuiGrid-align-items-xs-center MuiGrid-justify-xs-center"
+  >
+    <div
+      className="MuiGrid-root MuiGrid-item"
+    >
+      <div
+        className="MuiCardMedia-root makeStyles-card2-40"
+        style={
+          Object {
+            "background": "#FFFFFF",
           }
         }
         variant="outlined"
@@ -391,6 +542,7 @@ exports[`Compare Doc renders correctly 1`] = `
             className="MuiTypography-root MuiTypography-body2"
           >
             <div
+              data-cy="display-compare"
               id="display"
             />
           </p>
@@ -399,7 +551,7 @@ exports[`Compare Doc renders correctly 1`] = `
     </div>
   </div>
   <div
-    className="MuiBox-root MuiBox-root-384"
+    className="MuiBox-root MuiBox-root-428"
   />
 </div>
 `;
