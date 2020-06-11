@@ -11,6 +11,7 @@ function TabPanel(props) {
     <Typography
       component="div"
       role="tabpanel"
+      style={{ minHeight: "68vh" }}
       hidden={value !== index}
       id={`full-width-tabpanel-${index}`}
       aria-labelledby={`full-width-tab-${index}`}
