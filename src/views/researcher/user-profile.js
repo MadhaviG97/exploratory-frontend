@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactLoading from "react-loading";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -48,6 +49,7 @@ import { fetchPhotos, openUploadWidget } from "../../CloudinaryService";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    minheight: 900,
   },
   userSection: {
     minHeight: "100%",
@@ -61,17 +63,33 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0),
     textAlign: "center",
     color: theme.palette.text.secondary,
+    minHeight: 400,
   },
   paperDetails: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
     textAlign: "center",
     color: theme.palette.text.secondary,
     backgroundColor: "#E6E6E6",
+    minHeight: 600,
+  },
+  containerStyles1: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    backgroundColor: "#0d47a1",
+    minHeight: 900,
+  },
+  containerStyles2: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    minHeight: 900,
   },
   profileImage: {
     width: 150,
     height: 150,
-    padding: 2,
+    borderRadius: "50%",
+    margin: "28px",
   },
   input: {
     display: "none",
@@ -81,13 +99,21 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonEdit: {
     flexGrow: 1,
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
+  },
+  loader: {
+    height: 550,
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
   },
 }));
 
 export default function UserProfile() {
   const classes = useStyles();
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [linkedInVal, setLinkedInVal] = React.useState(false);
   const [twitterVal, setTwitterVal] = React.useState(false);
@@ -97,6 +123,9 @@ export default function UserProfile() {
   const { uId } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 1200);
     dispatch(getProfile(uId));
     dispatch(getProjectsByUserId(uId));
     dispatch(getProjectPostsByUserId(uId));
@@ -188,155 +217,162 @@ export default function UserProfile() {
   };
 
   return (
-    <CloudinaryContext cloudName={process.env.REACT_APP_CLAUDINARY_CLOUD_NAME}>
-      <div className={classes.root}>
-        <Grid className={classes.userSection} container spacing={0}>
-          <Grid item xs={4}>
-            <Container style={{ backgroundColor: "#222297", padding: "2px" }}>
-              <Paper className={classes.paper}>
-                <Paper className={classes.paperPhoto}>
-                  <div className={classes.paper}>
-                    {researcher.profile_picture ? (
-                      <img
-                        src={profile_picture}
-                        alt="profile photo"
-                        className={classes.profileImage}
-                      />
-                    ) : (
-                      <img
-                        src={profile}
-                        alt="profile photo"
-                        className={classes.profileImage}
-                      />
-                    )}
-                  </div>
-                  <div className={classes.paper}>
-                    {researcher.id == user._id ? (
-                      <div>
-                        <label htmlFor="icon-button-file">
-                          <IconButton
-                            color="primary"
-                            aria-label="upload picture"
-                            component="span"
-                            onClick={() => beginUpload()}
-                          >
-                            <PhotoCamera />
-                          </IconButton>
-                        </label>
-                      </div>
+    <div>
+      {loading ? (
+        <div className={classes.loader}>
+          <ReactLoading
+            type="spinningBubbles"
+            color="#5054CC"
+            height={550}
+            width={50}
+          />
+        </div>
+      ) : (
+        <CloudinaryContext
+          cloudName={process.env.REACT_APP_CLAUDINARY_CLOUD_NAME}
+        >
+          <Grid container spacing={0} className={classes.root}>
+            <Grid item xs={4} className={classes.containerStyles1}>
+              <Paper className={classes.paperPhoto}>
+                <div>
+                  {researcher.profile_picture ? (
+                    <img
+                      src={profile_picture}
+                      alt="profile photo"
+                      className={classes.profileImage}
+                    />
+                  ) : (
+                    <img
+                      src={profile}
+                      alt="profile photo"
+                      className={classes.profileImage}
+                    />
+                  )}
+                </div>
+                <div>
+                  {researcher.id == user._id ? (
+                    <div>
+                      <label htmlFor="icon-button-file">
+                        <IconButton
+                          color="primary"
+                          aria-label="upload picture"
+                          component="span"
+                          onClick={() => beginUpload()}
+                        >
+                          <PhotoCamera />
+                        </IconButton>
+                      </label>
+                    </div>
+                  ) : (
+                    <div></div>
+                  )}
+                  <Typography variant="h5" color="primary" gutterBottom>
+                    {researcher.first_name} {researcher.last_name}
+                  </Typography>
+                  <Typography variant="body2" color="inherit" gutterBottom>
+                    {profession}
+                  </Typography>
+                  <div>
+                    {linkedIn ? (
+                      <IconButton
+                        aria-label="LinkedIn"
+                        href={linkedIn}
+                        color="primary"
+                      >
+                        <LinkedInIcon />
+                      </IconButton>
                     ) : (
                       <div></div>
                     )}
-                    <Typography variant="h5" color="primary" gutterBottom>
-                      {researcher.first_name} {researcher.last_name}
-                    </Typography>
-                    <Typography variant="body2" color="inherit" gutterBottom>
-                      {profession}
-                    </Typography>
-                    <div className={classes.paper}>
-                      {linkedIn ? (
-                        <IconButton
-                          aria-label="LinkedIn"
-                          href={linkedIn}
-                          color="primary"
-                        >
-                          <LinkedInIcon />
-                        </IconButton>
-                      ) : (
-                        <div></div>
-                      )}
-                      {twitter ? (
-                        <IconButton
-                          aria-label="Twitter"
-                          href={twitter}
-                          color="primary"
-                        >
-                          <TwitterIcon color="primary" />
-                        </IconButton>
-                      ) : (
-                        <div></div>
-                      )}
-                    </div>
+                    {twitter ? (
+                      <IconButton
+                        aria-label="Twitter"
+                        href={twitter}
+                        color="primary"
+                      >
+                        <TwitterIcon color="primary" />
+                      </IconButton>
+                    ) : (
+                      <div></div>
+                    )}
                   </div>
-                </Paper>
-                <Paper className={classes.paperDetails}>
-                  <div>
-                    <List className={classes.root}>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <EmailIcon color="primary" />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary="Email"
-                          secondary={researcher.email}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <PhoneIcon color="primary" />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary="Contact Number"
-                          secondary={contact_no}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <WorkIcon color="primary" />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary="Institution"
-                          secondary={institution}
-                        />
-                      </ListItem>
-                      <ListItem>
-                        <ListItemAvatar>
-                          <Avatar>
-                            <DescriptionIcon color="primary" />
-                          </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary="Personal Description"
-                          secondary={description}
-                          className={classes.textRoot}
-                        />
-                      </ListItem>
-                    </List>
-                  </div>
-                </Paper>
-                {researcher.id == user._id ? (
-                  <div className={classes.buttonEdit}>
-                    <EditProfile profileDetails={researcher} />
-                  </div>
-                ) : (
-                  <div></div>
-                )}
+                </div>
               </Paper>
-            </Container>
-          </Grid>
-          <Grid item xs={8}>
-            <InfiniteScroll
-              dataLength={1000} //This is important field to render the next data
-              height={800}
-              endMessage={
-                <p style={{ textAlign: "center" }}>
-                  <b>********</b>
-                </p>
-              }
-            >
-              <Paper className={classes.paper}>
-                <TabPanel />
+              <Paper className={classes.paperDetails}>
+                <List>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <EmailIcon color="primary" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary="Email"
+                      secondary={researcher.email}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <PhoneIcon color="primary" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary="Contact Number"
+                      secondary={contact_no}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <WorkIcon color="primary" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary="Institution"
+                      secondary={institution}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <DescriptionIcon color="primary" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary="Personal Description"
+                      secondary={description}
+                      className={classes.textRoot}
+                    />
+                  </ListItem>
+                </List>
               </Paper>
-            </InfiniteScroll>
+              {researcher.id == user._id ? (
+                <div className={classes.buttonEdit}>
+                  <EditProfile profileDetails={researcher} />
+                </div>
+              ) : (
+                <div></div>
+              )}
+            </Grid>
+            <Grid item xs={8} className={classes.containerStyles2}>
+              <InfiniteScroll
+                dataLength="100%" //This is important field to render the next data
+                height={1000}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>********</b>
+                  </p>
+                }
+              >
+                <Paper className={classes.paper}>
+                  <TabPanel />
+                </Paper>
+              </InfiniteScroll>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
-    </CloudinaryContext>
+        </CloudinaryContext>
+      )}
+    </div>
   );
 }

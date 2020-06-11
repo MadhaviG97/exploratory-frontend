@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
     minWidth: 250,
-    minHeight: 550,
+    minHeight: 700,
   },
   paper: {
     padding: theme.spacing(2),
