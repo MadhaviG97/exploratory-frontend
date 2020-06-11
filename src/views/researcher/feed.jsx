@@ -45,7 +45,8 @@ export default function Feed() {
         setIndex(index + response.data.length);
       })
       .catch((err) => {
-        console.log(err);
+        setLoading(false)
+        // console.log(err);
       });
   }, []);
 

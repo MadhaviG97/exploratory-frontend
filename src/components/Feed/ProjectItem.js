@@ -60,7 +60,7 @@ export default function ProjectItem({ ResearchItem }) {
         //   className={classes.media}
         //   image={ResearchItem.poster_image[0]}
         // />
-        <TextMobileStepper images={ResearchItem.poster_image} />
+        <TextMobileStepper images={Array.isArray(ResearchItem.poster_image)?ResearchItem.poster_image:[ResearchItem.poster_image]} />
       ) : (
           <div></div>
         )}
