@@ -69,11 +69,11 @@ export default function ProjectItem({ ResearchItem }) {
 
       <Divider />
 
-      <CardActions disableSpacing>
+      {/* <CardActions disableSpacing>
         <Button variant="outlined" startIcon={<BookmarkBorderIcon />}>
           Follow
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }

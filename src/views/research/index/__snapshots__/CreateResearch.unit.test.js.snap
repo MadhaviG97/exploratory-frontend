@@ -2,10 +2,10 @@
 
 exports[`create research renders correctly 1`] = `
 <div
-  className="MuiBox-root MuiBox-root-323"
+  className="MuiBox-root MuiBox-root-322"
 >
   <div
-    className="MuiBox-root MuiBox-root-324"
+    className="MuiBox-root MuiBox-root-323"
   >
     <main
       className="makeStyles-layout-2"
@@ -157,8 +157,8 @@ exports[`create research renders correctly 1`] = `
                 <label
                   className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
                   data-shrink={false}
-                  htmlFor="asynchronous-demo"
-                  id="asynchronous-demo-label"
+                  htmlFor="collaborators"
+                  id="collaborators-label"
                 >
                   Collaborators
                 </label>
@@ -176,7 +176,7 @@ exports[`create research renders correctly 1`] = `
                     autoFocus={false}
                     className="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                     disabled={false}
-                    id="asynchronous-demo"
+                    id="collaborators"
                     onAnimationStart={[Function]}
                     onBlur={[Function]}
                     onChange={[Function]}
@@ -261,8 +261,8 @@ exports[`create research renders correctly 1`] = `
                 <label
                   className="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-outlined"
                   data-shrink={false}
-                  htmlFor="asynchronous-demo"
-                  id="asynchronous-demo-label"
+                  htmlFor="tags"
+                  id="tags-label"
                 >
                   Tags
                 </label>
@@ -280,7 +280,7 @@ exports[`create research renders correctly 1`] = `
                     autoFocus={false}
                     className="MuiInputBase-input MuiOutlinedInput-input MuiAutocomplete-input MuiAutocomplete-inputFocused MuiInputBase-inputAdornedEnd MuiOutlinedInput-inputAdornedEnd"
                     disabled={false}
-                    id="asynchronous-demo"
+                    id="tags"
                     onAnimationStart={[Function]}
                     onBlur={[Function]}
                     onChange={[Function]}
@@ -352,36 +352,32 @@ exports[`create research renders correctly 1`] = `
             className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
           >
             <div
-              className="makeStyles-root-279"
+              className="makeStyles-wrapper-279"
             >
-              <div
-                className="makeStyles-wrapper-280"
+              <button
+                className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
+                disabled={false}
+                onBlur={[Function]}
+                onClick={[Function]}
+                onDragLeave={[Function]}
+                onFocus={[Function]}
+                onKeyDown={[Function]}
+                onKeyUp={[Function]}
+                onMouseDown={[Function]}
+                onMouseLeave={[Function]}
+                onMouseUp={[Function]}
+                onTouchEnd={[Function]}
+                onTouchMove={[Function]}
+                onTouchStart={[Function]}
+                tabIndex={0}
+                type="button"
               >
-                <button
-                  className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary"
-                  disabled={false}
-                  onBlur={[Function]}
-                  onClick={[Function]}
-                  onDragLeave={[Function]}
-                  onFocus={[Function]}
-                  onKeyDown={[Function]}
-                  onKeyUp={[Function]}
-                  onMouseDown={[Function]}
-                  onMouseLeave={[Function]}
-                  onMouseUp={[Function]}
-                  onTouchEnd={[Function]}
-                  onTouchMove={[Function]}
-                  onTouchStart={[Function]}
-                  tabIndex={0}
-                  type="button"
+                <span
+                  className="MuiButton-label"
                 >
-                  <span
-                    className="MuiButton-label"
-                  >
-                    create project
-                  </span>
-                </button>
-              </div>
+                  create project
+                </span>
+              </button>
             </div>
           </div>
         </div>

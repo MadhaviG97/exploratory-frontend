@@ -5,6 +5,7 @@ import Container from "@material-ui/core/Container";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import TabPanel from './TabPanel'
+import ReactLoading from "react-loading";
 import axios from 'axios'
 
 const useStyles = makeStyles({
@@ -12,12 +13,20 @@ const useStyles = makeStyles({
     flexGrow: 1,
     marginTop: "8px",
   },
+  loader: {
+    height: 550,
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
+  },
 });
 
 const SearchList = (props) => {
 
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [loading, setLoading] = React.useState(true);
 
   const [projects, setProjects] = React.useState([])
   const [researchers, setResearchers] = React.useState([])
@@ -57,10 +66,11 @@ const SearchList = (props) => {
       var request = axios
         .post("/search", parameters)
         .then((response) => {
+          setLoading(false)
           setProjects(response.data.res)
           setProjectsLength(response.data.resLength)
         })
-        .catch(err => { });
+        .catch(err => { setLoading(false) });
     }
     fetchData()
   }, [projectPage, props.searchString])
@@ -106,49 +116,64 @@ const SearchList = (props) => {
   }, [institutionPage, props.searchString])
 
   return (
-    <Container maxWidth="sm">
-      <Paper className={classes.root} style={{ backgroundColor: '#ccebff' }}>
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-        >
-          <Tab label="Projects" />
-          <Tab label="Researchers" />
-          <Tab label="Institutions" />
-        </Tabs>
 
-        <TabPanel
-          value={value}
-          index={0}
-          projects={projects}
-          count={Math.ceil(projectsLength / pageAmount)}
-          page={projectPage}
-          setPage={setProjectPage}
-        />
+    <div>
+      {loading ? (
+        <div className={classes.loader}>
+          <ReactLoading
+            type="spinningBubbles"
+            color="#5054CC"
+            height={550}
+            width={50}
+          />
+        </div>
+      ) : (
+          <Container maxWidth="sm">
+            <Paper className={classes.root} style={{ backgroundColor: '#ccebff' }}>
+              <Tabs
+                value={value}
+                onChange={handleChange}
+                indicatorColor="primary"
+                textColor="primary"
+                centered
+              >
+                <Tab label="Projects" />
+                <Tab label="Researchers" />
+                <Tab label="Institutions" />
+              </Tabs>
 
-        <TabPanel
-          value={value}
-          index={1}
-          researchers={researchers}
-          count={Math.ceil(researchersLength / pageAmount)}
-          page={researcherPage}
-          setPage={setResearcherPage}
-        />
+              <TabPanel
+                value={value}
+                index={0}
+                projects={projects}
+                count={Math.ceil(projectsLength / pageAmount)}
+                page={projectPage}
+                setPage={setProjectPage}
+              />
 
-        <TabPanel
-          value={value}
-          index={2}
-          institutions={institutions}
-          count={Math.ceil(institutionsLength / pageAmount)}
-          page={institutionPage}
-          setPage={setInstitutionPage}
-        />
+              <TabPanel
+                value={value}
+                index={1}
+                researchers={researchers}
+                count={Math.ceil(researchersLength / pageAmount)}
+                page={researcherPage}
+                setPage={setResearcherPage}
+              />
 
-      </Paper>
-    </Container>
+              <TabPanel
+                value={value}
+                index={2}
+                institutions={institutions}
+                count={Math.ceil(institutionsLength / pageAmount)}
+                page={institutionPage}
+                setPage={setInstitutionPage}
+              />
+
+            </Paper>
+          </Container>
+        )}
+    </div>
+
   );
 };
 

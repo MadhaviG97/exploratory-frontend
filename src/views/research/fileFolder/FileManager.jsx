@@ -366,7 +366,7 @@ function FileManager(props) {
                         <Grid item xs={3} >
                             <Box p={4}/>
                             <Paper classname={classes.papermenu}>
-                            <Box p={1.5}>
+                            <Box p={1.5} display={{ xs: 'none', sm: 'none', md: 'block' }}>
                                 <FolderMenu handleSearch={handleSearch} onSearchChange={onSearchChange} folderParams={props.match.params} group={group}/>
                             </Box>
                             </Paper>
