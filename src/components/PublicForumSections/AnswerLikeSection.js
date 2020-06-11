@@ -77,7 +77,6 @@ export default function QuestionLike(props) {
                 answer_id={props.answer.answer_id}
                 question_id={props.answer.question_id}
               />
-              >
             </ButtonGroup>
           ) : (
             <div></div>
