@@ -43,7 +43,6 @@ export default function Team(props) {
     <CardActionArea
       id={props.user_id}
       onClick={() => {
-        alert("here");
         var { from } = location.state || {
           from: { pathname: `/userprofile/${props.user_id}` },
         };
