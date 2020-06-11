@@ -49,14 +49,15 @@ function ViewDocument(props) {
     if (user.userData && mounted && !loadingValidation){
         if (collabs.some(e => e.researcher_id == user_id) && validpost){
             return (
-            <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)", minHeight: '83vh'}}>
+            <div style={{background: "#eceff1"}}>
+                <div  className={classes.background}>
             
                     <div  > 
                         <ViewPage user={user} postId={props.match.params.postId} group={props.match.params.projectId}/>
                         <Box p={4}  /> 
                     </div>
                 
-                
+                </div>
             </div>
             );
         }return(

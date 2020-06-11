@@ -55,7 +55,8 @@ function Edit2Page(props) {
     if (user.userData && mounted && !loadingValidation){
         if (collabs.some(e => e.researcher_id == user_id) && validpost){
             return (
-            <div style={{ height: '100%', backgroundImage: "url(/images/feed/feedBackground.jpg)"}}>
+            <div style={{background: "#eceff1"}}>
+                <div  className={classes.background}>
                     <Box p={2}/> 
                     <div  className={classNames( classes.mainRaised3)} >
                         
@@ -68,8 +69,8 @@ function Edit2Page(props) {
                             
                             <Grid item xs={8} >
                                 <Box boxShadow={2} flexDirection="row">
-                                    <Box p={1} style={{  background: '#014f82'}}>
-                                        <h1 align='center' className={classes.topic5}>Editor</h1>
+                                    <Box p={1} style={{  background: '#eceff1'}}>
+                                        <h1 align='center' className={classes.topic4}>Editor</h1>
                                     </Box>
                                 </Box>
                             </Grid>
@@ -78,7 +79,7 @@ function Edit2Page(props) {
                         <YJSQuill user={user} variable={props.match.params.postId} group={props.match.params.projectId}/>
                         <Box p={5.5}  /> 
                     </div>
-                
+                </div>
             </div>
             );
         }else{

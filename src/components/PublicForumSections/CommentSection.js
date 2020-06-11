@@ -14,6 +14,8 @@ import Avatar from "@material-ui/core/Avatar";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import Badge from "@material-ui/core/Badge";
 import StarsIcon from "@material-ui/icons/Stars";
+import { Link } from "react-router-dom";
+import LinkTo from "@material-ui/core/Link";
 
 import AnswerLike from "./AddALike";
 import AddComment from "./AddComment";
@@ -77,11 +79,20 @@ export default function CommentSection(props) {
                     <ListItemAvatar>
                       <Avatar
                         alt="Profile Picture"
-                        src={`data:image/jpeg;base64,${answer.profile_picture}`}
+                        src={answer.profile_picture}
                       />
                     </ListItemAvatar>
                     <ListItemText
-                      primary={answer.first_name + " " + answer.last_name}
+                      primary={
+                        <Link
+                          to={`/userprofile/${answer.researcher_id}`}
+                          style={{ color: "primary" }}
+                        >
+                          <LinkTo component="h5">
+                            {answer.first_name + " " + answer.last_name}
+                          </LinkTo>
+                        </Link>
+                      }
                       secondary={
                         <React.Fragment>
                           <Typography
@@ -115,7 +126,10 @@ export default function CommentSection(props) {
                         <StarsIcon fontSize="medium" color="primary" />
                       </div>
                     )}
-                    <AnswerLike question_id={answer.question_id} answer_id={answer.answer_id} />
+                    <AnswerLike
+                      question_id={answer.question_id}
+                      answer_id={answer.answer_id}
+                    />
                     {answer.researcher_id === user.userData._id ? (
                       <ButtonGroup
                         color="primary"

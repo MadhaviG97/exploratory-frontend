@@ -49,7 +49,7 @@ export default function TeamSection() {
                 <small className={classes.smallTitle}>Web Developer</small>
               </h4>
               <CardFooter className={classes.justifyCenter}>
-                <IconButton aria-label="LinkedIn" href="">
+                {/* <IconButton aria-label="LinkedIn" href="">
                   <LinkedInIcon />
                 </IconButton>
                 <IconButton aria-label="Twitter" href="">
@@ -57,7 +57,7 @@ export default function TeamSection() {
                 </IconButton>
                 <IconButton aria-label="Facebook" href="">
                   <FacebookIcon />
-                </IconButton>
+                </IconButton> */}
               </CardFooter>
             </Card>
           </GridItem>
@@ -72,7 +72,7 @@ export default function TeamSection() {
                 <small className={classes.smallTitle}>Web Developer</small>
               </h4>
               <CardFooter className={classes.justifyCenter}>
-                <IconButton aria-label="LinkedIn" href="">
+                {/* <IconButton aria-label="LinkedIn" href="">
                   <LinkedInIcon />
                 </IconButton>
                 <IconButton aria-label="Twitter" href="">
@@ -80,7 +80,7 @@ export default function TeamSection() {
                 </IconButton>
                 <IconButton aria-label="Facebook" href="">
                   <FacebookIcon />
-                </IconButton>
+                </IconButton> */}
               </CardFooter>
             </Card>
           </GridItem>
@@ -95,7 +95,7 @@ export default function TeamSection() {
                 <small className={classes.smallTitle}>Web Developer</small>
               </h4>
               <CardFooter className={classes.justifyCenter}>
-                <IconButton aria-label="LinkedIn" href="">
+                {/* <IconButton aria-label="LinkedIn" href="">
                   <LinkedInIcon />
                 </IconButton>
                 <IconButton aria-label="Twitter" href="">
@@ -103,7 +103,7 @@ export default function TeamSection() {
                 </IconButton>
                 <IconButton aria-label="Facebook" href="">
                   <FacebookIcon />
-                </IconButton>
+                </IconButton> */}
               </CardFooter>
             </Card>
           </GridItem>
@@ -118,7 +118,7 @@ export default function TeamSection() {
                 <small className={classes.smallTitle}>Web Developer</small>
               </h4>
               <CardFooter className={classes.justifyCenter}>
-                <IconButton aria-label="LinkedIn" href="">
+                {/* <IconButton aria-label="LinkedIn" href="">
                   <LinkedInIcon />
                 </IconButton>
                 <IconButton aria-label="Twitter" href="">
@@ -126,7 +126,7 @@ export default function TeamSection() {
                 </IconButton>
                 <IconButton aria-label="Facebook" href="">
                   <FacebookIcon />
-                </IconButton>
+                </IconButton> */}
               </CardFooter>
             </Card>
           </GridItem>
