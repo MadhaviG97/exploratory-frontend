@@ -10,6 +10,12 @@ export const useStyles = makeStyles((theme) => ({
   papermenu: {
     marginLeft: theme.spacing(5)
   },
+  background:{
+    height: '100%',
+    backgroundSize: 'cover',
+    backgroundImage: "url(/images/fileFolder/bg4.png)", 
+    minHeight: '84vh'
+   },
   form: {
     //width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),

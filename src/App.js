@@ -71,7 +71,7 @@ function App() {
 
             <Route
               exact
-              path="/user/join-exploratory/:userId"
+              path="/user/join-exploratory/:userId/:token"
               component={Auth(ConfirmEmail, false)}
             />
 

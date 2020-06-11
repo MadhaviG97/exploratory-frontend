@@ -107,7 +107,7 @@ export default function ButtonBases(props) {
             <Typography
               component="span"
               variant="h3"
-              color="primary"
+              color="#eceff1"
               className={classes.imageTitle}
             >
               {props.title}

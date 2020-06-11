@@ -7,30 +7,24 @@ export default function Team(props) {
   const classes = useStyles();
 
   return (
-    <Box className={classes.container} display="flex" flexDirection="column">
-      <Box className={classes.box}>
-        <Paper className={classes.abstract} elevation={3}>
-          <Grid container xs={12} md={12} spacing={3}>
-            {/* <Box display="flex" flexWrap="wrap"> */}
-            {props.collaborators.map((member) => {
-              return (
-                <Grid item xs={12} lg={4} md={6} spacing={3}>
-                  <Member
-                    user_id={member.researcher_id}
-                    username={member.first_name
-                      .concat(" ")
-                      .concat(member.last_name)}
-                    university={member.institution_name}
-                    image={member.profile_picture}
-                    isAdmin={member.isAdmin}
-                  />
-                </Grid>
-              );
-            })}
-            {/* </Box> */}
-          </Grid>
-        </Paper>
-      </Box>
-    </Box>
+    <Paper className={classes.abstract} elevation={3}>
+      <Grid container xs={12} md={12} spacing={3}>
+        {props.collaborators.map((member) => {
+          return (
+            <Grid item xs={12} lg={4} md={6} spacing={3}>
+              <Member
+                user_id={member.researcher_id}
+                username={member.first_name
+                  .concat(" ")
+                  .concat(member.last_name)}
+                university={member.institution_name}
+                image={member.profile_picture}
+                isAdmin={member.isAdmin}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
+    </Paper>
   );
 }

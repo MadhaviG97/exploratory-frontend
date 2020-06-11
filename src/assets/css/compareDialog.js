@@ -43,6 +43,12 @@ export const useStyles = makeStyles((theme) => ({
     textDecoration: "none"
     
   },
+  background:{
+    height: '100%',
+    backgroundSize: 'cover',
+    backgroundImage: "url(/images/fileFolder/bg4-Copy.png)", 
+    minHeight: '84vh'
+   },
   shape: {
     width: 30,
     height: 30,
@@ -52,10 +58,10 @@ export const useStyles = makeStyles((theme) => ({
   },
   formControl: {
     margin: theme.spacing(1),
-    minWidth: 120,
+    minWidth: 120
   },
   topic: {
-    color: "#3C4858",
+    color: "#014f82",
     margin: "1.75rem 0 0.875rem",
     textDecoration: "none",
     fontWeight: "480",
@@ -71,9 +77,10 @@ export const useStyles = makeStyles((theme) => ({
     backgroundColor: "#014f82",
   },
   card: {
-    borderRadius: 2,
-    boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px'
-    //backgroundColor: theme.palette.primary.light,
+    borderRadius: 3,
+    boxShadow: 'rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px',
+    
+    border:1
     //color: theme.palette.primary.contrastText,
     //boxShadow: "none"
    },

@@ -37,19 +37,20 @@ export default function Send(props) {
     if (user.userData && mounted){
         if (collabs.some(e => e.researcher_id == user_id)){
             return(
-                <div className={classNames(classes.main2)} >
-                    
-                    <div style={{ width: '70%', margin: '0.1rem auto' }}>
-                            <Box p={1.5}/>
-                            <NavComponent projectId={props.match.params.projectId}/>
-                        
-                        <Divider  variant="fullWidth" />
-                        <Box p={0.5}/>
-                    </div> 
-                    <div > 
-                        <Sender group={props.match.params.projectId} user={user}/>
+                <div style={{background: "#eceff1"}}>
+                    <div  className={classes.background}>
+                        <div style={{ width: '70%', margin: '0.1rem auto' }}>
+                                <Box p={1.5}/>
+                                <NavComponent projectId={props.match.params.projectId} color={'#FFFFFF'}/>
+                            
+                            <Divider  variant="fullWidth" />
+                            <Box p={0.5}/>
+                        </div> 
+                        <div > 
+                            <Sender group={props.match.params.projectId} user={user}/>
+                        </div>
+                        <Box p={5}/>
                     </div>
-                    <Box p={5}/>
                 </div>
             );
         }else{

@@ -203,12 +203,12 @@ export default function SignUp(props) {
       await axios
         .post(`/temp-register`, formData)
         .then(async (result) => {
-          console.log(result.data.inserted_id);
           await axios
             .post("/email/join-exploratory", {
               name: `${values.first_name.value} ${values.last_name.value}`,
               email: values.email.value,
               message: result.data.inserted_id,
+              token: result.data.token,
             })
             .then((res) => {
               console.log(res);
