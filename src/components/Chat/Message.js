@@ -15,13 +15,13 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { Button } from '@material-ui/core'
-
+import TextField from '@material-ui/core/TextField';
 import CheckIcon from '@material-ui/icons/Check';
 import DoneAllIcon from '@material-ui/icons/DoneAll';
 import HourglassEmptyIcon from '@material-ui/icons/HourglassEmpty';
 import TimerIcon from '@material-ui/icons/Timer';
 import InfoIcon from '@material-ui/icons/Info';
-
+import InputBase from '@material-ui/core/InputBase';
 // import MoreIcon from '@material-ui/icons/MoreVert';
 import MoreIcon from '@material-ui/icons/More';
 import FeedbackIcon from '@material-ui/icons/Feedback';
@@ -90,7 +90,9 @@ const Message = ({ msg, client }) => {
                     </ListItemAvatar>
                 </HtmlTooltip>
 
-                <ListItemText primary={msg.message}
+                <ListItemText
+                    // primary={msg.message}
+                    primary={<InputBase defaultValue={msg.message} readOnly multiline></InputBase>}
                     secondary={getDateTime(msg.message_time)}
                 />
 
@@ -104,7 +106,7 @@ const Message = ({ msg, client }) => {
                     <DialogTitle id="form-dialog-title">Message Status</DialogTitle>
                     <DialogContent>
 
-                        <Typography variant="subtitle2">Seen Participants</Typography>
+                        <Typography variant="subtitle2">Seen</Typography>
 
                         <TableContainer component={Paper}>
                             <Table aria-label="simple table">
@@ -135,7 +137,7 @@ const Message = ({ msg, client }) => {
 
 
 
-                        <Typography style={{ marginTop: '30px' }} variant="subtitle2">Delivered Participants</Typography>
+                        <Typography style={{ marginTop: '30px' }} variant="subtitle2">Delivered to</Typography>
 
                         <TableContainer component={Paper}>
                             <Table aria-label="simple table">
