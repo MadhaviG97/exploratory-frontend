@@ -9,7 +9,7 @@ export default function PDFViewerComponent(props) {
       document={{
         url: `${process.env.REACT_APP_BACK_END_URL}/final_paper/${props.project_id}.pdf`,
       }}
-      scale={1}
+      scale={1.2}
       scaleStep={0.1}
       watermark={{
         text: "Exploratory", //Watermark text

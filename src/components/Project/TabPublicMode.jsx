@@ -18,15 +18,18 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Grid container>
-          <Grid item lg={1}></Grid>
-          <Grid item lg={10}>
-            <Box height="100%" alignItems="flex-start" py={3}>
-              {children}
-            </Box>
-          </Grid>
-          <Grid item lg={1}></Grid>
-        </Grid>
+        // <Grid container>
+        //   <Grid item></Grid>
+        //   <Grid item>
+        //     <Box height="100%" alignItems="flex-start" py={3}>
+        //       {children}
+        //     </Box>
+        //   </Grid>
+        //   <Grid item></Grid>
+        // </Grid>
+        <Box height="100%" alignItems="flex-start" py={3} px={15}>
+          {children}
+        </Box>
       )}
     </Typography>
   );

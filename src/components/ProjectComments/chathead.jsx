@@ -79,10 +79,10 @@ export default function Comments(props) {
         </Box>
       )}
       <Grid container>
-        <Grid item lg={2} md="2" xs={3} className={classes.newComment}>
+        <Grid item lg={2} md="3" sm={3} xs={3} className={classes.newComment}>
           <AddNewComment onNewComment={handleRefreshComment} />
         </Grid>
-        <Grid item lg={8} md="8" xs={9}>
+        <Grid item lg={8} md="8" sm={9} xs={9}>
           {comments.length !== 0 ? (
             comments.map((chat) => {
               return (
@@ -96,7 +96,7 @@ export default function Comments(props) {
             <img src="/images/project/Empty.png" />
           )}
         </Grid>
-        <Grid item lg={2} md="2" xs={0} />
+        <Grid item lg={2} md="1" xs={0} />
       </Grid>
     </React.Fragment>
   );

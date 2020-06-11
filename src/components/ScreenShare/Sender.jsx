@@ -208,7 +208,7 @@ class Sender extends React.Component {
                       >
                       {this.state.collaborators.filter(researcher => researcher.researcher_id !== user.userData._id).map((researcher) => (
                         <MenuItem key={researcher.researcher_id} value={researcher} data-cy="receipients-menu">
-                          <Avatar alt="user" src={researcher.pofile_picture} />
+                          <Avatar alt="user" src={researcher.profile_picture} />
                           <Box p={1}/>
                           {researcher.researcher_email}
                         </MenuItem>

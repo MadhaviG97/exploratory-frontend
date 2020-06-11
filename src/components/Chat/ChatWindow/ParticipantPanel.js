@@ -24,6 +24,11 @@ import Switch from '@material-ui/core/Switch';
 import ClearIcon from '@material-ui/icons/Clear';
 import IconButton from '@material-ui/core/IconButton';
 import ResponseDialog from '../ResponseDialog'
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableRow from '@material-ui/core/TableRow';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -108,23 +113,13 @@ const ParticipantPanel = (props) => {
 
   return (
     <div>
-
+{/* 
       <List className={classes.root} >
 
         {participants.map(option => (
           option ? (
             <ListItem>
-              {/* <ListItemAvatar>
-      <Avatar
-        src={
-          option.profile_picture
-        }
-      />
-    </ListItemAvatar>
-    <ListItemText
-      primary={option.first_name.concat(" ").concat(option.last_name)}
-      secondary={option.institution}
-    /> */}
+         
 
               <HtmlTooltip
                 title={
@@ -179,7 +174,83 @@ const ParticipantPanel = (props) => {
           ) : null
 
         ))}
-      </List>
+      </List> */}
+
+      <div style={{maxHeight:'200px'}}>
+      <TableContainer component={Paper}>
+        <Table aria-label="simple table"  >
+
+          <TableBody>
+            {participants.map(option => (
+              option ? (
+                <TableRow key={option.user_id}>
+                  <TableCell component="th" scope="row">
+                    <HtmlTooltip
+                      title={
+                        <React.Fragment>
+                          <Typography varient="body" color="inherit">Email: {option.email}</Typography>
+
+                        </React.Fragment>
+                      }
+                    >
+
+                      <Chip
+                        label={option.first_name.concat(" ").concat(option.last_name).concat(" - ").concat(option.institution)}
+
+                        avatar={
+                          <Avatar
+                            alt="propic"
+                            src={
+                              option.profile_picture
+                            }
+                          />
+                        }
+                      />
+                    </HtmlTooltip>
+                  </TableCell>
+
+                  <TableCell align="right">
+                    <FormControlLabel
+                      control={
+                        <Switch
+                          checked={option.isAdmin}
+                          onChange={handleAdminSwitchChange}
+                          name={option.user_id}
+                          disabled={(option.user_id == currentUser.user_id) || (currentUser.isAdmin == 0)}
+                          color="primary"
+                        />
+                      }
+                      label="Admin"
+                    />
+
+                  </TableCell>
+
+                  <TableCell>
+
+                    <Tooltip title={(option.user_id == currentUser.user_id) ? "Leave Chat Group" : "Remove ".concat(option.first_name.concat(" ")).concat(option.last_name)}
+                      arrow
+                    >
+                      <IconButton
+                        id="removeParticipantButton"
+                        edge="start"
+                        color="inherit"
+                        onClick={() => { handleRemoveParticipant(option.user_id) }}
+                        disabled={!(currentUser.isAdmin == 1 || option.user_id == currentUser.user_id)}
+                      >
+                        <ClearIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </TableCell>
+                </TableRow>
+
+              ) : null
+            ))}
+          </TableBody>
+         
+        </Table>
+      </TableContainer>
+      </div>
+
       <ResponseDialog
         open={openResponseDialog}
         handleCloseResponseDialog={handleCloseResponseDialog}

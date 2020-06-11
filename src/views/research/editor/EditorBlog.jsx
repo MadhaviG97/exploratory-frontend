@@ -187,7 +187,7 @@ export default function CreatePage(props) {
                             <Grid item xs={3}>
                             <Box p={4}/>
                                 <Paper >
-                                    <Box p={1.5}>
+                                    <Box p={1.5} display={{ xs: 'none', sm: 'none', md: 'block' }}>
                                         <EditorBlogMenu handleSearch={handleSearch} onSearchChange={onSearchChange} group={group}/>
                                     </Box>
                                 </Paper>

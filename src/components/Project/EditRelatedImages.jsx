@@ -1,7 +1,5 @@
 import React from "react";
-import Button from "@material-ui/core/Button";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import Paper from "@material-ui/core/Paper";
 import ImageUploader from "../Project/ImageUploader";
@@ -69,26 +67,32 @@ export default function FormDialog(props) {
         </DialogTitle>
         <DialogContent>
           {sucess && (
-            <Alert
-              severity="success"
-              onClose={() => {
-                setSucess(false);
-                props.onClose();
-              }}
-            >
-              The file Upload is Success!
-            </Alert>
+            <React.Fragment>
+              <Alert
+                severity="success"
+                onClose={() => {
+                  setSucess(false);
+                  props.onClose();
+                }}
+              >
+                The file Upload is Success!
+              </Alert>
+              <br />
+            </React.Fragment>
           )}
           {fail && (
-            <Alert
-              severity="error"
-              onClose={() => {
-                setFail(false);
-                props.onClose();
-              }}
-            >
-              Try again!
-            </Alert>
+            <React.Fragment>
+              <Alert
+                severity="error"
+                onClose={() => {
+                  setFail(false);
+                  props.onClose();
+                }}
+              >
+                Try again!
+              </Alert>
+              <br />
+            </React.Fragment>
           )}
           <Paper className={classes.fileUploader} elevation={3}>
             <ImageUploader
