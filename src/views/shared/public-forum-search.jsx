@@ -92,7 +92,7 @@ export default function Forum() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1000);
+    }, 3000);
     dispatch(getAnswers());
     dispatch(getForumUsers());
     dispatch(getFreqUsers());

@@ -125,7 +125,7 @@ export default function UserProfile() {
   useEffect(() => {
     setTimeout(() => {
       setLoading(false);
-    }, 1200);
+    }, 2500);
     dispatch(getProfile(uId));
     dispatch(getProjectsByUserId(uId));
     dispatch(getProjectPostsByUserId(uId));
