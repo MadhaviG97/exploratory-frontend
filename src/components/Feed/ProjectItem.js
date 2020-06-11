@@ -54,10 +54,10 @@ export default function ProjectItem({ ResearchItem }) {
             : ""
         }
       />
-      {ResearchItem.poster_image ? (
+      {ResearchItem.poster_image && ResearchItem.poster_image.length>0 ? (
         <CardMedia
           className={classes.media}
-          image={ResearchItem.poster_image}
+          image={ResearchItem.poster_image[0]}
         />
       ) : (
         <div></div>
