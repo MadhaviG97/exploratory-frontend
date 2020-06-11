@@ -12,6 +12,7 @@ import { red } from "@material-ui/core/colors";
 import { Box, Link, Divider, Button } from "@material-ui/core";
 import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import { getDateTime } from "../Chat/Utility/DTUtility";
+import TextMobileStepper from './TextMobileStepper';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,14 +55,16 @@ export default function ProjectItem({ ResearchItem }) {
             : ""
         }
       />
-      {ResearchItem.poster_image ? (
-        <CardMedia
-          className={classes.media}
-          image={ResearchItem.poster_image}
-        />
+      {ResearchItem.poster_image && ResearchItem.poster_image.length > 0 ? (
+        // <CardMedia
+        //   className={classes.media}
+        //   image={ResearchItem.poster_image[0]}
+        // />
+        <TextMobileStepper images={Array.isArray(ResearchItem.poster_image)?ResearchItem.poster_image:[ResearchItem.poster_image]} />
       ) : (
-        <div></div>
-      )}
+          <div></div>
+        )}
+
 
       <CardContent>
         <Box fontWeight="fontWeightBold" color="secondary" component="h3">
@@ -78,11 +81,11 @@ export default function ProjectItem({ ResearchItem }) {
 
       <Divider />
 
-      <CardActions disableSpacing>
+      {/* <CardActions disableSpacing>
         <Button variant="outlined" startIcon={<BookmarkBorderIcon />}>
           Follow
         </Button>
-      </CardActions>
+      </CardActions> */}
     </Card>
   );
 }
