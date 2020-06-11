@@ -16,9 +16,11 @@ import Badge from "@material-ui/core/Badge";
 import StarsIcon from "@material-ui/icons/Stars";
 import { Link } from "react-router-dom";
 import LinkTo from "@material-ui/core/Link";
+import Divider from "@material-ui/core/Divider";
 
 import AnswerLike from "./AddALike";
 import AddComment from "./AddComment";
+import AnswerLikeSection from "./AnswerLikeSection";
 import DeleteAnswer from "./AnswerDeleteDialog";
 import EditAnswer from "./EditAnswerDialog";
 
@@ -54,6 +56,11 @@ const useStyles = makeStyles((theme) => ({
     right: 0,
     margin: "0 auto",
   },
+  paper1: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+  },
 }));
 
 export default function CommentSection(props) {
@@ -61,6 +68,7 @@ export default function CommentSection(props) {
   const is_logged = useSelector((state) => state.is_logged);
   const forum = useSelector((state) => state.forum);
   const user = useSelector((state) => state.user);
+  const answerLikes = useSelector((state) => state.forum.answerLikes);
   const dispatch = useDispatch();
 
   return (
@@ -75,58 +83,63 @@ export default function CommentSection(props) {
             {forum.answers.map((answer) =>
               props.question_id === answer.question_id ? (
                 <React.Fragment key={answer.question_id}>
-                  <ListItem>
-                    <ListItemAvatar>
-                      <Avatar
-                        alt="Profile Picture"
-                        src={answer.profile_picture}
+                  <Paper>
+                    <ListItem>
+                      <ListItemAvatar>
+                        <Avatar
+                          alt="Profile Picture"
+                          src={answer.profile_picture}
+                        />
+                      </ListItemAvatar>
+                      <ListItemText
+                        primary={
+                          <Link
+                            to={`/userprofile/${answer.researcher_id}`}
+                            style={{ color: "primary" }}
+                          >
+                            <LinkTo component="h5">
+                              {answer.first_name + " " + answer.last_name}
+                            </LinkTo>
+                          </Link>
+                        }
+                        secondary={
+                          <React.Fragment>
+                            <Typography
+                              component="span"
+                              variant="body2"
+                              className={classes.inline}
+                              color="inherit"
+                            >
+                              {new Date(answer.updated_at).toDateString() +
+                                " :- "}
+                            </Typography>
+                            <Typography
+                              component="span"
+                              variant="body2"
+                              className={classes.inline}
+                              color="textPrimary"
+                            >
+                              {answer.answer}
+                            </Typography>
+                          </React.Fragment>
+                        }
                       />
-                    </ListItemAvatar>
-                    <ListItemText
-                      primary={
-                        <Link
-                          to={`/userprofile/${answer.researcher_id}`}
-                          style={{ color: "primary" }}
-                        >
-                          <LinkTo component="h5">
-                            {answer.first_name + " " + answer.last_name}
-                          </LinkTo>
-                        </Link>
-                      }
-                      secondary={
-                        <React.Fragment>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            className={classes.inline}
-                            color="inherit"
+                      {answer.like_count > 0 ? (
+                        <div className={classes.star}>
+                          <Badge
+                            color="primary"
+                            badgeContent={answer.like_count}
                           >
-                            {new Date(answer.updated_at).toDateString() +
-                              " :- "}
-                          </Typography>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            className={classes.inline}
-                            color="textPrimary"
-                          >
-                            {answer.answer}
-                          </Typography>
-                        </React.Fragment>
-                      }
-                    />
-                    {answer.like_count > 0 ? (
-                      <div className={classes.star}>
-                        <Badge color="primary" badgeContent={answer.like_count}>
+                            <StarsIcon fontSize="medium" color="primary" />
+                          </Badge>
+                        </div>
+                      ) : (
+                        <div className={classes.star}>
                           <StarsIcon fontSize="medium" color="primary" />
-                        </Badge>
-                      </div>
-                    ) : (
-                      <div className={classes.star}>
-                        <StarsIcon fontSize="medium" color="primary" />
-                      </div>
-                    )}
-                    <AnswerLike
+                        </div>
+                      )}
+
+                      {/* <AnswerLike
                       question_id={answer.question_id}
                       answer_id={answer.answer_id}
                     />
@@ -143,8 +156,13 @@ export default function CommentSection(props) {
                       </ButtonGroup>
                     ) : (
                       <div></div>
-                    )}
-                  </ListItem>
+                    )} */}
+                    </ListItem>
+                    <div className={classes.paper1}>
+                      <AnswerLikeSection answer={answer} />
+                    </div>
+                  </Paper>
+                  <Divider/>
                 </React.Fragment>
               ) : (
                 <div></div>
@@ -160,7 +178,7 @@ export default function CommentSection(props) {
                     <ListItemAvatar>
                       <Avatar
                         alt="Profile Picture"
-                        src={`data:image/jpeg;base64,${answer.profile_picture}`}
+                        src={answer.profile_picture}
                       />
                     </ListItemAvatar>
                     <ListItemText

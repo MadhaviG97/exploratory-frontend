@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   title: {
     padding: theme.spacing(1),
     textAlign: "center",
-    backgroundColor: "#0088cc",
+    backgroundColor: "#0d47a1",
     color: "#f9fbe7",
   },
   head: {

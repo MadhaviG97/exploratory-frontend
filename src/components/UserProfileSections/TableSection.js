@@ -105,7 +105,7 @@ export default function CustomizedTables() {
                   color="primary"
                   className={classes.paper}
                 >
-                  No projects yet...
+                  No collaborating projects yet...
                 </Typography>
               </div>
             </StyledTableRow>

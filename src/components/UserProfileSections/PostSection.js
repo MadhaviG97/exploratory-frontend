@@ -47,15 +47,15 @@ export default function PostCard() {
         researcher.posts.map((post) => (
           <Card className={classes.root}>
             <CardActionArea>
-              <CardMedia
+              {/* <CardMedia
                 className={classes.media}
                 image={post.poster_image}
                 title={post.title}
-              />
+              /> */}
               <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p" align="left" >
+              {/* <Typography variant="body2" color="textSecondary" component="p" align="left" >
                   {post.published_at}
-                </Typography>
+                </Typography> */}
                 <Typography gutterBottom variant="h5" component="h2">
                   {post.title}
                 </Typography>
@@ -79,7 +79,7 @@ export default function PostCard() {
             color="primary"
             className={classes.paper}
           >
-            No posts yet...
+            No created projects yet...
           </Typography>
         </div>
       )}

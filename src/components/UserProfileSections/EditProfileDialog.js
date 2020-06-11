@@ -111,16 +111,16 @@ export default function EditProfile(props) {
       console.log(proDetails);
       editProfile(proDetails);
       dispatch(getProfile(props.profileDetails.id));
-      setDetails({
-        first_name: "",
-        last_name: "",
-        contact_no: "",
-        institution: "",
-        profession: "",
-        linkedIn: "",
-        twitter: "",
-        description: "",
-      });
+      // setDetails({
+      //   first_name: "",
+      //   last_name: "",
+      //   contact_no: "",
+      //   institution: "",
+      //   profession: "",
+      //   linkedIn: "",
+      //   twitter: "",
+      //   description: "",
+      // });
       setOpen(false);
     }
   };
@@ -141,7 +141,7 @@ export default function EditProfile(props) {
 
   return (
     <div>
-      <Button variant="contained" color="primary" onClick={handleClickOpen}>
+      <Button variant="contained" color="default" onClick={handleClickOpen}>
         Edit Profile Info
       </Button>
       <Dialog

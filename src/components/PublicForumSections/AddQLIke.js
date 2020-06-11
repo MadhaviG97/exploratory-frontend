@@ -15,11 +15,16 @@ import {
   getQuestionLikes,
 } from "../../_actions/forum_actions";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useLocation } from "react-router-dom";
+
 
 export default function LikeQuestion(props) {
   const [open, setOpen] = React.useState(false);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  let history = useHistory();
+  let location = useLocation();
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -40,6 +45,7 @@ export default function LikeQuestion(props) {
     dispatch(getPopularQuestions());
     dispatch(getPopularAnswers());
     dispatch(getQuestionLikes());
+    history.go(0);
     setOpen(false);
   };
 
