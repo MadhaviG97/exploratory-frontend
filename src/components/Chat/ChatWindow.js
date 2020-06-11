@@ -109,7 +109,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const ChatWindow = (props) => {
   const classes = useStyles();
-console.log(props)
+// console.log(props)
   const [input, setInput] = useState("")
   const [loadMoreDisabled, setLoadMoreDisabled] = React.useState(false)
   const messagesEndRef = React.useRef(null)
