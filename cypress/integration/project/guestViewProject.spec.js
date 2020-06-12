@@ -1,6 +1,6 @@
 const { wait } = require("@testing-library/react");
 
-describe("Create project", () => {
+describe("View project", () => {
   before(() => {
     cy.visit("/signin");
 
@@ -31,14 +31,30 @@ describe("Create project", () => {
   });
 
   it("3.0 view Abstract", () => {
-    cy.get(".MuiBox-root-481").should("be.visible");
+    cy.get("div")
+      .contains("div", "Abstract")
+      .scrollIntoView()
+      .wait(2000)
+      .should("be.visible");
   });
 
   it("4.0 view related images", () => {
-    cy.get(".MuiBox-root-507").should("be.visible");
+    cy.get("div")
+      .contains("div", "Related Images")
+      .scrollIntoView()
+      .wait(2000)
+      .should("be.visible");
   });
 
-  it("5.0 Check Team", () => {
+  it("5.0 view final paper", () => {
+    cy.get("div")
+      .contains("div", "Final Paper")
+      .scrollIntoView()
+      .wait(2000)
+      .should("be.visible");
+  });
+
+  it("6.0 Check Team", () => {
     cy.get("#full-width-tab-1")
       .click()
       .should("be.visible")
@@ -52,17 +68,17 @@ describe("Create project", () => {
       .click()
       .should("be.visible")
       .wait(1000)
-      .get("button[id=10002]")
+      .get("button[id=10001]")
       .click()
       .wait(3000)
       .visit("/project/viewproject/10001");
   });
 
-  it("6.0 Check Comments", () => {
+  it("7.0 Check Comments", () => {
     cy.get("#full-width-tab-2").click().should("be.visible").wait(1000);
   });
 
-  it("7.0 Check files", () => {
+  it("8.0 Check files", () => {
     cy.get("#full-width-tab-3").click().should("be.visible").wait(1000);
   });
 });

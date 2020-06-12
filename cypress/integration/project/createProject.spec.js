@@ -62,7 +62,7 @@ describe("Create project", () => {
       });
     cy.get("input[id=collaborators]")
       .click()
-      .get("li[id=collaborators-option-2]")
+      .get("li[id=collaborators-option-3]")
       .within(() => {
         cy.get("input[type=checkbox]").check();
       });
