@@ -15,6 +15,9 @@ import Container from "@material-ui/core/Container";
 import Divider from "@material-ui/core/Divider";
 import Badge from "@material-ui/core/Badge";
 import StarsIcon from "@material-ui/icons/Stars";
+import { Link } from "react-router-dom";
+import LinkTo from "@material-ui/core/Link";
+import Paper from "@material-ui/core/Paper";
 
 import CommentSection from "./CommentSection";
 import QuestionLike from "./QuestionLikeSection";
@@ -43,7 +46,12 @@ const useStyles = makeStyles((theme) => ({
   },
   star: {
     paddingLeft: 10,
-    paddingRight: 15
+    paddingRight: 15,
+  },
+  paper1: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
   },
 }));
 
@@ -73,7 +81,16 @@ export default function Post(props) {
             />
           }
           title={
-            props.postDetails.first_name + " " + props.postDetails.last_name
+            <Link
+              to={`/userprofile/${props.postDetails.researcher_id}`}
+              style={{ color: "primary" }}
+            >
+              <LinkTo component="h5">
+                {props.postDetails.first_name +
+                  " " +
+                  props.postDetails.last_name}
+              </LinkTo>
+            </Link>
           }
           subheader={dateString}
         />
@@ -112,14 +129,16 @@ export default function Post(props) {
             </div>
           )}
 
-          {is_logged && props.valid==1 ? (
-            <QuestionLike
-              Q_id={props.postDetails.researcher_id}
-              question_id={props.postDetails.question_id}
-              title={props.postDetails.title}
-              description={props.postDetails.description}
-              like_count={props.postDetails.like_count}
-            />
+          {is_logged && props.valid == 1 ? (
+            <div className={classes.paper1}>
+              <QuestionLike
+                Q_id={props.postDetails.researcher_id}
+                question_id={props.postDetails.question_id}
+                title={props.postDetails.title}
+                description={props.postDetails.description}
+                like_count={props.postDetails.like_count}
+              />
+            </div>
           ) : (
             <div></div>
           )}

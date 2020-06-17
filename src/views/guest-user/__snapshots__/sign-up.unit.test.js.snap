@@ -383,30 +383,39 @@ exports[`signup renders correctly 1`] = `
             </div>
           </div>
         </div>
-        <button
-          className="MuiButtonBase-root MuiButton-root MuiButton-contained makeStyles-submit-6 MuiButton-containedPrimary MuiButton-fullWidth"
-          disabled={false}
-          onBlur={[Function]}
-          onClick={[Function]}
-          onDragLeave={[Function]}
-          onFocus={[Function]}
-          onKeyDown={[Function]}
-          onKeyUp={[Function]}
-          onMouseDown={[Function]}
-          onMouseLeave={[Function]}
-          onMouseUp={[Function]}
-          onTouchEnd={[Function]}
-          onTouchMove={[Function]}
-          onTouchStart={[Function]}
-          tabIndex={0}
-          type="submit"
+        <div
+          className="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-12"
         >
-          <span
-            className="MuiButton-label"
+          <br />
+          <div
+            className="makeStyles-wrapper-265"
           >
-            Sign Up
-          </span>
-        </button>
+            <button
+              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-fullWidth"
+              disabled={false}
+              onBlur={[Function]}
+              onClick={[Function]}
+              onDragLeave={[Function]}
+              onFocus={[Function]}
+              onKeyDown={[Function]}
+              onKeyUp={[Function]}
+              onMouseDown={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              onTouchEnd={[Function]}
+              onTouchMove={[Function]}
+              onTouchStart={[Function]}
+              tabIndex={0}
+              type="button"
+            >
+              <span
+                className="MuiButton-label"
+              >
+                SIGN UP
+              </span>
+            </button>
+          </div>
+        </div>
         <div
           className="MuiGrid-root MuiGrid-container MuiGrid-justify-xs-flex-end"
         >

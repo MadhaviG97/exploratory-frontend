@@ -1,7 +1,7 @@
 import React, { Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
 
-import signUp from "./views/guest-user/sign-up.jsx";
+import signUp from "./views/guest-user/SignUp.jsx";
 import ConfirmEmail from "./views/guest-user/ConfirmEmail.jsx";
 import TemporaryRegister from "./views/guest-user/TemporaryRegister.jsx";
 
@@ -71,7 +71,7 @@ function App() {
 
             <Route
               exact
-              path="/user/join-exploratory/:userId"
+              path="/user/join-exploratory/:userId/:token"
               component={Auth(ConfirmEmail, false)}
             />
 

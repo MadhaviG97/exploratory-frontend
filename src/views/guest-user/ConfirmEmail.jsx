@@ -1,6 +1,5 @@
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Box from "@material-ui/core/Box";
 import { useStyles } from "../../assets/css/JoinRoom";
 import Container from "@material-ui/core/Container";
 import JoinRoomButtonBase from "../../components/Whiteboard/JoinRoomButtonBase";
@@ -12,6 +11,7 @@ import { useHistory, useLocation } from "react-router-dom";
 export default function SignIn() {
   const classes = useStyles();
   let { userId } = useParams();
+  let { token } = useParams();
   var user = useSelector((state) => state.user);
   let history = useHistory();
   let location = useLocation();
@@ -19,12 +19,11 @@ export default function SignIn() {
   const handleClickOpen = async () => {
     const formData = {
       id: userId,
+      token: token,
     };
-    console.log(formData);
     await axios
       .post("/register", formData)
       .then((result) => {
-        console.log(result);
         let { from } = location.state || {
           from: {
             pathname: "/signin",
@@ -32,7 +31,14 @@ export default function SignIn() {
         };
         history.replace(from);
       })
-      .catch((e) => console.log(e.message));
+      .catch((e) => {
+        let { from } = location.state || {
+          from: {
+            pathname: "/signup",
+          },
+        };
+        history.replace(from);
+      });
   };
 
   return (

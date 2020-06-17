@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactLoading from "react-loading";
 import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -17,7 +18,7 @@ import {
   Route,
   useParams,
 } from "react-router-dom";
-import base64Img from "base64-img";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 import WorkIcon from "@material-ui/icons/Work";
 import EmailIcon from "@material-ui/icons/Email";
@@ -31,8 +32,13 @@ import TabPanel from "../../components/UserProfileSections/TabBarSection";
 import EditProfile from "../../components/UserProfileSections/EditProfileDialog";
 import profile from "../../assets/images/user-profile/faces/user_profile_default.jpg";
 
-import { getProfile, getProjectsByUserId, editProfilePicture } from "../../_actions/user_profile";
-import {auth} from "../../_actions/user_actions";
+import {
+  getProfile,
+  getProjectsByUserId,
+  editProfilePicture,
+  getProjectPostsByUserId,
+} from "../../_actions/user_profile";
+import { auth } from "../../_actions/user_actions";
 
 import { useDispatch, useSelector } from "react-redux";
 import { id } from "date-fns/locale";
@@ -43,6 +49,7 @@ import { fetchPhotos, openUploadWidget } from "../../CloudinaryService";
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
+    minheight: 900,
   },
   userSection: {
     minHeight: "100%",
@@ -56,17 +63,33 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0),
     textAlign: "center",
     color: theme.palette.text.secondary,
+    minHeight: 400,
   },
   paperDetails: {
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
     textAlign: "center",
     color: theme.palette.text.secondary,
     backgroundColor: "#E6E6E6",
+    minHeight: 600,
+  },
+  containerStyles1: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    backgroundColor: "#0d47a1",
+    minHeight: 900,
+  },
+  containerStyles2: {
+    padding: theme.spacing(1),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    minHeight: 900,
   },
   profileImage: {
     width: 150,
     height: 150,
-    padding: 2,
+    borderRadius: "50%",
+    margin: "28px",
   },
   input: {
     display: "none",
@@ -76,24 +99,36 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonEdit: {
     flexGrow: 1,
-    padding: theme.spacing(2),
+    padding: theme.spacing(1),
+  },
+  loader: {
+    height: 550,
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignContent: "center",
   },
 }));
 
 export default function UserProfile() {
   const classes = useStyles();
   const history = useHistory();
+  const [loading, setLoading] = useState(true);
   const [value, setValue] = React.useState(0);
   const [linkedInVal, setLinkedInVal] = React.useState(false);
   const [twitterVal, setTwitterVal] = React.useState(false);
   const [selectedFile, setSelectedFile] = React.useState(null);
-  const [images, setImages] = useState([])
+  const [images, setImages] = useState([]);
   const userData = useSelector((state) => state.user.userData);
   const { uId } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
+    setTimeout(() => {
+      setLoading(false);
+    }, 2500);
     dispatch(getProfile(uId));
     dispatch(getProjectsByUserId(uId));
+    dispatch(getProjectPostsByUserId(uId));
   }, []);
   const researcherData = useSelector(
     (state) => state.researcher.researcherData
@@ -153,20 +188,20 @@ export default function UserProfile() {
   };
   console.log(selectedFile);
 
-  const beginUpload = tag => {
+  const beginUpload = (tag) => {
     const uploadOptions = {
       cloudName: process.env.REACT_APP_CLAUDINARY_CLOUD_NAME,
-      tags: [tag, 'anImage'],
-      uploadPreset: process.env.REACT_APP_CLAUDINARY_UPLOAD_PRESET
+      tags: [tag, "anImage"],
+      uploadPreset: process.env.REACT_APP_CLAUDINARY_UPLOAD_PRESET,
     };
     openUploadWidget(uploadOptions, (error, photos) => {
       if (!error) {
         //console.log(photos);
-        if(photos.event === 'success'){
+        if (photos.event === "success") {
           //console.log(photos.info.url);
           const profileData = {
-            researcher_id:uId,
-            url:photos.info.url
+            researcher_id: uId,
+            url: photos.info.url,
           };
           console.log(profileData);
           editProfilePicture(profileData);
@@ -178,18 +213,28 @@ export default function UserProfile() {
       } else {
         console.log(error);
       }
-    })
-  }
+    });
+  };
 
   return (
-    <CloudinaryContext cloudName={process.env.REACT_APP_CLAUDINARY_CLOUD_NAME}>
-    <div className={classes.root}>
-      <Grid className={classes.userSection} container spacing={0}>
-        <Grid item xs={4}>
-          <Container style={{ backgroundColor: "#222297", padding: "2px" }}>
-            <Paper className={classes.paper}>
+    <div>
+      {loading ? (
+        <div className={classes.loader}>
+          <ReactLoading
+            type="spinningBubbles"
+            color="#5054CC"
+            height={550}
+            width={50}
+          />
+        </div>
+      ) : (
+        <CloudinaryContext
+          cloudName={process.env.REACT_APP_CLAUDINARY_CLOUD_NAME}
+        >
+          <Grid container spacing={0} className={classes.root}>
+            <Grid item xs={4} className={classes.containerStyles1}>
               <Paper className={classes.paperPhoto}>
-                <div className={classes.paper}>
+                <div>
                   {researcher.profile_picture ? (
                     <img
                       src={profile_picture}
@@ -204,7 +249,7 @@ export default function UserProfile() {
                     />
                   )}
                 </div>
-                <div className={classes.paper}>
+                <div>
                   {researcher.id == user._id ? (
                     <div>
                       <label htmlFor="icon-button-file">
@@ -227,7 +272,7 @@ export default function UserProfile() {
                   <Typography variant="body2" color="inherit" gutterBottom>
                     {profession}
                   </Typography>
-                  <div className={classes.paper}>
+                  <div>
                     {linkedIn ? (
                       <IconButton
                         aria-label="LinkedIn"
@@ -254,55 +299,53 @@ export default function UserProfile() {
                 </div>
               </Paper>
               <Paper className={classes.paperDetails}>
-                <div>
-                  <List className={classes.root}>
-                    <ListItem>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <EmailIcon color="primary" />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary="Email"
-                        secondary={researcher.email}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <PhoneIcon color="primary" />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary="Contact Number"
-                        secondary={contact_no}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <WorkIcon color="primary" />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary="Institution"
-                        secondary={institution}
-                      />
-                    </ListItem>
-                    <ListItem>
-                      <ListItemAvatar>
-                        <Avatar>
-                          <DescriptionIcon color="primary" />
-                        </Avatar>
-                      </ListItemAvatar>
-                      <ListItemText
-                        primary="Personal Description"
-                        secondary={description}
-                        className={classes.textRoot}
-                      />
-                    </ListItem>
-                  </List>
-                </div>
+                <List>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <EmailIcon color="primary" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary="Email"
+                      secondary={researcher.email}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <PhoneIcon color="primary" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary="Contact Number"
+                      secondary={contact_no}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <WorkIcon color="primary" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary="Institution"
+                      secondary={institution}
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemAvatar>
+                      <Avatar>
+                        <DescriptionIcon color="primary" />
+                      </Avatar>
+                    </ListItemAvatar>
+                    <ListItemText
+                      primary="Personal Description"
+                      secondary={description}
+                      className={classes.textRoot}
+                    />
+                  </ListItem>
+                </List>
               </Paper>
               {researcher.id == user._id ? (
                 <div className={classes.buttonEdit}>
@@ -311,16 +354,25 @@ export default function UserProfile() {
               ) : (
                 <div></div>
               )}
-            </Paper>
-          </Container>
-        </Grid>
-        <Grid item xs={8}>
-          <Paper className={classes.paper}>
-            <TabPanel />
-          </Paper>
-        </Grid>
-      </Grid>
+            </Grid>
+            <Grid item xs={8} className={classes.containerStyles2}>
+              <InfiniteScroll
+                dataLength="100%" //This is important field to render the next data
+                height={1000}
+                endMessage={
+                  <p style={{ textAlign: "center" }}>
+                    <b>********</b>
+                  </p>
+                }
+              >
+                <Paper className={classes.paper}>
+                  <TabPanel />
+                </Paper>
+              </InfiniteScroll>
+            </Grid>
+          </Grid>
+        </CloudinaryContext>
+      )}
     </div>
-    </CloudinaryContext>
   );
 }

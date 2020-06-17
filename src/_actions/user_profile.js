@@ -3,6 +3,7 @@ import {
   GET_PROFILE,
   UPDATE_PROFILE,
   GET_PROJECTS_BY_USER_ID,
+  GET_PROJECT_POSTS_BY_USER_ID,
   GET_INSTITUTIONS,
   EDIT_PROFILE_PICTURE,
 } from "./types";
@@ -64,5 +65,15 @@ export const getInstitutions = async () => {
   return {
     type: GET_INSTITUTIONS,
     payload: institutions,
+  };
+};
+
+export const getProjectPostsByUserId = async (uId) => {
+  const response = await fetch(`/userprofile/projects/posts/${uId}`);
+  const data = await response.json();
+  const projects = data.data;
+  return {
+    type: GET_PROJECT_POSTS_BY_USER_ID,
+    payload: projects,
   };
 };

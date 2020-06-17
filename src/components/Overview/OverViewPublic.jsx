@@ -22,9 +22,6 @@ export default function Overview() {
   const [editImages, setEditImages] = React.useState(false);
   const [editPaper, setEditPaper] = React.useState(false);
 
-  //props.project.visibility_public
-  const visibility_public = 1 ? true : false;
-
   const [state, setState] = React.useState({
     requested: false,
   });
@@ -47,6 +44,7 @@ export default function Overview() {
     return (
       <React.Fragment>
         <ItemHeader
+          id="abstract-edit"
           handleEditState={() => setEditAbstract(true)}
           title="Abstract"
         />
@@ -74,6 +72,7 @@ export default function Overview() {
     return (
       <React.Fragment>
         <ItemHeader
+          id="related-images-edit"
           handleEditState={() => setEditImages(true)}
           title="Related Images"
         />
@@ -100,7 +99,11 @@ export default function Overview() {
     if (!(PDFprops.url === "NULL" || PDFprops.url === null)) {
       return (
         <React.Fragment>
-          <ItemHeader handleEditState={() => setEditPaper(true)} title="" />
+          <ItemHeader
+            id="final-paper-edit"
+            title="Final Paper"
+            handleEditState={() => setEditPaper(true)}
+          />
           <EditFinalPaper
             onClose={() => {
               setEditPaper(false);
@@ -134,7 +137,7 @@ export default function Overview() {
             }}
             open={editPaper}
             id={project.project.id}
-            final_paper={[PDFprops.url]}
+            final_paper={[]}
           />
           <Divider />
           <Typography variant="caption">To be Published...</Typography>
@@ -160,14 +163,11 @@ export default function Overview() {
 
         <Box className={classes.box}>
           <Paper className={classes.abstract}>
-            <ExamplePDFViewer
-              view={project.project.visibility_public}
-              url={project.project.final_paper}
-            />
+            <ExamplePDFViewer view={true} url={project.project.final_paper} />
           </Paper>
         </Box>
 
-        {!project.project.visibility_public && (
+        {/* {!project.project.visibility_public && (
           <Box className={classes.box}>
             <Button
               variant="contained"
@@ -181,7 +181,7 @@ export default function Overview() {
               </Typography>
             </Button>
           </Box>
-        )}
+        )} */}
       </Box>
     </React.Fragment>
   );

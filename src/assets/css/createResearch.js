@@ -1,6 +1,9 @@
 import { fade, makeStyles } from "@material-ui/core/styles";
 
 export const useStyles = makeStyles((theme) => ({
+  root: {
+    backgroundImage: `url(/images/fileFolder/bg4.png)`,
+  },
   appBar: {
     position: "relative",
   },
@@ -15,8 +18,8 @@ export const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    marginTop: theme.spacing(6),
-    marginBottom: theme.spacing(6),
+    // marginTop: theme.spacing(6),
+    // marginBottom: theme.spacing(6),
     padding: theme.spacing(6),
   },
   stepper: {

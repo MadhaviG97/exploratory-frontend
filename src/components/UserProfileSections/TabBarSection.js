@@ -50,7 +50,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
     width: "auto",
-    minHeight: 700
+    minHeight: 900
   },
 }));
 
@@ -78,9 +78,9 @@ export default function FullWidthTabs() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="POSTS" icon={<LibraryBooksIcon />} {...a11yProps(0)} />
-          <Tab label="PUBLICATIONS" icon={<NoteIcon />} {...a11yProps(1)} />
-          <Tab label="PROJECTS" icon={<ListIcon />} {...a11yProps(2)} />
+          <Tab label="CREATED PROJECTS" icon={<LibraryBooksIcon />} {...a11yProps(0)} />
+          {/* <Tab label="PUBLICATIONS" icon={<NoteIcon />} {...a11yProps(1)} /> */}
+          <Tab label="COLLABORATING PROJECTS" icon={<ListIcon />} {...a11yProps(1)} />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -91,10 +91,10 @@ export default function FullWidthTabs() {
         <TabPanel value={value} index={0} dir={theme.direction}>
           <Posts/>
         </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
+        {/* <TabPanel value={value} index={1} dir={theme.direction}>
           <Publications/>
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
+        </TabPanel> */}
+        <TabPanel value={value} index={1} dir={theme.direction}>
           <ProjectsTable />
         </TabPanel>
       </SwipeableViews>

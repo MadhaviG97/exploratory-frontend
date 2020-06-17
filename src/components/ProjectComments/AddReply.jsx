@@ -9,6 +9,8 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import AddIcon from "@material-ui/icons/Add";
 import Fab from "@material-ui/core/Fab";
+import { useHistory, useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   text: {
@@ -44,6 +46,12 @@ export default function AddComment(props) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [reply, setReply] = React.useState("");
+  const user = useSelector((state) => state.user);
+  let history = useHistory();
+  let location = useLocation();
+  let { from } = location.state || {
+    from: { pathname: `/signin` },
+  };
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -54,8 +62,12 @@ export default function AddComment(props) {
   };
 
   const handlePost = () => {
-    props.onPost(reply);
-    setOpen(false);
+    if (user.userData !== undefined) {
+      props.onPost(reply);
+      setOpen(false);
+    } else {
+      history.replace(from);
+    }
   };
 
   const handleChange = (e) => {

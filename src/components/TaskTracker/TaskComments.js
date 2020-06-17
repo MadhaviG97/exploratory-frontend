@@ -16,7 +16,6 @@ import AddComment from "./AddNewComment";
 import DeleteComment from "./DeleteComment";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getComments } from "../../_actions/taskTracker_actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -48,11 +47,7 @@ const useStyles = makeStyles((theme) => ({
 export default function TaskComments(props) {
   const classes = useStyles();
   const pId = props.project_id;
-  const user = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  useEffect(() => {
-    dispatch(getComments(pId));
-  }, []);
+  const userData = useSelector((state) => state.user.userData);
   const tasktracker = useSelector((state) => state.task_tracker);
 
   function getLength(obj) {
@@ -63,6 +58,14 @@ export default function TaskComments(props) {
       }
     }
     return length;
+  }
+
+  var user = {};
+
+  for (var key in userData) {
+    if (userData.hasOwnProperty(key)) {
+      user[key] = userData[key];
+    }
   }
   
 
@@ -81,7 +84,7 @@ export default function TaskComments(props) {
                 <ListItemAvatar>
                   <Avatar
                     alt={comment.first_name + " " + comment.last_name}
-                    src={`data:image/jpeg;base64,${comment.profile_picture}`}
+                    src={comment.profile_picture}
                   />
                 </ListItemAvatar>
                 <ListItemText
@@ -109,7 +112,7 @@ export default function TaskComments(props) {
                 />
               </ListItem>
 
-              {comment.commentor_id == user.userData._id ? (
+              {comment.commentor_id == user._id ? (
                 <div>
                   <ButtonGroup
                     className={classes.commentButton}

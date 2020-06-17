@@ -8,7 +8,12 @@ export default function Search(props) {
   let { string } = useParams();
 
   return (
-    <div style={{ height: "93vh", backgroundImage: "url(/images/feed/feedBackground.jpg)" }}>
+    <div  style={{
+      height: "100%",
+      backgroundColor: "#eceff1",
+    }}
+    >
+  <div style={{ height: "99vh", backgroundImage: "url(/images/fileFolder/bg4.png)"}}>
         <Box display="flex" flexDirection="column">
       <Box flexGrow="1">
         <main>
@@ -19,5 +24,7 @@ export default function Search(props) {
       </Box>
     </Box>
     </div>
+    </div>
+  
   );
 }

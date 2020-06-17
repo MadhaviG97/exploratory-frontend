@@ -39,6 +39,14 @@ const useStyles = makeStyles((theme) => ({
   iconButton: {
     padding: 10,
   },
+  listItem: {
+    
+    [theme.breakpoints.down("sm")]: {
+      
+        display: "none" 
+      
+    }
+  },
 }));
  
 export default function FolderMenu(props) {
@@ -52,7 +60,7 @@ export default function FolderMenu(props) {
   };
   
   return (
-    <div>
+    <div className={classes.listItem}>
         
     <List className={classes.root}>
         <ListItem alignItems="flex-start">  

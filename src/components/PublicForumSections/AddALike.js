@@ -5,6 +5,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import ThumbUpIcon from "@material-ui/icons/ThumbUp";
+import { useHistory, useLocation } from "react-router-dom";
 
 import {
   getAnswers,
@@ -18,6 +19,8 @@ export default function LikeAnswer(props) {
   const [open, setOpen] = React.useState(false);
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  let history = useHistory();
+  let location = useLocation();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -37,6 +40,7 @@ export default function LikeAnswer(props) {
     dispatch(getAnswers());
     dispatch(getPopularQuestions());
     dispatch(getPopularAnswers());
+    history.go(0);
     setOpen(false);
   };
 

@@ -7,7 +7,7 @@ import { TextField, InputAdornment } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import IconButton from "@material-ui/core/IconButton";
-
+import ButtonLoader from "../../components/Loader/SignUpAndInLoader";
 import Link from "@material-ui/core/Link";
 import Grid from "@material-ui/core/Grid";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
@@ -22,6 +22,8 @@ import { useHistory, useLocation } from "react-router-dom";
 
 export default function SignUp(props) {
   const classes = useStyles();
+  const [success, setSuccess] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   let history = useHistory();
   let location = useLocation();
@@ -190,6 +192,7 @@ export default function SignUp(props) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!ValidateForm()) {
+      setLoading(true);
       const formData = {
         email: values.email.value,
         password: values.password.value,
@@ -200,12 +203,12 @@ export default function SignUp(props) {
       await axios
         .post(`/temp-register`, formData)
         .then(async (result) => {
-          console.log(result.data.inserted_id);
           await axios
             .post("/email/join-exploratory", {
               name: `${values.first_name.value} ${values.last_name.value}`,
               email: values.email.value,
               message: result.data.inserted_id,
+              token: result.data.token,
             })
             .then((res) => {
               console.log(res);
@@ -214,6 +217,8 @@ export default function SignUp(props) {
                   pathname: `/user/temporary-register/${result.data.inserted_id}`,
                 },
               };
+              setLoading(false);
+              setSuccess(true);
               history.replace(from);
             })
             .catch((e) => console.log(e.message));
@@ -353,16 +358,16 @@ export default function SignUp(props) {
                   />
                 </Grid>
               </Grid>
-              <Button
-                type="submit"
-                fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={handleSubmit}
-              >
-                Sign Up
-              </Button>
+              <Grid item xs={12}>
+                <br />
+                <ButtonLoader
+                  name="SIGN UP"
+                  success={success}
+                  loading={loading}
+                  onClick={handleSubmit}
+                />
+              </Grid>
+
               <Grid container justify="flex-end">
                 <Grid item>
                   <Link href="#" variant="body2">

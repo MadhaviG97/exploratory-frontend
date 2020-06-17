@@ -4,12 +4,11 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
-import DeleteIcon from "@material-ui/icons/Delete";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { useHistory, useLocation } from "react-router-dom";
-
+import Tooltip from "@material-ui/core/Tooltip";
 import { IconButton } from "@material-ui/core";
-
+import DeleteProject from "./DeleteProject";
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5",
@@ -70,9 +69,11 @@ export default function CustomizedMenus(props) {
 
   return (
     <div>
-      <IconButton aria-label="settings" size="small" onClick={handleClick}>
-        <SettingsIcon color="primary" />
-      </IconButton>
+      <Tooltip title="Apps">
+        <IconButton aria-label="settings" size="small" onClick={handleClick}>
+          <SettingsIcon color="primary" />
+        </IconButton>
+      </Tooltip>
       <StyledMenu
         id="customized-menu"
         anchorEl={anchorEl}
@@ -86,13 +87,7 @@ export default function CustomizedMenus(props) {
           </ListItemIcon>
           <ListItemText primary="EDIT" />
         </StyledMenuItem>
-
-        <StyledMenuItem onClick={handleDelete}>
-          <ListItemIcon>
-            <DeleteIcon fontSize="small" />
-          </ListItemIcon>
-          <ListItemText primary="DELETE" />
-        </StyledMenuItem>
+        <DeleteProject />
       </StyledMenu>
     </div>
   );

@@ -6,12 +6,7 @@ import { green } from "@material-ui/core/colors";
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
-    alignItems: "center",
-  },
   wrapper: {
-    margin: theme.spacing(1),
     position: "relative",
   },
   buttonSuccess: {
@@ -49,8 +44,8 @@ export default function CircularIntegration(props) {
   };
 
   return (
-    <div className={classes.root}>
-      <div className={classes.wrapper}>
+    <div className={classes.wrapper}>
+      <React.Fragment>
         <Button
           variant="contained"
           color="primary"
@@ -63,7 +58,7 @@ export default function CircularIntegration(props) {
         {props.loading && (
           <CircularProgress size={24} className={classes.buttonProgress} />
         )}
-      </div>
+      </React.Fragment>
     </div>
   );
 }

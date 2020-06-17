@@ -20,32 +20,56 @@ import NavComponent from "../../components/AppNavigation/NavigationComponent";
 import { useStyles } from "../../assets/css/projectNavbar";
 import SettingsIcon from "@material-ui/icons/Settings";
 import SettingMenu from "./SettingMenu";
+import FollowButton from "./FollowButton";
+import TaskTrackerButton from "./TaskTrackerButton";
+
+import { useSelector } from "react-redux";
+
 export default function ProjectNavbar(props) {
   const classes = useStyles();
+
+  var project = useSelector((state) => state.project);
+  var user = useSelector((state) => state.user);
+
+  const [isCollaborator, setIsCollaborator] = React.useState(false);
+
+  const checkIsCollaborator = (logged_in_user) => {
+    var collaborators = project.collaborators.concat(project.admins);
+    var i;
+    for (i = 0; i < collaborators.length; i++) {
+      if (collaborators[i].researcher_id === logged_in_user) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  React.useEffect(() => {
+    var user_id = user.userData ? user.userData._id : null;
+    if (user_id) {
+      setIsCollaborator(checkIsCollaborator(user_id));
+    } else {
+      setIsCollaborator(false);
+    }
+  }, []);
+
   return (
     <React.Fragment>
       <Paper className={classes.paperroot}>
         <Grid container>
-          <Grid item lg={2} md={1} xs={1}></Grid>
+          <Grid item lg={2} md={2} xs={2}></Grid>
           <Grid item lg={6} md={6} xs={6}>
             <List component="nav" aria-label="main mailbox folders">
               <ListItem className={classes.heading}>
                 <ListItemText
                   primary={
                     <React.Fragment>
-                      <Box display="flex" flexDirection="row">
-                        <Box flexGrow="0">
-                          <NavComponent projectId={props.projectId} />
+                      <Typography variant="h6">
+                        {" "}
+                        <Box fontWeight="fontWeightBold">
+                          {props.projectName}
                         </Box>
-                        <Box flexGrow="1" alignSelf="center">
-                          <Typography variant="h6">
-                            {" "}
-                            <Box fontWeight="fontWeightBold">
-                              {props.projectName}
-                            </Box>
-                          </Typography>
-                        </Box>
-                      </Box>
+                      </Typography>
                     </React.Fragment>
                   }
                 />
@@ -78,51 +102,39 @@ export default function ProjectNavbar(props) {
             <Box display="flex" flexDirection="row">
               <Box flexGrow="0" alignSelf="flex-end">
                 <List component="nav" aria-label="main mailbox folders">
-                  <ListItem className={classes.listItem}>
-                    <ListItemIcon>
-                      <Badge
-                        badgeContent={99}
-                        color="secondary"
-                        children={<CommentIcon color="primary" />}
+                  {isCollaborator ? (
+                    <ListItem className={classes.listItem}>
+                      <ListItemIcon>
+                        <NavComponent projectId={props.projectId} />
+                      </ListItemIcon>
+                      <ListItemText
+                        primary="APPS"
+                        primaryTypographyProps={{ variant: "button" }}
                       />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary="COMMENTS"
-                      primaryTypographyProps={{ variant: "button" }}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      <Badge
-                        badgeContent={99}
-                        color="secondary"
-                        children={<CheckCircleOutlineIcon color="primary" />}
+                    </ListItem>
+                  ) : (
+                    <TaskTrackerButton />
+                  )}
+
+                  <FollowButton />
+
+                  {isCollaborator && (
+                    <ListItem>
+                      <ListItemIcon>
+                        <SettingMenu project_id={props.projectId} />
+                      </ListItemIcon>
+
+                      <ListItemText
+                        primary="SETTINGS"
+                        primaryTypographyProps={{ variant: "button" }}
                       />
-                    </ListItemIcon>
-
-                    <ListItemText
-                      primary="FOLLOWER"
-                      primaryTypographyProps={{ variant: "button" }}
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemIcon>
-                      {/* <IconButton aria-label="settings" size="small">
-                        <SettingsIcon color="primary" />
-                      </IconButton> */}
-                      <SettingMenu project_id={props.projectId} />
-                    </ListItemIcon>
-
-                    <ListItemText
-                      primary="SETTINGS"
-                      primaryTypographyProps={{ variant: "button" }}
-                    />
-                  </ListItem>
+                    </ListItem>
+                  )}
                 </List>
               </Box>
             </Box>
           </Grid>
-          <Grid item lg={1} md={1} xs={1}></Grid>
+          <Grid item lg={1} md={0} xs={0}></Grid>
         </Grid>
       </Paper>
     </React.Fragment>

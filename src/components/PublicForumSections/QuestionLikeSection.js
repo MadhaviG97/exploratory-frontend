@@ -22,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
   buttonPlace: {
     flexDirection: "row-reverse",
   },
+  root1: {
+    display: "flex",
+  },
 }));
 
 export default function QuestionLike(props) {
@@ -58,38 +61,37 @@ export default function QuestionLike(props) {
   };
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root1}>
       {user.userData.isAuth ? (
-        <div>
-          {!available ? (
-            <ButtonGroup
-              color="primary"
-              aria-label="outlined primary button group"
-            >
+        <div className={classes.root1}>
+          <ButtonGroup
+            color="primary"
+            aria-label="outlined primary button group"
+          >
+            {!available ? (
               <LikeQuestion
                 question_id={props.question_id}
                 researcher_id={user.userData._id}
               />
-              >
-            </ButtonGroup>
-          ) : (
-            <div></div>
-          )}
-          {user.userData._id === props.Q_id ? (
-            <ButtonGroup
-              color="primary"
-              aria-label="outlined primary button group"
-            >
-              <DeleteQuestion question_id={props.question_id} />
-              <EditQuestion
-                question_id={props.question_id}
-                title={props.title}
-                description={props.description}
-              />
-            </ButtonGroup>
-          ) : (
-            <div></div>
-          )}
+            ) : (
+              <div></div>
+            )}
+
+            {user.userData._id === props.Q_id ? (
+              <div>
+                <ButtonGroup>
+                  <DeleteQuestion question_id={props.question_id} />
+                  <EditQuestion
+                    question_id={props.question_id}
+                    title={props.title}
+                    description={props.description}
+                  />
+                </ButtonGroup>
+              </div>
+            ) : (
+              <div></div>
+            )}
+          </ButtonGroup>
         </div>
       ) : (
         <div></div>

@@ -7,9 +7,7 @@ import Loader from "../Loader/PdfLoader";
 import { Button } from "@material-ui/core";
 
 export default function FileUploader(props) {
-  const [state, setState] = React.useState({
-    file: null,
-  });
+  const [state, setState] = React.useState({});
   const [reload, setReload] = React.useState(false);
 
   const Layout = ({
@@ -46,8 +44,8 @@ export default function FileUploader(props) {
   const handleRemovePaper = () => {
     axios
       .post("/project/remove-final-paper", { project_id: props.project_id })
-      .then((response) => alert(response.data.message))
-      .catch((err) => alert(err.response.data.message));
+      .then((response) => props.onSucess())
+      .catch((err) => props.onFail());
   };
 
   const toDataURL = (url) =>
@@ -65,7 +63,7 @@ export default function FileUploader(props) {
 
   React.useEffect(() => {
     if (!reload) {
-      if (props.default !== {}) {
+      if (props.default !== []) {
         toDataURL(
           `${process.env.REACT_APP_BACK_END_URL}/final_paper/${props.default}`
         )
@@ -78,13 +76,10 @@ export default function FileUploader(props) {
                 const file = new File([buf], props.default, {
                   type: "application/pdf",
                 });
-                console.log(file);
                 setState({ file });
               });
             });
           });
-      } else {
-        setState({ file: {} });
       }
     }
     setReload(true);
@@ -109,8 +104,8 @@ export default function FileUploader(props) {
 
     axios
       .post("/project/save-file", data, config)
-      .then((result) => alert(result.data.message))
-      .catch((err) => alert(err.message));
+      .then((result) => props.onSucess())
+      .catch((err) => props.onFail());
   };
 
   const handleChangeStatus = ({ meta, file }, status) => {
@@ -128,6 +123,16 @@ export default function FileUploader(props) {
       <React.Fragment>
         {state.file === null ? (
           <Loader />
+        ) : props.default !== [] ? (
+          <Dropzone
+            LayoutComponent={Layout}
+            maxFiles={props.maxFiles}
+            submitButtonContent={"save"}
+            onSubmit={handleUpload}
+            multiple={props.multiple}
+            accept={props.accept}
+            inputContent="..."
+          />
         ) : (
           <Dropzone
             LayoutComponent={Layout}
@@ -135,7 +140,6 @@ export default function FileUploader(props) {
             submitButtonContent={"save"}
             onSubmit={handleUpload}
             multiple={props.multiple}
-            // onChangeStatus={handleChangeStatus}
             accept={props.accept}
             inputContent="..."
             initialFiles={[state.file]}

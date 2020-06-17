@@ -38,7 +38,7 @@ class YJSQuill extends React.Component {
     this.quillRef=null;
     this.ydoc = new Y.Doc()
     this.group=props.group
-    this.provider = new WebsocketProvider('ws://localhost:1234',this.props.variable , this.ydoc)
+    this.provider = new WebsocketProvider(process.env.REACT_APP_EDITOR_URL,this.props.variable , this.ydoc)
     this.type = this.ydoc.getText('quill')
     this.st=(this.provider.awareness.getStates())
     
@@ -203,7 +203,7 @@ render() {
         </div>
         <Grid container spacing={5} >
             <Grid item xs={3}>
-                <Paper >
+                <Paper display={{ xs: 'none', sm: 'none', md: 'block' }}>
                 <EditorMenu 
                   group={this.group}
                   savedVersion={this.savedVersion} 

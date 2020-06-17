@@ -23,20 +23,35 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
-import "cypress-localstorage-commands"
-Cypress.Commands.add('login', () => { 
-    cy.request({
-      method: 'POST',
-      url: 'http://localhost:8888/login',
-      body: {
-         
-          email: 'damika2@gmail.com',
-          password: '123456',
-        
-      } 
-    })
-    .then((resp) => {
-      cy.setLocalStorage("token", resp.body.token);
-    })
-  
-  })
+
+import "cypress-localstorage-commands";
+Cypress.Commands.add("login", () => {
+  cy.request({
+    method: "POST",
+    url: "http://localhost:8888/login",
+    body: {
+      email: "imalka@gmail.com",
+      password: "123456@",
+    },
+  }).then((resp) => {
+    cy.setLocalStorage("token", resp.body.token);
+  });
+});
+
+Cypress.Commands.add(
+  "uploadFile",
+  { prevSubject: true },
+  (subject, fileName, fileType = "") => {
+    cy.fixture(fileName, "binary").then((content) => {
+      return Cypress.Blob.binaryStringToBlob(content, fileType).then((blob) => {
+        const el = subject[0];
+        const testFile = new File([blob], fileName, { type: fileType });
+        const dataTransfer = new DataTransfer();
+
+        dataTransfer.items.add(testFile);
+        el.files = dataTransfer.files;
+        cy.wrap(subject).trigger("change", { force: true });
+      });
+    });
+  }
+);

@@ -13,7 +13,7 @@ describe('Drive', () => {
 
 
     it('Creates a document', () => {
-        cy.visit('/document/10024/create')
+        cy.visit('/document/10003/create')
         cy.wait(1500)
         const content = 'Adding an alias using .as() to stubs makes them easier to identify in error messages and Cypress’s command log.'
         const newDocumentName = 'Test Document'

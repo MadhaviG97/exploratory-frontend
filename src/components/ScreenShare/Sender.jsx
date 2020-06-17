@@ -15,7 +15,7 @@ import axios from 'axios';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Avatar from '@material-ui/core/Avatar';
 import Box from '@material-ui/core/Box';
-const socket = openSocket('http://localhost:8000',{transports: ['websocket', 'polling', 'flashsocket']});
+const socket = openSocket(process.env.REACT_APP_SCREEN_SHARE_URL,{transports: ['websocket', 'polling', 'flashsocket']});
 
 var caller;
 //var group="GeeFour"
@@ -208,7 +208,7 @@ class Sender extends React.Component {
                       >
                       {this.state.collaborators.filter(researcher => researcher.researcher_id !== user.userData._id).map((researcher) => (
                         <MenuItem key={researcher.researcher_id} value={researcher} data-cy="receipients-menu">
-                          <Avatar alt="user" src={researcher.pofile_picture} />
+                          <Avatar alt="user" src={researcher.profile_picture} />
                           <Box p={1}/>
                           {researcher.researcher_email}
                         </MenuItem>

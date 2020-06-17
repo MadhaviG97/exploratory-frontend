@@ -16,8 +16,9 @@ import IconButton from "@material-ui/core/IconButton";
 import { useHistory, useLocation } from "react-router-dom";
 import { loginUser } from "../../_actions/user_actions";
 import { useDispatch } from "react-redux";
+import ButtonLoader from "../../components/Loader/SignUpAndInLoader";
 
-export default function SignInSide() {
+export default function SignInSide(props) {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [values, setValues] = React.useState({
@@ -30,6 +31,8 @@ export default function SignInSide() {
   });
 
   const [submit, setSubmit] = React.useState(false);
+  const [success, setSuccess] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -72,12 +75,13 @@ export default function SignInSide() {
         email: values.email,
         password: values.password,
       };
-
+      setLoading(true);
       dispatch(loginUser(formData))
         .then((result) => {
           var status = result.payload.status;
           var data = result.payload.data;
           if (status === 200) {
+            setSuccess(true);
             cb();
           } else if (status === 406) {
             setValues({
@@ -108,6 +112,7 @@ export default function SignInSide() {
               helperTextPassword: data.error,
             });
           }
+          setLoading(false);
         })
         .catch((err) => {
           console.log(err);
@@ -190,22 +195,19 @@ export default function SignInSide() {
               </Grid>
 
               <Grid item xs={12}>
-                <Button
-                  type="submit"
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                  data-testid="submit"
-                  className={classes.submit}
+                <br />
+                <ButtonLoader
+                  name="SIGN IN"
+                  success={success}
+                  loading={loading}
                   onClick={(e) =>
                     handleSubmit(e, () => {
                       history.replace(from);
                     })
                   }
-                >
-                  Sign In
-                </Button>
+                />
               </Grid>
+
               <Grid container>
                 <Grid item xs>
                   {/* <Link href="#" variant="body2">

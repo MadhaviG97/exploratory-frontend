@@ -8,11 +8,13 @@ import ListItemAvatar from "@material-ui/core/ListItemAvatar";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import LinkTo from "@material-ui/core/Link";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: "100%",
-    maxWidth: "36ch",
+    width: "auto",
+    minHeight: "auto",
     backgroundColor: theme.palette.background.paper,
   },
   inline: {
@@ -22,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
-    minHeight: 450
+    minHeight: 450,
   },
 }));
 
@@ -46,29 +48,43 @@ export default function AllUsers() {
       {getLength(forumUsers) > 0 ? (
         forumUsers.map((user) => (
           <div>
-            <ListItem alignItems="flex-start">
-              <ListItemAvatar>
-                <Avatar
-                  alt={user.first_name + " " + user.last_name}
-                  src={user.profile_picture}
+            {!(user.answer_count == 0 && user.question_count == 0) ? (
+              <ListItem alignItems="flex-start">
+                <ListItemAvatar>
+                  <Avatar
+                    alt={user.first_name + " " + user.last_name}
+                    src={user.profile_picture}
+                  />
+                </ListItemAvatar>
+                <ListItemText
+                  primary={
+                    <Link
+                    to={`/userprofile/${user.id}`}
+                    style={{ color: "primary" }}
+                  >
+                    <LinkTo component="h5">
+                      {user.first_name + " " + user.last_name}
+                    </LinkTo>
+                  </Link>
+                    }
+                  secondary={
+                    <React.Fragment>
+                      <Typography
+                        component="h6"
+                        variant="body2"
+                        className={classes.inline}
+                        color="textPrimary"
+                      >
+                        Questions = {user.question_count}, Answers ={" "}
+                        {user.answer_count}
+                      </Typography>
+                    </React.Fragment>
+                  }
                 />
-              </ListItemAvatar>
-              <ListItemText
-                primary={user.first_name + " " + user.last_name}
-                secondary={
-                  <React.Fragment>
-                    <Typography
-                      component="h6"
-                      variant="body2"
-                      className={classes.inline}
-                      color="textPrimary"
-                    >
-                      Questions = {user.question_count}, Answers = {user.answer_count}
-                    </Typography>
-                  </React.Fragment>
-                }
-              />
-            </ListItem>
+              </ListItem>
+            ) : (
+              <div></div>
+            )}
             <Divider variant="inset" component="li" />
           </div>
         ))

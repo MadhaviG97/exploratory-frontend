@@ -50,7 +50,6 @@ export default function Asynchronous(props) {
       await axios
         .post("/researcher/get-all-users", {})
         .then(async (res) => {
-          console.log(res.data);
           if (active) {
             var without_admin =
               (await admins) === undefined
@@ -88,7 +87,7 @@ export default function Asynchronous(props) {
 
   return (
     <Autocomplete
-      id="asynchronous-demo"
+      id="collaborators"
       fullWidth
       multiple
       disableClearable

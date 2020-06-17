@@ -22,11 +22,15 @@ export default function NavigationComponent(props) {
   const [open, setOpen] = React.useState(false);
   const [name, setName] = React.useState("");
   const projectId = props.projectId;
-  console.log(props.projectId);
   const [filecreated, setFileCreated] = React.useState(false);
   const user = useSelector((state) => state.user);
+  const project = useSelector((state) => state.project);
+  
+
+  
+
   const grid = [
-    [
+     [
       {
         refr: `/project/tasktracker/${projectId}`,
         name: "Task...",
@@ -76,7 +80,9 @@ export default function NavigationComponent(props) {
         image: process.env.PUBLIC_URL + "/images/appnav/squares.png",
       },
     ],
-  ];
+  ]
+    
+  
   //attributes should go to flaticon.com for the icons used
   const handleClickOpen = () => {
     setOpen(true);
@@ -89,12 +95,12 @@ export default function NavigationComponent(props) {
     setName(event.target.value);
   };
   let color;
-  if (props.color){color=props.color}else{color="#616161"}
-  
+  if (props.color){color=props.color}else{color="#014f82"}
+
   return (
-    <div>
+    <React.Fragment>
       <Tooltip title="Apps">
-        <IconButton onClick={handleClickOpen}>
+        <IconButton aria-label="apps" size="small" onClick={handleClickOpen}>
           <AppsIcon style={{ color: color }}/>
         </IconButton>
       </Tooltip>
@@ -104,7 +110,7 @@ export default function NavigationComponent(props) {
           className={classes.dialogTitle}
           style={{ background: "#eceff1" }}
         >
-          <IconButton onClick={handleClose}>
+          <IconButton id="app-close" onClick={handleClose}>
             <CloseIcon />
           </IconButton>
         </DialogTitle>
@@ -150,6 +156,6 @@ export default function NavigationComponent(props) {
           <Box p={4} />
         </DialogContent>
       </Dialog>
-    </div>
+    </React.Fragment>
   );
 }
