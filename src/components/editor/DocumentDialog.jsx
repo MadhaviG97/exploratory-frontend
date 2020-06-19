@@ -108,6 +108,7 @@ export default function DocumentDialog(props) {
                   id="name"
                   label=""
                   type="text"
+                  inputProps={{ maxLength: 20 }}
                   fullWidth
                   required
                   onChange={handleChange}

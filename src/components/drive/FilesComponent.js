@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useSelector } from "react-redux";
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
@@ -27,14 +28,15 @@ import { useStyles } from "../../assets/css/editor";
 import FileSaver from 'file-saver';
 import Grid from "@material-ui/core/Grid";
 import Slide from '@material-ui/core/Slide'
+import TextField from '@material-ui/core/TextField';
 import history from '../../history'
+const path = require('path');
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 function FileComponent(props) {
     const classes = useStyles();
     const user = useSelector(state => state.user);
-    console.log(user)
     let user_id=0
     if (user.userData){
         user_id=user.userData._id
@@ -44,6 +46,8 @@ function FileComponent(props) {
     const [filedeleted,setFileDeleted]=useState(false);
     const [fileshared,setFileShared]=useState(false);
     const [filenotshared,setFileNotShared]=useState(false);
+    const [renameOpen, setRenameOpen] = React.useState(false);
+    const [rename,setRename]=useState('');
     const [fileDetail, setFileDetail] = useState('')
     const [url,setUrl]=useState('')
     const [viewPdf,setViewPdf]=useState(false)
@@ -64,7 +68,6 @@ function FileComponent(props) {
         const variable = { 
             name:fileDetail.filename
         }
-        console.log(variable)
         const token = localStorage.token;
         let config = {
             headers: {
@@ -106,7 +109,6 @@ function FileComponent(props) {
         const variable = { 
             filename:fileDetail.filename
         }
-        console.log(variable)
         const token = localStorage.token;
         let config = {
             'Authorization': `Bearer ${token}`
@@ -133,7 +135,6 @@ function FileComponent(props) {
         const variable = { 
             filename:fileDetail.filename
         }
-        console.log(variable)
         const token = localStorage.token;
         let config = {
             'Authorization': `Bearer ${token}`
@@ -149,7 +150,6 @@ function FileComponent(props) {
             .then(response => {
             if (response.data) {
                 var file = new Blob([response.data], {type: 'application/pdf'});
-                console.log(file)
                 setUrl(URL.createObjectURL(file));
                 setViewPdf(true)
                 //pdfViewer.setAttribute("src", url)
@@ -160,6 +160,40 @@ function FileComponent(props) {
         })
         setAnchorEl(null);
         
+    };
+    const handleFileRename = () => {
+        const variable = { 
+            filename:fileDetail.filename,
+            changedname:rename
+        }
+        const token = localStorage.token;
+        let config = {
+            headers: {
+            'Authorization': `Bearer ${token}`
+            }
+          }
+        axios.post('/drive/renamefile', variable,config)
+            .then(response => {
+                if (response.data.success) {
+                    setTimeout(() => {
+                        window.location.reload();
+                        }, 1000);
+                    
+                } else {
+                    alert('Could not Rename File ')
+                }
+            })
+        
+    };
+    const handleClickOpen = () => {
+        setRenameOpen(true);
+      };
+      
+    const handleRenameClose = () => {
+        setRenameOpen(false);
+    };
+    const handleChange = (event) => {
+        setRename(event.target.value);
     };
     const handleDeleteOpen = () => {
         setDeleteOpen(true);
@@ -172,7 +206,6 @@ function FileComponent(props) {
         const variable = { 
             filename:fileDetail.filename
         }
-        console.log(variable)
         const token = localStorage.token;
         let config = {
             headers: {
@@ -306,11 +339,7 @@ function FileComponent(props) {
             </Dialog>
         )
     }
-    
-    
-    useEffect(() => {
-        
-    }, [])
+   
     
         return (
             <div >
@@ -334,12 +363,34 @@ function FileComponent(props) {
                         : <MenuItem style={{ fontSize: 14 }} data-cy='share' onClick={handleShare}>Stop Sharing</MenuItem>
                     }
                     <MenuItem style={{fontSize: 14 }} data-cy='download' onClick={fileDownload}>Download</MenuItem>
+                    <MenuItem style={{fontSize: 14 }} data-cy='download' onClick={handleClickOpen}>Rename</MenuItem>
                     <MenuItem style={{ color: '#d60009',fontSize: 14 }} data-cy='delete' onClick={handleDeleteOpen}>Delete</MenuItem>
                 </Menu>
                 <DeleteConfirmation/>
                 <FileShareAlert/>
                 <FileNotShareAlert/>
                 <FileDeleteAlert/>
+                <Dialog
+                    open={renameOpen}
+                    onClose={handleRenameClose}
+                    aria-labelledby="form-dialog-title"
+                >
+                    <form onSubmit={handleFileRename}>
+                    <DialogTitle id="rename-dialog-title">{"Enter New File Name"}</DialogTitle>
+                        <DialogContent>
+                        <DialogContentText>Changing the file extension is not going to change the type of the file but it is recommended to keep the original filename extention for easier reference.</DialogContentText>
+                            <TextField autoFocus margin="dense" id="rename" defaultValue={path.extname(fileDetail.filename)} label="" inputProps={{ maxLength: 20 }} type="text" fullWidth required={true} onChange={handleChange}/>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={handleRenameClose} color="primary">
+                                Cancel
+                            </Button>
+                            <Button type="submit" color="primary" >
+                                Rename
+                            </Button>
+                        </DialogActions>
+                    </form>
+                </Dialog>
                 <Grid container spacing={3} direction="row"  >
                 {folders.map((folder,index) => (
                     <Grid item lg={3} md={4} xs={8}>
