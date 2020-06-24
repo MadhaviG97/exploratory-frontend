@@ -6,7 +6,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import TextField from "@material-ui/core/TextField";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import axios from "axios";
-import ButtonLoader from "../Loader/ButtonLoader";
+import ButtonLoader from "../../Loader/ButtonLoader";
 
 export default function FormDialog(props) {
   const [text, setText] = React.useState(props.default);

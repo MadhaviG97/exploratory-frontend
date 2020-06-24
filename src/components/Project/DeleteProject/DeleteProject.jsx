@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import DeleteIcon from "@material-ui/icons/Delete";
 import MenuItem from "@material-ui/core/MenuItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ButtonLoader from "../Loader/ButtonLoader";
+import ButtonLoader from "../../Loader/ButtonLoader";
 import axios from "axios";
 import { useHistory, useLocation, useParams } from "react-router-dom";
 

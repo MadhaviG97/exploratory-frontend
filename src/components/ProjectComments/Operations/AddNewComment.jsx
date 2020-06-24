@@ -9,7 +9,7 @@ import DialogTitle from "@material-ui/core/DialogTitle";
 import Box from "@material-ui/core/Box";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
-import ButtonLoader from "../Loader/ButtonLoader";
+import ButtonLoader from "../../Loader/ButtonLoader";
 import { useHistory, useLocation } from "react-router-dom";
 
 export default function AddComment(props) {

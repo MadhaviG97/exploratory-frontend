@@ -1,14 +1,18 @@
 import React from "react";
+// MUI components
 import { Box, Paper, Typography, Divider, Button } from "@material-ui/core";
+// styles
 import { useStyles } from "../../assets/css/overviewpublic";
+// Components
 import PDFViewer from "./PDFViewer";
 import ImageViewer from "./ImageViewer";
+import ItemHeader from "./ItemHeader";
+import EditRelatedImages from "../Project/EditProject/EditRelatedImages";
+import EditFinalPaper from "../Project/EditProject/EditFinalPaper";
+import EditAbstract from "../Project/EditProject/EditAbstract";
+// Routing components
 import { useHistory, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
-import ItemHeader from "./ItemHeader";
-import EditRelatedImages from "../Project/EditRelatedImages";
-import EditFinalPaper from "../Project/EditFinalPaper";
-import EditAbstract from "../Project/EditAbstract";
 
 export default function Overview() {
   const classes = useStyles();

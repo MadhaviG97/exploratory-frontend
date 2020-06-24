@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import AppBar from "@material-ui/core/AppBar";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -12,42 +11,13 @@ import ListSubheader from "@material-ui/core/ListSubheader";
 import Avatar from "@material-ui/core/Avatar";
 import ButtonGroup from "@material-ui/core/ButtonGroup";
 import { useSelector } from "react-redux";
-import LikeComment from "./LikeComment";
-import DislikeComment from "./DislikeComment";
-import AddReply from "./AddReply";
-import EditReply from "./EditReply";
-import DeleteReply from "./DeleteReply";
+// import LikeComment from "./ToBeAdded/LikeComment";
+// import DislikeComment from "./ToBeAdded/DislikeComment";
+import AddReply from "./Operations/AddReply";
+import EditReply from "./Operations/EditReply";
+import DeleteReply from "./Operations/DeleteReply";
 import { Typography } from "@material-ui/core";
-
-const useStyles = makeStyles((theme) => ({
-  text: {
-    padding: theme.spacing(2, 2, 0),
-  },
-  paper: {
-    paddingBottom: 50,
-  },
-  list: {
-    marginBottom: theme.spacing(2),
-  },
-  subheader: {
-    backgroundColor: theme.palette.background.paper,
-  },
-  appBar: {
-    top: "auto",
-    bottom: 0,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  fabButton: {
-    position: "absolute",
-    zIndex: 1,
-    top: -30,
-    left: 0,
-    right: 0,
-    margin: "0 auto",
-  },
-}));
+import { useStyles } from "../../assets/css/commentThread";
 
 export default function CommentSection(props) {
   const classes = useStyles();
@@ -87,7 +57,7 @@ export default function CommentSection(props) {
           {props.replies.length !== 0 ? (
             props.replies.map((reply) => (
               <React.Fragment key={reply.reply_id}>
-                {reply.reply_id === 1 && (
+                {/* {reply.created_at ===  && (
                   <ListSubheader className={classes.subheader}>
                     Today
                   </ListSubheader>
@@ -96,21 +66,27 @@ export default function CommentSection(props) {
                   <ListSubheader className={classes.subheader}>
                     Last Week
                   </ListSubheader>
-                )}
+                )} */}
                 <ListItem>
                   <ListItemAvatar>
                     <Avatar alt="Profile Picture" src={reply.profile_picture} />
                   </ListItemAvatar>
                   <ListItemText
                     primary={
-                      <Typography variant="button">
+                      <Typography variant="body2" display="block">
                         {reply.first_name + " " + reply.last_name}
                       </Typography>
                     }
-                    secondary={reply.message}
+                    secondary={
+                      <React.Fragment>
+                        <Typography variant="button" display="block">
+                          {reply.message}
+                        </Typography>
+                      </React.Fragment>
+                    }
                   />
                   <Typography variant="caption">
-                    {getTimeAndDate(reply.created_at)}
+                    {getTimeAndDate(reply.updated_at)}
                   </Typography>
                   <ButtonGroup
                     color="primary"
@@ -134,14 +110,14 @@ export default function CommentSection(props) {
                     )}
                   </ButtonGroup>
 
-                  <LikeComment
+                  {/* <LikeComment
                     count={reply.no_of_likes}
                     reply_id={reply.reply_id}
                   />
                   <DislikeComment
                     count={reply.no_of_dislikes}
                     reply_id={reply.reply_id}
-                  />
+                  /> */}
                 </ListItem>
               </React.Fragment>
             ))

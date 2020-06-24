@@ -9,7 +9,7 @@ import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton";
-import ButtonLoader from "../Loader/ButtonLoader";
+import ButtonLoader from "../../Loader/ButtonLoader";
 
 const useStyles = makeStyles((theme) => ({
   text: {

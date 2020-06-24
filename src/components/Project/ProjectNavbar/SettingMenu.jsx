@@ -8,7 +8,8 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import { useHistory, useLocation } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
 import { IconButton } from "@material-ui/core";
-import DeleteProject from "./DeleteProject";
+import DeleteProject from "../DeleteProject/DeleteProject";
+
 const StyledMenu = withStyles({
   paper: {
     border: "1px solid #d3d4d5",

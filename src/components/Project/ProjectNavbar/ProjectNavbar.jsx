@@ -5,19 +5,16 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Chip,
   Grid,
   Typography,
   Paper,
-  Badge,
-  IconButton,
 } from "@material-ui/core";
 import BorderColorIcon from "@material-ui/icons/BorderColor";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import CommentIcon from "@material-ui/icons/Comment";
 import Avatar from "@material-ui/core/Avatar";
-import NavComponent from "../../components/AppNavigation/NavigationComponent";
-import { useStyles } from "../../assets/css/projectNavbar";
+import NavComponent from "../../AppNavigation/NavigationComponent";
+import { useStyles } from "../../../assets/css/projectNavbar";
 import SettingsIcon from "@material-ui/icons/Settings";
 import SettingMenu from "./SettingMenu";
 import FollowButton from "./FollowButton";

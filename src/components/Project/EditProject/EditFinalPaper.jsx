@@ -2,10 +2,9 @@ import React from "react";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import Paper from "@material-ui/core/Paper";
-import ImageUploader from "../Project/ImageUploader";
+import FileUploader from "../FinalPaper/FileUploader";
 import { makeStyles } from "@material-ui/core/styles";
 import Alert from "@material-ui/lab/Alert";
-
 import { withStyles } from "@material-ui/core/styles";
 import MuiDialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
@@ -16,6 +15,7 @@ let useStyles = makeStyles((theme) => ({
   fileUploader: {
     padding: theme.spacing(0.5, 2),
   },
+  buttonClose: theme.spacing(0.5, 2),
 }));
 
 const styles = (theme) => ({
@@ -62,9 +62,10 @@ export default function FormDialog(props) {
         fullWidth
         aria-labelledby="form-dialog-title"
       >
-        <DialogTitle id="edit-related-images" onClose={props.onClose}>
-          Edit Related Images
+        <DialogTitle id="edit-final-paper" onClose={props.onClose}>
+          Edit Final Paper
         </DialogTitle>
+
         <DialogContent>
           {sucess && (
             <React.Fragment>
@@ -95,15 +96,15 @@ export default function FormDialog(props) {
             </React.Fragment>
           )}
           <Paper className={classes.fileUploader} elevation={3}>
-            <ImageUploader
-              maxFiles={30}
-              multiple={true}
-              accept={"image/*"}
-              type="related_images"
+            <FileUploader
+              maxFiles={1}
+              multiple={false}
+              accept={"application/pdf"}
+              type="final_paper"
               project_id={props.id}
               onSucess={() => setSucess(true)}
               onFail={() => setFail(true)}
-              default={props.related_images ? props.related_images : []}
+              default={props.final_paper}
             />
           </Paper>
           <br /> <br />

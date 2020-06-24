@@ -1,13 +1,15 @@
 import React from "react";
-import { defaultClassNames } from "react-dropzone-uploader/dist/styles.css";
+// import { defaultClassNames } from "react-dropzone-uploader/dist/styles.css";
 import Dropzone from "react-dropzone-uploader";
 import axios from "axios";
 import "react-dropzone-uploader/dist/styles.css";
-import Loader from "../Loader/PdfLoader";
+import Loader from "../../Loader/PdfLoader";
+import { Button } from "@material-ui/core";
 
-export default function ImageUploader(props) {
-  const [state, setState] = React.useState([]);
+export default function FileUploader(props) {
+  const [state, setState] = React.useState({});
   const [reload, setReload] = React.useState(false);
+
   const Layout = ({
     input,
     previews,
@@ -21,8 +23,29 @@ export default function ImageUploader(props) {
         {previews} ​
         <div {...dropzoneProps}>{files.length < maxFiles && input}</div> ​
         {files.length > 0 && submitButton}
+        {files.length == 0 && (
+          <React.Fragment>
+            <br />
+            <Button
+              onClick={handleRemovePaper}
+              variant="contained"
+              color="primary"
+            >
+              save
+            </Button>
+            <br />
+            <br />
+          </React.Fragment>
+        )}
       </div>
     );
+  };
+
+  const handleRemovePaper = () => {
+    axios
+      .post("/project/remove-final-paper", { project_id: props.project_id })
+      .then((response) => props.onSucess())
+      .catch((err) => props.onFail());
   };
 
   const toDataURL = (url) =>
@@ -38,12 +61,11 @@ export default function ImageUploader(props) {
           })
       );
 
-  React.useEffect(async () => {
-    let imageArray = [];
+  React.useEffect(() => {
     if (!reload) {
-      await props.default.map((image) => {
+      if (props.default !== []) {
         toDataURL(
-          `${process.env.REACT_APP_BACK_END_URL}/related_images/${image.url}`
+          `${process.env.REACT_APP_BACK_END_URL}/final_paper/${props.default}`
         )
           .then((dataUrl) => {
             return dataUrl;
@@ -51,29 +73,23 @@ export default function ImageUploader(props) {
           .then((imageDataUrl) => {
             fetch(imageDataUrl).then((res) => {
               res.arrayBuffer().then((buf) => {
-                const file = new File([buf], image.url, {
-                  type: `image/${image.url.slice(-3)}`,
+                const file = new File([buf], props.default, {
+                  type: "application/pdf",
                 });
-                setState([...state, file]);
-                imageArray.push(file);
+                setState({ file });
               });
             });
           });
-      });
-
-      setReload(true);
+      }
     }
+    setReload(true);
   }, []);
 
   const handleSubmit = (type, file) => {
     let data = new FormData();
     var date = new Date();
     var type = file.name.slice(-3);
-    var name = `${
-      props.project_id
-    }-${date.valueOf()}-${date.getMilliseconds()}-${Math.floor(
-      Math.random() * 100000
-    )}.${type}`;
+    var name = `${props.project_id}.${type}`;
 
     data.append("project_id", props.project_id);
     data.append("type", props.type);
@@ -88,11 +104,8 @@ export default function ImageUploader(props) {
 
     axios
       .post("/project/save-file", data, config)
-      .then((result) => {
-        console.log("Done!");
-      })
+      .then((result) => props.onSucess())
       .catch((err) => props.onFail());
-    return name;
   };
 
   const handleChangeStatus = ({ meta, file }, status) => {
@@ -100,30 +113,26 @@ export default function ImageUploader(props) {
   };
 
   const handleUpload = async (files, allFiles) => {
-    let fileList = [];
-    await files.map(async (f) => {
-      var name = handleSubmit(props.type, f.file);
-      fileList.push(name);
+    await files.map((f) => {
+      handleSubmit(props.type, f.file);
     });
-
-    axios
-      .post("/project/insert-image-files", {
-        project_id: props.project_id,
-        images: fileList,
-      })
-      .then((res) => {
-        props.onSucess();
-      })
-      .catch((err) => {
-        props.onFail();
-      });
   };
 
   function CustomLayout() {
     return (
       <React.Fragment>
-        {state === false ? (
+        {state.file === null ? (
           <Loader />
+        ) : props.default !== [] ? (
+          <Dropzone
+            LayoutComponent={Layout}
+            maxFiles={props.maxFiles}
+            submitButtonContent={"save"}
+            onSubmit={handleUpload}
+            multiple={props.multiple}
+            accept={props.accept}
+            inputContent="..."
+          />
         ) : (
           <Dropzone
             LayoutComponent={Layout}
@@ -131,10 +140,9 @@ export default function ImageUploader(props) {
             submitButtonContent={"save"}
             onSubmit={handleUpload}
             multiple={props.multiple}
-            onChangeStatus={handleChangeStatus}
             accept={props.accept}
             inputContent="..."
-            initialFiles={state}
+            initialFiles={[state.file]}
           />
         )}
       </React.Fragment>

@@ -2,7 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import { makeStyles, useTheme } from "@material-ui/core/styles";
-import { Tabs, Tab, Paper, Typography, Box, Grid } from "@material-ui/core";
+import { Tabs, Tab, Paper, Typography, Box } from "@material-ui/core";
+
+import OverView from "../../Overview/OverViewPublic";
+import Team from "../../Team/Team";
+import CommentHeads from "../../ProjectComments/Comments";
+import PublicFiles from "../../ProjectPublicFiles/DisplayList";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -18,15 +23,6 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        // <Grid container>
-        //   <Grid item></Grid>
-        //   <Grid item>
-        //     <Box height="100%" alignItems="flex-start" py={3}>
-        //       {children}
-        //     </Box>
-        //   </Grid>
-        //   <Grid item></Grid>
-        // </Grid>
         <Box height="100%" alignItems="flex-start" py={3} px={15}>
           {children}
         </Box>
@@ -83,10 +79,10 @@ export default function FullWidthTabs(props) {
           scrollButtons="auto"
           aria-label="full width tabs example"
         >
-          <Tab className={classes.tab} label="Overview" {...a11yProps(0)} />
-          <Tab className={classes.tab} label="Team" {...a11yProps(1)} />
-          <Tab className={classes.tab} label="Comments" {...a11yProps(2)} />
-          <Tab className={classes.tab} label="Files" {...a11yProps(3)} />
+          <Tab label="Overview" {...a11yProps(0)} />
+          <Tab label="Team" {...a11yProps(1)} />
+          <Tab label="Comments" {...a11yProps(2)} />
+          <Tab label="Files" {...a11yProps(3)} />
         </Tabs>
       </Paper>
       <SwipeableViews
@@ -99,7 +95,9 @@ export default function FullWidthTabs(props) {
           index={0}
           dir={theme.direction}
           children={OverView()}
-        />
+        >
+          {/* <OverView /> */}
+        </TabPanel>
         <TabPanel
           value={value}
           index={1}

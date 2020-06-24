@@ -1,6 +1,6 @@
 import React from "react";
-import ProjectNavbar from "../../../components/Project/ProjectNavbar";
-import Tab from "../../../components/Project/TabPublicMode";
+import ProjectNavbar from "../../../components/Project/ProjectNavbar/ProjectNavbar";
+import Tab from "../../../components/Project/ProjectBody/BodyTabs";
 import Box from "@material-ui/core/Box";
 import { useEffect } from "react";
 import { render } from "../../../_actions/project_actions";
@@ -9,9 +9,10 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../../components/Loader";
 import OverView from "../../../components/Overview/OverViewPublic";
-import Team from "../../../components/Team/team";
-import Comments from "../../../components/ProjectComments/chathead";
+import Team from "../../../components/Team/Team";
+import Comments from "../../../components/ProjectComments/Comments";
 import FilesList from "../../../components/ProjectPublicFiles/DisplayList";
+
 function Home() {
   let { id } = useParams();
   var dispatch = useDispatch();
@@ -111,6 +112,7 @@ function Home() {
       return <Comments comments={[]} />;
     }
   };
+
   const getFiles = () => {
     return <FilesList files={files} />;
   };

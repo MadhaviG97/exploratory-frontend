@@ -1,7 +1,7 @@
 import React from "react";
 import { useStyles } from "../../assets/css/team";
 import { Paper, Grid, Box } from "@material-ui/core";
-import Member from "./member";
+import Member from "./TeamMember";
 
 export default function Team(props) {
   const classes = useStyles();
