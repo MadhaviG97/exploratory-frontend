@@ -1,6 +1,6 @@
 const { wait } = require("@testing-library/react");
 
-describe("Create project", () => {
+describe("View project", () => {
   before(() => {
     cy.visit("/signin");
 
@@ -18,50 +18,50 @@ describe("Create project", () => {
     cy.visit("/project/viewproject/10001").wait(2000);
   });
 
-  //   it("1.0 view apps", () => {
-  //     cy.get("button[aria-label=apps]")
-  //       .scrollIntoView()
-  //       .trigger("mouseover")
-  //       .wait(1000)
-  //       .click();
-  //     cy.get("button[id=app-close]")
-  //       .scrollIntoView()
-  //       .trigger("mouseover")
-  //       .wait(1000)
-  //       .click();
-  //   });
+  it("1.0 view apps", () => {
+    cy.get("button[aria-label=apps]")
+      .scrollIntoView()
+      .trigger("mouseover")
+      .wait(1000)
+      .click();
+    cy.get("button[id=app-close]")
+      .scrollIntoView()
+      .trigger("mouseover")
+      .wait(1000)
+      .click();
+  });
 
-  //   it("2.0 follow project", () => {
-  //     cy.get("button[title=follow]")
-  //       .scrollIntoView()
-  //       .trigger("mouseover")
-  //       .click()
-  //       .wait(1000);
-  //   });
+  it("2.0 follow project", () => {
+    cy.get("button[title=follow]")
+      .scrollIntoView()
+      .trigger("mouseover")
+      .click()
+      .wait(1000);
+  });
 
-  //   it("3.0 view Abstract", () => {
-  //     cy.get("div")
-  //       .contains("div", "Abstract")
-  //       .scrollIntoView()
-  //       .should("be.visible");
-  //   });
+  it("3.0 view Abstract", () => {
+    cy.get("div")
+      .contains("div", "Abstract")
+      .scrollIntoView()
+      .should("be.visible");
+  });
 
-  //   it("3.0 edit Abstract", () => {
-  //     cy.fixture("collaborator.json").then((data) => {
-  //       cy.get("div")
-  //         .contains("div", "Abstract")
-  //         .scrollIntoView()
-  //         .get('button[id="abstract-edit"]')
-  //         .click()
-  //         .get('textarea[id="outlined-multiline-static"]')
-  //         .clear()
-  //         .type(data.abstract)
-  //         .get("button")
-  //         .contains("span", "SUBMIT")
-  //         .wait(1500)
-  //         .click();
-  //     });
-  //   });
+  it("3.0 edit Abstract", () => {
+    cy.fixture("collaborator.json").then((data) => {
+      cy.get("div")
+        .contains("div", "Abstract")
+        .scrollIntoView()
+        .get('button[id="abstract-edit"]')
+        .click()
+        .get('textarea[id="outlined-multiline-static"]')
+        .clear()
+        .type(data.abstract)
+        .get("button")
+        .contains("span", "SUBMIT")
+        .wait(1500)
+        .click();
+    });
+  });
 
   it("4.0 view related images", () => {
     cy.get("div")
@@ -91,36 +91,63 @@ describe("Create project", () => {
       .visit("/project/viewproject/10001");
   });
 
-  //   it("4.0 view final paper", () => {
-  //     cy.get('button[id="final-paper-edit"]')
-  //       .scrollIntoView()
-  //       .should("be.visible");
-  //   });
-  //   it("5.0 Check Team", () => {
-  //     cy.get("#full-width-tab-1")
-  //       .click()
-  //       .should("be.visible")
-  //       .wait(1000)
-  //       .get("button[id=10003]")
-  //       .click()
-  //       .wait(3000)
-  //       .visit("/project/viewproject/10001");
+  it("5.0 view final paper", () => {
+    cy.get("div")
+      .contains("div", "Final Paper")
+      .scrollIntoView()
+      .should("be.visible");
+  });
 
-  //     cy.get("#full-width-tab-1")
-  //       .click()
-  //       .should("be.visible")
-  //       .wait(1000)
-  //       .get("button[id=10002]")
-  //       .click()
-  //       .wait(3000)
-  //       .visit("/project/viewproject/10001");
-  //   });
+  // it("5.1 edit final paper", () => {
+  //   cy.get("div")
+  //     .contains("div", "Final Paper")
+  //     .parent()
+  //     .parent()
+  //     .parent()
+  //     .within((div) => {
+  //       cy.get("button")
+  //         .click()
+  //         .wait(1500)
+  // .get(".dzu-previewButton")
+  // .click()
+  // .wait(1500)
+  //     .get("input[type=file]")
+  //     .uploadFile("demo.pdf", "application/pdf")
+  //     .wait(1000)
+  //     .get("button")
+  //     .contains("save")
+  //     .should("be.visible")
+  //     .click()
+  //     .wait(1500)
+  //     .visit("/project/viewproject/10001");
+  // });
+  // });
 
-  //   it("6.0 Check Comments", () => {
-  //     cy.get("#full-width-tab-2").click().should("be.visible").wait(1000);
-  //   });
+  it("6.0 Check Team", () => {
+    cy.get("#full-width-tab-1")
+      .click()
+      .should("be.visible")
+      .wait(1000)
+      .get("button[id=10003]")
+      .click()
+      .wait(3000)
+      .visit("/project/viewproject/10001");
 
-  //   it("7.0 Check files", () => {
-  //     cy.get("#full-width-tab-3").click().should("be.visible").wait(1000);
-  //   });
+    cy.get("#full-width-tab-1")
+      .click()
+      .should("be.visible")
+      .wait(1000)
+      .get("button[id=10001]")
+      .click()
+      .wait(3000)
+      .visit("/project/viewproject/10001");
+  });
+
+  it("7.0 Check Comments", () => {
+    cy.get("#full-width-tab-2").click().should("be.visible").wait(1000);
+  });
+
+  it("8.0 Check files", () => {
+    cy.get("#full-width-tab-3").click().should("be.visible").wait(1000);
+  });
 });
