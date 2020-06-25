@@ -9,7 +9,7 @@ import { useHistory, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../../components/Loader";
 import OverView from "../../../components/Overview/OverViewPublic";
-import Team from "../../../components/Team/Team";
+import Team from "../../../components/Team/TeamMembers";
 import Comments from "../../../components/ProjectComments/Comments";
 import FilesList from "../../../components/ProjectPublicFiles/DisplayList";
 
