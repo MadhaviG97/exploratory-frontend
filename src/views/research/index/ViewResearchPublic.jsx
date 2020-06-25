@@ -5,7 +5,7 @@ import Box from "@material-ui/core/Box";
 import { useEffect } from "react";
 import { render } from "../../../_actions/project_actions";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useHistory, useLocation, useParams } from "react-router-dom";
 import axios from "axios";
 import Loader from "../../../components/Loader";
 import OverView from "../../../components/Overview/OverViewPublic";
@@ -15,59 +15,80 @@ import FilesList from "../../../components/ProjectPublicFiles/DisplayList";
 
 export default function Home() {
   let { id } = useParams();
+  let history = useHistory();
+  let location = useLocation();
   var dispatch = useDispatch();
   var project = useSelector((state) => state.project);
   const [files, setFiles] = React.useState([]);
+  const [validated, setValidated] = React.useState(false);
+
   const [state, setState] = React.useState({
     loaded: false,
     collaborators: [],
     tags: [],
   });
 
+  function validProject(cb) {
+    var request = axios
+      .post("/project/is-exist-project", { project_id: id })
+      .then(async (response) => {
+        if (!response.data) {
+          var home_location = location.state || {
+            from: { pathname: `/` },
+          };
+          history.replace(home_location.from);
+        } else {
+          cb();
+        }
+      })
+      .catch((err) => alert(err.message));
+  }
+
   useEffect(() => {
     let mounted = true;
 
     if (mounted) {
       if (!state.loaded) {
-        let config = {
-          headers: {
-            Authorization: `Bearer ${localStorage.token}`,
-          },
-        };
-        const variables = {
-          group: id,
-        };
-        axios
-          .post("/drive/getpublicfiles", variables, config)
-          .then((response) => {
-            if (response.data.success) {
-              console.log(response.data.files);
-              setFiles(response.data.files);
-            } else {
-              console.log("not");
-              alert("Could not get files ");
-            }
-          });
-
-        var request = axios
-          .post("/project/view-project", { id: id })
-          .then((response) => {
-            return response.data;
-          })
-          .catch((err) => console.log(err.message));
-
-        dispatch(render(request))
-          .then((response) => {
-            setState({
-              ...state,
-              loaded: true,
+        if (validated) {
+          let config = {
+            headers: {
+              Authorization: `Bearer ${localStorage.token}`,
+            },
+          };
+          const variables = {
+            group: id,
+          };
+          axios
+            .post("/drive/getpublicfiles", variables, config)
+            .then((response) => {
+              if (response.data.success) {
+                console.log(response.data.files);
+                setFiles(response.data.files);
+              }
             });
-          })
-          .catch((err) => setState({ ...state, loaded: true }));
+
+          var request = axios
+            .post("/project/view-project", { id: id })
+            .then((response) => {
+              return response.data;
+            })
+            .catch((err) => console.log(err.message));
+
+          dispatch(render(request))
+            .then((response) => {
+              setState({
+                ...state,
+                loaded: true,
+              });
+            })
+            .catch((err) => setState({ ...state, loaded: true }));
+        } else {
+          validProject(() => setValidated(true));
+        }
       }
     }
     return () => (mounted = false);
-  }, []);
+  }, [validated]);
 
   const Page = () => {
     return (
