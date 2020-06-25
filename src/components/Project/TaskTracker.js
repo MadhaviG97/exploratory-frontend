@@ -16,7 +16,11 @@ import CommentSection from "../TaskTracker/TaskComments";
 import AddTask from "../TaskTracker/AddNewTask";
 
 import { useDispatch, useSelector } from "react-redux";
-import { getTasks, getCollaborators, getComments } from "../../_actions/taskTracker_actions";
+import {
+  getTasks,
+  getCollaborators,
+  getComments,
+} from "../../_actions/taskTracker_actions";
 import { propTypes } from "pdf-viewer-reactjs";
 import { useParams, useHistory } from "react-router-dom";
 
@@ -30,19 +34,19 @@ const useStyles = makeStyles((theme) => ({
     minWidth: 700,
   },
   paper: {
-    paddingLeft:theme.spacing(5),
-    paddingRight:theme.spacing(5),
-    paddingBottom:theme.spacing(1),
-    paddingTop:theme.spacing(1),
+    paddingLeft: theme.spacing(5),
+    paddingRight: theme.spacing(5),
+    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(1),
     textAlign: "center",
     color: theme.palette.text.secondary,
-    border:10
+    border: 10,
   },
   commentSection: {
-    paddingLeft:theme.spacing(20),
-    paddingRight:theme.spacing(20),
-    paddingBottom:theme.spacing(1),
-    paddingTop:theme.spacing(1),
+    paddingLeft: theme.spacing(20),
+    paddingRight: theme.spacing(20),
+    paddingBottom: theme.spacing(1),
+    paddingTop: theme.spacing(1),
     textAlign: "left",
     color: theme.palette.text.secondary,
   },
@@ -78,7 +82,7 @@ const StyledTableRow = withStyles((theme) => ({
 
 export default function SimpleTable() {
   const classes = useStyles();
-  const {pId} = useParams();
+  const { pId } = useParams();
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTasks(pId));
@@ -86,9 +90,11 @@ export default function SimpleTable() {
     dispatch(getComments(pId));
   }, []);
   const user = useSelector((state) => state.user);
-  console.log(user.userData)
+  console.log(user.userData);
   const tasktracker = useSelector((state) => state.task_tracker);
-  const collaborators = useSelector((state) => state.task_tracker.collaborators);
+  const collaborators = useSelector(
+    (state) => state.task_tracker.collaborators
+  );
 
   function getLength(obj) {
     var length = 0;
@@ -111,7 +117,7 @@ export default function SimpleTable() {
           <Typography variant="h6">Task Tracker</Typography>
         </Paper>
 
-          <Progress tasks={tasktracker.tasks} />
+        <Progress tasks={tasktracker.tasks} />
 
         <div className={classes.paper}>
           <TableContainer component={Paper}>
@@ -162,7 +168,11 @@ export default function SimpleTable() {
                         {new Date(task.created_at).toDateString()}
                       </StyledTableCell>
                       <StyledTableCell align="left">
-                        <ActionButtonGroup task={task} project_id={pId} collaborators={collaborators} />
+                        <ActionButtonGroup
+                          task={task}
+                          project_id={pId}
+                          collaborators={collaborators}
+                        />
                       </StyledTableCell>
                     </StyledTableRow>
                   ))
@@ -179,12 +189,12 @@ export default function SimpleTable() {
             </Table>
           </TableContainer>
         </div>
-        <div className={classes.paper}  >
-          <AddTask project_id={pId}/>
+        <div className={classes.paper}>
+          <AddTask project_id={pId} />
         </div>
       </div>
       <Paper className={classes.commentSection}>
-        <CommentSection project_id={pId} userData={user.userData}/>
+        <CommentSection project_id={pId} userData={user.userData} />
       </Paper>
     </div>
   );
