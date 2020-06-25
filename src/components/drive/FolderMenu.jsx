@@ -1,5 +1,5 @@
 
-import React,{useEffect} from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,7 +9,6 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import Box from '@material-ui/core/Box';
 import TextField from '@material-ui/core/TextField';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -67,11 +66,10 @@ export default function FolderMenu(props) {
   const [file,setFile]=React.useState('');
   const [foldercreated, setFolderCreated] = React.useState(false);
   const [fileadded, setFileAdded] = React.useState(false);
-  const [disable, setDisable] = React.useState(false);
-  const [fileSizeExceeded, setFileSizeExceeded] = React.useState(false);
   const [name,setName]=React.useState('');
   let folder=props.folderParams.folderId
   const group=props.group
+  console.log(folder)
   const handleClickOpen = () => {
     setOpen(true);
   };
@@ -87,9 +85,11 @@ export default function FolderMenu(props) {
     setName(event.target.value);
   };
   const handleSubmit = (event) => {
+    console.log("yep");
     event.preventDefault();
     const token = localStorage.token;
     if (folder) {
+      console.log("folderinside");
     } else {
       folder = "root";
     }
@@ -106,6 +106,7 @@ export default function FolderMenu(props) {
     axios.post('/drive/createfolder', variables,config)
        .then(response => {
             if (response) {
+              console.log('yep2')
               setFolderCreated(true)
 
         setTimeout(() => {
@@ -117,32 +118,36 @@ export default function FolderMenu(props) {
 
   const fileChanged = (event) => {
     const f = event.target.files[0];
-    
-    if (f.size<5*10**7){
-      if (folder) {
-      } else {
-        folder = "root";
+    console.log(f);
+    if (folder) {
+      console.log("folderinside");
+    } else {
+      folder = "root";
+    }
+    setFile(f);
+    event.preventDefault();
+    let data = new FormData();
+    data.append("file", f);
+    data.append("group", group);
+    data.append("sensitivity", "private");
+    data.append("folder", folder);
+    console.log(event.target.files[0]);
+    const token = localStorage.token;
+    console.log(token);
+    let config = {
+      headers: {
+      'Authorization': `Bearer ${token}`
       }
-      setFile(f);
-      event.preventDefault();
-      let data = new FormData();
-      data.append("file", f);
-      data.append("group", group);
-      data.append("sensitivity", "private");
-      data.append("folder", folder);
-      const token = localStorage.token;
-      let config = {
-        headers: {
-        'Authorization': `Bearer ${token}`
-        }
-      }
-      fetch('/drive/upload', {
+    }
+    console.log(data)
+    fetch('/drive/upload', {
         method: 'POST',
         body: data,
         //headers:config
       }).then(res => res.json())
         .then(data => {
           if (data.success) {
+            console.log('yep3')
               setFileAdded(true)
               setTimeout(() => {
                 window.location.reload();
@@ -152,64 +157,11 @@ export default function FolderMenu(props) {
           alert("Upload failed");
         }
       });
-    }else{
-      setFileSizeExceeded(true)
-    }
-    
   };
-  useEffect(() => {
-    const variable = { 
-      group:group
-  }
-    axios.get('/drive/getlimit',variable)
-    .then(response => {
-        if (response.data.success) {
-            if (response.data.storage[0].total>4*10**8){
-              setDisable(true)
-            }
-        }
-    })
-  }, [])
-  const DisableAlert=()=>{
-    return (
-      <Collapse in={disable}>
-        <Alert data-cy='disable-alert'
-        severity="warning"
-        >
-        Storage Limit Exceeded!
-        </Alert>
-        <Box p={0.5}></Box>
-      </Collapse>
-    )
-}
-const FileSizeExceededAlert=()=>{
-  return (
-    <Collapse in={fileSizeExceeded}>
-      <Alert data-cy='exceeded-alert'
-      severity="error"
-      action={
-        <IconButton
-          aria-label="close"
-          color="inherit"
-          size="small"
-          onClick={() => {
-            setFileSizeExceeded(false);
-          }}
-        >
-          <CloseIcon fontSize="inherit" />
-        </IconButton>
-      }
-      >
-      Uploading File Size Limit Exceeded!
-      </Alert>
-      <Box p={0.5}></Box>
-    </Collapse>
-  )
-}
+
   return (
     <div className={classes.listItem}>
      <div className={classes.roota}>
-      
       <Collapse in={foldercreated}>
         <Alert data-cy='folder-created-alert'
           action={
@@ -247,7 +199,6 @@ const FileSizeExceededAlert=()=>{
         </Alert>
       </Collapse>
     </div>
-    <FileSizeExceededAlert/>
     <List className={classes.root}>
         <ListItem alignItems="flex-start">
           <ListItemText
@@ -267,7 +218,6 @@ const FileSizeExceededAlert=()=>{
           />
         </ListItem>
         <Divider variant="fullWidth" />
-        <DisableAlert/>
         <ListItem alignItems="flex-start">
           <ListItemAvatar>
             <Avatar variant="square" alt="fileImage" src={fileImage} />
@@ -275,12 +225,11 @@ const FileSizeExceededAlert=()=>{
           <ListItemText
             primary={
               <React.Fragment>
-                <Button backgroundColor="#b2beb5" height={50} component="label" disabled={disable}>
+                <Button backgroundColor="#b2beb5" height={50} component="label">
                   <input
                     type="file"
                     style={{ display: "none" }}
                     onChange={fileChanged.bind(this)}
-                    disabled={disable}
                   />
                   <Typography
                     component="span"
@@ -337,7 +286,6 @@ const FileSizeExceededAlert=()=>{
                   id="name"
                   label=""
                   type="text"
-                  inputProps={{ maxLength: 20 }}
                   fullWidth
                   required={true}
                   onChange={handleChange}
