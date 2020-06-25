@@ -5,7 +5,7 @@ import { makeStyles, useTheme } from "@material-ui/core/styles";
 import { Tabs, Tab, Paper, Typography, Box } from "@material-ui/core";
 
 import OverView from "../../Overview/OverViewPublic";
-import Team from "../../Team/Team";
+import Team from "../../Team/TeamMembers";
 import CommentHeads from "../../ProjectComments/Comments";
 import PublicFiles from "../../ProjectPublicFiles/DisplayList";
 
