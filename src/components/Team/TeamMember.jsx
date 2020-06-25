@@ -7,9 +7,9 @@ import Typography from "@material-ui/core/Typography";
 import CardActionArea from "@material-ui/core/CardActionArea";
 import Box from "@material-ui/core/Box";
 import { useHistory } from "react-router-dom";
-import { useStyles } from "../../assets/css/team";
+import { useStyles } from "../../assets/css/member";
 
-export default function Team(props) {
+export default function TeamMember(props) {
   const classes = useStyles();
   const theme = useTheme();
   let history = useHistory();

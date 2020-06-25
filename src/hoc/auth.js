@@ -8,21 +8,23 @@ export default function (ComposedClass, reload) {
     const dispatch = useDispatch();
 
     useEffect(() => {
-      dispatch(auth()).then(async (response) => {
-        if (await !response.payload) {
+      dispatch(auth())
+        .then(async (response) => {
+          if (await !response.payload) {
+            if (reload) {
+              props.history.push("/signup");
+            }
+          } else {
+            if (reload === false) {
+              props.history.push("/");
+            }
+          }
+        })
+        .catch((err) => {
           if (reload) {
             props.history.push("/signup");
           }
-        } else {
-          if (reload === false) {
-            props.history.push("/");
-          }
-        }
-      }).catch((err) => {
-        if (reload) {
-          props.history.push("/signup");
-        }
-      })
+        });
     }, [dispatch, props.history, user.googleAuth]);
 
     return <ComposedClass {...props} user={user} />;

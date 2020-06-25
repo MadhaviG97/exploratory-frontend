@@ -131,7 +131,7 @@ export default function ProjectNavbar(props) {
               </Box>
             </Box>
           </Grid>
-          <Grid item lg={1} md={0} xs={0}></Grid>
+          <Grid item lg={1} md={1} xs={1}></Grid>
         </Grid>
       </Paper>
     </React.Fragment>

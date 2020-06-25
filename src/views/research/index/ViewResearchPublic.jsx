@@ -13,7 +13,7 @@ import Team from "../../../components/Team/Team";
 import Comments from "../../../components/ProjectComments/Comments";
 import FilesList from "../../../components/ProjectPublicFiles/DisplayList";
 
-function Home() {
+export default function Home() {
   let { id } = useParams();
   var dispatch = useDispatch();
   var project = useSelector((state) => state.project);
@@ -125,5 +125,3 @@ function Home() {
     </React.Fragment>
   );
 }
-
-export default Home;

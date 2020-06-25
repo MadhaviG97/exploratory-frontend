@@ -70,8 +70,9 @@ export default class ImageViwerClass extends React.Component {
   };
 
   render() {
+    // alert(this.state.viewerIsOpen);
     return (
-      <div style={classes.root}>
+      <React.Fragment style={classes.root}>
         <GridList style={classes.gridList} cols={2.5}>
           {this.state.dataSet.map((tile) => (
             <GridListTile key={tile.id}>
@@ -104,8 +105,9 @@ export default class ImageViwerClass extends React.Component {
           onClickPrev={this.gotoPrevious}
           onClickNext={this.gotoNext}
           onClose={this.closeViewer}
+          // onClickImg={() => alert("please")}
         />
-      </div>
+      </React.Fragment>
     );
   }
 }

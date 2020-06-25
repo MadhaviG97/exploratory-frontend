@@ -41,7 +41,6 @@ export default function CommentSection(props) {
   const isEditable = (authur_id) => {
     return authur_id === loggedInUser ? true : false;
   };
-  console.log(props.replies);
 
   React.useState(() => {
     if (user === {} || user.userData !== undefined) {

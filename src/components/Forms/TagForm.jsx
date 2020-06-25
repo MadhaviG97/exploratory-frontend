@@ -5,7 +5,6 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import axios from "axios";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@material-ui/icons/CheckBox";
-import ListItemCol from "./ListItemCol";
 
 function sleep(delay = 0) {
   return new Promise((resolve) => {
