@@ -5,7 +5,6 @@ import signUp from "./views/guest-user/SignUp.jsx";
 import ConfirmEmail from "./views/guest-user/ConfirmEmail.jsx";
 import TemporaryRegister from "./views/guest-user/TemporaryRegister.jsx";
 
-import fillProfile from "./views/researcher/fill-profile";
 import UserProfile from "./views/researcher/user-profile";
 import AboutUs from "./views/shared/about-us.jsx";
 import Forum from "./views/shared/public-forum";
@@ -63,11 +62,6 @@ function App() {
             />
             <Route exact path="/signin" component={Auth(signIn, false)} />
             <Route exact path="/signup" component={Auth(signUp, false)} />
-            <Route
-              exact
-              path="/fillProfile"
-              component={Auth(fillProfile, true)}
-            />
 
             <Route
               exact
