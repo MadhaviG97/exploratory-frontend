@@ -214,7 +214,9 @@ export default function SignInSide(props) {
                     Forgot password?
                   </Link> */}
                 </Grid>
+
                 <Grid item>
+                  <br />
                   <Link href="/signup" variant="body2">
                     {"Don't have an account? Sign Up"}
                   </Link>
