@@ -4,14 +4,15 @@ describe('Chat', () => {
     before(() => {
 
         const username = 'damika@gmail.com'
-        const password = 'password1'
+        const password = '123456@'
 
         cy.visit('/signin')
         cy.get('input[name=email]').type(username)
 
         // {enter} causes the form to submit
         cy.get('input[id=Password]').type(`${password}{enter}`)
-        cy.wait(1500)
+        cy.get('button').contains('SIGN IN').click()
+        cy.wait(2500)
         cy.get('[id=chatButton').click()
 
     })
@@ -24,8 +25,8 @@ describe('Chat', () => {
         cy.get('button').contains('Start').should('not.be.visible')
         cy.get('button').contains('Cancel').should('be.visible')
 
-        cy.get('input[name=researcher').type('Nimal').click()
-        cy.get('li').contains('Nimal').click()
+        cy.get('input[name=researcher').type('Janith').click()
+        cy.get('li').contains('Janith').click()
         cy.get('button').contains('Start').should('be.visible')
         cy.get('button').contains('Cancel').should('be.visible')
         cy.get('button').contains('Start').click()
@@ -42,8 +43,8 @@ describe('Chat', () => {
         cy.get('button').contains('Start').should('not.be.visible')
         cy.get('button').contains('Cancel').should('be.visible')
 
-        cy.get('input[name=researcher').type('Nimal').click()
-        cy.get('li').contains('Nimal').click()
+        cy.get('input[name=researcher').type('Janith').click()
+        cy.get('li').contains('Janith').click()
         cy.get('button').contains('Start').should('be.visible')
         cy.get('button').contains('Cancel').should('be.visible')
         cy.get('button').contains('Cancel').click()
@@ -54,11 +55,11 @@ describe('Chat', () => {
 
         const message = "Test message 1"
 
-        cy.get('[id=chatItem').contains('Nimal').click()
+        cy.get('[id=chatItem').contains('Janith').click()
 
         cy.get('[id=chatWindowMoreButton').should('not.be.visible')
         cy.get('[id=chatWindowBackButton').should('be.visible')
-        cy.get('[id=chatWindow').get('[id=chatWindowTopAppBar').should('contain', 'Nimal')
+        cy.get('[id=chatWindow').get('[id=chatWindowTopAppBar').should('contain', 'Janith')
         cy.get('[id=chatWindow').get('[id=sendButton').should('not.be.visible')
 
         cy.get('[id=chatWindow').get('[id=msgBox').type(message).should('have.value', message)
@@ -72,8 +73,8 @@ describe('Chat', () => {
         cy.get('[id=chatWindow').get('[id=messageInfoButton]').last().click()
 
         cy.get('[id=messageStatusDialog]').should('contain', 'Message Status')
-        cy.get('[id=messageStatusDialog]').should('contain', 'Seen Participants')
-        cy.get('[id=messageStatusDialog]').should('contain', 'Delivered Participants')
+        cy.get('[id=messageStatusDialog]').should('contain', 'Seen')
+        cy.get('[id=messageStatusDialog]').should('contain', 'Delivered to')
 
 
         cy.get('[id=messageStatusDialog]').click(100, 100)
