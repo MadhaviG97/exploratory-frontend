@@ -10,7 +10,8 @@ describe("Chat", () => {
 
     // {enter} causes the form to submit
     cy.get("input[id=Password]").type(`${password}{enter}`);
-    cy.wait(1500);
+    cy.get('button').contains('SIGN IN').click()
+    cy.wait(2500);
     cy.get("[id=chatButton").click();
   });
 
@@ -57,32 +58,32 @@ describe("Chat", () => {
     cy.get("button").contains("OK").click();
   });
 
-        cy.get('input[name=participants').click()
-        // cy.wait(1000)
-        // cy.get('[type="checkbox"]').first().check()  
-        cy.get('li').get('[id=participantItem]').first().click({waitForAnimations: false})
-        cy.get('button').contains('Create').click()
+  //       cy.get('input[name=participants').click()
+  //       // cy.wait(1000)
+  //       // cy.get('[type="checkbox"]').first().check()  
+  //       cy.get('li').get('[id=participantItem]').first().click({waitForAnimations: false})
+  //       cy.get('button').contains('Create').click()
 
-    cy.get("input[id=name]").clear();
-    cy.get("button").contains("Create").should("not.be.visible");
-    cy.get("[id=name-helper-text]").should(
-      "contain",
-      '"Group Name" is not allowed to be empty'
-    );
-    cy.get("input[id=name]")
-      .type(newGroupName)
-      .should("have.value", newGroupName);
+  //   cy.get("input[id=name]").clear();
+  //   cy.get("button").contains("Create").should("not.be.visible");
+  //   cy.get("[id=name-helper-text]").should(
+  //     "contain",
+  //     '"Group Name" is not allowed to be empty'
+  //   );
+  //   cy.get("input[id=name]")
+  //     .type(newGroupName)
+  //     .should("have.value", newGroupName);
 
-    cy.get("button").contains("Create").should("be.visible");
+  //   cy.get("button").contains("Create").should("be.visible");
 
-    cy.get("[id=description]").clear();
-    cy.get("button").contains("Create").should("not.be.visible");
-    cy.get("[id=description-helper-text]").should(
-      "contain",
-      '"Description" is not allowed to be empty'
-    );
-    cy.get("button").contains("Cancel").click();
-  });
+  //   cy.get("[id=description]").clear();
+  //   cy.get("button").contains("Create").should("not.be.visible");
+  //   cy.get("[id=description-helper-text]").should(
+  //     "contain",
+  //     '"Description" is not allowed to be empty'
+  //   );
+  //   cy.get("button").contains("Cancel").click();
+  // });
 
   it("Create new group check for invalid inputs", () => {
     const newGroupName =

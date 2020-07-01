@@ -3,14 +3,15 @@ describe('Chat', () => {
     beforeEach(() => {
 
         const username = 'damika@gmail.com'
-        const password = 'password1'
+        const password = '123456@'
 
         cy.visit('/signin')
         cy.get('input[name=email]').type(username)
 
         // {enter} causes the form to submit
         cy.get('input[id=Password]').type(`${password}{enter}`)
-        cy.wait(1500)
+        cy.get('button').contains('SIGN IN').click()
+        cy.wait(2500)
         cy.get('[id=chatButton').click()
 
     })
@@ -34,8 +35,8 @@ describe('Chat', () => {
         cy.get('[id=chatWindow').get('[id=messageInfoButton]').last().click()
 
         cy.get('[id=messageStatusDialog]').should('contain', 'Message Status')
-        cy.get('[id=messageStatusDialog]').should('contain', 'Seen Participants')
-        cy.get('[id=messageStatusDialog]').should('contain', 'Delivered Participants')
+        cy.get('[id=messageStatusDialog]').should('contain', 'Seen')
+        cy.get('[id=messageStatusDialog]').should('contain', 'Delivered to')
 
 
         cy.get('[id=messageStatusDialog]').click(100, 100)
@@ -101,7 +102,7 @@ describe('Chat', () => {
         cy.get('li').contains('Settings').click()
 
         cy.get('[id=addMoreParticipantsButton]').click()
-        cy.get('input[id=fixed-participant-demo').type('Dummy User1').click()
+        cy.get('input[id=fixed-participant-demo').type('Yogya').click()
         cy.get('li').get('[id=participantItem]').first().click()
         cy.get('button').contains('Add').click()
         cy.get('[id=alert-dialog-title]').should('contain', 'Successfully added the participants')
