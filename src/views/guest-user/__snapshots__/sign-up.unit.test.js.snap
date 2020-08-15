@@ -422,9 +422,10 @@ exports[`signup renders correctly 1`] = `
           <div
             className="MuiGrid-root MuiGrid-item"
           >
+            <br />
             <a
               className="MuiTypography-root MuiLink-root MuiLink-underlineHover MuiTypography-body2 MuiTypography-colorPrimary"
-              href="#"
+              href="/signin"
               onBlur={[Function]}
               onFocus={[Function]}
             >
